@@ -23,6 +23,25 @@ int Margay::begin(uint8_t *Vals, uint8_t NumVals, String Header_)
 	memcpy(I2C_ADR, Vals, sizeof(I2C_ADR)); //Copy array
 	NumADR = NumVals; //Copy length of array
 	Header = Header_; //Copy user defined header
+
+	RTC.Begin(); //Initalize RTC
+	RTC.ClearAlarm(); //
+
+	Serial.begin(38400); //DEBUG!
+	Serial.println("\nInitializing...\n"); //DEBUG!
+	delay(100);
+	if(Serial.available()) {  //If time setting info available 
+		Serial.println("BANG!"); //DEBUG!
+		String DateTimeTemp = Serial.readString();
+		Serial.println(DateTimeTemp);  //DEBUG!
+		int DateTimeVals[6] = {0};
+		for(int i = 0; i < 6; i++) {
+			DateTimeVals[i] = DateTimeTemp.substring(2*i, 2*(i+1)).toInt();
+			Serial.print(i); Serial.print("  "); Serial.println(DateTimeVals[i]);  //DEBUG!
+		}
+		RTC.SetTime(2000 + DateTimeVals[0], DateTimeVals[1], DateTimeVals[2], DateTimeVals[3], DateTimeVals[4], DateTimeVals[5]);
+	}
+
 	//Sets up basic initialization required for the system
 	selfPointer = this;
 	pinMode(Ext3v3Ctrl, OUTPUT);
@@ -34,8 +53,7 @@ int Margay::begin(uint8_t *Vals, uint8_t NumVals, String Header_)
 
 	LED_Color(OFF);
 
-	Serial.begin(38400); //DEBUG!
-	Serial.println("\nInitializing...\n"); //DEBUG!
+
 
 	pinMode(BuiltInLED, OUTPUT);
 
@@ -49,9 +67,6 @@ int Margay::begin(uint8_t *Vals, uint8_t NumVals, String Header_)
 	attachInterrupt(digitalPinToInterrupt(LogInt), Margay::isr0, FALLING);	//Attach an interrupt driven by the manual log button, sets logging flag and logs data
 	pinMode(RTCInt, INPUT_PULLUP);
 	pinMode(LogInt, INPUT);
-
-	RTC.Begin(); //Initalize RTC
-	RTC.ClearAlarm(); //
 
 	I2CTest();
 	ClockTest();
