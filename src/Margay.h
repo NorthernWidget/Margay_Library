@@ -43,6 +43,7 @@ class Margay
 		int LogStr(String Val);
 		void LED_Color(unsigned long Val);
 		void Run(String (*f)(void), unsigned long LogInterval);
+		float GetVoltage();
 	protected:
 		float TempConvert(float V, float Vcc, float R, float A, float B, float C, float D, float R25);
 		void Blink();
@@ -66,6 +67,7 @@ class Margay
 		void InitLogFile();
 
 		DS3231_Logger RTC;
+		MCP3421 adc;
 
 		#if defined(MARGAY_1v0)
 			const int SD_CS = 4;

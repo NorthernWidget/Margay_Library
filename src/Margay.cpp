@@ -26,6 +26,8 @@ int Margay::begin(uint8_t *Vals, uint8_t NumVals, String Header_)
 
 	RTC.Begin(); //Initalize RTC
 	RTC.ClearAlarm(); //
+	adc.Begin(); //Initalize external ADC
+	adc.SetResolution(18);
 
 	Serial.begin(38400); //DEBUG!
 	Serial.println("\nInitializing...\n"); //DEBUG!
@@ -371,6 +373,12 @@ void Margay::Blink()
     digitalWrite(BlueLED, HIGH);
     delay(500);
   }
+}
+
+float Margay::GetVoltage()  //Get voltage from Ax pin
+{
+	float Val = adc.GetVoltage();
+	return Val;
 }
 
 void Margay::Run(String (*Update)(void), unsigned long LogInterval) //Pass in function which returns string of data
