@@ -14,6 +14,7 @@
 #include <avr/wdt.h>
 #include <avr/power.h>
 #include <Arduino.h>
+#include <MCP3421.h>
 
 
 #define RED 0xFFFF0000L
@@ -26,6 +27,8 @@
 #define CYAN 0xFF00FFFF
 #define BLACK_ALERT 0x802019FF
 #define OFF 0x00
+
+// #define MARGAY_1v0 //Comment for older models 
 
 ////////////////////////////PIN DEFINITIONS///////////////////////
 
@@ -45,13 +48,14 @@ class Margay
 		void LED_Color(unsigned long Val);
 		void Run(String (*f)(void), unsigned long LogInterval);
 		float GetVoltage();
+		void AddDataPoint(String (*Update)(void));
 	protected:
 		float TempConvert(float V, float Vcc, float R, float A, float B, float C, float D, float R25);
 		void Blink();
 		// void StartLog();
 		// void Log();
 		void virtual Log();
-		void virtual StartLog();
+		void virtual ButtonLog();
 		static void isr0();
 		static void isr1();
 		static Margay* selfPointer;
@@ -132,6 +136,7 @@ class Margay
 
 		volatile bool LogEvent = false; //Used to test if logging should begin yet
 		volatile bool NewLog = false; //Used to tell system to start a new log
+		volatile bool ManualLog = false; //Used to add point to log by pressing the log button
 		volatile int AwakeCount = 0;
 
 		char FileNameC[11]; //Used for file handling

@@ -26,9 +26,10 @@ String Update()
 	float Val1 = Sensor.getPressure();
 	float Val2 = Sensor.getTemperature(1);
 	return String(Val1) + "," + String(Val2);
+	// return "DEADBEEF"; //DEBUG!
 }
 
 void Init() 
 {
-	Sensor.begin(TP2v2);
+	// Sensor.begin(TP2v2);
 }

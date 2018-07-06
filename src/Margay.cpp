@@ -10,6 +10,7 @@
 #include <avr/wdt.h>
 #include <avr/power.h>
 #include <Margay.h>
+#include <MCP3421.h>
 // #include <Arduino.h>
 
 Margay* Margay::selfPointer;
@@ -20,6 +21,12 @@ Margay::Margay()
 
 int Margay::begin(uint8_t *Vals, uint8_t NumVals, String Header_)
 {
+	pinMode(Ext3v3Ctrl, OUTPUT);
+	digitalWrite(Ext3v3Ctrl, LOW); //Make sure external power is on
+
+	pinMode(BuiltInLED, OUTPUT);
+	digitalWrite(BuiltInLED, LOW); //Turn built in LED on
+
 	memcpy(I2C_ADR, Vals, sizeof(I2C_ADR)); //Copy array
 	NumADR = NumVals; //Copy length of array
 	Header = Header_; //Copy user defined header
@@ -46,18 +53,13 @@ int Margay::begin(uint8_t *Vals, uint8_t NumVals, String Header_)
 
 	//Sets up basic initialization required for the system
 	selfPointer = this;
-	pinMode(Ext3v3Ctrl, OUTPUT);
-	digitalWrite(Ext3v3Ctrl, LOW); //Turn on power by default, turn off later to sleep
+
 
 	pinMode(RedLED, OUTPUT);
 	pinMode(GreenLED, OUTPUT);
 	pinMode(BlueLED, OUTPUT);
 
 	LED_Color(OFF);
-
-
-
-	pinMode(BuiltInLED, OUTPUT);
 
 	Wire.begin();
 	pinMode(SD_CS, OUTPUT);
@@ -99,7 +101,8 @@ int Margay::begin(uint8_t *Vals, uint8_t NumVals, String Header_)
 		delay(2000);
 	}
 
-	Serial.print("\nLog When Ready...\n\n");
+	Serial.print("\nReady to Log...\n\n");
+	NewLog = true; //Set flag to begin new log file
 
 	// delay(2000);
 
@@ -385,29 +388,32 @@ void Margay::Run(String (*Update)(void), unsigned long LogInterval) //Pass in fu
 {
 	if(NewLog) {
 		Serial.println("Log Started!"); //DEBUG
-		LogEvent = true;
+		// LogEvent = true;
+		// unsigned long TempLogInterval = LogInterval; //ANDY, Fix with addition of function??
 		RTC.SetAlarm(LogInterval); //DEBUG!
-		// SetAlarm(Log_Interval_Hours, Log_Interval_Minutes, Log_Interval_Seconds); //Setup alarm when log button is pressed
 		InitLogFile(); //Start a new file each time log button is pressed
-		// Log(); //Log a value at that instant as well as set up future logs
-		NewLog = false;
-    	Blink();
+
+		//Add inital data point 
+		AddDataPoint(Update);
+		NewLog = false;  //Clear flag once log is started 
+    	Blink();  //Alert user to start of log
 	}
 
 	if(LogEvent) {
-		String Data = "";
-		Data = (*Update)(); //Run external update function
-		Data = Data + GetOnBoardVals(); //Append on board readings
-		LogStr(Data);
-		// Serial.println("LoggingDone"); //DEBUG!
+		// Serial.println("Log!"); //DEBUG!
+		AddDataPoint(Update); //Write values to SD
 		LogEvent = false; //Clear log flag
-		RTC.SetAlarm(LogInterval);
+		// Serial.println("BANG!"); //DEBUG!
+		RTC.SetAlarm(LogInterval);  //Set/reset alarm
 	}
 
-	//  Serial.println("AlarmTest"); //DEBUG!
-	if(!digitalRead(RTCInt)) {
+	if(ManualLog) {  //Write data to SD card without interrupting existing timing cycle
+		AddDataPoint(Update); //write values to SD
+		ManualLog = false; //Clear log flag
+	}
+
+	if(!digitalRead(RTCInt)) {  //Catch alarm if not reset properly 
    		Serial.println("Reset Alarm"); //DEBUG!
-	//    RTC.ClearAlarm(); //
 		RTC.SetAlarm(LogInterval); //Turn alarm back on 
 	}
 
@@ -420,12 +426,18 @@ void Margay::Run(String (*Update)(void), unsigned long LogInterval) //Pass in fu
 	delay(1);
 }
 
+void Margay::AddDataPoint(String (*Update)(void)) //Reads new data and writes data to SD
+{
+	String Data = "";
+	Data = (*Update)(); //Run external update function
+	Data = Data + GetOnBoardVals(); //Append on board readings
+	LogStr(Data);
+}
 //ISRs
-static void Margay::StartLog() 
+static void Margay::ButtonLog() 
 {
 	//ISR to respond to pressing log button and waking device from sleep and starting log
-	// Serial.println("Begin Logging"); //DEBUG!
-	NewLog = true; //Set initial logging flag
+	ManualLog = true; //Set flag to manually record an additional data point
 }
 
 static void Margay::Log() 
@@ -435,7 +447,7 @@ static void Margay::Log()
 	AwakeCount = 0; 
 }
 
-void Margay::isr0() { selfPointer->StartLog(); }
+void Margay::isr0() { selfPointer->ButtonLog(); }
 
 void Margay::isr1() { selfPointer->Log(); }
 
