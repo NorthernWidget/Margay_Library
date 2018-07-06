@@ -15,8 +15,50 @@
 
 Margay* Margay::selfPointer;
 
-Margay::Margay()
+Margay::Margay(board Model)
 {
+if(Model == 1) {
+	SD_CS = 4;
+	BuiltInLED = 20;
+	RedLED = 13;
+	GreenLED = 15;
+	BlueLED = 14;
+
+	VRef_Pin = 2;
+	ThermSense_Pin = 1;
+	BatSense_Pin = 0;
+
+	VSwitch_Pin = 3;
+	SD_CD = 1;
+
+	Ext3v3Ctrl = 19;
+	I2C_SW = 12;
+	PG = 18;
+	ExtInt = 11;
+	RTCInt = 10;
+	LogInt = 2; 
+}
+else {
+	SD_CS = 4;
+	BuiltInLED = 19;
+	RedLED = 13;
+	GreenLED = 15;
+	BlueLED = 14;
+
+	VRef_Pin = 2;
+	ThermSense_Pin = 1;
+	BatSense_Pin = 0;
+
+	VSwitch_Pin = 3;
+	SD_CD = 1;
+
+	Ext3v3Ctrl = 12;
+	I2C_SW = 255;
+	PG = 18;
+	ExtInt = 11;
+	RTCInt = 10;
+	LogInt = 2; 
+}
 }
 
 int Margay::begin(uint8_t *Vals, uint8_t NumVals, String Header_)

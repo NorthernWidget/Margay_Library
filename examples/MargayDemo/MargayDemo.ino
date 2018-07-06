@@ -2,6 +2,7 @@
 #include "Margay.h"
 #include <TP_Downhole.h>
 
+// #define MARGAY_1v0
 TP_Downhole Sensor; //Initalize TP-Downhole sensor
 
 String Header = "Pressure [mBar], Temp DH [C]"; //Information header
@@ -9,7 +10,7 @@ uint8_t I2CVals[2] = {0x6A, 0x77};
 // int Count = 0;
 unsigned long UpdateRate = 5; //Number of seconds between readings 
 
-Margay Logger;
+Margay Logger(Model_1v0);
 
 void setup() {
   Logger.begin(I2CVals, sizeof(I2CVals), Header); //Pass header info to logger
@@ -31,5 +32,5 @@ String Update()
 
 void Init() 
 {
-	// Sensor.begin(TP2v2);
+	Sensor.begin(TP2v2);
 }
