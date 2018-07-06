@@ -280,7 +280,7 @@ void Margay::InitLogFile()
     }
     (FileName + NumString + ".txt").toCharArray(FileNameC, 11);
   
-    LogStr(Header + ", Temp OB [C], Temp RTC [C], Bat [V], Time [UTC]"); //Log concatonated header
+    LogStr("Time [UTC],Temp OB [C],Temp RTC [C], Bat [V], " + Header); //Log concatonated header
 }
 
 int Margay::LogStr(String Val) 
@@ -348,7 +348,7 @@ String Margay::GetOnBoardVals()
 	// Temp[3] = Clock.getTemperature(); //Get tempreture from RTC //FIX!
 	float RTCTemp = RTC.GetTemp();
 	GetTime(); //FIX!
-	return "," + String(TempData) + "," + String(RTCTemp) + "," + String(BatVoltage) + "," + LogTimeDate;
+	return  LogTimeDate + "," + String(TempData) + "," + String(RTCTemp) + "," + String(BatVoltage) + ",";
 }
 
 float Margay::TempConvert(float V, float Vcc, float R, float A, float B, float C, float D, float R25)
@@ -397,7 +397,7 @@ void Margay::Run(String (*Update)(void), unsigned long LogInterval) //Pass in fu
 	if(LogEvent) {
 		String Data = "";
 		Data = (*Update)(); //Run external update function
-		Data = Data + GetOnBoardVals(); //Append on board readings
+		Data = GetOnBoardVals() + Data; //Append on board readings
 		LogStr(Data);
 		// Serial.println("LoggingDone"); //DEBUG!
 		LogEvent = false; //Clear log flag
