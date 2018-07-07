@@ -10,7 +10,7 @@ uint8_t I2CVals[2] = {0x6A, 0x77};
 // int Count = 0;
 unsigned long UpdateRate = 5; //Number of seconds between readings 
 
-Margay Logger(Model_1v0);
+Margay Logger(Model_0v0);
 
 void setup() {
   Logger.begin(I2CVals, sizeof(I2CVals), Header); //Pass header info to logger

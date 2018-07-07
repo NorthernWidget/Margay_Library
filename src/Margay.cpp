@@ -103,7 +103,7 @@ int Margay::begin(uint8_t *Vals, uint8_t NumVals, String Header_)
 
 	LED_Color(OFF);
 
-	Wire.begin();
+	// Wire.begin();
 	pinMode(SD_CS, OUTPUT);
 	// SPI.setDataMode(SPI_MODE0);
 	// SPI.setClockDivider(SPI_CLOCK_DIV2); //Sts SPI clock to 4 MHz for an 8 MHz system clock
