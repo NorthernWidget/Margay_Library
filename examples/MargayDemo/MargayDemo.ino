@@ -5,7 +5,7 @@
 // #define MARGAY_1v0
 TP_Downhole Sensor; //Initalize TP-Downhole sensor
 
-String Header = "Pressure [mBar], Temp DH [C]"; //Information header
+String Header = "Pressure [mBar],Temp DH [C]"; //Information header
 uint8_t I2CVals[2] = {0x6A, 0x77}; 
 // int Count = 0;
 unsigned long UpdateRate = 5; //Number of seconds between readings 
