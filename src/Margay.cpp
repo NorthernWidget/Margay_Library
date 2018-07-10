@@ -325,7 +325,7 @@ void Margay::InitLogFile()
     }
     (FileName + NumString + ".txt").toCharArray(FileNameC, 11);
   
-    LogStr("Time [UTC],Temp OB [C],Temp RTC [C],Bat [V], " + Header); //Log concatonated header
+    LogStr("Time [UTC],Temp OB [C],Temp RTC [C],Bat [V]," + Header); //Log concatonated header
 }
 
 int Margay::LogStr(String Val) 
@@ -431,7 +431,6 @@ void Margay::Run(String (*Update)(void), unsigned long LogInterval) //Pass in fu
 	if(NewLog) {
 		Serial.println("Log Started!"); //DEBUG
 		// LogEvent = true;
-		// unsigned long TempLogInterval = LogInterval; //ANDY, Fix with addition of function??
 		RTC.SetAlarm(LogInterval); //DEBUG!
 		InitLogFile(); //Start a new file each time log button is pressed
 
@@ -439,6 +438,11 @@ void Margay::Run(String (*Update)(void), unsigned long LogInterval) //Pass in fu
 		AddDataPoint(Update);
 		NewLog = false;  //Clear flag once log is started 
     	Blink();  //Alert user to start of log
+
+    // After the first data point is collected, use a custom offset to
+    // standardize logging on round values of hours, minutes, seconds;
+    // this is to synchronize multiple loggers
+		unsigned long TempLogInterval = TimeToFirstRegularLog(LogInterval);
 	}
 
 	if(LogEvent) {
@@ -466,6 +470,29 @@ void Margay::Run(String (*Update)(void), unsigned long LogInterval) //Pass in fu
 		sleepNow();
 	}
 	delay(1);
+}
+
+uint32_t Margay::TimeToFirstRegularLog(uint32_t LogInterval_seconds)
+{
+  /*
+  Calculates the time to the next regular logging event, and sets the alarm
+  to make the logger wake up at a regular time given by the modulo operator
+  All sensors will be set so they log exactly at midnight
+  If your log interval is not evenly divisible into 86400 s (1 day), then
+  loggers deployed on different days may not be synchronous!
+  */
+  uint32_t seconds_since_midnight;
+  uint32_t seconds_to_next_regularly_timed_log_event;
+  
+  seconds_since_midnight = RTC.seconds_since_midnight();
+  seconds_to_next_regularly_timed_log_event = LogInterval_seconds - \
+                               (seconds_since_midnight % LogInterval_seconds);
+  // Make sure that this event is at least 2 seconds in the future
+  // to safeguard against missing an alarm
+  if (seconds_to_next_regularly_timed_log_event < 2) {
+    seconds_to_next_regularly_timed_log_event += LogInterval_seconds;
+  }
+  return seconds_to_next_log_event;
 }
 
 void Margay::AddDataPoint(String (*Update)(void)) //Reads new data and writes data to SD
