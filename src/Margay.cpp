@@ -472,7 +472,7 @@ void Margay::AddDataPoint(String (*Update)(void)) //Reads new data and writes da
 {
 	String Data = "";
 	Data = (*Update)(); //Run external update function
-	Data = Data + GetOnBoardVals(); //Append on board readings
+	Data = GetOnBoardVals() + Data; //Append on board readings
 	LogStr(Data);
 }
 //ISRs
@@ -567,7 +567,8 @@ void Margay::turnOffSDcard()
 	pinMode(17, INPUT);
 	// digitalWrite(16, HIGH);
 	// digitalWrite(17, HIGH);
-	digitalWrite(SD_CS, HIGH);
+	// pinMode(SD_CS, INPUT); //DEBUG!
+	// digitalWrite(SD_CS, HIGH); //DEBUG!
 	// digitalWrite(5, LOW);
 	// // Note: you must disconnect the LED on pin 13 or you’ll bleed current through the limit resistor
 	// // LowPower.powerDown(SLEEP_1S, ADC_OFF, BOD_OFF); // wait 1 second before pulling the plug!
