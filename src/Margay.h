@@ -52,16 +52,6 @@ class Margay
 		void Run(String (*f)(void), unsigned long LogInterval);
 		float GetVoltage();
 		void AddDataPoint(String (*Update)(void));
-	protected:
-		float TempConvert(float V, float Vcc, float R, float A, float B, float C, float D, float R25);
-		void Blink();
-		// void StartLog();
-		// void Log();
-		void virtual Log();
-		void virtual ButtonLog();
-		static void isr0();
-		static void isr1();
-		static Margay* selfPointer;
 
 		//Pin definitions
 		int SD_CS = 4;
@@ -83,6 +73,17 @@ class Margay
 		uint8_t ExtInt = 11;
 		uint8_t RTCInt = 10;
 		uint8_t LogInt = 2; 
+
+	protected:
+		float TempConvert(float V, float Vcc, float R, float A, float B, float C, float D, float R25);
+		void Blink();
+		// void StartLog();
+		// void Log();
+		void virtual Log();
+		void virtual ButtonLog();
+		static void isr0();
+		static void isr1();
+		static Margay* selfPointer;
 
 		void sleepNow();
 		void turnOffSDcard();

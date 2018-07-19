@@ -331,6 +331,7 @@ void Margay::InitLogFile()
 int Margay::LogStr(String Val) 
 {
 	Serial.println(Val); //Echo to serial monitor 
+	SD.begin(SD_CS); //DEBUG!
 	File DataFile = SD.open(FileNameC, FILE_WRITE);
 
 	// if the file is available, write to it:
@@ -450,6 +451,7 @@ void Margay::Run(String (*Update)(void), unsigned long LogInterval) //Pass in fu
 	}
 
 	if(ManualLog) {  //Write data to SD card without interrupting existing timing cycle
+		// Serial.println("Click!"); //DEBUG!
 		AddDataPoint(Update); //write values to SD
 		ManualLog = false; //Clear log flag
 	}
@@ -472,7 +474,7 @@ void Margay::AddDataPoint(String (*Update)(void)) //Reads new data and writes da
 {
 	String Data = "";
 	Data = (*Update)(); //Run external update function
-	Data = Data + GetOnBoardVals(); //Append on board readings
+	Data = GetOnBoardVals() + Data; //Append on board readings
 	LogStr(Data);
 }
 //ISRs
@@ -563,8 +565,8 @@ void Margay::turnOffSDcard()
 	// DDRB &= ~((1<<DDB5) | (1<<DDB7) | (1<<DDB6) | (1<<DDB4));   // set All SPI pins to INPUT
 	// pinMode(SD_CD, INPUT);
 	// DDRC &= ~((1<<DDC0) | (1<<DDC1));
-	pinMode(16, INPUT);
-	pinMode(17, INPUT);
+	// pinMode(16, INPUT); //DEBUG!
+	// pinMode(17, INPUT);  //DEBUG!
 	// digitalWrite(16, HIGH);
 	// digitalWrite(17, HIGH);
 	digitalWrite(SD_CS, HIGH);
