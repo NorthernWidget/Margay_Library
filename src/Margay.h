@@ -31,6 +31,11 @@
 #define MODEL_1v0 
 #define MODEL_0v0
 
+//Define CBI macro
+#ifndef cbi
+#define cbi(sfr, bit) (_SFR_BYTE(sfr) &= ~_BV(bit))
+#endif
+
 enum board
 {
     Model_0v0 = 0,
@@ -114,8 +119,10 @@ class Margay
 		String Header = "";
 		uint8_t NumADR = 0;
 		uint8_t I2C_ADR[16] = {0}; //Change length??
-		 uint8_t NumADR_OB = 2;
-		 uint8_t I2C_ADR_OB[2] = {0x68, 0x6A}; //ADC, Clock
+		uint8_t NumADR_OB = 2;
+		uint8_t I2C_ADR_OB[2] = {0x68, 0x6A}; //ADC, Clock
+
+		float BatteryDivider = 2.0; //Default for v1.0
 
 		volatile bool LogEvent = false; //Used to test if logging should begin yet
 		volatile bool NewLog = false; //Used to tell system to start a new log
@@ -127,6 +134,7 @@ class Margay
 		bool SD_Init = false;
 		SdFat SD;
 		byte  keep_SPCR;
+		byte keep_ADCSRA;
 };
 
 #endif

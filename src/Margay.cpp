@@ -17,48 +17,50 @@ Margay* Margay::selfPointer;
 
 Margay::Margay(board Model)
 {
-if(Model == 1) {
-	SD_CS = 4;
-	BuiltInLED = 20;
-	RedLED = 13;
-	GreenLED = 15;
-	BlueLED = 14;
+	if(Model == 1) {
+		SD_CS = 4;
+		BuiltInLED = 20;
+		RedLED = 13;
+		GreenLED = 15;
+		BlueLED = 14;
 
-	VRef_Pin = 2;
-	ThermSense_Pin = 1;
-	BatSense_Pin = 0;
+		VRef_Pin = 2;
+		ThermSense_Pin = 1;
+		BatSense_Pin = 0;
 
-	VSwitch_Pin = 3;
-	SD_CD = 1;
+		VSwitch_Pin = 3;
+		SD_CD = 1;
 
-	Ext3v3Ctrl = 19;
-	I2C_SW = 12;
-	PG = 18;
-	ExtInt = 11;
-	RTCInt = 10;
-	LogInt = 2; 
-}
-else {
-	SD_CS = 4;
-	BuiltInLED = 19;
-	RedLED = 13;
-	GreenLED = 15;
-	BlueLED = 14;
+		Ext3v3Ctrl = 19;
+		I2C_SW = 12;
+		PG = 18;
+		ExtInt = 11;
+		RTCInt = 10;
+		LogInt = 2; 
+		BatteryDivider = 2.0;
+	}
+	else {
+		SD_CS = 4;
+		BuiltInLED = 19;
+		RedLED = 13;
+		GreenLED = 15;
+		BlueLED = 14;
 
-	VRef_Pin = 2;
-	ThermSense_Pin = 1;
-	BatSense_Pin = 0;
+		VRef_Pin = 2;
+		ThermSense_Pin = 1;
+		BatSense_Pin = 0;
 
-	VSwitch_Pin = 3;
-	SD_CD = 1;
+		VSwitch_Pin = 3;
+		SD_CD = 1;
 
-	Ext3v3Ctrl = 12;
-	I2C_SW = 255;
-	PG = 18;
-	ExtInt = 11;
-	RTCInt = 10;
-	LogInt = 2; 
-}
+		Ext3v3Ctrl = 12;
+		I2C_SW = 255;
+		PG = 18;
+		ExtInt = 11;
+		RTCInt = 10;
+		LogInt = 2; 
+		BatteryDivider = 9.0;
+	}
 }
 
 int Margay::begin(uint8_t *Vals, uint8_t NumVals, String Header_)
@@ -77,6 +79,8 @@ int Margay::begin(uint8_t *Vals, uint8_t NumVals, String Header_)
 	RTC.ClearAlarm(); //
 	adc.Begin(); //Initalize external ADC
 	adc.SetResolution(18);
+
+	ADCSRA = 0b10000111; //Confiure on board ADC for low speed, and enable 
 
 	Serial.begin(38400); //DEBUG!
 	Serial.println("\nInitializing...\n"); //DEBUG!
@@ -388,8 +392,8 @@ String Margay::GetOnBoardVals()
 	//  Serial.println(Vout);  //DEBUG!
 	float TempData = TempConvert(Val, Vcc, 10000.0, A, B, C, D, 10000.0);
 	TempData = TempData - 273.15; //Get temp from on board thermistor 
-
-	BatVoltage = analogRead(BatSense_Pin)*9.0*(Vcc/1024.0); //Get battery voltage, Include voltage divider in math
+	// delay(10);
+	BatVoltage = analogRead(BatSense_Pin)*BatteryDivider*(Vcc/1024.0); //Get battery voltage, Include voltage divider in math
 
 	// Temp[3] = Clock.getTemperature(); //Get tempreture from RTC //FIX!
 	float RTCTemp = RTC.GetTemp();
@@ -498,116 +502,119 @@ void Margay::isr1() { selfPointer->Log(); }
 //Low Power functions
 void Margay::sleepNow()         // here we put the arduino to sleep
 {
-	/* Now is the time to set the sleep mode. In the Atmega8 datasheet
-	 * http://www.atmel.com/dyn/resources/prod_documents/doc2486.pdf on page 35
-	 * there is a list of sleep modes which explains which clocks and
-	 * wake up sources are available in which sleep mode.
-	 *
-	 * In the avr/sleep.h file, the call names of these sleep modes are to be found:
-	 *
-	 * The 5 different modes are:
-	 *     SLEEP_MODE_IDLE         -the least power savings
-	 *     SLEEP_MODE_ADC
-	 *     SLEEP_MODE_PWR_SAVE
-	 *     SLEEP_MODE_STANDBY
-	 *     SLEEP_MODE_PWR_DOWN     -the most power savings
-	 *
-	 * For now, we want as much power savings as possible, so we
-	 * choose the according
-	 * sleep mode: SLEEP_MODE_PWR_DOWN
-	 *
-	 */  
-	// MCUCR = bit (BODS) | bit (BODSE);
-		// MCUCR = bit (BODS);
-	wdt_disable();
-	// power_adc_disable(); // ADC converter
-	// // power_spi_disable(); // SPI
-	// power_usart0_disable();// Serial (USART) 
-	// power_timer1_disable();// Timer 1
-	// power_timer2_disable();// Timer 2
-	// ADCSRA = 0;
-	turnOffSDcard();
-	// digitalWrite(Ext3v3Ctrl, HIGH); //Turn off extenral rail
-	// SPI.end(); //Turn off SPI
-	// digitalWrite(SD_CS, LOW);
-	// pinMode(SD_CS, INPUT); //Disconnect SD chip slect pin
-	// pinMode(5, INPUT); //Set all SPI pins as inputs, will be reversed be beginning SPI again
-	// pinMode(6, INPUT);
-	// pinMode(7, INPUT);
-	set_sleep_mode(SLEEP_MODE_PWR_DOWN);   // sleep mode is set here
+    /* Now is the time to set the sleep mode. In the Atmega8 datasheet
+     * http://www.atmel.com/dyn/resources/prod_documents/doc2486.pdf on page 35
+     * there is a list of sleep modes which explains which clocks and
+     * wake up sources are available in which sleep mode.
+     *
+     * In the avr/sleep.h file, the call names of these sleep modes are to be found:
+     *
+     * The 5 different modes are:
+     *     SLEEP_MODE_IDLE         -the least power savings
+     *     SLEEP_MODE_ADC
+     *     SLEEP_MODE_PWR_SAVE
+     *     SLEEP_MODE_STANDBY
+     *     SLEEP_MODE_PWR_DOWN     -the most power savings
+     *
+     * For now, we want as much power savings as possible, so we
+     * choose the according
+     * sleep mode: SLEEP_MODE_PWR_DOWN
+     *
+     */  
+    // MCUCR = bit (BODS) | bit (BODSE);
+    // MCUCR = bit (BODS);
+//  wdt_disable();  //DEBUG!??
+  // power_adc_disable(); // ADC converter
+  // // power_spi_disable(); // SPI
+  // power_usart0_disable();// Serial (USART) 
+  // power_timer1_disable();// Timer 1
+  // power_timer2_disable();// Timer 2
+  // ADCSRA = 0;
 
-	sleep_enable();          // enables the sleep bit in the mcucr register
-
-	// attachInterrupt(0, wakeUpNow, FALLING); // use interrupt 0 (pin 2) and run function
-	                                   // wakeUpNow when pin 2 gets LOW
-
-	sleep_mode();            // here the device is actually put to sleep!!
-	                         // THE PROGRAM CONTINUES FROM HERE AFTER WAKING UP
-	//    sleep();              //WIRING MODE!
-
-	sleep_disable();         // first thing after waking from sleep:
-	                         // disable sleep...
-	// detachInterrupt(0);      // disables interrupt 0 on pin 2 so the
-	//    ADCSRA = 1; //Turn ADC back on
-	// digitalWrite(Ext3v3Ctrl, LOW); //turn external rail back on
-	// digitalWrite(SD_CS, HIGH);
-	// SPI.begin();
-	// SD.begin(SD_CS);
-	turnOnSDcard();
-	// pinMode(SD_CS, OUTPUT); //Disconnect SD chip slect pin
+  turnOffSDcard();
+  // digitalWrite(Ext3v3Ctrl, HIGH); //Turn off extenral rail
+  // SPI.end(); //Turn off SPI
+  // digitalWrite(SD_CS, LOW);
+  // pinMode(SD_CS, INPUT); //Disconnect SD chip slect pin
+  // pinMode(5, INPUT); //Set all SPI pins as inputs, will be reversed be beginning SPI again
+  // pinMode(6, INPUT);
+  // pinMode(7, INPUT);
+  	keep_ADCSRA = ADCSRA;
+    set_sleep_mode(SLEEP_MODE_PWR_DOWN);   // sleep mode is set here
+    cbi(ADCSRA,ADEN);
+    sleep_enable();
+    sleep_bod_disable();
+    sei();
+    sleep_cpu();
+    sleep_disable();
+    // detachInterrupt(0);      // disables interrupt 0 on pin 2 so the
+//    ADCSRA = 1; //Turn ADC back on
+    // digitalWrite(Ext3v3Ctrl, LOW); //turn external rail back on
+    // digitalWrite(SD_CS, HIGH);
+//     SPI.begin();
+    turnOnSDcard();
+	ADCSRA = 135; //DEBUG!
+    // pinMode(SD_CS, OUTPUT); //Disconnect SD chip slect pin
+ 
 }
 
 void Margay::turnOffSDcard() 
 {
-	delay(6);
-	                                   // disable SPI
-	// power_spi_disable();                     // disable SPI clock
-	// DDRB &= ~((1<<DDB5) | (1<<DDB7) | (1<<DDB6) | (1<<DDB4));   // set All SPI pins to INPUT
-	// pinMode(SD_CD, INPUT);
-	// DDRC &= ~((1<<DDC0) | (1<<DDC1));
-	// pinMode(16, INPUT); //DEBUG!
-	// pinMode(17, INPUT);  //DEBUG!
-	// digitalWrite(16, HIGH);
-	// digitalWrite(17, HIGH);
-	digitalWrite(SD_CS, HIGH);
-	// digitalWrite(5, LOW);
-	// // Note: you must disconnect the LED on pin 13 or you’ll bleed current through the limit resistor
-	// // LowPower.powerDown(SLEEP_1S, ADC_OFF, BOD_OFF); // wait 1 second before pulling the plug!
-	delay(6);
-	digitalWrite(Ext3v3Ctrl, HIGH);  //turn off BJT
-	delay(20);
-	// SPCR = SPCR & 0b11101111;
-	SPCR = 0;  
-	power_spi_disable(); 
-	// SPI.end();
-	delay(10);
-	// pinMode(5, OUTPUT);
-	// digitalWrite(5, LOW);
-	// DDRB &= ~((1<<DDB5));
-	// PORTB &= ~(1<<PORTB5); //Set port B5 (MOSI) LOW
-	// DDRB &= ~((1<<DDB5) | (1<<DDB7) | (1<<DDB6) | (1<<DDB4)); 
-	// PORTB |= ((1<<DDB5) | (1<<DDB7) | (1<<DDB6) | (1<<DDB4));     // set ALL SPI pins HIGH (~30k pullup)
-	// digitalWrite(SD_CS, LOW);
-	// pinMode(SD_CS, INPUT);
-	delay(6); 
+delay(6);
+                                       // disable SPI
+// power_spi_disable();                     // disable SPI clock
+// DDRB &= ~((1<<DDB5) | (1<<DDB7) | (1<<DDB6) | (1<<DDB4));   // set All SPI pins to INPUT
+// pinMode(SD_CD, INPUT);
+// DDRC &= ~((1<<DDC0) | (1<<DDC1));
+pinMode(16, INPUT);
+pinMode(17, INPUT);
+// digitalWrite(16, HIGH);
+// digitalWrite(17, HIGH);
+//digitalWrite(SD_CS, HIGH);
+// digitalWrite(5, LOW);
+// // Note: you must disconnect the LED on pin 13 or you’ll bleed current through the limit resistor
+// // LowPower.powerDown(SLEEP_1S, ADC_OFF, BOD_OFF); // wait 1 second before pulling the plug!
+delay(6);
+digitalWrite(Ext3v3Ctrl, HIGH);  //turn off BJT
+// digitalWrite(BatRailCtrl, HIGH);
+delay(1);
+digitalWrite(SD_CS, LOW);
+delay(20);
+// SPCR = SPCR & 0b11101111;
+SPCR = 0;  
+power_spi_disable(); 
+// SPI.end();
+delay(10);
+// pinMode(5, OUTPUT);d
+// digitalWrite(5, LOW);
+// DDRB &= ~((1<<DDB5));
+// PORTB &= ~(1<<PORTB5); //Set port B5 (MOSI) LOW
+// DDRB &= ~((1<<DDB5) | (1<<DDB7) | (1<<DDB6) | (1<<DDB4)); 
+// PORTB |= ((1<<DDB5) | (1<<DDB7) | (1<<DDB6) | (1<<DDB4));     // set ALL SPI pins HIGH (~30k pullup)
+// digitalWrite(SD_CS, LOW);
+// pinMode(SD_CS, INPUT);
+delay(6); 
 } 
 
 void Margay::turnOnSDcard() 
 {
-	// pinMode(SD_CS, OUTPUT);
-	// SPI.begin();
-	// SD.begin(SD_CS);
-	// DDRB |= ((1<<DDB5));
-	// digitalWrite(SD_CS, HIGH);
-	delay(6);                                            // let the card settle
-	// some cards will fail on power-up unless SS is pulled up  ( &  D0/MISO as well? )
-	// DDRC = DDRC | ((1<<DDC0) | (1<<DDC1));
-	// DDRB = DDRB | (1<<DDB7) | (1<<DDB5) | (1<<DDB4); // set SCLK(D13), MOSI(D11) & SS(D10) as OUTPUT
-	// Note: | is an OR operation so  the other pins stay as they were.                (MISO stays as INPUT) 
-	// PORTB = PORTB & ~(1<<DDB7);  // disable pin 13 SCLK pull-up – leave pull-up in place on the other 3 lines
-	power_spi_enable();                      // enable the SPI clock 
-	SPCR=keep_SPCR;                          // enable SPI peripheral
-	delay(20);
-	digitalWrite(Ext3v3Ctrl, LOW); //turn on the BJT on SD ground line
-	delay(10);  
+// pinMode(SD_CS, OUTPUT);
+// SPI.begin();
+// sd.begin(SD_CS);
+// DDRB |= ((1<<DDB5));
+// digitalWrite(SD_CS, HIGH);
+delay(6);                                            // let the card settle
+// some cards will fail on power-up unless SS is pulled up  ( &  D0/MISO as well? )
+// DDRC = DDRC | ((1<<DDC0) | (1<<DDC1));
+// DDRB = DDRB | (1<<DDB7) | (1<<DDB5) | (1<<DDB4); // set SCLK(D13), MOSI(D11) & SS(D10) as OUTPUT
+// Note: | is an OR operation so  the other pins stay as they were.                (MISO stays as INPUT) 
+// PORTB = PORTB & ~(1<<DDB7);  // disable pin 13 SCLK pull-up – leave pull-up in place on the other 3 lines
+power_spi_enable();                      // enable the SPI clock 
+SPCR=keep_SPCR;                          // enable SPI peripheral
+delay(20);
+// digitalWrite(BatRailCtrl, LOW);
+digitalWrite(Ext3v3Ctrl, LOW); //turn on the BJT on SD ground line
+delay(10);
+SD.begin(SD_CS);  
+
 }
