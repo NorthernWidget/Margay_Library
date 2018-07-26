@@ -329,7 +329,7 @@ void Margay::InitLogFile()
     }
     (FileName + NumString + ".txt").toCharArray(FileNameC, 11);
   
-    LogStr("Time [UTC],Temp OB [C],Temp RTC [C],Bat [V], " + Header); //Log concatonated header
+    LogStr("Time [UTC], Temp OB [C], Temp RTC [C], Bat [V], " + Header); //Log concatonated header
 }
 
 int Margay::LogStr(String Val) 
