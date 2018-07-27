@@ -119,8 +119,8 @@ class Margay
 		String Header = "";
 		uint8_t NumADR = 0;
 		uint8_t I2C_ADR[16] = {0}; //Change length??
-		uint8_t NumADR_OB = 2;
-		uint8_t I2C_ADR_OB[2] = {0x68, 0x6A}; //ADC, Clock
+		uint8_t NumADR_OB = 1;
+		uint8_t I2C_ADR_OB[1] = {0x68}; //ADC, Clock
 
 		float BatteryDivider = 2.0; //Default for v1.0
 
