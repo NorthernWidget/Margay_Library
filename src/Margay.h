@@ -42,6 +42,12 @@ enum board
     Model_1v0 = 1
 };
 
+enum temp_val
+{
+	Therm_Val = 0,
+	RTC_Val = 1
+};
+
 ////////////////////////////PIN DEFINITIONS///////////////////////
 
 class Margay
@@ -57,6 +63,9 @@ class Margay
 		void Run(String (*f)(void), unsigned long LogInterval);
 		float GetVoltage();
 		void AddDataPoint(String (*Update)(void));
+
+		float GetTemp(temp_val Val = Therm_Val);
+		float GetBatVoltage();
 
 		//Pin definitions
 		int SD_CS = 4;
@@ -111,7 +120,6 @@ class Margay
 		String LogTimeDate = "2063/04/05 20:00:00";
 		// float Temp[5] = {0}; //Temp Downhole, Temp on board, Temp RTC, Temp Baro
 		// float Pressure[2] = {0}; //Downhole pressure, Atmospheric pressure (if applicable)
-		float BatVoltage = 0;
 		bool OBError = false;
 		bool SensorError = false;
 		bool TimeError = false;

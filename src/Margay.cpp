@@ -378,6 +378,27 @@ void Margay::GetTime()
 	LogTimeDate = RTC.GetTime(0);
 }
 
+float Margay::GetTemp(temp_val Val)
+{
+	float Vcc = 3.3;
+	if(Val == Therm_Val) {
+		float Val = float(analogRead(ThermSense_Pin))*(Vcc/1024.0);
+		float TempData = TempConvert(Val, Vcc, 10000.0, A, B, C, D, 10000.0);
+		TempData = TempData - 273.15; //Get temp from on board thermistor 
+		return TempData;
+	}
+	if(Val == RTC_Val) {
+		float RTCTemp = RTC.GetTemp();  //Get Temp from RTC
+		return RTCTemp;
+	}
+}
+
+float Margay::GetBatVoltage()
+{
+	float Vcc = 3.3;
+	float BatVoltage = analogRead(BatSense_Pin)*BatteryDivider*(Vcc/1024.0); //Get battery voltage, Include voltage divider in math
+}
+
 String Margay::GetOnBoardVals() 
 {
 	//Get onboard temp, RTC temp, and battery voltage, referance voltage
@@ -393,10 +414,10 @@ String Margay::GetOnBoardVals()
 	float TempData = TempConvert(Val, Vcc, 10000.0, A, B, C, D, 10000.0);
 	TempData = TempData - 273.15; //Get temp from on board thermistor 
 	// delay(10);
-	BatVoltage = analogRead(BatSense_Pin)*BatteryDivider*(Vcc/1024.0); //Get battery voltage, Include voltage divider in math
+	float BatVoltage = analogRead(BatSense_Pin)*BatteryDivider*(Vcc/1024.0); //Get battery voltage, Include voltage divider in math
 
 	// Temp[3] = Clock.getTemperature(); //Get tempreture from RTC //FIX!
-	float RTCTemp = RTC.GetTemp();
+	float RTCTemp = RTC.GetTemp();  //Get Temp from RTC
 	GetTime(); //FIX!
 	return  LogTimeDate + "," + String(TempData) + "," + String(RTCTemp) + "," + String(BatVoltage) + ",";
 }
