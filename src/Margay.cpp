@@ -97,6 +97,10 @@ int Margay::begin(uint8_t *Vals, uint8_t NumVals, String Header_)
 		RTC.SetTime(2000 + DateTimeVals[0], DateTimeVals[1], DateTimeVals[2], DateTimeVals[3], DateTimeVals[4], DateTimeVals[5]);
 	}
 
+	GetTime(); //Get time to pass to computer 
+	Serial.print("\nTimestamp = ");
+	Serial.println(LogTimeDate);
+
 	//Sets up basic initialization required for the system
 	selfPointer = this;
 
@@ -121,8 +125,6 @@ int Margay::begin(uint8_t *Vals, uint8_t NumVals, String Header_)
 	I2CTest();
 	ClockTest();
 	SDTest();
-	Serial.print("\nTimestamp = ");
-	Serial.println(LogTimeDate);
   	
   	digitalWrite(BuiltInLED, HIGH); 
 
