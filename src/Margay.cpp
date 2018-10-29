@@ -397,8 +397,16 @@ float Margay::GetTemp(temp_val Val)
 
 float Margay::GetBatVoltage()
 {
+	ADMUX = 0b00000000; //Setup voltage ref
+	delay(10); //Alow for >1 clock cycle to set values
+	ADCSRA = 0b10000111; //Enable ADC, set clock divider to max to deal with high impedance input
+	delay(10); //Alow for >1 clock cycle to set values
 	float Vcc = 3.3;
-	float BatVoltage = analogRead(BatSense_Pin)*BatteryDivider*(Vcc/1024.0); //Get battery voltage, Include voltage divider in math
+	float BatVoltage = analogRead(BatSense_Pin); //Get (divided) battery voltage
+	float Comp = (1.8/3.3)*1024.0/analogRead(VRef_Pin);  //Find compensation value with VRef due to Vcc error
+	BatVoltage = BatVoltage*BatteryDivider*Comp*(Vcc/1024.0); //Compensate for voltage divider and ref voltage error
+
+	return BatVoltage;
 }
 
 String Margay::GetOnBoardVals() 
@@ -416,7 +424,7 @@ String Margay::GetOnBoardVals()
 	float TempData = TempConvert(Val, Vcc, 10000.0, A, B, C, D, 10000.0);
 	TempData = TempData - 273.15; //Get temp from on board thermistor 
 	// delay(10);
-	float BatVoltage = analogRead(BatSense_Pin)*BatteryDivider*(Vcc/1024.0); //Get battery voltage, Include voltage divider in math
+	float BatVoltage = GetBatVoltage(); //Get battery voltage, Include voltage divider in math
 
 	// Temp[3] = Clock.getTemperature(); //Get tempreture from RTC //FIX!
 	float RTCTemp = RTC.GetTemp();  //Get Temp from RTC
