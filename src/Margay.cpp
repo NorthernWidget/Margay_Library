@@ -15,9 +15,9 @@
 
 Margay* Margay::selfPointer;
 
-Margay::Margay(board Model)
+Margay::Margay(board Model_)
 {
-	if(Model == 1) {
+	if(Model_ == 1) {
 		SD_CS = 4;
 		BuiltInLED = 20;
 		RedLED = 13;
@@ -61,6 +61,7 @@ Margay::Margay(board Model)
 		LogInt = 2; 
 		BatteryDivider = 9.0;
 	}
+	Model = Model_; //Store model info locally
 }
 
 int Margay::begin(uint8_t *Vals, uint8_t NumVals, String Header_)
@@ -404,6 +405,7 @@ float Margay::GetBatVoltage()
 	float Vcc = 3.3;
 	float BatVoltage = analogRead(BatSense_Pin); //Get (divided) battery voltage
 	float Comp = (1.8/3.3)*1024.0/analogRead(VRef_Pin);  //Find compensation value with VRef due to Vcc error
+	if(Model == 0) Comp = 1.0; //Overide comp calculation since many v0.0 models do not have ref equiped 
 	BatVoltage = BatVoltage*BatteryDivider*Comp*(Vcc/1024.0); //Compensate for voltage divider and ref voltage error
 
 	return BatVoltage;
