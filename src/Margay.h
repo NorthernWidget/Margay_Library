@@ -88,6 +88,8 @@ class Margay
 		uint8_t RTCInt = 10;
 		uint8_t LogInt = 2; 
 
+		const String LibVersion = "0.1.2";
+
 	protected:
 		float TempConvert(float V, float Vcc, float R, float A, float B, float C, float D, float R25);
 		void Blink();

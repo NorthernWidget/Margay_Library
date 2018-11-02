@@ -84,10 +84,22 @@ int Margay::begin(uint8_t *Vals, uint8_t NumVals, String Header_)
 	ADCSRA = 0b10000111; //Confiure on board ADC for low speed, and enable 
 
 	Serial.begin(38400); //DEBUG!
+	Serial.print("Lib = ");
+	Serial.println(LibVersion);
+	Serial.print("SN = ");
+	int EEPROMLen = EEPROM.length(); //Copy value for faster access
+	int Val = 0; //Value to read temp EEPROM values into
+	for(int i = EEPROMLen - 8; i < EEPROMLen; i++) {  //Read out Serial Number 
+		Val = EEPROM.read(i);
+		if(Val < 0x10) Serial.print("0"); //Append 0 if needed
+		Serial.print(Val, HEX);  //Print serial digit
+		if(i % 2 == 1 && i < EEPROMLen - 1) Serial.print("-");  //Print - between each SN category
+	}
+	Serial.print("\n\n");
 	Serial.println("\nInitializing...\n"); //DEBUG!
 	delay(100);
 	if(Serial.available()) {  //If time setting info available 
-		Serial.println("BANG!"); //DEBUG!
+		// Serial.println("BANG!"); //DEBUG!
 		String DateTimeTemp = Serial.readString();
 		Serial.println(DateTimeTemp);  //DEBUG!
 		int DateTimeVals[6] = {0};
