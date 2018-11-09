@@ -431,11 +431,14 @@ String Margay::GetOnBoardVals()
 	// Serial.println(Vcc); //DEBUG!
 
 
-	float Val = float(analogRead(ThermSense_Pin))*(Vcc/1024.0);
+	float Val = float(analogRead(ThermSense_Pin));
+	float Comp = (1.8/3.3)*1024.0/analogRead(VRef_Pin);  //Find compensation value with VRef due to Vcc error
+	if(Model == 0) Comp = 1.0; //Overide comp calculation since many v0.0 models do not have ref equiped 
+	Val = Val*Comp*(Vcc/1024.0); //Compensate for ref voltage error
 	//  float Vout = Vcc - Val;
 	//  Serial.println(Val); //DEBUG!
 	//  Serial.println(Vout);  //DEBUG!
-	float TempData = TempConvert(Val, Vcc, 10000.0, A, B, C, D, 10000.0);
+	float TempData = TempConvert(Val, Vcc*Comp, 10000.0, A, B, C, D, 10000.0);
 	TempData = TempData - 273.15; //Get temp from on board thermistor 
 	// delay(10);
 	float BatVoltage = GetBatVoltage(); //Get battery voltage, Include voltage divider in math
