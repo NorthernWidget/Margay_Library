@@ -19,7 +19,9 @@ Using this library, logging begins automatically once power is applied. If error
 		- **Orange** -> A sensor system is not registering properly, some sensor data may be missing or incorrect 
 		- **Cyan** -> Clock time is incorrect, but otherwise working correctly 
 		- **Pink** -> SD card is not inserted 
-		- **Red** -> Critical on board component ([Jesus Nut](https://en.wikipedia.org/wiki/Jesus_nut)) is not functioning correctly, such as SD card or clock, logging will likely not be able to proceed 
+		- **Red** -> Critical on board component ([Jesus Nut](https://en.wikipedia.org/wiki/Jesus_nut)) is not functioning correctly, such as SD card or clock, logging will likely not be able to proceed
+		- **Yellow, Fast Blinking** -> Battery capacity (assuming 3 series alkaline cells) is less than 50% of operational range. Device will still function fine, but operational time is less than ideal.
+		- **Red, Fast Blinking** -> Battery voltage is less than 3.3v. Functionality of hardware no longer guaranteed beyond this point.  
 - After display of status code(s)
 	- `STAT` light will blink blue to indicate logging (or attempted logging) has begun
 
@@ -45,3 +47,8 @@ If an error code is received try the following steps:
 	- Try different SD card
 	- Disconnect all sensors
 	- If none of the previous steps remove the red light, contact [Northern Widget](http://www.northernwidget.com/contact/) for further support 
+- **Yellow, Fast Blinking** 
+	- Replace batteries
+- **Red, Fast Blinking** 
+	- *If* this error occurs while also connected over USB, check proper connection of batteries
+	- Replace batteries
