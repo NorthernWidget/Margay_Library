@@ -138,6 +138,9 @@ int Margay::begin(uint8_t *Vals, uint8_t NumVals, String Header_)
 	I2CTest();
 	ClockTest();
 	SDTest();
+	BatTest();
+	
+
   	
   	digitalWrite(BuiltInLED, HIGH); 
 
@@ -157,7 +160,24 @@ int Margay::begin(uint8_t *Vals, uint8_t NumVals, String Header_)
 		LED_Color(PURPLE); //Sd card not inserted
 		delay(2000);
 	}
-	if(!OBError && !SensorError && !TimeError && !SDError) {
+	if(BatError) {  //Battery voltage is below level where hardware functionality can be gaurenteed
+		for(int i = 0; i < 10; i++) {
+			LED_Color(RED); 
+			delay(100);
+			LED_Color(OFF);
+			delay(100);
+		}
+	}
+
+	if(BatWarning && !BatError) {  //Battery charge % is at a concerning level, recomend repacing batteries 
+		for(int i = 0; i < 10; i++) {
+			LED_Color(GOLD); //Sd card not inserted
+			delay(100);
+			LED_Color(OFF);
+			delay(100);
+		}
+	}
+	if(!OBError && !SensorError && !TimeError && !SDError) {  //Include battery error in test??
 		LED_Color(GREEN); 
 		delay(2000);
 	}
@@ -315,6 +335,16 @@ void Margay::ClockTest()
 	}
 }
 
+void Margay::BatTest()
+{
+	if(GetBatVoltage() < BatVoltageError) BatError = true; //Set error flag if below min voltage
+	if(GetBatPer() < BatPercentageWarning) BatWarning = true; //Set warning flag is below set percentage
+	Serial.print("Bat = ");
+	Serial.print(GetBatVoltage());
+	Serial.print("V\t");
+	Serial.print(GetBatPer());
+	Serial.println("%");
+}
 void Margay::PowerTest() 
 {
 	int Error = 0;
@@ -421,6 +451,20 @@ float Margay::GetBatVoltage()
 	BatVoltage = BatVoltage*BatteryDivider*Comp*(Vcc/1024.0); //Compensate for voltage divider and ref voltage error
 
 	return BatVoltage;
+}
+
+float Margay::GetBatPer()
+{
+	//NOTE: Fit developed for Duracell AA, should work well for most alkalines, but no gaurentee given on accuracy
+	//From 305 to 100% capacity, should be accurate to within 1% (for data taken at 25C)
+	float A = -1.9809;
+	float B = 6.2931;
+	float C = -4.0063;
+	float Val = GetBatVoltage()/3.0; //Divide to get cell voltage
+	float Per = ((A*pow(Val, 2) + B*Val + C)*2 - 1)*100.0; //Return percentage of remaining battery energy
+	if(Per < 0) return 0;  //Do not allow return of non-sensical values 
+	if(Per > 100) return 100;  //Is this appropriate? Float voltage could be higher than specified and still be correct
+	return Per;
 }
 
 String Margay::GetOnBoardVals() 

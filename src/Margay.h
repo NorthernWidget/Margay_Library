@@ -66,6 +66,7 @@ class Margay
 
 		float GetTemp(temp_val Val = Therm_Val);
 		float GetBatVoltage();
+		float GetBatPer();
 
 		//Pin definitions
 		int SD_CS = 4;
@@ -109,6 +110,7 @@ class Margay
 		void I2CTest();
 		void SDTest();
 		void ClockTest();
+		void BatTest();
 		void PowerTest();
 		void InitLogFile();
 
@@ -126,6 +128,10 @@ class Margay
 		bool SensorError = false;
 		bool TimeError = false;
 		bool SDError = false; //USE??
+		bool BatError = false; 
+		bool BatWarning = false;
+		float BatVoltageError = 3.3; //Low battery alert will trigger if voltage drops below this value
+		float BatPercentageWarning = 50; //Percentage at which a warning will be indicated
 		String Header = "";
 		uint8_t NumADR = 0;
 		uint8_t I2C_ADR[16] = {0}; //Change length??
