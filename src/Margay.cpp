@@ -67,7 +67,11 @@ Margay::Margay(board Model_)
 int Margay::begin(uint8_t *Vals, uint8_t NumVals, String Header_)
 {
 	pinMode(Ext3v3Ctrl, OUTPUT);
+	digitalWrite(Ext3v3Ctrl, HIGH); //Power cycle external devices to reset them
+	delay(100);
 	digitalWrite(Ext3v3Ctrl, LOW); //Make sure external power is on
+
+	wdt_enable(WDTO_4S); //Enable wdt to ensure proper setup
 
 	pinMode(BuiltInLED, OUTPUT);
 	digitalWrite(BuiltInLED, LOW); //Turn built in LED on
@@ -139,7 +143,10 @@ int Margay::begin(uint8_t *Vals, uint8_t NumVals, String Header_)
 	ClockTest();
 	SDTest();
 	BatTest();
-	
+
+	wdt_reset(); //Reset wdt before disabling
+	wdt_disable(); //Disable wdt now that setup has finishe d
+	Serial.println(millis()); //DEBUG!
 
   	
   	digitalWrite(BuiltInLED, HIGH); 
@@ -525,15 +532,17 @@ float Margay::GetVoltage()  //Get voltage from Ax pin
 
 void Margay::Run(String (*Update)(void), unsigned long LogInterval) //Pass in function which returns string of data
 {
+	wdt_enable(WDTO_8S);  //Turn on WDT for this segment
 	if(NewLog) {
 		Serial.println("Log Started!"); //DEBUG
 		// LogEvent = true;
 		// unsigned long TempLogInterval = LogInterval; //ANDY, Fix with addition of function??
 		RTC.SetAlarm(LogInterval); //DEBUG!
 		InitLogFile(); //Start a new file each time log button is pressed
-
+		wdt_reset(); //Incremental reset
 		//Add inital data point 
 		AddDataPoint(Update);
+		wdt_reset(); //Incremental reset
 		NewLog = false;  //Clear flag once log is started 
     	Blink();  //Alert user to start of log
 	}
@@ -559,10 +568,13 @@ void Margay::Run(String (*Update)(void), unsigned long LogInterval) //Pass in fu
 		RTC.SetAlarm(LogInterval); //Turn alarm back on 
 	}
 
+	wdt_reset();  //Reset wdt each go around, must be triggered every 8 seconds or system will reset
 	AwakeCount++;
 
 	if(AwakeCount > 5) {
 	//    AwakeCount = 0;
+		wdt_reset();  //Reset WDT before disabling
+		wdt_disable(); //Desiable WDT before going into sleep mode (to save power), the RTC will wake us up later
 		sleepNow();
 	}
 	delay(1);
