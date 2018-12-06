@@ -540,10 +540,12 @@ void Margay::Run(String (*Update)(void), unsigned long LogInterval) //Pass in fu
 
 	if(LogEvent) {
 		// Serial.println("Log!"); //DEBUG!
+		// RTC.SetAlarm(LogInterval);  //Set/reset alarm //DEBUG!
 		AddDataPoint(Update); //Write values to SD
 		LogEvent = false; //Clear log flag
 		// Serial.println("BANG!"); //DEBUG!
 		RTC.SetAlarm(LogInterval);  //Set/reset alarm
+		// Serial.println("ResetTimer"); //DEBUG!
 	}
 
 	if(ManualLog) {  //Write data to SD card without interrupting existing timing cycle
@@ -553,7 +555,7 @@ void Margay::Run(String (*Update)(void), unsigned long LogInterval) //Pass in fu
 	}
 
 	if(!digitalRead(RTCInt)) {  //Catch alarm if not reset properly 
-   		Serial.println("Reset Alarm"); //DEBUG!
+   		// Serial.println("Reset Alarm"); //DEBUG!
 		RTC.SetAlarm(LogInterval); //Turn alarm back on 
 	}
 
@@ -570,8 +572,11 @@ void Margay::AddDataPoint(String (*Update)(void)) //Reads new data and writes da
 {
 	String Data = "";
 	Data = (*Update)(); //Run external update function
+	// Serial.println("Called Update"); //DEBUG!
 	Data = GetOnBoardVals() + Data; //Append on board readings
+	// Serial.println("Got OB Vals");  //DEBUG!
 	LogStr(Data);
+	// Serial.println("Loged Data"); //DEBUG!
 }
 //ISRs
 static void Margay::ButtonLog() 
