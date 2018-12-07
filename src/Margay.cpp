@@ -66,6 +66,7 @@ Margay::Margay(board Model_)
 
 int Margay::begin(uint8_t *Vals, uint8_t NumVals, String Header_)
 {
+	SwitchI2C(OnBoard); //Switch to internal I2C immediately to attempt to prevent latchups due to external hardware failures
 	pinMode(Ext3v3Ctrl, OUTPUT);
 	digitalWrite(Ext3v3Ctrl, HIGH); //Power cycle external devices to reset them
 	delay(100);
@@ -210,6 +211,7 @@ void Margay::I2CTest()
 
 	Serial.print("I2C: ");
 
+	SwitchI2C(OffBoard); //Switch to external I2C
 	for(int i = 0; i < NumADR; i++) {
 		Wire.beginTransmission(I2C_ADR[i]);
     	Error = Wire.endTransmission();
@@ -223,7 +225,7 @@ void Margay::I2CTest()
 	}
 
 	//Switch to connect to onboard I2C!
-
+	SwitchI2C(OnBoard); //Switch to internal I2C
 	for(int i = 0; i < NumADR_OB; i++) {
 		Wire.beginTransmission(I2C_ADR_OB[i]);
     	Error = Wire.endTransmission();
@@ -307,6 +309,8 @@ void Margay::ClockTest()
 	int Error = 1;
 	uint8_t TestSeconds = 0;
 	bool OscStop = false;
+
+	SwitchI2C(OnBoard); //Switch to internal I2C
 
 	Serial.print("Clock: ");
 	Wire.beginTransmission(I2C_ADR_OB[0]);
@@ -403,6 +407,12 @@ int Margay::LogStr(String Val)
 	DataFile.close();
 }
 
+void Margay::SwitchI2C(bus_val Bus)
+{
+	pinMode(I2C_SW, OUTPUT); //Ensure pin is set as output
+	digitalWrite(I2C_SW, Bus); //Write to 0 to connect to on board devices, write to 1 to connect to off board devices
+}
+
 void Margay::LED_Color(unsigned long Val) //Set color of onboard led
 {
 	int Red = 0; //Red led color
@@ -427,6 +437,7 @@ void Margay::GetTime()
 	//Update global time string
 	// DateTime TimeStamp = RTC.now();
 	// LogTimeDate = String(TimeStamp.year()) + "/" + String(TimeStamp.month()) + "/" + String(TimeStamp.day()) + " " + String(TimeStamp.hour()) + ":" + String(TimeStamp.minute()) + ":" + String(TimeStamp.second());  
+	SwitchI2C(OnBoard); //Switch to internal I2C
 	LogTimeDate = RTC.GetTime(0);
 }
 
@@ -481,6 +492,7 @@ String Margay::GetOnBoardVals()
 	float Vcc = 3.3; //(1.8/VRef)*3.3; //Compensate for Vcc using VRef
 	// Serial.println(Vcc); //DEBUG!
 
+	SwitchI2C(OnBoard); //Switch to internal I2C
 
 	float Val = float(analogRead(ThermSense_Pin));
 	float Comp = (1.8/3.3)*1024.0/analogRead(VRef_Pin);  //Find compensation value with VRef due to Vcc error
@@ -526,6 +538,7 @@ void Margay::Blink()
 
 float Margay::GetVoltage()  //Get voltage from Ax pin
 {
+	SwitchI2C(OnBoard); //Switch to internal I2C
 	float Val = adc.GetVoltage();
 	return Val;
 }
@@ -583,6 +596,7 @@ void Margay::Run(String (*Update)(void), unsigned long LogInterval) //Pass in fu
 void Margay::AddDataPoint(String (*Update)(void)) //Reads new data and writes data to SD
 {
 	String Data = "";
+	SwitchI2C(OffBoard); //Switch to external I2C by default
 	Data = (*Update)(); //Run external update function
 	// Serial.println("Called Update"); //DEBUG!
 	Data = GetOnBoardVals() + Data; //Append on board readings

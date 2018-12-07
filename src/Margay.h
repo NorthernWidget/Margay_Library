@@ -48,6 +48,12 @@ enum temp_val
 	RTC_Val = 1
 };
 
+enum bus_val  //CHANGE NAMES??
+{
+	OnBoard = 0,
+	OffBoard = 1
+};
+
 ////////////////////////////PIN DEFINITIONS///////////////////////
 
 class Margay
@@ -67,6 +73,7 @@ class Margay
 		float GetTemp(temp_val Val = Therm_Val);
 		float GetBatVoltage();
 		float GetBatPer();
+		void SwitchI2C(bus_val Bus); //SHOULD THIS BE PUBLIC??
 
 		//Pin definitions
 		int SD_CS = 4;
