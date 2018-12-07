@@ -147,7 +147,7 @@ int Margay::begin(uint8_t *Vals, uint8_t NumVals, String Header_)
 
 	wdt_reset(); //Reset wdt before disabling
 	wdt_disable(); //Disable wdt now that setup has finishe d
-	Serial.println(millis()); //DEBUG!
+	// Serial.println(millis()); //DEBUG!
 
   	
   	digitalWrite(BuiltInLED, HIGH); 
@@ -390,21 +390,25 @@ void Margay::InitLogFile()
 
 int Margay::LogStr(String Val) 
 {
+
 	Serial.println(Val); //Echo to serial monitor 
-	SD.begin(SD_CS); //DEBUG!
-	File DataFile = SD.open(FileNameC, FILE_WRITE);
+	if(digitalRead(PG) == HIGH) {  //Only proceed if power is stable and good, prevents corruption via low voltage write 
+		//No status indication since this should be an emergency protection and only kick in when something fails or pushed beyond where it should be
+		SD.begin(SD_CS); //DEBUG!
+		File DataFile = SD.open(FileNameC, FILE_WRITE);
 
-	// if the file is available, write to it:
-	if (DataFile) {
-		DataFile.println(Val);
-	   // return 0;
-	}
-	// if the file isn't open, pop up an error:
-	else {
-	   // return -1;
-	}
+		// if the file is available, write to it:
+		if (DataFile) {
+			DataFile.println(Val);
+		   // return 0;
+		}
+		// if the file isn't open, pop up an error:
+		else {
+		   // return -1;
+		}
 
-	DataFile.close();
+		DataFile.close();
+	}
 }
 
 void Margay::SwitchI2C(bus_val Bus)
