@@ -73,9 +73,11 @@ int Margay::begin(uint8_t *Vals, uint8_t NumVals, String Header_)
 	digitalWrite(BuiltInLED, LOW); //Turn built in LED on
 
 	memcpy(I2C_ADR, Vals, sizeof(I2C_ADR)); //Copy array
+	// memcpy(I2C_ADR, Vals, NumVals); //Copy array  //DEBUG??
 	NumADR = NumVals; //Copy length of array
 	Header = Header_; //Copy user defined header
 
+	// NumADR_OB = 2; //DEBUG!
 	RTC.Begin(); //Initalize RTC
 	RTC.ClearAlarm(); //
 	adc.Begin(); //Initalize external ADC
@@ -89,12 +91,23 @@ int Margay::begin(uint8_t *Vals, uint8_t NumVals, String Header_)
 	Serial.print("SN = ");
 	int EEPROMLen = EEPROM.length(); //Copy value for faster access
 	int Val = 0; //Value to read temp EEPROM values into
+	int Pos = 0; //used to keep track of position in SN string
 	for(int i = EEPROMLen - 8; i < EEPROMLen; i++) {  //Read out Serial Number 
-		Val = EEPROM.read(i);
-		if(Val < 0x10) Serial.print("0"); //Append 0 if needed
-		Serial.print(Val, HEX);  //Print serial digit
-		if(i % 2 == 1 && i < EEPROMLen - 1) Serial.print("-");  //Print - between each SN category
+		Val = EEPROM.read(i);  //Read SN values as individual bytes from EEPROM
+		SN[Pos++] = HexMap[(Val >> 4)]; //Load upper nibble of hex value, post inc pos
+		SN[Pos++] = HexMap[(Val % 0x10)]; //Load lower nibble of hex value, post inc pos
+		// SN[Pos++] = HexMap[0]; //Load upper nibble of hex value, post inc pos  //DEBUG!
+		// Pos += 1;
+		// SN[Pos++] = HexMap[0]; //Load lower nibble of hex value, post inc pos  //DEBUG!
+		// Pos += 1;
+		if(i % 2 == 1 && i < EEPROMLen - 1) {
+			SN[Pos++] = '-';  //Place - between each SN category, post inc pos
+			// Pos += 1;
+		}
+		SN[19] = NULL; //Null terminate string
 	}
+	// Serial.println(freeMemory());  //DEBUG!
+	Serial.print(SN); //Print compiled string
 	Serial.print("\n\n");
 	Serial.println("\nInitializing...\n"); //DEBUG!
 	delay(100);
@@ -129,7 +142,7 @@ int Margay::begin(uint8_t *Vals, uint8_t NumVals, String Header_)
 	// SPI.setDataMode(SPI_MODE0);
 	// SPI.setClockDivider(SPI_CLOCK_DIV2); //Sts SPI clock to 4 MHz for an 8 MHz system clock
 
-
+	SdFile::dateTimeCallback(DateTimeSD); //Setup SD file time setting
 	attachInterrupt(digitalPinToInterrupt(RTCInt), Margay::isr1, FALLING); //Attach an interrupt driven by the interrupt from RTC, logs data
 	attachInterrupt(digitalPinToInterrupt(LogInt), Margay::isr0, FALLING);	//Attach an interrupt driven by the manual log button, sets logging flag and logs data
 	pinMode(RTCInt, INPUT_PULLUP);
@@ -202,7 +215,8 @@ void Margay::I2CTest()
 	bool I2C_Test = true;
 
 	Serial.print("I2C: ");
-
+	// Serial.println(NumADR); //DEBUG!
+	// Serial.println(NumADR_OB); //DEBUG!
 	for(int i = 0; i < NumADR; i++) {
 		Wire.beginTransmission(I2C_ADR[i]);
     	Error = Wire.endTransmission();
@@ -255,11 +269,17 @@ void Margay::SDTest()
   	}
 
   	if(!CardPressent) {
+  		SD.mkdir("NW");  //Create NW folder (if not already present)
+  		SD.chdir("/NW"); //Move file pointer into NW folder (at root level)
+  		SD.mkdir(SN); //Make directory with serial number as name
+  		SD.chdir(SN); //Move into this directory
+  		//Change directory to SN# named dir
+  		SD.mkdir("Logs"); //Use???
 		String FileNameTest = "HWTest";
 		(FileNameTest + ".txt").toCharArray(FileNameTestC, 11);
 		SD.remove(FileNameTestC); //Remove any previous files
 
-		randomSeed(analogRead(A7)); //Seed with a random number to try to endsure randomness
+		randomSeed(analogRead(A7)); //Seed with a random process to try to endsure randomness
 		int RandVal = random(30557); //Generate a random number between 0 and 30557 (the number of words in Hamlet)
 		char RandDigits[6] = {0};
 		sprintf(RandDigits, "%d", RandVal); //Convert RandVal into a series of digits
@@ -291,8 +311,8 @@ void Margay::SDTest()
 		keep_SPCR=SPCR; 
 	}
   
-	if(SDError && !CardPressent) Serial.println("FAIL");
-  	else if(!SDError && !CardPressent) Serial.println("PASS");
+	if(SDError && !CardPressent) Serial.println("FAIL");  //If card is inserted and still does not connect propperly, throw error
+  	else if(!SDError && !CardPressent) Serial.println("PASS");  //If card is inserted AND connectects propely return success 
 }
 
 void Margay::ClockTest() 
@@ -363,6 +383,11 @@ void Margay::PowerTest()
 
 void Margay::InitLogFile()
 {
+	// SD.chdir("/"); //Return to root to define starting state 
+	SD.chdir("/NW");  //Move into northern widget folder from root
+	SD.chdir(SN);  //Move into specific numbered sub folder
+	SD.chdir("Logs"); //Move into the logs sub-folder
+	//Perform same search, but do so inside of "SD:NW/sn/Logs"
     String FileName = "Log";
     int FileNum = 1;
     String NumString = "01";
@@ -373,7 +398,8 @@ void Margay::InitLogFile()
       (FileName + NumString + ".txt").toCharArray(FileNameC, 11);
     }
     (FileName + NumString + ".txt").toCharArray(FileNameC, 11);
-  
+  	String InitData = "Lib = " + String(LibVersion) + " SN = " + String(SN);  //Make string of onboard characteristics
+  	LogStr(InitData); //Log as first line of data
     LogStr("Time [UTC], Temp OB [C], Temp RTC [C], Bat [V], " + Header); //Log concatonated header
 }
 
@@ -381,6 +407,10 @@ int Margay::LogStr(String Val)
 {
 	Serial.println(Val); //Echo to serial monitor 
 	SD.begin(SD_CS); //DEBUG!
+	// SD.chdir("/"); //Return to root to define starting state 
+	SD.chdir("/NW");  //Move into northern widget folder from root
+	SD.chdir(SN);  //Move into specific numbered sub folder
+	SD.chdir("Logs"); //Move into the logs sub-folder
 	File DataFile = SD.open(FileNameC, FILE_WRITE);
 
 	// if the file is available, write to it:
@@ -592,6 +622,22 @@ static void Margay::Log()
 	AwakeCount = 0; 
 }
 
+static void Margay::DateTimeSD(uint16_t* date, uint16_t* time) 
+{
+	// DateTime now = RTC.now();
+	// sprintf(timestamp, "%02d:%02d:%02d %2d/%2d/%2d \n", now.hour(),now.minute(),now.second(),now.month(),now.day(),now.year()-2000);
+	// Serial.println("yy");
+	// Serial.println(timestamp);
+	// return date using FAT_DATE macro to format fields
+	// Serial.println(selfPointer->RTC.GetValue(0)); //DEBUG!
+	*date = FAT_DATE(selfPointer->RTC.GetValue(0) + 2000, selfPointer->RTC.GetValue(1), selfPointer->RTC.GetValue(2));
+
+	// return time using FAT_TIME macro to format fields
+	*time = FAT_TIME(selfPointer->RTC.GetValue(3), selfPointer->RTC.GetValue(4), selfPointer->RTC.GetValue(5));
+}
+
+void Margay::DateTimeSD_Glob(uint16_t* date, uint16_t* time) {selfPointer->DateTimeSD(date, time);}  //Fix dumb name!
+
 void Margay::isr0() { selfPointer->ButtonLog(); }
 
 void Margay::isr1() { selfPointer->Log(); }
@@ -714,4 +760,22 @@ digitalWrite(Ext3v3Ctrl, LOW); //turn on the BJT on SD ground line
 delay(10);
 SD.begin(SD_CS);  
 
+}
+
+#ifdef __arm__
+// should use uinstd.h to define sbrk but Due causes a conflict
+extern "C" char* sbrk(int incr);
+#else  // __ARM__
+extern char *__brkval;
+#endif  // __arm__
+ 
+int Margay::freeMemory() {  //DEBUG!
+  char top;
+#ifdef __arm__
+  return &top - reinterpret_cast<char*>(sbrk(0));
+#elif defined(CORE_TEENSY) || (ARDUINO > 103 && ARDUINO != 151)
+  return &top - __brkval;
+#else  // __arm__
+  return __brkval ? &top - __brkval : &top - __malloc_heap_start;
+#endif  // __arm__
 }
