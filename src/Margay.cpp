@@ -244,9 +244,10 @@ void Margay::I2CTest()
 
 void Margay::SDTest() 
 {
-	bool SDErrorTemp = false;
+	// bool SDErrorTemp = false;
 	// bool SD_Test = true;
 
+	pinMode(PG, INPUT);
 	pinMode(SD_CD, INPUT);
 	bool CardPressent = digitalRead(SD_CD);
 
@@ -254,16 +255,15 @@ void Margay::SDTest()
 
 	if(CardPressent) {
 		Serial.println(" NO CARD");
-    	SDErrorTemp = true;
     	SDError = true; //Card not inserted
 	}
 
 	else if (!SD.begin(SD_CS)) {
     	OBError = true;
-    	SDErrorTemp = true;
+    	SDError = true;
   	}
 
-  	if(!CardPressent) {
+  	if(!CardPressent && digitalRead(PG) == HIGH) {  //Only proceed if power is legit
 		String FileNameTest = "HWTest";
 		(FileNameTest + ".txt").toCharArray(FileNameTestC, 11);
 		SD.remove(FileNameTestC); //Remove any previous files
@@ -287,10 +287,9 @@ void Margay::SDTest()
 		File DataRead = SD.open(FileNameTestC, FILE_READ);
 		if(DataRead) {
 		DataRead.read(TestDigits, RandLength);
-
 		for(int i = 0; i < RandLength - 1; i++){ //Test random value string
 		  if(TestDigits[i] != RandDigits[i]) {
-		    SDErrorTemp = true;
+		    SDError = true;
 		    OBError = true;
 		  }
 		}
@@ -392,6 +391,9 @@ int Margay::LogStr(String Val)
 {
 
 	Serial.println(Val); //Echo to serial monitor 
+	pinMode(PG, INPUT); //Make sure PG is configured as input
+	// Serial.print("PG = "); //DEBUG!
+	// Serial.println(digitalRead(PG)); //DEBUG!
 	if(digitalRead(PG) == HIGH) {  //Only proceed if power is stable and good, prevents corruption via low voltage write 
 		//No status indication since this should be an emergency protection and only kick in when something fails or pushed beyond where it should be
 		SD.begin(SD_CS); //DEBUG!
