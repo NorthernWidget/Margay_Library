@@ -15,7 +15,7 @@
 
 Margay* Margay::selfPointer;
 
-Margay::Margay(board Model_)
+Margay::Margay(board Model_, build Specs_)
 {
 	if(Model_ == 1) {
 		SD_CS = 4;
@@ -38,6 +38,20 @@ Margay::Margay(board Model_)
 		RTCInt = 10;
 		LogInt = 2; 
 		BatteryDivider = 2.0;
+
+		if(Specs_ == Build_A) {
+			NumADR_OB = 1; //Only check for clock presance 
+		}
+
+		else if(Specs_ == Build_B) {
+			NumADR_OB = 2; //Tell system to search additional ADRs
+			I2C_ADR_OB[1] = 0x69; //Use 0x69 on board ADC (MCP3421A1)
+		}
+
+		else if(Specs_ == Build_C) {
+			NumADR_OB = 2; //Tell system to search additional ADRs
+			I2C_ADR_OB[1] = 0x6B; //Use 0x6B on board ADC (MCP3421A3)
+		}
 	}
 	else {
 		SD_CS = 4;
@@ -60,8 +74,24 @@ Margay::Margay(board Model_)
 		RTCInt = 10;
 		LogInt = 2; 
 		BatteryDivider = 9.0;
+
+		if(Specs_ == Build_A) {  //Setup sub builds 
+			NumADR_OB = 1; //Only check for clock presance 
+		}
+
+		else if(Specs_ == Build_B) {
+			NumADR_OB = 2; //Tell system to search additional ADRs
+			I2C_ADR_OB[1] = 0x69; //Use 0x69 on board ADC (MCP3421A1)
+		}
+
+		else if(Specs_ == Build_C) {
+			NumADR_OB = 2; //Tell system to search additional ADRs
+			I2C_ADR_OB[1] = 0x6B; //Use 0x6B on board ADC (MCP3421A3)
+		}
 	}
+
 	Model = Model_; //Store model info locally
+	Specs = Specs_; //Store build info locally 
 }
 
 int Margay::begin(uint8_t *Vals, uint8_t NumVals, String Header_)
