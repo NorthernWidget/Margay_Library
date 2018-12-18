@@ -96,23 +96,18 @@ int Margay::begin(uint8_t *Vals, uint8_t NumVals, String Header_)
 		Val = EEPROM.read(i);  //Read SN values as individual bytes from EEPROM
 		SN[Pos++] = HexMap[(Val >> 4)]; //Load upper nibble of hex value, post inc pos
 		SN[Pos++] = HexMap[(Val % 0x10)]; //Load lower nibble of hex value, post inc pos
-		// SN[Pos++] = HexMap[0]; //Load upper nibble of hex value, post inc pos  //DEBUG!
-		// Pos += 1;
-		// SN[Pos++] = HexMap[0]; //Load lower nibble of hex value, post inc pos  //DEBUG!
-		// Pos += 1;
 		if(i % 2 == 1 && i < EEPROMLen - 1) {
 			SN[Pos++] = '-';  //Place - between each SN category, post inc pos
 			// Pos += 1;
 		}
 		SN[19] = NULL; //Null terminate string
 	}
-	// Serial.println(freeMemory());  //DEBUG!
+
 	Serial.print(SN); //Print compiled string
 	Serial.print("\n\n");
 	Serial.println("\nInitializing...\n"); //DEBUG!
 	delay(100);
 	if(Serial.available()) {  //If time setting info available 
-		// Serial.println("BANG!"); //DEBUG!
 		String DateTimeTemp = Serial.readString();
 		Serial.println(DateTimeTemp);  //DEBUG!
 		int DateTimeVals[6] = {0};
@@ -215,8 +210,6 @@ void Margay::I2CTest()
 	bool I2C_Test = true;
 
 	Serial.print("I2C: ");
-	// Serial.println(NumADR); //DEBUG!
-	// Serial.println(NumADR_OB); //DEBUG!
 	for(int i = 0; i < NumADR; i++) {
 		Wire.beginTransmission(I2C_ADR[i]);
     	Error = Wire.endTransmission();
@@ -325,7 +318,7 @@ void Margay::ClockTest()
 	Wire.beginTransmission(I2C_ADR_OB[0]);
   	Wire.write(0xFF);
 	Error = Wire.endTransmission();
-	// Serial.print("Error = "); Serial.println(Error); //DEBUG!
+
 	if(Error == 0) {
 		GetTime(); //FIX!
 		TestSeconds = RTC.GetValue(5);
@@ -337,7 +330,7 @@ void Margay::ClockTest()
 	}
 
 	unsigned int YearNow = RTC.GetValue(0);
-	// Serial.println(YearNow); //DEBUG!
+
 	if(YearNow == 00) {  //If value is 2000, work around Y2K bug by setting time to Jan 1st, midnight, 2049
 		// if(YearNow <= 00) RTC.SetTime(2018, 01, 01, 00, 00, 00);  //Only reset if Y2K
 		// GetTime(); //Update local time
@@ -760,22 +753,4 @@ digitalWrite(Ext3v3Ctrl, LOW); //turn on the BJT on SD ground line
 delay(10);
 SD.begin(SD_CS);  
 
-}
-
-#ifdef __arm__
-// should use uinstd.h to define sbrk but Due causes a conflict
-extern "C" char* sbrk(int incr);
-#else  // __ARM__
-extern char *__brkval;
-#endif  // __arm__
- 
-int Margay::freeMemory() {  //DEBUG!
-  char top;
-#ifdef __arm__
-  return &top - reinterpret_cast<char*>(sbrk(0));
-#elif defined(CORE_TEENSY) || (ARDUINO > 103 && ARDUINO != 151)
-  return &top - __brkval;
-#else  // __arm__
-  return __brkval ? &top - __brkval : &top - __malloc_heap_start;
-#endif  // __arm__
 }
