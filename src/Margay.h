@@ -42,6 +42,13 @@ enum board
     Model_1v0 = 1
 };
 
+enum build 
+{
+	Build_A = 0,
+	Build_B = 1,
+	Build_C = 2
+};
+
 enum temp_val
 {
 	Therm_Val = 0,
@@ -54,7 +61,7 @@ class Margay
 {
 
 	public:
-		Margay(board Model);
+		Margay(board Model, build Specs_ = Build_A); //Use Build_A by default
 		int begin(uint8_t *Vals, uint8_t NumVals, String Header_);
 		int begin(String Header_);
 
@@ -147,6 +154,7 @@ class Margay
 		float BatteryDivider = 2.0; //Default for v1.0
 
 		board Model;
+		build Specs;
 
 		volatile bool LogEvent = false; //Used to test if logging should begin yet
 		volatile bool NewLog = false; //Used to tell system to start a new log
