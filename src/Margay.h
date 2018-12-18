@@ -102,6 +102,8 @@ class Margay
 		static void isr1();
 		static Margay* selfPointer;
 
+		static void DateTimeSD(uint16_t* date, uint16_t* time);
+		void DateTimeSD_Glob(uint16_t* date, uint16_t* time);
 		void sleepNow();
 		void turnOffSDcard();
 		void turnOnSDcard();
@@ -113,6 +115,7 @@ class Margay
 		void BatTest();
 		void PowerTest();
 		void InitLogFile();
+		int freeMemory(); //DEBUG!
 
 		DS3231_Logger RTC;
 		MCP3421 adc;
@@ -133,6 +136,9 @@ class Margay
 		float BatVoltageError = 3.3; //Low battery alert will trigger if voltage drops below this value
 		float BatPercentageWarning = 50; //Percentage at which a warning will be indicated
 		String Header = "";
+		const char HexMap[16] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'}; //used for conversion to HEX of string
+		char SN[20] = {0}; //Used to store device serial number, 19 chars + null terminator 
+		// String SN = "FFFF-FFFF-FFFF-FFFF";
 		uint8_t NumADR = 0;
 		uint8_t I2C_ADR[16] = {0}; //Change length??
 		uint8_t NumADR_OB = 1;
