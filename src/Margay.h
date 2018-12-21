@@ -103,7 +103,7 @@ class Margay
 		uint8_t RTCInt = 10;
 		uint8_t LogInt = 2; 
 
-		const String LibVersion = "0.1.2";
+		const String LibVersion = "B0.2.0";
 
 	protected:
 		float TempConvert(float V, float Vcc, float R, float A, float B, float C, float D, float R25);
@@ -115,6 +115,8 @@ class Margay
 		static void isr0();
 		static void isr1();
 		static Margay* selfPointer;
+		static void DateTimeSD(uint16_t* date, uint16_t* time);
+		void DateTimeSD_Glob(uint16_t* date, uint16_t* time);  //Fix dumb name!
 
 		void sleepNow();
 		void turnOffSDcard();
@@ -151,6 +153,9 @@ class Margay
 		uint8_t I2C_ADR[16] = {0}; //Change length??
 		uint8_t NumADR_OB = 1; //
 		uint8_t I2C_ADR_OB[2] = {0x68, 0x6A}; //Clock, ADC (Build A by default)
+
+		const char HexMap[16] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'}; //used for conversion to HEX of string
+		char SN[20] = {0}; //Used to store device serial number, 19 chars + null terminator 
 
 		float BatteryDivider = 2.0; //Default for v1.0
 
