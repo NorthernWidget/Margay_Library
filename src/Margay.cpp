@@ -113,7 +113,7 @@ int Margay::begin(uint8_t *Vals, uint8_t NumVals, String Header_)
 
 	RTC.Begin(); //Initalize RTC
 	RTC.ClearAlarm(); //
-	adc.Begin(); //Initalize external ADC
+	adc.Begin(I2C_ADR_OB[1]); //Initalize external ADC using variable address
 	adc.SetResolution(18);
 
 	ADCSRA = 0b10000111; //Confiure on board ADC for low speed, and enable 
