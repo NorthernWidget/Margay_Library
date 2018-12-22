@@ -301,6 +301,12 @@ void Margay::SDTest()
   	}
 
   	if(!CardPressent && digitalRead(PG) == HIGH) {  //Only proceed if power is legit
+		SD.mkdir("NW");  //Create NW folder (if not already present)
+  		SD.chdir("/NW"); //Move file pointer into NW folder (at root level)
+  		SD.mkdir(SN); //Make directory with serial number as name
+  		SD.chdir(SN); //Move into this directory
+  		//Change directory to SN# named dir
+  		SD.mkdir("Logs"); //Use???
 		String FileNameTest = "HWTest";
 		(FileNameTest + ".txt").toCharArray(FileNameTestC, 11);
 		SD.remove(FileNameTestC); //Remove any previous files
