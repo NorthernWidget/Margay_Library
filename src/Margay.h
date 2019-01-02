@@ -68,6 +68,7 @@ class Margay
 		void Run(String (*f)(void), unsigned long LogInterval);
 		float GetVoltage();
 		void AddDataPoint(String (*Update)(void));
+		void InitLogFile();
 
 		float GetTemp(temp_val Val = Therm_Val);
 		float GetBatVoltage();
@@ -119,7 +120,6 @@ class Margay
 		void ClockTest();
 		void BatTest();
 		void PowerTest();
-		void InitLogFile();
 		int freeMemory(); //DEBUG!
 
 		DS3231_Logger RTC;

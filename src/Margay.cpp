@@ -613,8 +613,9 @@ void Margay::Run(String (*Update)(void), unsigned long LogInterval) //Pass in fu
 void Margay::AddDataPoint(String (*Update)(void)) //Reads new data and writes data to SD
 {
 	String Data = "";
-	Data = (*Update)(); //Run external update function
 	// Serial.println("Called Update"); //DEBUG!
+	Data = (*Update)(); //Run external update function
+	// Serial.println("Request OB Vals"); //DEBUG!
 	Data = GetOnBoardVals() + Data; //Append on board readings
 	// Serial.println("Got OB Vals");  //DEBUG!
 	LogStr(Data);
