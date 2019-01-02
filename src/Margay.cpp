@@ -1,17 +1,6 @@
 //Margay library
 
-#include <SPI.h>
-#include <Wire.h>
-#include <DS3231_Logger.h>
-#include <SdFat.h>
-#include <avr/pgmspace.h>
-#include <EEPROM.h>
-#include <avr/sleep.h>
-#include <avr/wdt.h>
-#include <avr/power.h>
 #include <Margay.h>
-#include <MCP3421.h>
-// #include <Arduino.h>
 
 Margay* Margay::selfPointer;
 

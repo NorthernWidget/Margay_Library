@@ -2,7 +2,7 @@
 #ifndef MARGAY_h
 #define MARGAY_h
 
-#include "Arduino.h"
+#include <Arduino.h>
 #include <Wire.h>
 #include <SPI.h>
 #include <DS3231_Logger.h>
@@ -13,8 +13,6 @@
 #include <avr/sleep.h>
 #include <avr/wdt.h>
 #include <avr/power.h>
-#include <Arduino.h>
-#include <MCP3421.h>
 
 
 #define RED 0xFFFF0000L
