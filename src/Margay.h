@@ -5,14 +5,14 @@
 #include <Arduino.h>
 #include <Wire.h>
 #include <SPI.h>
-#include <DS3231_Logger.h>
-#include <MCP3421.h>
-#include <SdFat.h>
 #include <avr/pgmspace.h>
-#include <EEPROM.h>
 #include <avr/sleep.h>
 #include <avr/wdt.h>
 #include <avr/power.h>
+#include <EEPROM.h>
+#include "DS3231_Logger.h"
+#include "MCP3421.h"
+#include "SdFat.h"
 
 
 #define RED 0xFFFF0000L
