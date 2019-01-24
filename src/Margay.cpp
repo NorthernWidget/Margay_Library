@@ -17,7 +17,8 @@ Margay::Margay(board Model_, build Specs_)
 		ThermSense_Pin = 1;
 		BatSense_Pin = 0;
 
-		VSwitch_Pin = 3;
+		// VSwitch_Pin = 3;
+		VSwitch_Pin = 12; //DEBUG!??
 		SD_CD = 1;
 
 		Ext3v3Ctrl = 19;
@@ -91,6 +92,8 @@ int Margay::begin(uint8_t *Vals, uint8_t NumVals, String Header_)
 	pinMode(BuiltInLED, OUTPUT);
 	digitalWrite(BuiltInLED, LOW); //Turn built in LED on
 
+	pinMode(VSwitch_Pin, OUTPUT); //Setup switch control as output
+
 	memcpy(I2C_ADR, Vals, sizeof(I2C_ADR)); //Copy array
 	// memcpy(I2C_ADR, Vals, NumVals); //Copy array  //DEBUG??
 	NumADR = NumVals; //Copy length of array
@@ -99,7 +102,7 @@ int Margay::begin(uint8_t *Vals, uint8_t NumVals, String Header_)
 	// NumADR_OB = 2; //DEBUG!
 	RTC.Begin(); //Initalize RTC
 	RTC.ClearAlarm(); //
-	adc.Begin(); //Initalize external ADC
+	adc.Begin(I2C_ADR_OB[1]); //Initalize external ADC
 	adc.SetResolution(18);
 
 	ADCSRA = 0b10000111; //Confiure on board ADC for low speed, and enable 
@@ -695,6 +698,7 @@ void Margay::sleepNow()         // here we put the arduino to sleep
   // pinMode(5, INPUT); //Set all SPI pins as inputs, will be reversed be beginning SPI again
   // pinMode(6, INPUT);
   // pinMode(7, INPUT);
+  	digitalWrite(VSwitch_Pin, LOW); //DEBUG!
   	keep_ADCSRA = ADCSRA;
     set_sleep_mode(SLEEP_MODE_PWR_DOWN);   // sleep mode is set here
     cbi(ADCSRA,ADEN);
@@ -710,6 +714,7 @@ void Margay::sleepNow()         // here we put the arduino to sleep
 //     SPI.begin();
     turnOnSDcard();
 	ADCSRA = 135; //DEBUG!
+	digitalWrite(VSwitch_Pin, HIGH);  //DEBUG!
     // pinMode(SD_CS, OUTPUT); //Disconnect SD chip slect pin
  
 }
