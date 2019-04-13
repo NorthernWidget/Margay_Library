@@ -6,7 +6,44 @@ Margay* Margay::selfPointer;
 
 Margay::Margay(board Model_, build Specs_)
 {	
-	if(Model_ == 1) {
+	if(Model_ == 2) {
+		SD_CS = 4;
+		BuiltInLED = 20;
+		RedLED = 13;
+		GreenLED = 15;
+		BlueLED = 14;
+
+		VRef_Pin = 3;
+		ThermSense_Pin = 1;
+		BatSense_Pin = 2;
+
+		// VSwitch_Pin = 3;
+		VSwitch_Pin = 12; //DEBUG!??
+		SD_CD = 1;
+
+		Ext3v3Ctrl = 19;
+		I2C_SW = 12;
+		PG = 18;
+		ExtInt = 11;
+		RTCInt = 2;
+		LogInt = 255; //ADJUST TO USE PC INT!!!! 
+		BatteryDivider = 2.0;
+
+		if(Specs_ == Build_A) {
+			NumADR_OB = 1; //Only check for clock presance 
+		}
+
+		else if(Specs_ == Build_B) {
+			NumADR_OB = 2; //Tell system to search additional ADRs
+			I2C_ADR_OB[1] = 0x69; //Use 0x69 on board ADC (MCP3421A1)
+		}
+
+		else if(Specs_ == Build_C) {
+			NumADR_OB = 2; //Tell system to search additional ADRs
+			I2C_ADR_OB[1] = 0x6B; //Use 0x6B on board ADC (MCP3421A3)
+		}
+	}
+	else if(Model_ == 1) {
 		SD_CS = 4;
 		BuiltInLED = 20;
 		RedLED = 13;
@@ -86,8 +123,11 @@ Margay::Margay(board Model_, build Specs_)
 
 int Margay::begin(uint8_t *Vals, uint8_t NumVals, String Header_)
 {
+	pinMode(WDHold, OUTPUT);
+	pinMode(BatSwitch, OUTPUT);
+	digitalWrite(BatSwitch, HIGH);
 	pinMode(Ext3v3Ctrl, OUTPUT);
-	digitalWrite(Ext3v3Ctrl, LOW); //Make sure external power is on
+	digitalWrite(Ext3v3Ctrl, HIGH); //Make sure external power is on
 
 	pinMode(BuiltInLED, OUTPUT);
 	digitalWrite(BuiltInLED, LOW); //Turn built in LED on
@@ -570,6 +610,7 @@ float Margay::GetVoltage()  //Get voltage from Ax pin
 
 void Margay::Run(String (*Update)(void), unsigned long LogInterval) //Pass in function which returns string of data
 {
+	Serial.println("BANG!"); //DEBUG!
 	if(NewLog) {
 		Serial.println("Log Started!"); //DEBUG
 		// LogEvent = true;
@@ -581,6 +622,7 @@ void Margay::Run(String (*Update)(void), unsigned long LogInterval) //Pass in fu
 		AddDataPoint(Update);
 		NewLog = false;  //Clear flag once log is started 
     	Blink();  //Alert user to start of log
+    	ResetWD(); //Clear alarm
 	}
 
 	if(LogEvent) {
@@ -591,16 +633,18 @@ void Margay::Run(String (*Update)(void), unsigned long LogInterval) //Pass in fu
 		// Serial.println("BANG!"); //DEBUG!
 		RTC.SetAlarm(LogInterval);  //Set/reset alarm
 		// Serial.println("ResetTimer"); //DEBUG!
+		ResetWD(); //Clear alarm
 	}
 
 	if(ManualLog) {  //Write data to SD card without interrupting existing timing cycle
 		// Serial.println("Click!"); //DEBUG!
 		AddDataPoint(Update); //write values to SD
 		ManualLog = false; //Clear log flag
+		ResetWD(); //Clear alarm
 	}
 
 	if(!digitalRead(RTCInt)) {  //Catch alarm if not reset properly 
-   		// Serial.println("Reset Alarm"); //DEBUG!
+   		Serial.println("Reset Alarm"); //DEBUG!
 		RTC.SetAlarm(LogInterval); //Turn alarm back on 
 	}
 
@@ -611,6 +655,13 @@ void Margay::Run(String (*Update)(void), unsigned long LogInterval) //Pass in fu
 		sleepNow();
 	}
 	delay(1);
+}
+
+void Margay::ResetWD()  //Send a pulse to "feed" the watchdog timer
+{
+	digitalWrite(WDHold, HIGH); //Set DONE pin high
+	delayMicroseconds(5); //Wait a short pulse
+	digitalWrite(WDHold, LOW); 
 }
 
 void Margay::AddDataPoint(String (*Update)(void)) //Reads new data and writes data to SD
@@ -729,6 +780,10 @@ delay(6);
 // DDRC &= ~((1<<DDC0) | (1<<DDC1));
 pinMode(16, INPUT);
 pinMode(17, INPUT);
+digitalWrite(8, LOW);
+digitalWrite(9, LOW);
+// pinMode(8, INPUT);
+// pinMode(9, INPUT);
 // digitalWrite(16, HIGH);
 // digitalWrite(17, HIGH);
 //digitalWrite(SD_CS, HIGH);
@@ -736,7 +791,9 @@ pinMode(17, INPUT);
 // // Note: you must disconnect the LED on pin 13 or you’ll bleed current through the limit resistor
 // // LowPower.powerDown(SLEEP_1S, ADC_OFF, BOD_OFF); // wait 1 second before pulling the plug!
 delay(6);
-digitalWrite(Ext3v3Ctrl, HIGH);  //turn off BJT
+// digitalWrite(Ext3v3Ctrl, HIGH); //MODEL <= v1
+digitalWrite(Ext3v3Ctrl, LOW);  //turn off external 3v3 rail
+digitalWrite(BatSwitch, LOW); //Turn off battery connection to sense divider 
 // digitalWrite(BatRailCtrl, HIGH);
 delay(1);
 digitalWrite(SD_CS, LOW);
@@ -774,7 +831,9 @@ power_spi_enable();                      // enable the SPI clock
 SPCR=keep_SPCR;                          // enable SPI peripheral
 delay(20);
 // digitalWrite(BatRailCtrl, LOW);
-digitalWrite(Ext3v3Ctrl, LOW); //turn on the BJT on SD ground line
+// digitalWrite(Ext3v3Ctrl, LOW); //MODEL <= v1
+digitalWrite(Ext3v3Ctrl, HIGH);  //turn off external 3v3 rail
+digitalWrite(BatSwitch, HIGH); //Turn off battery connection to sense divider 
 delay(10);
 SD.begin(SD_CS);  
 

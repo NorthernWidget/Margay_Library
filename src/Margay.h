@@ -37,7 +37,8 @@
 enum board
 {
     Model_0v0 = 0,
-    Model_1v0 = 1
+    Model_1v0 = 1,
+    Model_2v0 = 2
 };
 
 enum build 
@@ -74,6 +75,8 @@ class Margay
 		float GetBatVoltage();
 		float GetBatPer();
 
+		void ResetWD();
+
 		//Pin definitions
 		int SD_CS = 4;
 		uint8_t BuiltInLED = 20;
@@ -94,6 +97,8 @@ class Margay
 		uint8_t ExtInt = 11;
 		uint8_t RTCInt = 10;
 		uint8_t LogInt = 2; 
+		uint8_t WDHold = 23; //ADD TO DOCUMENTATION!
+		uint8_t BatSwitch = 22; //ADD TO DOCUMENTATION!
 
 		const String LibVersion = "0.2.0";
 
