@@ -13,6 +13,7 @@
 #include "DS3231_Logger.h"
 #include "MCP3421.h"
 #include "SdFat.h"
+#include "BME.h"
 
 
 #define RED 0xFFFF0000L
@@ -24,7 +25,9 @@
 #define PURPLE 0xFF800080L
 #define CYAN 0xFF00FFFF
 #define BLACK_ALERT 0x802019FF
-#define OFF 0x00
+
+#define ON 1
+#define OFF 0
 
 #define MODEL_1v0 
 #define MODEL_0v0
@@ -60,7 +63,7 @@ class Margay
 {
 
 	public:
-		Margay(board Model, build Specs_ = Build_A); //Use Build_A by default
+		Margay(board Model_, build Specs_ = Build_A); //Use Build_A by default
 		int begin(uint8_t *Vals, uint8_t NumVals, String Header_);
 		int begin(String Header_ = "");
 
@@ -76,6 +79,8 @@ class Margay
 		float GetBatPer();
 
 		void ResetWD();
+		void PowerOB(bool State);
+		void PowerAux(bool State);
 
 		//Pin definitions
 		int SD_CS = 4;
@@ -99,8 +104,10 @@ class Margay
 		uint8_t LogInt = 2; 
 		uint8_t WDHold = 23; //ADD TO DOCUMENTATION!
 		uint8_t BatSwitch = 22; //ADD TO DOCUMENTATION!
+		uint8_t TX = 11; //ADD TO DOCUMENTATION!
+		uint8_t RX = 10; //ADD TO DOCUMENTATION! 
 
-		const String LibVersion = "0.2.0";
+		const String LibVersion = "0.3.0";
 
 	protected:
 		float TempConvert(float V, float Vcc, float R, float A, float B, float C, float D, float R25);
@@ -125,10 +132,12 @@ class Margay
 		void ClockTest();
 		void BatTest();
 		void PowerTest();
+		void EnviroStats();
 		int freeMemory(); //DEBUG!
 
 		DS3231_Logger RTC;
 		MCP3421 adc;
+		BME EnviroSense; 
 
 		float A = 0.003354016;
 		float B = 0.0003074038;
