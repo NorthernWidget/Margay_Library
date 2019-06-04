@@ -1,6 +1,22 @@
 //Margay library
 
 #include <Margay.h>
+#include <Arduino.h>
+
+// #include <PCINT.h>
+
+
+
+// extern void AttachPCI(byte Pin, void (*UserFunc)(void), int Mode);
+// extern void enableInterrupt(uint8_t interruptDesignator, void (*userFunction)(void), uint8_t mode);
+// uint8_t LogInt = 28; //DEBUG!
+
+// *digitalPinToPCMSK(LogInt) |= bit (digitalPinToPCMSKbit(LogInt));  // enable pin
+
+
+
+		volatile bool ManualLog = false; //Global for interrupt access
+
 
 Margay* Margay::selfPointer;
 
@@ -217,7 +233,14 @@ int Margay::begin(uint8_t *Vals, uint8_t NumVals, String Header_)
 
 	SdFile::dateTimeCallback(DateTimeSD); //Setup SD file time setting
 	attachInterrupt(digitalPinToInterrupt(RTCInt), Margay::isr1, FALLING); //Attach an interrupt driven by the interrupt from RTC, logs data
-	attachInterrupt(digitalPinToInterrupt(LogInt), Margay::isr0, FALLING);	//Attach an interrupt driven by the manual log button, sets logging flag and logs data
+	// attachInterrupt(digitalPinToInterrupt(LogInt), Margay::isr0, FALLING);	//Attach an interrupt driven by the manual log button, sets logging flag and logs data
+	// AttachPCI(LogInt, ButtonLog, FALLING); //Attach an interrupt driven by the manual log button, sets logging flag and logs data (using pin change interrupts)
+	// enableInterrupt(LogInt, ButtonLog, FALLING);
+	*digitalPinToPCMSK(LogInt) |= bit (digitalPinToPCMSKbit(LogInt));  // enable pin
+	// PCIFR  |= 0xFE; // clear any outstanding interrupt
+	// PCICR  |= 0x01; // enable interrupt for the group
+	PCIFR  |= bit (digitalPinToPCICRbit(LogInt)); // clear any outstanding interrupt
+    PCICR  |= bit (digitalPinToPCICRbit(LogInt)); // enable interrupt for the group
 	pinMode(RTCInt, INPUT_PULLUP);
 	pinMode(LogInt, INPUT);
 
@@ -275,6 +298,12 @@ int Margay::begin(uint8_t *Vals, uint8_t NumVals, String Header_)
 	// delay(2000);
 
 	LED_Color(OFF);
+}
+
+ISR (PCINT0_vect) // handle pin change interrupt for D8 to D13 here
+{
+	boolean PinVal = (PINA & digitalPinToBitMask(28));
+    if(PinVal == LOW) ManualLog = true; //Set flag to manually record an additional data point; //Only fun the function if trigger criteria is true 
 }
 
 int Margay::begin(String Header_)
@@ -716,11 +745,6 @@ void Margay::AddDataPoint(String (*Update)(void)) //Reads new data and writes da
 	// Serial.println("Loged Data"); //DEBUG!
 }
 //ISRs
-void Margay::ButtonLog() 
-{
-	//ISR to respond to pressing log button and waking device from sleep and starting log
-	ManualLog = true; //Set flag to manually record an additional data point
-}
 
 void Margay::Log() 
 {
@@ -761,7 +785,7 @@ void Margay::DateTimeSD(uint16_t* date, uint16_t* time)
 
 void Margay::DateTimeSD_Glob(uint16_t* date, uint16_t* time) {selfPointer->DateTimeSD(date, time);}  //Fix dumb name!
 
-void Margay::isr0() { selfPointer->ButtonLog(); }
+// void Margay::isr0() { selfPointer->ButtonLog(); }
 
 void Margay::isr1() { selfPointer->Log(); }
 

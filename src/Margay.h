@@ -1,4 +1,6 @@
 
+
+
 #ifndef MARGAY_h
 #define MARGAY_h
 
@@ -57,6 +59,8 @@ enum temp_val
 	RTC_Val = 1
 };
 
+extern void AttachPCI(byte Pin, void (*UserFunc)(void), int Mode);
+
 ////////////////////////////PIN DEFINITIONS///////////////////////
 
 class Margay
@@ -106,6 +110,7 @@ class Margay
 		uint8_t BatSwitch = 22; //ADD TO DOCUMENTATION!
 		uint8_t TX = 11; //ADD TO DOCUMENTATION!
 		uint8_t RX = 10; //ADD TO DOCUMENTATION! 
+		uint8_t D0 = 3; //ADD TO DOCUMENTATION!
 
 		const String LibVersion = "0.3.0";
 
@@ -115,7 +120,7 @@ class Margay
 		// void StartLog();
 		// void Log();
 		void virtual Log();
-		void virtual ButtonLog();
+		// void virtual ButtonLog();
 		static void isr0();
 		static void isr1();
 		static Margay* selfPointer;
@@ -170,7 +175,7 @@ class Margay
 
 		volatile bool LogEvent = false; //Used to test if logging should begin yet
 		volatile bool NewLog = false; //Used to tell system to start a new log
-		volatile bool ManualLog = false; //Used to add point to log by pressing the log button
+		// volatile bool ManualLog = false; //Used to add point to log by pressing the log button
 		volatile int AwakeCount = 0;
 
 		char FileNameC[11]; //Used for file handling
@@ -182,3 +187,4 @@ class Margay
 };
 
 #endif
+
