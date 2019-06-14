@@ -37,7 +37,7 @@ Margay::Margay(board Model_, build Specs_)
 		VSwitch_Pin = 12; //DEBUG!??
 		SD_CD = 1;
 
-		Ext3v3Ctrl = 19;
+		Ext3v3Ctrl = 22;
 		I2C_SW = 12;
 		PG = 18;
 		TX = 11;
@@ -47,7 +47,7 @@ Margay::Margay(board Model_, build Specs_)
 		LogInt = 28; //ADJUST TO USE PC INT!!!! 
 
 		WDHold = 23; 
-		BatSwitch = 22; 
+		BatSwitch = 19; 
 
 		BatteryDivider = 2.0;
 
