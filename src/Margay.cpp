@@ -748,7 +748,7 @@ void Margay::AddDataPoint(String (*Update)(void)) //Reads new data and writes da
 }
 //ISRs
 
-static void Margay::ButtonLog() 
+void Margay::ButtonLog() 
 {
 	//ISR to respond to pressing log button and waking device from sleep and starting log
 	ManualLog = true; //Set flag to manually record an additional data point
