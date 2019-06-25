@@ -300,10 +300,12 @@ int Margay::begin(uint8_t *Vals, uint8_t NumVals, String Header_)
 	LED_Color(OFF);
 }
 
-ISR (PCINT0_vect) // handle pin change interrupt for D8 to D13 here
+ISR (PCINT1_vect) // handle pin change interrupt for D8 to D13 here
 {
-	boolean PinVal = (PINA & digitalPinToBitMask(28));
-    if(PinVal == LOW) ManualLog = true; //Set flag to manually record an additional data point; //Only fun the function if trigger criteria is true 
+	// boolean PinVal = (PINA & digitalPinToBitMask(28));
+    // if(PinVal == LOW) ManualLog = true; //Set flag to manually record an additional data point; //Only fun the function if trigger criteria is true 
+    // digitalWrite(14, LOW); //DEBUG!
+    ManualLog = true; //DEBUG!
 }
 
 int Margay::begin(String Header_)
@@ -746,6 +748,12 @@ void Margay::AddDataPoint(String (*Update)(void)) //Reads new data and writes da
 }
 //ISRs
 
+static void Margay::ButtonLog() 
+{
+	//ISR to respond to pressing log button and waking device from sleep and starting log
+	ManualLog = true; //Set flag to manually record an additional data point
+}
+
 void Margay::Log() 
 {
 	//Write global Data to SD
@@ -785,8 +793,14 @@ void Margay::DateTimeSD(uint16_t* date, uint16_t* time)
 
 void Margay::DateTimeSD_Glob(uint16_t* date, uint16_t* time) {selfPointer->DateTimeSD(date, time);}  //Fix dumb name!
 
-// void Margay::isr0() { selfPointer->ButtonLog(); }
+void Margay::isr0() { selfPointer->ButtonLog(); }
 
+// ISR(PCINT0_vect)
+// {
+// 	ManualLog = true;
+// }
+
+// ISR(PCINT0_vect) {
 void Margay::isr1() { selfPointer->Log(); }
 
 //Low Power functions
