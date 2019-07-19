@@ -233,14 +233,16 @@ int Margay::begin(uint8_t *Vals, uint8_t NumVals, String Header_)
 
 	SdFile::dateTimeCallback(DateTimeSD); //Setup SD file time setting
 	attachInterrupt(digitalPinToInterrupt(RTCInt), Margay::isr1, FALLING); //Attach an interrupt driven by the interrupt from RTC, logs data
-	// attachInterrupt(digitalPinToInterrupt(LogInt), Margay::isr0, FALLING);	//Attach an interrupt driven by the manual log button, sets logging flag and logs data
+	if(Model < 2) attachInterrupt(digitalPinToInterrupt(LogInt), Margay::isr0, FALLING);	//Attach an interrupt driven by the manual log button, sets logging flag and logs data
 	// AttachPCI(LogInt, ButtonLog, FALLING); //Attach an interrupt driven by the manual log button, sets logging flag and logs data (using pin change interrupts)
 	// enableInterrupt(LogInt, ButtonLog, FALLING);
-	*digitalPinToPCMSK(LogInt) |= bit (digitalPinToPCMSKbit(LogInt));  // enable pin
-	// PCIFR  |= 0xFE; // clear any outstanding interrupt
-	// PCICR  |= 0x01; // enable interrupt for the group
-	PCIFR  |= bit (digitalPinToPCICRbit(LogInt)); // clear any outstanding interrupt
-    PCICR  |= bit (digitalPinToPCICRbit(LogInt)); // enable interrupt for the group
+	else { //If using Model > v2.2, use PCINT for log button
+		*digitalPinToPCMSK(LogInt) |= bit (digitalPinToPCMSKbit(LogInt));  // enable pin
+		// PCIFR  |= 0xFE; // clear any outstanding interrupt
+		// PCICR  |= 0x01; // enable interrupt for the group
+		PCIFR  |= bit (digitalPinToPCICRbit(LogInt)); // clear any outstanding interrupt
+	    PCICR  |= bit (digitalPinToPCICRbit(LogInt)); // enable interrupt for the group
+	}
 	pinMode(RTCInt, INPUT_PULLUP);
 	pinMode(LogInt, INPUT);
 
@@ -300,7 +302,7 @@ int Margay::begin(uint8_t *Vals, uint8_t NumVals, String Header_)
 	LED_Color(OFF);
 }
 
-ISR (PCINT1_vect) // handle pin change interrupt for D8 to D13 here
+ISR (PCINT0_vect) // handle pin change interrupt for D8 to D13 here
 {
 	// boolean PinVal = (PINA & digitalPinToBitMask(28));
     // if(PinVal == LOW) ManualLog = true; //Set flag to manually record an additional data point; //Only fun the function if trigger criteria is true 

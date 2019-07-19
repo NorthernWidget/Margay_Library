@@ -59,8 +59,6 @@ enum temp_val
 	RTC_Val = 1
 };
 
-extern void AttachPCI(byte Pin, void (*UserFunc)(void), int Mode);
-
 ////////////////////////////PIN DEFINITIONS///////////////////////
 
 class Margay
