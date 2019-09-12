@@ -50,7 +50,8 @@ enum build
 {
 	Build_A = 0,
 	Build_B = 1,
-	Build_C = 2
+	Build_C = 2,
+	Build_D = 3
 };
 
 enum temp_val

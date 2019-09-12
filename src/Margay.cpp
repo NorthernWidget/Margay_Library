@@ -107,6 +107,12 @@ Margay::Margay(board Model_, build Specs_)
 			NumADR_OB = 2; //Tell system to search additional ADRs
 			I2C_ADR_OB[1] = 0x6B; //Use 0x6B on board ADC (MCP3421A3)
 		}
+
+
+		else if(Specs_ == Build_D) {
+			NumADR_OB = 2; //Tell system to search additional ADRs
+			I2C_ADR_OB[1] = 0x6A; //Use 0x6B on board ADC (MCP3421A3)
+		}
 	}
 	else {
 		SD_CS = 4;
@@ -367,7 +373,6 @@ void Margay::SDTest()
     	SDErrorTemp = true;
     	SDError = true; //Card not inserted
 	}
-
 	else if (!SD.begin(SD_CS)) {
     	OBError = true;
     	SDErrorTemp = true;
@@ -389,7 +394,6 @@ void Margay::SDTest()
 		char RandDigits[6] = {0};
 		sprintf(RandDigits, "%d", RandVal); //Convert RandVal into a series of digits
 		int RandLength = (int)((ceil(log10(RandVal))+1)*sizeof(char)); //Find the length of the values in the array
-
 		File DataWrite = SD.open(FileNameTestC, FILE_WRITE);
 		if(DataWrite) {
 		DataWrite.println(RandVal);
@@ -398,7 +402,6 @@ void Margay::SDTest()
 		DataWrite.println("-Hamlet, Act 1, Scene 2");
 		}
 		DataWrite.close();
-
 		char TestDigits[6] = {0};
 		File DataRead = SD.open(FileNameTestC, FILE_READ);
 		if(DataRead) {
@@ -516,6 +519,7 @@ void Margay::InitLogFile()
       (FileName + NumString + ".txt").toCharArray(FileNameC, 11);
     }
     (FileName + NumString + ".txt").toCharArray(FileNameC, 11);
+
   	String InitData = "Lib = " + String(LibVersion) + " SN = " + String(SN);  //Make string of onboard characteristics
   	LogStr(InitData); //Log as first line of data
   	// LogStr("Drink. Drink. Drink. Drink. Don't Think. Drive. Kill. Get drunk a lot. And work 40 hours a week. Drink. Drink. Drink. Drink. Don't Think. Drive. Kill. Get drunk a lot. And work 40 hours a week. "); //DEBUG!
@@ -739,7 +743,7 @@ void Margay::ResetWD()  //Send a pulse to "feed" the watchdog timer
 void Margay::AddDataPoint(String (*Update)(void)) //Reads new data and writes data to SD
 {
 	String Data = "";
-	EnviroSense.begin(0x77); //Re-initialize BME280
+	if(Model >= Model_2v0) EnviroSense.begin(0x77); //Re-initialize BME280  //FIX??
 	// Serial.println("Called Update"); //DEBUG!
 	Data = (*Update)(); //Run external update function
 	// Serial.println("Request OB Vals"); //DEBUG!
