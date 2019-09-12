@@ -509,17 +509,20 @@ void Margay::InitLogFile()
 	SD.chdir(SN);  //Move into specific numbered sub folder
 	SD.chdir("Logs"); //Move into the logs sub-folder
 	//Perform same search, but do so inside of "SD:NW/sn/Logs"
+    char NumCharArray[6];
     String FileName = "Log";
     int FileNum = 1;
-    String NumString = "01";
-    (FileName + "01"+ ".txt").toCharArray(FileNameC, 11);
+    sprintf(NumCharArray, "%05d", FileNum);
+    //Serial.print("NumString: ");
+    //Serial.println(ns);
+    (FileName + String(NumCharArray) + ".txt").toCharArray(FileNameC, 13);
     while(SD.exists(FileNameC)) {
       FileNum += 1;
-      NumString = String(FileNum, DEC);
-      (FileName + NumString + ".txt").toCharArray(FileNameC, 11);
+      sprintf(NumCharArray, "%05d", FileNum);
+      (FileName + String(NumCharArray) + ".txt").toCharArray(FileNameC, 13);
     }
-    (FileName + NumString + ".txt").toCharArray(FileNameC, 11);
-
+    Serial.print("FileNameC: ");
+    Serial.println(FileNameC);
   	String InitData = "Lib = " + String(LibVersion) + " SN = " + String(SN);  //Make string of onboard characteristics
   	LogStr(InitData); //Log as first line of data
   	// LogStr("Drink. Drink. Drink. Drink. Don't Think. Drive. Kill. Get drunk a lot. And work 40 hours a week. Drink. Drink. Drink. Drink. Don't Think. Drive. Kill. Get drunk a lot. And work 40 hours a week. "); //DEBUG!
