@@ -1,7 +1,7 @@
 # Margay Logger Library
 This library is designed to facilitate the simple and modular usage of the Margay data logger
 
-## Instillation:
+## Installation:
 
 ## Examples:
 
