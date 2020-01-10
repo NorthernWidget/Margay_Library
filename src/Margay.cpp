@@ -15,8 +15,12 @@
 
 
 
-		volatile bool ManualLog = false; //Global for interrupt access
+volatile bool ManualLog = false; // Global for interrupt access
 
+volatile uint8_t ExtIntPin = 255; // Sets external interrupt number; 255 for none
+String ext_int_header_entry;
+volatile bool ExtIntTripped = false; // Global for the external interrupt
+volatile uint16_t ExtInt_count = 0; // Global for the external interrupt
 
 Margay* Margay::selfPointer;
 
@@ -85,7 +89,7 @@ Margay::Margay(board Model_, build Specs_)
 		PG = 18;
 		TX = 11;
 		RX = 10; 
-		ExtInt = 11;
+		ExtIntPin = 11;
 		RTCInt = 10;
 		LogInt = 2; 
 
@@ -131,7 +135,7 @@ Margay::Margay(board Model_, build Specs_)
 		Ext3v3Ctrl = 12;
 		I2C_SW = 255;
 		PG = 18;
-		ExtInt = 11;
+		ExtIntPin = 11;
 		RTCInt = 10;
 		LogInt = 2; 
 		BatteryDivider = 9.0;
@@ -173,8 +177,15 @@ int Margay::begin(uint8_t *Vals, uint8_t NumVals, String Header_)
 	memcpy(I2C_ADR, Vals, sizeof(I2C_ADR)); //Copy array
 	// memcpy(I2C_ADR, Vals, NumVals); //Copy array  //DEBUG??
 	NumADR = NumVals; //Copy length of array
-	Header = Header_; //Copy user defined header
-
+	if (ExtIntPin == 255)
+	{
+		Header = Header_; //Copy user defined header
+	}
+	else
+	{
+		Header = Header_ + ext_int_header_entry;
+  }
+	
 	// NumADR_OB = 2; //DEBUG!
 	RTC.Begin(); //Initalize RTC
 	RTC.ClearAlarm(); //
@@ -305,6 +316,13 @@ int Margay::begin(uint8_t *Vals, uint8_t NumVals, String Header_)
 
 	// delay(2000);
 
+	if (ExtIntPin != 255)
+	{ 
+	  pinMode(ExtIntPin, INPUT);
+	  digitalWrite(ExtIntPin, HIGH);
+    attachInterrupt(digitalPinToInterrupt(ExtIntPin), Margay::isr2, FALLING);
+  }
+
 	LED_Color(OFF);
 }
 
@@ -369,7 +387,8 @@ void Margay::SDTest()
 	Serial.print("SD: ");
 	delay(5); //DEBUG!
 	if(CardPressent) {
-		Serial.println(" NO CARD");
+		Serial.println(F(" NO CARD"));
+    	SDErrorTemp = true;
     	SDError = true; //Card not inserted
 	}
 	else if (!SD.begin(SD_CS)) {
@@ -418,8 +437,8 @@ void Margay::SDTest()
 		keep_SPCR=SPCR; 
 	}
   
-	if(SDErrorTemp && !CardPressent) Serial.println("FAIL");  //If card is inserted and still does not connect propperly, throw error
-  	else if(!SDErrorTemp && !CardPressent) Serial.println("PASS");  //If card is inserted AND connectects propely return success 
+	if(SDError && !CardPressent) Serial.println("FAIL");  //If card is inserted and still does not connect propperly, throw error
+  	else if(!SDError && !CardPressent) Serial.println("PASS");  //If card is inserted AND connectects propely return success 
 }
 
 void Margay::ClockTest() 
@@ -720,6 +739,15 @@ void Margay::Run(String (*Update)(void), unsigned long LogInterval) //Pass in fu
 		ResetWD(); //Clear alarm
 	}
 
+	if(ExtIntTripped) {  // Defaults to just counter for now
+		// Serial.println("TIP!"); //DEBUG!
+    ExtInt_count ++;
+		ExtIntTripped = false; // Clear interrupt flag flag
+		ResetWD(); //Clear alarm
+		delay(150); //Hard-code for now; tipping bucket "debounce"
+    attachInterrupt(digitalPinToInterrupt(ExtIntPin), Margay::isr2, FALLING);
+	}
+
 	if(!digitalRead(RTCInt)) {  //Catch alarm if not reset properly 
    		Serial.println("Reset Alarm"); //DEBUG!
 		RTC.SetAlarm(LogInterval); //Turn alarm back on 
@@ -754,6 +782,7 @@ void Margay::AddDataPoint(String (*Update)(void)) //Reads new data and writes da
 	LogStr(Data);
 	// Serial.println("Loged Data"); //DEBUG!
 }
+
 //ISRs
 
 void Margay::ButtonLog() 
@@ -762,11 +791,40 @@ void Margay::ButtonLog()
 	ManualLog = true; //Set flag to manually record an additional data point
 }
 
+void Margay::ExtIntCounter()
+{
+  // ISR for an external event waking the logger
+  detachInterrupt(digitalPinToInterrupt(ExtIntPin));
+  ExtIntTripped = true; // Set flag to just increment the counter and return to sleep
+}
+
 void Margay::Log() 
 {
 	//Write global Data to SD
 	LogEvent = true; //Set flag for a log event
 	AwakeCount = 0; 
+}
+
+// ExtInt functions
+void Margay::SetExtInt(uint8_t n, String header_entry)
+{
+  ExtIntPin = n;
+  ext_int_header_entry = header_entry;
+}
+
+uint16_t Margay::GetExtIntCount(bool reset0)
+{
+  uint16_t out = ExtInt_count;
+  if (reset0)
+  {
+    ResetExtIntCount(0);
+  }
+  return out;
+}
+
+void Margay::ResetExtIntCount(uint16_t start)
+{
+    ExtInt_count = start;
 }
 
 void Margay::PowerAux(bool State)
@@ -810,6 +868,7 @@ void Margay::isr0() { selfPointer->ButtonLog(); }
 
 // ISR(PCINT0_vect) {
 void Margay::isr1() { selfPointer->Log(); }
+void Margay::isr2() { selfPointer->ExtIntCounter(); }
 
 //Low Power functions
 void Margay::sleepNow()         // here we put the arduino to sleep

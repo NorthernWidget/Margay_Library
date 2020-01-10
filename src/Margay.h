@@ -76,6 +76,10 @@ class Margay
 		float GetVoltage();
 		void AddDataPoint(String (*Update)(void));
 		void InitLogFile();
+		
+		void SetExtInt(uint8_t n, String header_entry = "nInterrupts,");
+		uint16_t GetExtIntCount(bool reset0 = true);
+		void ResetExtIntCount(uint16_t start = 0);
 
 		float GetTemp(temp_val Val = Therm_Val);
 		float GetBatVoltage();
@@ -122,6 +126,7 @@ class Margay
 		void virtual ButtonLog();
 		static void isr0();
 		static void isr1();
+		static void isr2();
 		static Margay* selfPointer;
 
 		static void DateTimeSD(uint16_t* date, uint16_t* time);
@@ -137,6 +142,7 @@ class Margay
 		void BatTest();
 		void PowerTest();
 		void EnviroStats();
+		void ExtIntCounter();
 		int freeMemory(); //DEBUG!
 
 		DS3231_Logger RTC;
