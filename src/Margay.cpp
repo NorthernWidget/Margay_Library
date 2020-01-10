@@ -369,8 +369,7 @@ void Margay::SDTest()
 	Serial.print("SD: ");
 	delay(5); //DEBUG!
 	if(CardPressent) {
-		Serial.println(F(" NO CARD"));
-    	SDErrorTemp = true;
+		Serial.println(" NO CARD");
     	SDError = true; //Card not inserted
 	}
 	else if (!SD.begin(SD_CS)) {
@@ -419,8 +418,8 @@ void Margay::SDTest()
 		keep_SPCR=SPCR; 
 	}
   
-	if(SDError && !CardPressent) Serial.println("FAIL");  //If card is inserted and still does not connect propperly, throw error
-  	else if(!SDError && !CardPressent) Serial.println("PASS");  //If card is inserted AND connectects propely return success 
+	if(SDErrorTemp && !CardPressent) Serial.println("FAIL");  //If card is inserted and still does not connect propperly, throw error
+  	else if(!SDErrorTemp && !CardPressent) Serial.println("PASS");  //If card is inserted AND connectects propely return success 
 }
 
 void Margay::ClockTest() 
