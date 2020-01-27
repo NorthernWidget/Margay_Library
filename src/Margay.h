@@ -1,4 +1,6 @@
 
+
+
 #ifndef MARGAY_h
 #define MARGAY_h
 
@@ -13,6 +15,7 @@
 #include "DS3231_Logger.h"
 #include "MCP3421.h"
 #include "SdFat.h"
+#include "BME.h"
 
 
 #define RED 0xFFFF0000L
@@ -24,7 +27,9 @@
 #define PURPLE 0xFF800080L
 #define CYAN 0xFF00FFFF
 #define BLACK_ALERT 0x802019FF
-#define OFF 0x00
+
+#define ON 1
+#define OFF 0
 
 #define MODEL_1v0 
 #define MODEL_0v0
@@ -37,14 +42,16 @@
 enum board
 {
     Model_0v0 = 0,
-    Model_1v0 = 1
+    Model_1v0 = 1,
+    Model_2v0 = 2
 };
 
 enum build 
 {
 	Build_A = 0,
 	Build_B = 1,
-	Build_C = 2
+	Build_C = 2,
+	Build_D = 3
 };
 
 enum temp_val
@@ -59,9 +66,9 @@ class Margay
 {
 
 	public:
-		Margay(board Model, build Specs_ = Build_A); //Use Build_A by default
+		Margay(board Model_, build Specs_ = Build_A); //Use Build_A by default
 		int begin(uint8_t *Vals, uint8_t NumVals, String Header_);
-		int begin(String Header_);
+		int begin(String Header_ = "");
 
 		int LogStr(String Val);
 		void LED_Color(unsigned long Val);
@@ -69,10 +76,18 @@ class Margay
 		float GetVoltage();
 		void AddDataPoint(String (*Update)(void));
 		void InitLogFile();
+		
+		void SetExtInt(uint8_t n, String header_entry = "nInterrupts,");
+		uint16_t GetExtIntCount(bool reset0 = true);
+		void ResetExtIntCount(uint16_t start = 0);
 
 		float GetTemp(temp_val Val = Therm_Val);
 		float GetBatVoltage();
 		float GetBatPer();
+
+		void ResetWD();
+		void PowerOB(bool State);
+		void PowerAux(bool State);
 
 		//Pin definitions
 		int SD_CS = 4;
@@ -94,8 +109,13 @@ class Margay
 		uint8_t ExtInt = 11;
 		uint8_t RTCInt = 10;
 		uint8_t LogInt = 2; 
+		uint8_t WDHold = 23; //ADD TO DOCUMENTATION!
+		uint8_t BatSwitch = 22; //ADD TO DOCUMENTATION!
+		uint8_t TX = 11; //ADD TO DOCUMENTATION!
+		uint8_t RX = 10; //ADD TO DOCUMENTATION! 
+		uint8_t D0 = 3; //ADD TO DOCUMENTATION!
 
-		const String LibVersion = "0.2.0";
+		const String LibVersion = "0.3.0";
 
 	protected:
 		float TempConvert(float V, float Vcc, float R, float A, float B, float C, float D, float R25);
@@ -106,6 +126,7 @@ class Margay
 		void virtual ButtonLog();
 		static void isr0();
 		static void isr1();
+		static void isr2();
 		static Margay* selfPointer;
 
 		static void DateTimeSD(uint16_t* date, uint16_t* time);
@@ -120,10 +141,13 @@ class Margay
 		void ClockTest();
 		void BatTest();
 		void PowerTest();
+		void EnviroStats();
+		void ExtIntCounter();
 		int freeMemory(); //DEBUG!
 
 		DS3231_Logger RTC;
 		MCP3421 adc;
+		BME EnviroSense; 
 
 		float A = 0.003354016;
 		float B = 0.0003074038;
@@ -156,7 +180,7 @@ class Margay
 
 		volatile bool LogEvent = false; //Used to test if logging should begin yet
 		volatile bool NewLog = false; //Used to tell system to start a new log
-		volatile bool ManualLog = false; //Used to add point to log by pressing the log button
+		// volatile bool ManualLog = false; //Used to add point to log by pressing the log button
 		volatile int AwakeCount = 0;
 
 		char FileNameC[11]; //Used for file handling
@@ -168,3 +192,4 @@ class Margay
 };
 
 #endif
+
