@@ -381,12 +381,14 @@ void Margay::SDTest()
 	bool SDErrorTemp = false;
 	// bool SD_Test = true;
 
+  // SD_CD is pulled up: HIGH=1 if not present
+  // SD card being inserted closes a switch to pull it LOW
 	pinMode(SD_CD, INPUT);
-	bool CardPressent = digitalRead(SD_CD);
+	bool CardNotPresent = digitalRead(SD_CD);
 
 	Serial.print("SD: ");
 	delay(5); //DEBUG!
-	if(CardPressent) {
+	if(CardNotPresent) {
 		Serial.println(F(" NO CARD"));
     	SDErrorTemp = true;
     	SDError = true; //Card not inserted
@@ -396,7 +398,8 @@ void Margay::SDTest()
     	SDErrorTemp = true;
   	}
 
-  	if(!CardPressent) {
+    // If card is present, do the following:
+  	if(!CardNotPresent) {
   		SD.mkdir("NW");  //Create NW folder (if not already present)
   		SD.chdir("/NW"); //Move file pointer into NW folder (at root level)
   		SD.mkdir(SN); //Make directory with serial number as name
@@ -437,8 +440,8 @@ void Margay::SDTest()
 		keep_SPCR=SPCR; 
 	}
   
-	if(SDError && !CardPressent) Serial.println("FAIL");  //If card is inserted and still does not connect propperly, throw error
-  	else if(!SDError && !CardPressent) Serial.println("PASS");  //If card is inserted AND connectects propely return success 
+	if(SDError && !CardNotPresent) Serial.println("FAIL");  //If card is inserted and still does not connect propperly, throw error
+	else if(!SDError && !CardNotPresent) Serial.println("PASS");  //If card is inserted AND connectects propely return success 
 }
 
 void Margay::ClockTest() 
