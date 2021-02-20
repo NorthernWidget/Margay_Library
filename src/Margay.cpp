@@ -390,55 +390,54 @@ void Margay::SDTest()
 	delay(5); //DEBUG!
 	if(CardNotPresent) {
 		Serial.println(F(" NO CARD"));
-    	SDErrorTemp = true;
-    	SDError = true; //Card not inserted
+  	SDErrorTemp = true;
+  	SDError = true; //Card not inserted
 	}
 	else if (!SD.begin(SD_CS)) {
-    	OBError = true;
-    	SDErrorTemp = true;
-  	}
-
-    // If card is present, do the following:
-  	if(!CardNotPresent) {
-  		SD.mkdir("NW");  //Create NW folder (if not already present)
-  		SD.chdir("/NW"); //Move file pointer into NW folder (at root level)
-  		SD.mkdir(SN); //Make directory with serial number as name
-  		SD.chdir(SN); //Move into this directory
-  		//Change directory to SN# named dir
-  		SD.mkdir("Logs"); //Use???
-		String FileNameTest = "HWTest";
-		(FileNameTest + ".txt").toCharArray(FileNameTestC, 11);
-		SD.remove(FileNameTestC); //Remove any previous files
-
-		randomSeed(analogRead(A7)); //Seed with a random process to try to endsure randomness
-		int RandVal = random(30557); //Generate a random number between 0 and 30557 (the number of words in Hamlet)
-		char RandDigits[6] = {0};
-		sprintf(RandDigits, "%d", RandVal); //Convert RandVal into a series of digits
-		int RandLength = (int)((ceil(log10(RandVal))+1)*sizeof(char)); //Find the length of the values in the array
-		File DataWrite = SD.open(FileNameTestC, FILE_WRITE);
-		if(DataWrite) {
-		DataWrite.println(RandVal);
-		DataWrite.println("\nHe was a man. Take him for all in all.");
-		DataWrite.println("I shall not look upon his like again.");
-		DataWrite.println("-Hamlet, Act 1, Scene 2");
-		}
-		DataWrite.close();
-		char TestDigits[6] = {0};
-		File DataRead = SD.open(FileNameTestC, FILE_READ);
-		if(DataRead) {
-		DataRead.read(TestDigits, RandLength);
-
-		for(int i = 0; i < RandLength - 1; i++){ //Test random value string
-		  if(TestDigits[i] != RandDigits[i]) {
-		    SDErrorTemp = true;
-		    OBError = true;
-		  }
-		}
-		}
-		DataRead.close();
-
-		keep_SPCR=SPCR; 
+  	OBError = true;
+  	SDErrorTemp = true;
 	}
+
+  // If card is present, do the following:
+	if(!CardNotPresent) {
+		SD.mkdir("NW");  //Create NW folder (if not already present)
+		SD.chdir("/NW"); //Move file pointer into NW folder (at root level)
+		SD.mkdir(SN); //Make directory with serial number as name
+		SD.chdir(SN); //Move into this directory
+		//Change directory to SN# named dir
+		SD.mkdir("Logs"); //Use???
+	  String FileNameTest = "HWTest";
+	  (FileNameTest + ".txt").toCharArray(FileNameTestC, 11);
+	  SD.remove(FileNameTestC); //Remove any previous files
+
+	  randomSeed(analogRead(A7)); //Seed with a random process to try to endsure randomness
+	  int RandVal = random(30557); //Generate a random number between 0 and 30557 (the number of words in Hamlet)
+	  char RandDigits[6] = {0};
+	  sprintf(RandDigits, "%d", RandVal); //Convert RandVal into a series of digits
+	  int RandLength = (int)((ceil(log10(RandVal))+1)*sizeof(char)); //Find the length of the values in the array
+	  File DataWrite = SD.open(FileNameTestC, FILE_WRITE);
+	  if(DataWrite) {
+		  DataWrite.println(RandVal);
+		  DataWrite.println("\nHe was a man. Take him for all in all.");
+		  DataWrite.println("I shall not look upon his like again.");
+		  DataWrite.println("-Hamlet, Act 1, Scene 2");
+	  }
+	  DataWrite.close();
+	  char TestDigits[6] = {0};
+	  File DataRead = SD.open(FileNameTestC, FILE_READ);
+	  if(DataRead) {
+    	DataRead.read(TestDigits, RandLength);
+		  for(int i = 0; i < RandLength - 1; i++){ //Test random value string
+		    if(TestDigits[i] != RandDigits[i]) {
+		      SDErrorTemp = true;
+		      OBError = true;
+		    }
+		  }
+	  }
+	  DataRead.close();
+
+	  keep_SPCR=SPCR; 
+  }
   
 	if(SDError && !CardNotPresent) Serial.println("FAIL");  //If card is inserted and still does not connect propperly, throw error
 	else if(!SDError && !CardNotPresent) Serial.println("PASS");  //If card is inserted AND connectects propely return success 
