@@ -699,6 +699,22 @@ void Margay::Blink()
   }
 }
 
+void Margay::BlinkGood()
+{  
+  // Peppy blinky pattern to show that the logger has successfully initialized
+  digitalWrite(BlueLED,LOW);
+  delay(651);
+  digitalWrite(BlueLED,HIGH);
+  delay(300);
+  digitalWrite(BlueLED,LOW);
+  delay(100);
+  digitalWrite(BlueLED,HIGH);
+  delay(200);
+  digitalWrite(BlueLED,LOW);
+  delay(100);
+  digitalWrite(BlueLED,HIGH);
+}
+
 float Margay::GetVoltage()  //Get voltage from Ax pin
 {
 	float Val = adc.GetVoltage();
@@ -719,7 +735,7 @@ void Margay::Run(String (*Update)(void), unsigned long LogInterval) //Pass in fu
 		//Add inital data point 
 		AddDataPoint(Update);
 		NewLog = false;  //Clear flag once log is started 
-    	Blink();  //Alert user to start of log
+    	BlinkGood();  //Alert user to start of log
     	ResetWD(); //Clear alarm
 	}
 
