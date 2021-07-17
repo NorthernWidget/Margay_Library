@@ -22,7 +22,7 @@ Andy Wickert
 
 
 
-volatile bool ManualLog = false; // Global for interrupt access
+volatile bool manualLog = false; // Global for interrupt access
 
 volatile uint8_t ExtIntPin = 255; // Sets external interrupt number; 255 for none
 String ext_int_header_entry;
@@ -336,9 +336,9 @@ int Margay::begin(uint8_t *Vals, uint8_t numVals, String header_)
 ISR (PCINT0_vect) // handle pin change interrupt for D8 to D13 here
 {
 	// boolean PinVal = (PINA & digitalPinToBitMask(28));
-    // if(PinVal == LOW) ManualLog = true; //Set flag to manually record an additional data point; //Only fun the function if trigger criteria is true
+    // if(PinVal == LOW) manualLog = true; //Set flag to manually record an additional data point; //Only fun the function if trigger criteria is true
     // digitalWrite(14, LOW); //DEBUG!
-    ManualLog = true; //DEBUG!
+    manualLog = true; //DEBUG!
 }
 
 int Margay::begin(String header_)
@@ -759,10 +759,10 @@ void Margay::run(String (*update)(void), unsigned long logInterval) //Pass in fu
 		resetWDT(); //Clear alarm
 	}
 
-	if(ManualLog) {  //Write data to SD card without interrupting existing timing cycle
+	if(manualLog) {  //Write data to SD card without interrupting existing timing cycle
 		// Serial.println("Click!"); //DEBUG!
 		addDataPoint(update); //write values to SD
-		ManualLog = false; //Clear log flag
+		manualLog = false; //Clear log flag
 		resetWDT(); //Clear alarm
 	}
 
@@ -840,7 +840,7 @@ void Margay::addDataPoint(String (*update)(void)) //Reads new data and writes da
 void Margay::buttonLog()
 {
 	//ISR to respond to pressing log button and waking device from sleep and starting log
-	ManualLog = true; //Set flag to manually record an additional data point
+	manualLog = true; //Set flag to manually record an additional data point
 }
 
 void Margay::extIntCounter()
@@ -915,7 +915,7 @@ void Margay::isr0() { selfPointer->buttonLog(); }
 
 // ISR(PCINT0_vect)
 // {
-// 	ManualLog = true;
+// 	manualLog = true;
 // }
 
 // ISR(PCINT0_vect) {
