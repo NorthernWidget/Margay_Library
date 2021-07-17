@@ -728,7 +728,7 @@ float Margay::getVoltage()  //Get voltage from Ax pin
 	return val;
 }
 
-void Margay::Run(String (*update)(void), unsigned long logInterval) //Pass in function which returns string of data
+void Margay::run(String (*update)(void), unsigned long logInterval) //Pass in function which returns string of data
 {
 	// Serial.println("BANG!"); //DEBUG!
 	// Serial.println(millis()); //DEBUG!

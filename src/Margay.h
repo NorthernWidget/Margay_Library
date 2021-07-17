@@ -78,7 +78,7 @@ class Margay
 
 		int logStr(String val);
 		void LED_Color(unsigned long val);
-		void Run(String (*f)(void), unsigned long logInterval);
+		void run(String (*f)(void), unsigned long logInterval);
 		float getVoltage();
 		void addDataPoint(String (*update)(void));
 		void initLogFile();
