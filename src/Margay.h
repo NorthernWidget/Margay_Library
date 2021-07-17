@@ -130,7 +130,7 @@ class Margay
 		// void StartLog();
 		// void Log();
 		void virtual writeDataToSD();
-		void virtual ButtonLog();
+		void virtual buttonLog();
 		static void isr0();
 		static void isr1();
 		static void isr2();

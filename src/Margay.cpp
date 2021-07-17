@@ -258,8 +258,8 @@ int Margay::begin(uint8_t *Vals, uint8_t numVals, String header_)
 	SdFile::dateTimeCallback(dateTimeSD); //Setup SD file time setting
 	attachInterrupt(digitalPinToInterrupt(RTCInt), Margay::isr1, FALLING); //Attach an interrupt driven by the interrupt from RTC, logs data
 	if(Model < 2) attachInterrupt(digitalPinToInterrupt(LogInt), Margay::isr0, FALLING);	//Attach an interrupt driven by the manual log button, sets logging flag and logs data
-	// AttachPCI(LogInt, ButtonLog, FALLING); //Attach an interrupt driven by the manual log button, sets logging flag and logs data (using pin change interrupts)
-	// enableInterrupt(LogInt, ButtonLog, FALLING);
+	// AttachPCI(LogInt, buttonLog, FALLING); //Attach an interrupt driven by the manual log button, sets logging flag and logs data (using pin change interrupts)
+	// enableInterrupt(LogInt, buttonLog, FALLING);
 	else { //If using Model > v2.2, use PCINT for log button
 		*digitalPinToPCMSK(LogInt) |= bit (digitalPinToPCMSKbit(LogInt));  // enable pin
 		// PCIFR  |= 0xFE; // clear any outstanding interrupt
@@ -837,7 +837,7 @@ void Margay::addDataPoint(String (*update)(void)) //Reads new data and writes da
 
 //ISRs
 
-void Margay::ButtonLog()
+void Margay::buttonLog()
 {
 	//ISR to respond to pressing log button and waking device from sleep and starting log
 	ManualLog = true; //Set flag to manually record an additional data point
@@ -911,7 +911,7 @@ void Margay::dateTimeSD(uint16_t* date, uint16_t* time)
 
 void Margay::dateTimeSD_Glob(uint16_t* date, uint16_t* time) {selfPointer->dateTimeSD(date, time);}  //Fix dumb name!
 
-void Margay::isr0() { selfPointer->ButtonLog(); }
+void Margay::isr0() { selfPointer->buttonLog(); }
 
 // ISR(PCINT0_vect)
 // {
