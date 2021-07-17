@@ -66,7 +66,7 @@ class Margay
 
 	public:
     Margay();
-		Margay(board Model_, build Specs_ = Build_A); //Use Build_A by default
+		Margay(board model_, build specs_);
     int begin(uint8_t *Vals, uint8_t NumVals, String Header_);
 		int begin(String Header_ = "");
 
