@@ -31,7 +31,7 @@
 #define ON 1
 #define OFF 0
 
-#define MODEL_1v0 
+#define MODEL_1v0
 #define MODEL_0v0
 
 //Define CBI macro
@@ -46,7 +46,7 @@ enum board
     Model_2v0 = 2
 };
 
-enum build 
+enum build
 {
 	Build_A = 0,
 	Build_B = 1,
@@ -66,8 +66,9 @@ class Margay
 {
 
 	public:
+    Margay();
 		Margay(board Model_, build Specs_ = Build_A); //Use Build_A by default
-		int begin(uint8_t *Vals, uint8_t NumVals, String Header_);
+    int begin(uint8_t *Vals, uint8_t NumVals, String Header_);
 		int begin(String Header_ = "");
 
 		int LogStr(String Val);
@@ -76,7 +77,7 @@ class Margay
 		float GetVoltage();
 		void AddDataPoint(String (*Update)(void));
 		void InitLogFile();
-		
+
 		void SetExtInt(uint8_t n, String header_entry = "nInterrupts,");
 		uint16_t GetExtIntCount(bool reset0 = true);
 		void ResetExtIntCount(uint16_t start = 0);
@@ -108,11 +109,11 @@ class Margay
 		uint8_t PG = 18;
 		uint8_t ExtInt = 11;
 		uint8_t RTCInt = 10;
-		uint8_t LogInt = 2; 
+		uint8_t LogInt = 2;
 		uint8_t WDHold = 23; //ADD TO DOCUMENTATION!
 		uint8_t BatSwitch = 22; //ADD TO DOCUMENTATION!
 		uint8_t TX = 11; //ADD TO DOCUMENTATION!
-		uint8_t RX = 10; //ADD TO DOCUMENTATION! 
+		uint8_t RX = 10; //ADD TO DOCUMENTATION!
 		uint8_t D0 = 3; //ADD TO DOCUMENTATION!
 
 		const String LibVersion = "0.3.0";
@@ -148,7 +149,7 @@ class Margay
 
 		DS3231_Logger RTC;
 		MCP3421 adc;
-		BME EnviroSense; 
+		BME EnviroSense;
 
 		float A = 0.003354016;
 		float B = 0.0003074038;
@@ -161,13 +162,13 @@ class Margay
 		bool SensorError = false;
 		bool TimeError = false;
 		bool SDError = false; //USE??
-		bool BatError = false; 
+		bool BatError = false;
 		bool BatWarning = false;
 		float BatVoltageError = 3.3; //Low battery alert will trigger if voltage drops below this value
 		float BatPercentageWarning = 50; //Percentage at which a warning will be indicated
 		String Header = "";
 		const char HexMap[16] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'}; //used for conversion to HEX of string
-		char SN[20] = {0}; //Used to store device serial number, 19 chars + null terminator 
+		char SN[20] = {0}; //Used to store device serial number, 19 chars + null terminator
 		// String SN = "FFFF-FFFF-FFFF-FFFF";
 		uint8_t NumADR = 0;
 		uint8_t I2C_ADR[16] = {0}; //Change length??
@@ -193,4 +194,3 @@ class Margay
 };
 
 #endif
-
