@@ -26,8 +26,8 @@ Margay* Margay::selfPointer;
 
 Margay::Margay()
 {
-	// Default to v2, build B
-	Margay::Margay(Model_2v0, Build_B);
+	// Default to v2.2, build B
+	Margay::Margay(MODEL_2v2, BUILD_B);
 }
 
 Margay::Margay(board Model_, build Specs_)
@@ -273,7 +273,7 @@ int Margay::begin(uint8_t *Vals, uint8_t NumVals, String Header_)
 	ClockTest();
 	SDTest();
 	BatTest();
-	if(Model >= Model_2v0) EnviroStats();  //Only print out enviromental variables if BME is on board
+	if(Model >= MODEL_2v0) EnviroStats();  //Only print out enviromental variables if BME is on board
 
 
 
@@ -553,7 +553,7 @@ void Margay::InitLogFile()
   	LogStr(InitData); //Log as first line of data
   	// LogStr("Drink. Drink. Drink. Drink. Don't Think. Drive. Kill. Get drunk a lot. And work 40 hours a week. Drink. Drink. Drink. Drink. Don't Think. Drive. Kill. Get drunk a lot. And work 40 hours a week. "); //DEBUG!
     // LogStr(Header); //DEBUG!
-    if(Model < Model_2v0) LogStr("Time [UTC], Temp OB [C], Temp RTC [C], Bat [V], " + Header); //Log concatonated header (for old loggers)
+    if(Model < MODEL_2v0) LogStr("Time [UTC], Temp OB [C], Temp RTC [C], Bat [V], " + Header); //Log concatonated header (for old loggers)
     else LogStr("Time [UTC], PresOB [mBar], RH_OB [%], TempOB [C], Temp RTC [C], Bat [V], " + Header); //Log concatonated header (for new loggers)
     // LogStr("Time [UTC], PresOB [mBar], RH_OB [%], TempOB [C], Temp RTC [C], Bat [V], " + Header); //Log concatonated header (for new loggers)
 }
@@ -659,7 +659,7 @@ String Margay::GetOnBoardVals()
 	// Serial.println(Vcc); //DEBUG!
 	float TempData = 0; //FIX!!! Dumb!
 
-	if(Model < Model_2v0) {  //For older thermistor models
+	if(Model < MODEL_2v0) {  //For older thermistor models
 		float Val = float(analogRead(ThermSense_Pin));
 		float Comp = (1.8/3.3)*1024.0/analogRead(VRef_Pin);  //Find compensation value with VRef due to Vcc error
 		if(Model == 0) Comp = 1.0; //Overide comp calculation since many v0.0 models do not have ref equiped
@@ -677,7 +677,7 @@ String Margay::GetOnBoardVals()
 	// Temp[3] = Clock.getTemperature(); //Get tempreture from RTC //FIX!
 	float RTCTemp = RTC.getTemp();  //Get Temp from RTC
 	GetTime(); //FIX!
-	if(Model< Model_2v0) return LogTimeDate + "," + String(TempData) + "," + String(RTCTemp) + "," + String(BatVoltage) + ",";
+	if(Model< MODEL_2v0) return LogTimeDate + "," + String(TempData) + "," + String(RTCTemp) + "," + String(BatVoltage) + ",";
 	else return LogTimeDate + "," + String(EnviroSense.GetString()) + String(RTCTemp) + "," + String(BatVoltage) + ",";
 }
 
@@ -797,7 +797,7 @@ void Margay::ResetWD()  //Send a pulse to "feed" the watchdog timer
 void Margay::AddDataPoint(String (*Update)(void)) //Reads new data and writes data to SD
 {
 	String Data = "";
-	if(Model >= Model_2v0) EnviroSense.begin(0x77); //Re-initialize BME280  //FIX??
+	if(Model >= MODEL_2v0) EnviroSense.begin(0x77); //Re-initialize BME280  //FIX??
 	// Serial.println("Called Update"); //DEBUG!
 	Data = (*Update)(); //Run external update function
 	// Serial.println("Request OB Vals"); //DEBUG!
@@ -855,7 +855,7 @@ void Margay::PowerAux(bool State)
 {
 	pinMode(Ext3v3Ctrl, OUTPUT); //Setup outputs for robustness
 	if(State) PowerOB(ON); //Turn on on-board power if required
-	if(Model >= Model_2v0) {  //use positive logic for Model v2.0 and newer
+	if(Model >= MODEL_2v0) {  //use positive logic for Model v2.0 and newer
 		digitalWrite(Ext3v3Ctrl, State); //Switch 3v3 Aux power
 	}
 	else digitalWrite(Ext3v3Ctrl, !State); //Switch 3v3 Aux power

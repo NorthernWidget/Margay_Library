@@ -38,17 +38,19 @@
 
 enum board
 {
-    Model_0v0 = 0,
-    Model_1v0 = 1,
-    Model_2v0 = 2
+    MODEL_0v0 = 0,
+    MODEL_1v0 = 1,
+    MODEL_2v0 = 2,
+    MODEL_2v1 = 2,
+    MODEL_2v2 = 2
 };
 
 enum build
 {
-	Build_A = 0,
-	Build_B = 1,
-	Build_C = 2,
-	Build_D = 3
+	BUILD_A = 0,
+	BUILD_B = 1,
+	BUILD_C = 2,
+	BUILD_D = 3
 };
 
 enum temp_val
