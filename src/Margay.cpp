@@ -822,7 +822,14 @@ void Margay::addDataPoint(String (*update)(void)) //Reads new data and writes da
 	data = (*update)(); //Run external update function
 	externalI2C(OFF);
 	// Serial.println("Request OB Vals"); //DEBUG!
+	// Briefly flash an LED to show that data are being logged
+	// without needing to waste extra time/power with a delay.
+	// This step should always take the same amount of time
+	// unless there is a significant library or xtal change
+	pinMode(BlueLED, OUTPUT);
+	digitalWrite(BlueLED, LOW); //ON
 	data = getOnBoardVals() + data; //Prepend on board readings
+	digitalWrite(BlueLED, HIGH); //OFF
 	// Serial.println("Got OB Vals");  //DEBUG!
 	logStr(data);
 	// Serial.println("Loged Data"); //DEBUG!
