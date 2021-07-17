@@ -159,10 +159,10 @@ Margay::Margay(board model_, build specs_)
 	Specs = specs_; //Store build info locally
 }
 
-int Margay::begin(uint8_t *Vals, uint8_t NumVals, String Header_)
+int Margay::begin(uint8_t *Vals, uint8_t numVals, String header_)
 {
-	PowerOB(ON);  //Turn on on-board power
-	PowerAux(ON); //Turn on external auxilary power
+	powerOB(ON);  //Turn on on-board power
+	powerAux(ON); //Turn on external auxilary power
 	pinMode(WDHold, OUTPUT);
 	// pinMode(BatSwitch, OUTPUT);
 	// digitalWrite(BatSwitch, HIGH);
@@ -175,15 +175,15 @@ int Margay::begin(uint8_t *Vals, uint8_t NumVals, String Header_)
 	pinMode(VSwitch_Pin, OUTPUT); //Setup switch control as output
 
 	memcpy(I2C_ADR, Vals, sizeof(I2C_ADR)); //Copy array
-	// memcpy(I2C_ADR, Vals, NumVals); //Copy array  //DEBUG??
-	NumADR = NumVals; //Copy length of array
+	// memcpy(I2C_ADR, Vals, numVals); //Copy array  //DEBUG??
+	NumADR = numVals; //Copy length of array
 	if (ExtIntPin == 255)
 	{
-		Header = Header_; //Copy user defined header
+		Header = header_; //Copy user defined header
 	}
 	else
 	{
-		Header = Header_ + ext_int_header_entry;
+		Header = header_ + ext_int_header_entry;
   }
 
 	// NumADR_OB = 2; //DEBUG!
@@ -201,12 +201,12 @@ int Margay::begin(uint8_t *Vals, uint8_t NumVals, String Header_)
 	Serial.println(LibVersion);
 	Serial.print("SN = ");
 	int EEPROMLen = EEPROM.length(); //Copy value for faster access
-	int Val = 0; //Value to read temp EEPROM values into
+	int val = 0; //Value to read temp EEPROM values into
 	int Pos = 0; //used to keep track of position in SN string
 	for(int i = EEPROMLen - 8; i < EEPROMLen; i++) {  //Read out Serial Number
-		Val = EEPROM.read(i);  //Read SN values as individual bytes from EEPROM
-		SN[Pos++] = HexMap[(Val >> 4)]; //Load upper nibble of hex value, post inc pos
-		SN[Pos++] = HexMap[(Val % 0x10)]; //Load lower nibble of hex value, post inc pos
+		val = EEPROM.read(i);  //Read SN values as individual bytes from EEPROM
+		SN[Pos++] = HexMap[(val >> 4)]; //Load upper nibble of hex value, post inc pos
+		SN[Pos++] = HexMap[(val % 0x10)]; //Load lower nibble of hex value, post inc pos
 		if(i % 2 == 1 && i < EEPROMLen - 1) {
 			SN[Pos++] = '-';  //Place - between each SN category, post inc pos
 			// Pos += 1;
@@ -334,10 +334,10 @@ ISR (PCINT0_vect) // handle pin change interrupt for D8 to D13 here
     ManualLog = true; //DEBUG!
 }
 
-int Margay::begin(String Header_)
+int Margay::begin(String header_)
 {
 	uint8_t Dummy[1] = {NULL};
-	begin(Dummy, 0, Header_); //Call generalized begin function
+	begin(Dummy, 0, header_); //Call generalized begin function
 }
 
 void Margay::I2CTest()
@@ -485,12 +485,12 @@ void Margay::ClockTest()
 
 void Margay::BatTest()
 {
-	if(GetBatVoltage() < BatVoltageError) BatError = true; //Set error flag if below min voltage
-	if(GetBatPer() < BatPercentageWarning) BatWarning = true; //Set warning flag is below set percentage
+	if(getBatVoltage() < BatVoltageError) BatError = true; //Set error flag if below min voltage
+	if(getBatPer() < BatPercentageWarning) BatWarning = true; //Set warning flag is below set percentage
 	Serial.print("Bat = ");
-	Serial.print(GetBatVoltage());
+	Serial.print(getBatVoltage());
 	Serial.print("V\t");
-	Serial.print(GetBatPer());
+	Serial.print(getBatPer());
 	Serial.println("%");
 }
 void Margay::PowerTest()
@@ -522,7 +522,7 @@ void Margay::EnviroStats()
 	Serial.println("%");
 }
 
-void Margay::InitLogFile()
+void Margay::initLogFile()
 {
 	// SD.chdir("/"); //Return to root to define starting state
 	SD.chdir("/NW");  //Move into northern widget folder from root
@@ -544,17 +544,17 @@ void Margay::InitLogFile()
     Serial.print("FileNameC: ");
     Serial.println(FileNameC);
   	String InitData = "Lib = " + String(LibVersion) + " SN = " + String(SN);  //Make string of onboard characteristics
-  	LogStr(InitData); //Log as first line of data
-  	// LogStr("Drink. Drink. Drink. Drink. Don't Think. Drive. Kill. Get drunk a lot. And work 40 hours a week. Drink. Drink. Drink. Drink. Don't Think. Drive. Kill. Get drunk a lot. And work 40 hours a week. "); //DEBUG!
-    // LogStr(Header); //DEBUG!
-    if(Model < MODEL_2v0) LogStr("Time [UTC], Temp OB [C], Temp RTC [C], Bat [V], " + Header); //Log concatonated header (for old loggers)
-    else LogStr("Time [UTC], PresOB [mBar], RH_OB [%], TempOB [C], Temp RTC [C], Bat [V], " + Header); //Log concatonated header (for new loggers)
-    // LogStr("Time [UTC], PresOB [mBar], RH_OB [%], TempOB [C], Temp RTC [C], Bat [V], " + Header); //Log concatonated header (for new loggers)
+  	logStr(InitData); //Log as first line of data
+  	// logStr("Drink. Drink. Drink. Drink. Don't Think. Drive. Kill. Get drunk a lot. And work 40 hours a week. Drink. Drink. Drink. Drink. Don't Think. Drive. Kill. Get drunk a lot. And work 40 hours a week. "); //DEBUG!
+    // logStr(Header); //DEBUG!
+    if(Model < MODEL_2v0) logStr("Time [UTC], Temp OB [C], Temp RTC [C], Bat [V], " + Header); //Log concatonated header (for old loggers)
+    else logStr("Time [UTC], PresOB [mBar], RH_OB [%], TempOB [C], Temp RTC [C], Bat [V], " + Header); //Log concatonated header (for new loggers)
+    // logStr("Time [UTC], PresOB [mBar], RH_OB [%], TempOB [C], Temp RTC [C], Bat [V], " + Header); //Log concatonated header (for new loggers)
 }
 
-int Margay::LogStr(String Val)
+int Margay::logStr(String val)
 {
-	Serial.println(Val); //Echo to serial monitor
+	Serial.println(val); //Echo to serial monitor
 	// SD.begin(SD_CS); //DEBUG!
 	// SD.chdir("/"); //Return to root to define starting state
 	SD.chdir("/NW");  //Move into northern widget folder from root
@@ -564,7 +564,7 @@ int Margay::LogStr(String Val)
 
 	// if the file is available, write to it:
 	if (DataFile) {
-		DataFile.println(Val);
+		DataFile.println(val);
 	   // return 0;
 	}
 	// if the file isn't open, pop up an error:
@@ -575,18 +575,18 @@ int Margay::LogStr(String Val)
 	DataFile.close();
 }
 
-void Margay::LED_Color(unsigned long Val) //Set color of onboard led
+void Margay::LED_Color(unsigned long val) //Set color of onboard led
 {
 	int Red = 0; //Red led color
 	int Green = 0;  //Green led color
 	int Blue = 0;  //Blue led color
 	int Lum = 0;  //Luminosity
 
-	//Parse all values from single Val
-	Blue = Val & 0xFF;
-	Green = (Val >> 8) & 0xFF;
-	Red = (Val >> 16) & 0xFF;
-	Lum = (Val >> 24) & 0xFF;
+	//Parse all values from single val
+	Blue = val & 0xFF;
+	Green = (val >> 8) & 0xFF;
+	Red = (val >> 16) & 0xFF;
+	Lum = (val >> 24) & 0xFF;
 	//  Lum = 255 - Lum; //Invert since LEDs are open drain
 
 	analogWrite(RedLED, 255 - (Red * Lum)/0xFF);
@@ -602,22 +602,22 @@ void Margay::GetTime()
 	LogTimeDate = RTC.getTime(0);
 }
 
-float Margay::GetTemp(temp_val Val)
+float Margay::getTemp(temp_val val)
 {
 	float Vcc = 3.3;
-	if(Val == Therm_Val) {
-		float Val = float(analogRead(ThermSense_Pin))*(Vcc/1024.0);
-		float TempData = TempConvert(Val, Vcc, 10000.0, A, B, C, D, 10000.0);
+	if(val == therm_val) {
+		float val = float(analogRead(ThermSense_Pin))*(Vcc/1024.0);
+		float TempData = TempConvert(val, Vcc, 10000.0, A, B, C, D, 10000.0);
 		TempData = TempData - 273.15; //Get temp from on board thermistor
 		return TempData;
 	}
-	if(Val == RTC_Val) {
+	if(val == RTC_val) {
 		float RTCTemp = RTC.getTemp();  //Get Temp from RTC
 		return RTCTemp;
 	}
 }
 
-float Margay::GetBatVoltage()
+float Margay::getBatVoltage()
 {
 	ADMUX = 0b00000000; //Setup voltage ref
 	delay(10); //Alow for >1 clock cycle to set values
@@ -631,21 +631,21 @@ float Margay::GetBatVoltage()
 	return BatVoltage;
 }
 
-float Margay::GetBatPer()
+float Margay::getBatPer()
 {
 	//NOTE: Fit developed for Duracell AA, should work well for most alkalines, but no gaurentee given on accuracy
 	//From 305 to 100% capacity, should be accurate to within 1% (for data taken at 25C)
 	float A = -1.9809;
 	float B = 6.2931;
 	float C = -4.0063;
-	float Val = GetBatVoltage()/3.0; //Divide to get cell voltage
-	float Per = ((A*pow(Val, 2) + B*Val + C)*2 - 1)*100.0; //Return percentage of remaining battery energy
+	float val = getBatVoltage()/3.0; //Divide to get cell voltage
+	float Per = ((A*pow(val, 2) + B*val + C)*2 - 1)*100.0; //Return percentage of remaining battery energy
 	if(Per < 0) return 0;  //Do not allow return of non-sensical values
 	if(Per > 100) return 100;  //Is this appropriate? Float voltage could be higher than specified and still be correct
 	return Per;
 }
 
-String Margay::GetOnBoardVals()
+String Margay::getOnBoardVals()
 {
 	//Get onboard temp, RTC temp, and battery voltage, referance voltage
 	// float VRef = analogRead(VRef_Pin);
@@ -654,19 +654,19 @@ String Margay::GetOnBoardVals()
 	float TempData = 0; //FIX!!! Dumb!
 
 	if(Model < MODEL_2v0) {  //For older thermistor models
-		float Val = float(analogRead(ThermSense_Pin));
+		float val = float(analogRead(ThermSense_Pin));
 		float Comp = (1.8/3.3)*1024.0/analogRead(VRef_Pin);  //Find compensation value with VRef due to Vcc error
 		if(Model == 0) Comp = 1.0; //Overide comp calculation since many v0.0 models do not have ref equiped
-		Val = Val*Comp*(Vcc/1024.0); //Compensate for ref voltage error
-		//  float Vout = Vcc - Val;
-		//  Serial.println(Val); //DEBUG!
+		val = val*Comp*(Vcc/1024.0); //Compensate for ref voltage error
+		//  float Vout = Vcc - val;
+		//  Serial.println(val); //DEBUG!
 		//  Serial.println(Vout);  //DEBUG!
-		TempData = TempConvert(Val, Vcc*Comp, 10000.0, A, B, C, D, 10000.0);
+		TempData = TempConvert(val, Vcc*Comp, 10000.0, A, B, C, D, 10000.0);
 		TempData = TempData - 273.15; //Get temp from on board thermistor
 	}
 
 	// delay(10);
-	float BatVoltage = GetBatVoltage(); //Get battery voltage, Include voltage divider in math
+	float BatVoltage = getBatVoltage(); //Get battery voltage, Include voltage divider in math
 
 	// Temp[3] = Clock.getTemperature(); //Get tempreture from RTC //FIX!
 	float RTCTemp = RTC.getTemp();  //Get Temp from RTC
@@ -715,60 +715,60 @@ void Margay::BlinkGood()
   digitalWrite(BlueLED,HIGH);
 }
 
-float Margay::GetVoltage()  //Get voltage from Ax pin
+float Margay::getVoltage()  //Get voltage from Ax pin
 {
-	float Val = adc.GetVoltage();
-	return Val;
+	float val = adc.GetVoltage();
+	return val;
 }
 
-void Margay::Run(String (*Update)(void), unsigned long LogInterval) //Pass in function which returns string of data
+void Margay::Run(String (*update)(void), unsigned long logInterval) //Pass in function which returns string of data
 {
 	// Serial.println("BANG!"); //DEBUG!
 	// Serial.println(millis()); //DEBUG!
 	if(NewLog) {
 		// Serial.println("Log Started!"); //DEBUG
 		// LogEvent = true;
-		// unsigned long TempLogInterval = LogInterval; //ANDY, Fix with addition of function??
-		RTC.setAlarm(LogInterval); //DEBUG!
-		InitLogFile(); //Start a new file each time log button is pressed
+		// unsigned long TempLogInterval = logInterval; //ANDY, Fix with addition of function??
+		RTC.setAlarm(logInterval); //DEBUG!
+		initLogFile(); //Start a new file each time log button is pressed
 
 		//Add inital data point
-		AddDataPoint(Update);
+		addDataPoint(update);
 		NewLog = false;  //Clear flag once log is started
     	BlinkGood();  //Alert user to start of log
-    	ResetWD(); //Clear alarm
+    	resetWDT(); //Clear alarm
 	}
 
 	if(LogEvent) {
 		// Serial.println("Log!"); //DEBUG!
-		// RTC.setAlarm(LogInterval);  //Set/reset alarm //DEBUG!
-		AddDataPoint(Update); //Write values to SD
+		// RTC.setAlarm(logInterval);  //Set/reset alarm //DEBUG!
+		addDataPoint(update); //Write values to SD
 		LogEvent = false; //Clear log flag
 		// Serial.println("BANG!"); //DEBUG!
-		RTC.setAlarm(LogInterval);  //Set/reset alarm
+		RTC.setAlarm(logInterval);  //Set/reset alarm
 		// Serial.println("ResetTimer"); //DEBUG!
-		ResetWD(); //Clear alarm
+		resetWDT(); //Clear alarm
 	}
 
 	if(ManualLog) {  //Write data to SD card without interrupting existing timing cycle
 		// Serial.println("Click!"); //DEBUG!
-		AddDataPoint(Update); //write values to SD
+		addDataPoint(update); //write values to SD
 		ManualLog = false; //Clear log flag
-		ResetWD(); //Clear alarm
+		resetWDT(); //Clear alarm
 	}
 
 	if(ExtIntTripped) {  // Defaults to just counter for now
 		// Serial.println("TIP!"); //DEBUG!
     ExtInt_count ++;
 		ExtIntTripped = false; // Clear interrupt flag flag
-		ResetWD(); //Clear alarm
+		resetWDT(); //Clear alarm
 		delay(150); //Hard-code for now; tipping bucket "debounce"
     attachInterrupt(digitalPinToInterrupt(ExtIntPin), Margay::isr2, FALLING);
 	}
 
 	if(!digitalRead(RTCInt)) {  //Catch alarm if not reset properly
    		Serial.println("Reset Alarm"); //DEBUG!
-		RTC.setAlarm(LogInterval); //Turn alarm back on
+		RTC.setAlarm(logInterval); //Turn alarm back on
 	}
 
 	AwakeCount++;
@@ -781,23 +781,23 @@ void Margay::Run(String (*Update)(void), unsigned long LogInterval) //Pass in fu
 	delay(1);
 }
 
-void Margay::ResetWD()  //Send a pulse to "feed" the watchdog timer
+void Margay::resetWDT()  //Send a pulse to "feed" the watchdog timer
 {
 	digitalWrite(WDHold, HIGH); //Set DONE pin high
 	delayMicroseconds(5); //Wait a short pulse
 	digitalWrite(WDHold, LOW);
 }
 
-void Margay::AddDataPoint(String (*Update)(void)) //Reads new data and writes data to SD
+void Margay::addDataPoint(String (*update)(void)) //Reads new data and writes data to SD
 {
-	String Data = "";
+	String data = "";
 	if(Model >= MODEL_2v0) EnviroSense.begin(0x77); //Re-initialize BME280  //FIX??
 	// Serial.println("Called Update"); //DEBUG!
-	Data = (*Update)(); //Run external update function
+	data = (*update)(); //Run external update function
 	// Serial.println("Request OB Vals"); //DEBUG!
-	Data = GetOnBoardVals() + Data; //Append on board readings
+	data = getOnBoardVals() + data; //Append on board readings
 	// Serial.println("Got OB Vals");  //DEBUG!
-	LogStr(Data);
+	logStr(data);
 	// Serial.println("Loged Data"); //DEBUG!
 }
 
@@ -818,44 +818,44 @@ void Margay::ExtIntCounter()
 
 void Margay::Log()
 {
-	//Write global Data to SD
+	//Write global data to SD
 	LogEvent = true; //Set flag for a log event
 	AwakeCount = 0;
 }
 
 // ExtInt functions
-void Margay::SetExtInt(uint8_t n, String header_entry)
+void Margay::setExtInt(uint8_t n, String header_entry)
 {
   ExtIntPin = n;
   ext_int_header_entry = header_entry;
 }
 
-uint16_t Margay::GetExtIntCount(bool reset0)
+uint16_t Margay::getExtIntCount(bool reset0)
 {
   uint16_t out = ExtInt_count;
   if (reset0)
   {
-    ResetExtIntCount(0);
+    resetExtIntCount(0);
   }
   return out;
 }
 
-void Margay::ResetExtIntCount(uint16_t start)
+void Margay::resetExtIntCount(uint16_t start)
 {
     ExtInt_count = start;
 }
 
-void Margay::PowerAux(bool State)
+void Margay::powerAux(bool State)
 {
 	pinMode(Ext3v3Ctrl, OUTPUT); //Setup outputs for robustness
-	if(State) PowerOB(ON); //Turn on on-board power if required
+	if(State) powerOB(ON); //Turn on on-board power if required
 	if(Model >= MODEL_2v0) {  //use positive logic for Model v2.0 and newer
 		digitalWrite(Ext3v3Ctrl, State); //Switch 3v3 Aux power
 	}
 	else digitalWrite(Ext3v3Ctrl, !State); //Switch 3v3 Aux power
 }
 
-void Margay::PowerOB(bool State)
+void Margay::powerOB(bool State)
 {
 	pinMode(BatSwitch, OUTPUT);
 	digitalWrite(BatSwitch, State); //Set bat switch for onboard 3v3/main power
@@ -974,8 +974,8 @@ delay(6);
 // digitalWrite(Ext3v3Ctrl, HIGH); //MODEL <= v1
 // digitalWrite(Ext3v3Ctrl, LOW);  //turn off external 3v3 rail
 // digitalWrite(BatSwitch, LOW); //Turn off battery connection to sense divider
-PowerAux(OFF); //turn off external 3v3 rail
-PowerOB(OFF); //Turn off battery connection to sense divider
+powerAux(OFF); //turn off external 3v3 rail
+powerOB(OFF); //Turn off battery connection to sense divider
 // digitalWrite(BatRailCtrl, HIGH);
 delay(1);
 digitalWrite(SD_CS, LOW);
@@ -1005,8 +1005,8 @@ void Margay::turnOnSDcard()
 // digitalWrite(SD_CS, HIGH);
 // digitalWrite(Ext3v3Ctrl, HIGH);  //turn off external 3v3 rail
 // digitalWrite(BatSwitch, HIGH); //Turn off battery connection to sense divider
-PowerOB(ON); //Turn on battery connection to sense divider
-PowerAux(ON); //turn on external 3v3 rail
+powerOB(ON); //Turn on battery connection to sense divider
+powerAux(ON); //turn on external 3v3 rail
 delay(6);                                            // let the card settle
 // some cards will fail on power-up unless SS is pulled up  ( &  D0/MISO as well? )
 // DDRC = DDRC | ((1<<DDC0) | (1<<DDC1));

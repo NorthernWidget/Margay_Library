@@ -55,8 +55,8 @@ enum build
 
 enum temp_val
 {
-	Therm_Val = 0,
-	RTC_Val = 1
+	therm_val = 0,
+	RTC_val = 1
 };
 
 ////////////////////////////PIN DEFINITIONS///////////////////////
@@ -66,27 +66,27 @@ class Margay
 
 	public:
 		Margay(board model_ = MODEL_2v2, build specs_ = BUILD_B);
-    int begin(uint8_t *Vals, uint8_t NumVals, String Header_);
-		int begin(String Header_ = "");
+    int begin(uint8_t *Vals, uint8_t numVals, String header_);
+		int begin(String header_ = "");
 
-		int LogStr(String Val);
-		void LED_Color(unsigned long Val);
-		void Run(String (*f)(void), unsigned long LogInterval);
-		float GetVoltage();
-		void AddDataPoint(String (*Update)(void));
-		void InitLogFile();
+		int logStr(String val);
+		void LED_Color(unsigned long val);
+		void Run(String (*f)(void), unsigned long logInterval);
+		float getVoltage();
+		void addDataPoint(String (*update)(void));
+		void initLogFile();
 
-		void SetExtInt(uint8_t n, String header_entry = "nInterrupts,");
-		uint16_t GetExtIntCount(bool reset0 = true);
-		void ResetExtIntCount(uint16_t start = 0);
+		void setExtInt(uint8_t n, String header_entry = "nInterrupts,");
+		uint16_t getExtIntCount(bool reset0 = true);
+		void resetExtIntCount(uint16_t start = 0);
 
-		float GetTemp(temp_val Val = Therm_Val);
-		float GetBatVoltage();
-		float GetBatPer();
+		float getTemp(temp_val val = therm_val);
+		float getBatVoltage();
+		float getBatPer();
 
-		void ResetWD();
-		void PowerOB(bool State);
-		void PowerAux(bool State);
+		void resetWDT();
+		void powerOB(bool State);
+		void powerAux(bool State);
 
 		//Pin definitions
 		int SD_CS = 4;
@@ -135,7 +135,7 @@ class Margay
 		void turnOffSDcard();
 		void turnOnSDcard();
 		void GetTime();
-		String GetOnBoardVals();
+		String getOnBoardVals();
 		void I2CTest();
 		void SDTest();
 		void ClockTest();
