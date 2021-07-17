@@ -135,8 +135,7 @@ class Margay
 		static void isr1();
 		static void isr2();
 		static Margay* selfPointer;
-
-  		static void dateTimeSD(uint16_t* date, uint16_t* time);
+    static void dateTimeSD(uint16_t* date, uint16_t* time);
 		void dateTimeSD_Glob(uint16_t* date, uint16_t* time);
     void externalI2C(bool state);
 		void sleepNow();
