@@ -126,8 +126,6 @@ class Margay
 	protected:
 		float tempConvert(float V, float Vcc, float R, float A, float B, float C, float D, float R25);
 		void blinkGood();
-		// void StartLog();
-		// void Log();
 		void virtual writeDataToSD();
 		void virtual buttonLog();
 		static void isr0();
