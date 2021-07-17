@@ -31,9 +31,6 @@
 #define ON 1
 #define OFF 0
 
-#define MODEL_1v0
-#define MODEL_0v0
-
 //Define CBI macro
 #ifndef cbi
 #define cbi(sfr, bit) (_SFR_BYTE(sfr) &= ~_BV(bit))
