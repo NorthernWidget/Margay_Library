@@ -187,7 +187,6 @@ class Margay
 
 		volatile bool LogEvent = false; //Used to test if logging should begin yet
 		volatile bool NewLog = false; //Used to tell system to start a new log
-		// volatile bool ManualLog = false; //Used to add point to log by pressing the log button
 		volatile int AwakeCount = 0;
 
 		char FileNameC[11]; //Used for file handling
