@@ -850,7 +850,7 @@ void Margay::extIntCounter()
   ExtIntTripped = true; // Set flag to just increment the counter and return to sleep
 }
 
-void Margay::Log()
+void Margay::writeDataToSD()
 {
 	//Write global data to SD
 	LogEvent = true; //Set flag for a log event
@@ -919,7 +919,7 @@ void Margay::isr0() { selfPointer->ButtonLog(); }
 // }
 
 // ISR(PCINT0_vect) {
-void Margay::isr1() { selfPointer->Log(); }
+void Margay::isr1() { selfPointer->writeDataToSD(); }
 void Margay::isr2() { selfPointer->extIntCounter(); }
 
 //Low Power functions

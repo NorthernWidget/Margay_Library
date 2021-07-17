@@ -129,7 +129,7 @@ class Margay
 		void blinkGood();
 		// void StartLog();
 		// void Log();
-		void virtual Log();
+		void virtual writeDataToSD();
 		void virtual ButtonLog();
 		static void isr0();
 		static void isr1();
