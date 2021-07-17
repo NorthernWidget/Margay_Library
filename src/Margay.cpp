@@ -24,12 +24,6 @@ volatile uint16_t ExtInt_count = 0; // Global for the external interrupt
 
 Margay* Margay::selfPointer;
 
-Margay::Margay()
-{
-	// Default to v2.2, build B
-	Margay::Margay(MODEL_2v2, BUILD_B);
-}
-
 Margay::Margay(board model_, build specs_)
 {
 	if(model_ == 2) {
