@@ -129,20 +129,20 @@ class Margay
 		static void isr2();
 		static Margay* selfPointer;
 
-		static void DateTimeSD(uint16_t* date, uint16_t* time);
-		void DateTimeSD_Glob(uint16_t* date, uint16_t* time);
+  		static void dateTimeSD(uint16_t* date, uint16_t* time);
+		void dateTimeSD_Glob(uint16_t* date, uint16_t* time);
 		void sleepNow();
 		void turnOffSDcard();
 		void turnOnSDcard();
-		void GetTime();
+		void getTime();
 		String getOnBoardVals();
-		void I2CTest();
-		void SDTest();
-		void ClockTest();
-		void BatTest();
-		void PowerTest();
-		void EnviroStats();
-		void ExtIntCounter();
+		void I2Ctest();
+		void SDtest();
+		void clockTest();
+		void batTest();
+		void powerTest();
+		void enviroStats();
+		void extIntCounter();
 		int freeMemory(); //DEBUG!
 
 		DS3231_Logger RTC;

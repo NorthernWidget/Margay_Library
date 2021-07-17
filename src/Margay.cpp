@@ -229,7 +229,7 @@ int Margay::begin(uint8_t *Vals, uint8_t numVals, String header_)
 		RTC.setTime(2000 + DateTimeVals[0], DateTimeVals[1], DateTimeVals[2], DateTimeVals[3], DateTimeVals[4], DateTimeVals[5]);
 	}
 
-	GetTime(); //Get time to pass to computer
+	getTime(); //Get time to pass to computer
 	Serial.print("\nTimestamp = ");
 	Serial.println(LogTimeDate);
 
@@ -248,7 +248,7 @@ int Margay::begin(uint8_t *Vals, uint8_t numVals, String header_)
 	// SPI.setDataMode(SPI_MODE0);
 	// SPI.setClockDivider(SPI_CLOCK_DIV2); //Sts SPI clock to 4 MHz for an 8 MHz system clock
 
-	SdFile::dateTimeCallback(DateTimeSD); //Setup SD file time setting
+	SdFile::dateTimeCallback(dateTimeSD); //Setup SD file time setting
 	attachInterrupt(digitalPinToInterrupt(RTCInt), Margay::isr1, FALLING); //Attach an interrupt driven by the interrupt from RTC, logs data
 	if(Model < 2) attachInterrupt(digitalPinToInterrupt(LogInt), Margay::isr0, FALLING);	//Attach an interrupt driven by the manual log button, sets logging flag and logs data
 	// AttachPCI(LogInt, ButtonLog, FALLING); //Attach an interrupt driven by the manual log button, sets logging flag and logs data (using pin change interrupts)
@@ -263,11 +263,11 @@ int Margay::begin(uint8_t *Vals, uint8_t numVals, String header_)
 	pinMode(RTCInt, INPUT_PULLUP);
 	pinMode(LogInt, INPUT);
 
-	I2CTest();
-	ClockTest();
-	SDTest();
-	BatTest();
-	if(Model >= MODEL_2v0) EnviroStats();  //Only print out enviromental variables if BME is on board
+	I2Ctest();
+	clockTest();
+	SDtest();
+	batTest();
+	if(Model >= MODEL_2v0) enviroStats();  //Only print out enviromental variables if BME is on board
 
 
 
@@ -340,7 +340,7 @@ int Margay::begin(String header_)
 	begin(Dummy, 0, header_); //Call generalized begin function
 }
 
-void Margay::I2CTest()
+void Margay::I2Ctest()
 {
 	int Error = 0;
 	bool I2C_Test = true;
@@ -376,7 +376,7 @@ void Margay::I2CTest()
 }
 
 
-void Margay::SDTest()
+void Margay::SDtest()
 {
 	bool SDErrorTemp = false;
 	// bool SD_Test = true;
@@ -443,7 +443,7 @@ void Margay::SDTest()
 	else if(!SDError && !CardNotPresent) Serial.println("PASS");  //If card is inserted AND connectects propely return success
 }
 
-void Margay::ClockTest()
+void Margay::clockTest()
 {
 	int Error = 1;
 	uint8_t TestSeconds = 0;
@@ -455,7 +455,7 @@ void Margay::ClockTest()
 	Error = Wire.endTransmission();
 
 	if(Error == 0) {
-		GetTime(); //FIX!
+		getTime(); //FIX!
 		TestSeconds = RTC.getValue(5);
 	  	delay(1100);
 	  	if(RTC.getValue(5) == TestSeconds) {
@@ -468,7 +468,7 @@ void Margay::ClockTest()
 
 	if(YearNow == 00) {  //If value is 2000, work around Y2K bug by setting time to Jan 1st, midnight, 2049
 		// if(YearNow <= 00) RTC.setTime(2018, 01, 01, 00, 00, 00);  //Only reset if Y2K
-		// GetTime(); //Update local time
+		// getTime(); //Update local time
 		TimeError = true;
 		Serial.println(" PASS, BAD TIME");
 	}
@@ -483,7 +483,7 @@ void Margay::ClockTest()
 	}
 }
 
-void Margay::BatTest()
+void Margay::batTest()
 {
 	if(getBatVoltage() < BatVoltageError) BatError = true; //Set error flag if below min voltage
 	if(getBatPer() < BatPercentageWarning) BatWarning = true; //Set warning flag is below set percentage
@@ -493,7 +493,7 @@ void Margay::BatTest()
 	Serial.print(getBatPer());
 	Serial.println("%");
 }
-void Margay::PowerTest()
+void Margay::powerTest()
 {
 	int Error = 0;
 
@@ -509,7 +509,7 @@ void Margay::PowerTest()
 	digitalWrite(Ext3v3Ctrl, LOW); //Turn power back on
 }
 
-void Margay::EnviroStats()
+void Margay::enviroStats()
 {
 	Serial.print("Temp = ");
 	Serial.print(EnviroSense.GetTemperature());
@@ -594,7 +594,7 @@ void Margay::LED_Color(unsigned long val) //Set color of onboard led
 	analogWrite(BlueLED, 255 - (Blue * Lum)/0xFF);
 }
 
-void Margay::GetTime()
+void Margay::getTime()
 {
 	//Update global time string
 	// DateTime TimeStamp = RTC.now();
@@ -670,7 +670,7 @@ String Margay::getOnBoardVals()
 
 	// Temp[3] = Clock.getTemperature(); //Get tempreture from RTC //FIX!
 	float RTCTemp = RTC.getTemp();  //Get Temp from RTC
-	GetTime(); //FIX!
+	getTime(); //FIX!
 	if(Model< MODEL_2v0) return LogTimeDate + "," + String(TempData) + "," + String(RTCTemp) + "," + String(BatVoltage) + ",";
 	else return LogTimeDate + "," + String(EnviroSense.GetString()) + String(RTCTemp) + "," + String(BatVoltage) + ",";
 }
@@ -809,7 +809,7 @@ void Margay::ButtonLog()
 	ManualLog = true; //Set flag to manually record an additional data point
 }
 
-void Margay::ExtIntCounter()
+void Margay::extIntCounter()
 {
   // ISR for an external event waking the logger
   detachInterrupt(digitalPinToInterrupt(ExtIntPin));
@@ -861,7 +861,7 @@ void Margay::powerOB(bool State)
 	digitalWrite(BatSwitch, State); //Set bat switch for onboard 3v3/main power
 }
 
-void Margay::DateTimeSD(uint16_t* date, uint16_t* time)
+void Margay::dateTimeSD(uint16_t* date, uint16_t* time)
 {
 	// DateTime now = RTC.now();
 	// sprintf(timestamp, "%02d:%02d:%02d %2d/%2d/%2d \n", now.hour(),now.minute(),now.second(),now.month(),now.day(),now.year()-2000);
@@ -875,7 +875,7 @@ void Margay::DateTimeSD(uint16_t* date, uint16_t* time)
 	*time = FAT_TIME(selfPointer->RTC.getValue(3), selfPointer->RTC.getValue(4), selfPointer->RTC.getValue(5));
 }
 
-void Margay::DateTimeSD_Glob(uint16_t* date, uint16_t* time) {selfPointer->DateTimeSD(date, time);}  //Fix dumb name!
+void Margay::dateTimeSD_Glob(uint16_t* date, uint16_t* time) {selfPointer->dateTimeSD(date, time);}  //Fix dumb name!
 
 void Margay::isr0() { selfPointer->ButtonLog(); }
 
@@ -886,7 +886,7 @@ void Margay::isr0() { selfPointer->ButtonLog(); }
 
 // ISR(PCINT0_vect) {
 void Margay::isr1() { selfPointer->Log(); }
-void Margay::isr2() { selfPointer->ExtIntCounter(); }
+void Margay::isr2() { selfPointer->extIntCounter(); }
 
 //Low Power functions
 void Margay::sleepNow()         // here we put the arduino to sleep
