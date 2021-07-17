@@ -55,16 +55,16 @@ Margay::Margay(board model_, build specs_)
 
 		BatteryDivider = 2.0;
 
-		if(specs_ == Build_A) {
+		if(specs_ == BUILD_A) {
 			NumADR_OB = 1; //Only check for clock presance
 		}
 
-		else if(specs_ == Build_B) {
+		else if(specs_ == BUILD_B) {
 			NumADR_OB = 2; //Tell system to search additional ADRs
 			I2C_ADR_OB[1] = 0x69; //Use 0x69 on board ADC (MCP3421A1)
 		}
 
-		else if(specs_ == Build_C) {
+		else if(specs_ == BUILD_C) {
 			NumADR_OB = 2; //Tell system to search additional ADRs
 			I2C_ADR_OB[1] = 0x6B; //Use 0x6B on board ADC (MCP3421A3)
 		}
@@ -98,22 +98,22 @@ Margay::Margay(board model_, build specs_)
 
 		BatteryDivider = 2.0;
 
-		if(specs_ == Build_A) {
+		if(specs_ == BUILD_A) {
 			NumADR_OB = 1; //Only check for clock presance
 		}
 
-		else if(specs_ == Build_B) {
+		else if(specs_ == BUILD_B) {
 			NumADR_OB = 2; //Tell system to search additional ADRs
 			I2C_ADR_OB[1] = 0x69; //Use 0x69 on board ADC (MCP3421A1)
 		}
 
-		else if(specs_ == Build_C) {
+		else if(specs_ == BUILD_C) {
 			NumADR_OB = 2; //Tell system to search additional ADRs
 			I2C_ADR_OB[1] = 0x6B; //Use 0x6B on board ADC (MCP3421A3)
 		}
 
 
-		else if(specs_ == Build_D) {
+		else if(specs_ == BUILD_D) {
 			NumADR_OB = 2; //Tell system to search additional ADRs
 			I2C_ADR_OB[1] = 0x6A; //Use 0x6B on board ADC (MCP3421A3)
 		}
@@ -140,16 +140,16 @@ Margay::Margay(board model_, build specs_)
 		LogInt = 2;
 		BatteryDivider = 9.0;
 
-		if(specs_ == Build_A) {  //Setup sub builds
+		if(specs_ == BUILD_A) {  //Setup sub builds
 			NumADR_OB = 1; //Only check for clock presance
 		}
 
-		else if(specs_ == Build_B) {
+		else if(specs_ == BUILD_B) {
 			NumADR_OB = 2; //Tell system to search additional ADRs
 			I2C_ADR_OB[1] = 0x69; //Use 0x69 on board ADC (MCP3421A1)
 		}
 
-		else if(specs_ == Build_C) {
+		else if(specs_ == BUILD_C) {
 			NumADR_OB = 2; //Tell system to search additional ADRs
 			I2C_ADR_OB[1] = 0x6B; //Use 0x6B on board ADC (MCP3421A3)
 		}
