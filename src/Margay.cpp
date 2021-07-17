@@ -616,7 +616,7 @@ float Margay::getTemp(temp_val val)
 	float Vcc = 3.3;
 	if(val == therm_val) {
 		float val = float(analogRead(ThermSense_Pin))*(Vcc/1024.0);
-		float TempData = TempConvert(val, Vcc, 10000.0, A, B, C, D, 10000.0);
+		float TempData = tempConvert(val, Vcc, 10000.0, A, B, C, D, 10000.0);
 		TempData = TempData - 273.15; //Get temp from on board thermistor
 		return TempData;
 	}
@@ -670,7 +670,7 @@ String Margay::getOnBoardVals()
 		//  float Vout = Vcc - val;
 		//  Serial.println(val); //DEBUG!
 		//  Serial.println(Vout);  //DEBUG!
-		TempData = TempConvert(val, Vcc*Comp, 10000.0, A, B, C, D, 10000.0);
+		TempData = tempConvert(val, Vcc*Comp, 10000.0, A, B, C, D, 10000.0);
 		TempData = TempData - 273.15; //Get temp from on board thermistor
 	}
 
@@ -684,7 +684,7 @@ String Margay::getOnBoardVals()
 	else return LogTimeDate + "," + String(EnviroSense.GetString()) + String(RTCTemp) + "," + String(BatVoltage) + ",";
 }
 
-float Margay::TempConvert(float V, float Vcc, float R, float A, float B, float C, float D, float R25)
+float Margay::tempConvert(float V, float Vcc, float R, float A, float B, float C, float D, float R25)
 {
 	//  Serial.print("R = "); //DEBUG!
 	//  Serial.println(R); //DEBUG!
@@ -698,7 +698,7 @@ float Margay::TempConvert(float V, float Vcc, float R, float A, float B, float C
 	return T;
 }
 
-void Margay::Blink()
+void Margay::blink()
 {
   for(int i = 0; i < 5; i++) {
     digitalWrite(BlueLED, LOW);
@@ -708,7 +708,7 @@ void Margay::Blink()
   }
 }
 
-void Margay::BlinkGood()
+void Margay::blinkGood()
 {
   // Peppy blinky pattern to show that the logger has successfully initialized
   digitalWrite(BlueLED,LOW);
@@ -744,7 +744,7 @@ void Margay::run(String (*update)(void), unsigned long logInterval) //Pass in fu
 		//Add inital data point
 		addDataPoint(update);
 		NewLog = false;  //Clear flag once log is started
-    	BlinkGood();  //Alert user to start of log
+    	blinkGood();  //Alert user to start of log
     	resetWDT(); //Clear alarm
 	}
 
