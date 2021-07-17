@@ -1,4 +1,11 @@
-//Margay library
+/*
+Margay Library
+Licensed: GNU GPL v3
+
+Written by:
+Bobby Schulz
+Andy Wickert
+*/
 
 #include <Margay.h>
 #include <Arduino.h>
