@@ -698,16 +698,6 @@ float Margay::tempConvert(float V, float Vcc, float R, float A, float B, float C
 	return T;
 }
 
-void Margay::blink()
-{
-  for(int i = 0; i < 5; i++) {
-    digitalWrite(BlueLED, LOW);
-    delay(500);
-    digitalWrite(BlueLED, HIGH);
-    delay(500);
-  }
-}
-
 void Margay::blinkGood()
 {
   // Peppy blinky pattern to show that the logger has successfully initialized
