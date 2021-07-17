@@ -49,7 +49,7 @@ Margay::Margay(board model_, build specs_)
 		SD_CD = 1;
 
 		Ext3v3Ctrl = 22;
-		I2C_SW = 12;
+		I2C_SW = 21;
 		PG = 18;
 		TX = 11;
 		RX = 10;
@@ -92,7 +92,7 @@ Margay::Margay(board model_, build specs_)
 		SD_CD = 1;
 
 		Ext3v3Ctrl = 19;
-		I2C_SW = 12;
+		I2C_SW = 21;
 		PG = 18;
 		TX = 11;
 		RX = 10;
@@ -349,6 +349,7 @@ int Margay::begin(String header_)
 
 void Margay::I2Ctest()
 {
+	externalI2C(ON);
 	int Error = 0;
 	bool I2C_Test = true;
 
@@ -363,6 +364,7 @@ void Margay::I2Ctest()
     		I2C_Test = false;
     		SensorError = true;
 		}
+		externalI2C(OFF);
 	}
 
 	//Switch to connect to onboard I2C!
@@ -795,14 +797,32 @@ void Margay::resetWDT()  //Send a pulse to "feed" the watchdog timer
 	digitalWrite(WDHold, LOW);
 }
 
+void Margay::externalI2C(bool state)
+{
+	/*
+	Must be ON to read off-board sensors, OFF to read on-board sensors and RTC
+	Serves to isolate these s.t. I2C addresses may not clash.
+	*/
+	pinMode(I2C_SW, OUTPUT);
+	if ( state == ON ){
+		digitalWrite(I2C_SW, HIGH);
+	}
+	else{
+		digitalWrite(I2C_SW, LOW);
+	}
+	delay(1); // Any time needed to switch states; may not be necessary
+}
+
 void Margay::addDataPoint(String (*update)(void)) //Reads new data and writes data to SD
 {
 	String data = "";
 	if(Model >= MODEL_2v0) EnviroSense.begin(0x77); //Re-initialize BME280  //FIX??
 	// Serial.println("Called Update"); //DEBUG!
+	externalI2C(ON);
 	data = (*update)(); //Run external update function
+	externalI2C(OFF);
 	// Serial.println("Request OB Vals"); //DEBUG!
-	data = getOnBoardVals() + data; //Append on board readings
+	data = getOnBoardVals() + data; //Prepend on board readings
 	// Serial.println("Got OB Vals");  //DEBUG!
 	logStr(data);
 	// Serial.println("Loged Data"); //DEBUG!

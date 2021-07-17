@@ -110,7 +110,7 @@ class Margay
 		uint8_t SD_CD = 1;
 
 		uint8_t Ext3v3Ctrl = 19;
-		uint8_t I2C_SW = 12;
+		uint8_t I2C_SW = 21;
 		uint8_t PG = 18;
 		uint8_t ExtInt = 11;
 		uint8_t RTCInt = 10;
@@ -138,6 +138,7 @@ class Margay
 
   		static void dateTimeSD(uint16_t* date, uint16_t* time);
 		void dateTimeSD_Glob(uint16_t* date, uint16_t* time);
+    void externalI2C(bool state);
 		void sleepNow();
 		void turnOffSDcard();
 		void turnOnSDcard();
