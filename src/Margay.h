@@ -1,4 +1,11 @@
+/*
+Margay Library
+Licensed: GNU GPL v3
 
+Written by:
+Bobby Schulz
+Andy Wickert
+*/
 
 
 #ifndef MARGAY_h
