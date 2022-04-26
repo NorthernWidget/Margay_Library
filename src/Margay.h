@@ -94,6 +94,7 @@ class Margay
 		void resetWDT();
 		void powerOB(bool State);
 		void powerAux(bool State);
+		void initADC();
 
 		//Pin definitions
 		int SD_CS = 4;
