@@ -715,8 +715,22 @@ void Margay::blinkGood()
 
 float Margay::getVoltage()  //Get voltage from Ax pin
 {
-	float val = adc.GetVoltage();
-	return val;
+	// first allow access to ADC via internal I2C
+	pinMode(I2C_SW, INPUT);
+	bool extI2COn = digitalRead(SD_CD);
+
+	if ( !extI2COn ){
+		initADC(); // initialize ADC
+		float val = adc.GetVoltage();
+		return val;
+	}
+	else{
+		externalI2C(OFF);
+		initADC(); // initialize ADC
+		float val = adc.GetVoltage();
+		externalI2C(ON); // re-allow external I2C		
+		return val;
+	}
 }
 
 void Margay::run(String (*update)(void), unsigned long logInterval) //Pass in function which returns string of data
@@ -903,7 +917,7 @@ void Margay::initADC()
 	// Serial.print("ADC should be on"); // DEBUG
 	adc.Begin(I2C_ADR_OB[1]); //Initalize external ADC
 	adc.SetResolution(18);
-	delay(250); // allow ADC to spin up and achieve full resolution.
+	delay(500); // allow ADC to spin up and achieve full resolution.
 }
 
 void Margay::dateTimeSD_Glob(uint16_t* date, uint16_t* time) {selfPointer->dateTimeSD(date, time);}  //Fix dumb name!
