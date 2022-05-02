@@ -715,22 +715,30 @@ void Margay::blinkGood()
 
 float Margay::getVoltage()  //Get voltage from Ax pin
 {
-	// first allow access to ADC via internal I2C
-	pinMode(I2C_SW, INPUT);
-	bool extI2COn = digitalRead(SD_CD);
+	// voltage reads from the on-board ADC, but to read the Ax pin at the same time as external
+	// sensors, need access to the ADC. However, we do not want to change the state of the I2C 
+	// bus communication by taking a voltage reading. So we have logic here to make the switch.
 
+	// first check whether external I2C connnections are on by testing pin I2C_SW (HIGH is on)
+	pinMode(I2C_SW, INPUT);
+	bool extI2COn = digitalRead(I2C_SW);
+
+	// initialize a variable to hold the voltage reading.
+	float val = 0;
+
+	// if it is off, then we can communicate with ADC already, then take a reading.
 	if ( !extI2COn ){
 		initADC(); // initialize ADC
-		float val = adc.GetVoltage();
-		return val;
+		val = adc.GetVoltage();
 	}
+	// otherwise, turn off external I2C comms, take a reading, then turn comms back on.
 	else{
 		externalI2C(OFF);
 		initADC(); // initialize ADC
-		float val = adc.GetVoltage();
+		val = adc.GetVoltage();
 		externalI2C(ON); // re-allow external I2C		
-		return val;
 	}
+	return val;
 }
 
 void Margay::run(String (*update)(void), unsigned long logInterval) //Pass in function which returns string of data
@@ -914,10 +922,8 @@ void Margay::dateTimeSD(uint16_t* date, uint16_t* time)
 
 void Margay::initADC() 
 {
-	// Serial.print("ADC should be on"); // DEBUG
 	adc.Begin(I2C_ADR_OB[1]); //Initalize external ADC
 	adc.SetResolution(18);
-	delay(500); // allow ADC to spin up and achieve full resolution.
 }
 
 void Margay::dateTimeSD_Glob(uint16_t* date, uint16_t* time) {selfPointer->dateTimeSD(date, time);}  //Fix dumb name!
