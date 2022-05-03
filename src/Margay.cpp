@@ -196,7 +196,7 @@ int Margay::begin(uint8_t *Vals, uint8_t numVals, String header_)
 	// NumADR_OB = 2; //DEBUG!
 	RTC.begin(); //Initalize RTC
 	RTC.clearAlarm(); //
-	initADC();
+	initADC(18);
 	EnviroSense.begin(0x77); //Initalize onboard temp/pressure/RH sensor (BME280)
 
 
@@ -507,6 +507,14 @@ void Margay::batTest()
 	Serial.print(getBatPer());
 	Serial.println("%");
 }
+
+void Margay::initADC(uint8_t desiredResolution) 
+{
+	// Serial.print("ADC should be on"); // DEBUG
+	adc.Begin(I2C_ADR_OB[1]); //Initalize external ADC
+	adc.SetResolution(desiredResolution);
+}
+
 void Margay::powerTest()
 {
 	int Error = 0;
@@ -949,12 +957,6 @@ void Margay::dateTimeSD(uint16_t* date, uint16_t* time)
 
 	// return time using FAT_TIME macro to format fields
 	*time = FAT_TIME(selfPointer->RTC.getValue(3), selfPointer->RTC.getValue(4), selfPointer->RTC.getValue(5));
-}
-
-void Margay::initADC() 
-{
-	adc.Begin(I2C_ADR_OB[1]); //Initalize external ADC
-	adc.SetResolution(18);
 }
 
 void Margay::dateTimeSD_Glob(uint16_t* date, uint16_t* time) {selfPointer->dateTimeSD(date, time);}  //Fix dumb name!
