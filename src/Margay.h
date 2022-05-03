@@ -150,7 +150,7 @@ class Margay
 		void extIntCounter();
 		int freeMemory(); //DEBUG!
 		void _addDataPoint(String data);
-		void closeFarmGateI2C(bool initStateI2C);
+		void farmGateI2C(bool initialStateExternalI2C);
 
 		DS3231_Logger RTC;
 		MCP3421 adc;
