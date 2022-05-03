@@ -348,7 +348,7 @@ int Margay::begin(String header_)
 
 void Margay::I2Ctest()
 {
-	bool initialStateI2C = digitalRead(I2C_SW);
+	bool initialStateExternalI2C = digitalRead(I2C_SW);
 
 	switchExternalI2C(ON);
 	
@@ -386,7 +386,7 @@ void Margay::I2Ctest()
 	if(I2C_Test) Serial.println("PASS");
 
 	// make sure I2C Bus is returned to initial state
-	closeFarmGateI2C(initialStateI2C);
+	farmGateI2C(initialStateExternalI2C);
 }
 
 
@@ -734,7 +734,8 @@ float Margay::getVoltage()  //Get voltage from Ax pin
 	// bus communication by taking a voltage reading. So we have logic here to make the switch.
 
 	// first check whether external I2C connnections are on by testing pin I2C_SW (HIGH is on)
-	bool initialStateI2C = digitalRead(I2C_SW);
+	// When the external I2C connection is on, the internal I2C connection is cut off.
+	bool initialStateExternalI2C = digitalRead(I2C_SW);
 
 	// initialize a variable to hold the voltage reading.
 	float val = 0;
@@ -742,10 +743,9 @@ float Margay::getVoltage()  //Get voltage from Ax pin
 	switchExternalI2C(OFF);
 	initADC(18); // initialize ADC
 	val = adc.GetVoltage();
-	switchExternalI2C(ON); // re-allow external I2C		
 
 	// make sure I2C Bus is returned to initial state
-	closeFarmGateI2C(initialStateI2C);
+	farmGateI2C(initialStateExternalI2C);
 
 	return val;
 }
@@ -836,7 +836,7 @@ void Margay::switchExternalI2C(bool desiredState)
 	delay(1); // Any time needed to switch states; may not be necessary
 }
 
-void Margay::closeFarmGateI2C(bool initStateI2C)
+void Margay::farmGateI2C(bool initStateI2C)
 {
 	// This closes the farm gate at the end of a function that uses external I2C bus. 
 	// It works by by checking if the current state of I2C Comms (class variable)
@@ -856,14 +856,13 @@ void Margay::addDataPoint(String (*update)(void)) //Reads new data and writes da
 	if(Model >= MODEL_2v0) EnviroSense.begin(0x77); //Re-initialize BME280  //FIX??
 	// Serial.println("Called Update"); //DEBUG!
 	
-	bool initialStateI2C = digitalRead(I2C_SW);
+	bool initialStateExternalI2C = digitalRead(I2C_SW);
 
 	switchExternalI2C(ON);
 	data = (*update)(); //Run external update function	
-	switchExternalI2C(OFF);
 
 	// make sure I2C Bus is returned to initial state
-	closeFarmGateI2C(initialStateI2C);
+	farmGateI2C(initialStateExternalI2C);
 
 	_addDataPoint(data);
 
