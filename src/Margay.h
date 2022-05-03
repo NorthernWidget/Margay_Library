@@ -91,10 +91,10 @@ class Margay
 		float getBatVoltage();
 		float getBatPer();
 
+		void initADC(uint8_t desiredResolution);
 		void resetWDT();
 		void powerOB(bool State);
 		void powerAux(bool State);
-		void initADC();
 
 		//Pin definitions
 		int SD_CS = 4;
@@ -135,7 +135,7 @@ class Margay
 		static Margay* selfPointer;
     static void dateTimeSD(uint16_t* date, uint16_t* time);
 		void dateTimeSD_Glob(uint16_t* date, uint16_t* time);
-	    void switchExternalI2C();
+	    void switchExternalI2C(bool desiredState);
 		void sleepNow();
 		void turnOffSDcard();
 		void turnOnSDcard();
@@ -149,6 +149,8 @@ class Margay
 		void enviroStats();
 		void extIntCounter();
 		int freeMemory(); //DEBUG!
+		void _addDataPoint(String data);
+		void closeFarmGateI2C(bool initStateI2C);
 
 		DS3231_Logger RTC;
 		MCP3421 adc;
@@ -190,6 +192,7 @@ class Margay
 		char FileNameC[11]; //Used for file handling
 		char FileNameTestC[11]; //Used for file handling
 		bool SD_Init = false;
+		bool externalI2COn = false;
 		SdFat SD;
 		byte  keep_SPCR;
 		byte keep_ADCSRA;
