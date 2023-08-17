@@ -35,7 +35,7 @@ Margay::Margay(board model_, build specs_)
 {
 	if(model_ == 2) {
 		SD_CS = 4;
-		AuxLED = 20;
+		BuiltInLED = 20;
 		RedLED = 13;
 		GreenLED = 15;
 		BlueLED = 14;
@@ -78,7 +78,7 @@ Margay::Margay(board model_, build specs_)
 	}
 	else if(model_ == 1) {
 		SD_CS = 4;
-		AuxLED = 20;
+		BuiltInLED = 20;
 		RedLED = 13;
 		GreenLED = 15;
 		BlueLED = 14;
@@ -127,7 +127,7 @@ Margay::Margay(board model_, build specs_)
 	}
 	else {
 		SD_CS = 4;
-		AuxLED = 19;
+		BuiltInLED = 19;
 		RedLED = 13;
 		GreenLED = 15;
 		BlueLED = 14;
@@ -176,8 +176,8 @@ int Margay::begin(uint8_t *Vals, uint8_t numVals, String header_)
 	// pinMode(Ext3v3Ctrl, OUTPUT);
 	// digitalWrite(Ext3v3Ctrl, HIGH); //Make sure external power is on
 
-	pinMode(AuxLED, OUTPUT);
-	digitalWrite(AuxLED, LOW); //Turn built in LED on
+	pinMode(BuiltInLED, OUTPUT);
+	digitalWrite(BuiltInLED, LOW); //Turn built in LED on
 
 	pinMode(VSwitch_Pin, OUTPUT); //Setup switch control as output
 
@@ -275,12 +275,14 @@ int Margay::begin(uint8_t *Vals, uint8_t numVals, String header_)
 	batTest();
 	if(Model >= MODEL_2v0) enviroStats();  //Only print out enviromental variables if BME is on board
 
-	digitalWrite(AuxLED, HIGH);
 
-	if(OBError) {
-		LED_Color(RED);	//On board failure
-		delay(2000);
-	}
+
+  	digitalWrite(BuiltInLED, HIGH);
+
+  	if(OBError) {
+  		LED_Color(RED);	//On board failure
+  		delay(2000);
+  	}
 	if(SensorError) {
 		LED_Color(ORANGE);  //Sensor failure
 		delay(2000);
@@ -879,7 +881,7 @@ void Margay::_addDataPoint(String data)
 	digitalWrite(BlueLED, HIGH); //OFF
 	// Serial.println("Got OB Vals");  //DEBUG!
 	logStr(data);
-	// Serial.println("Logged Data"); //DEBUG!	
+	// Serial.println("Loged Data"); //DEBUG!
 }
 
 //ISRs
