@@ -639,8 +639,11 @@ float Margay::getTemp(temp_val val)
 
 float Margay::getBatVoltage()
 {
-	ADMUX = 0b00000000; //Setup voltage ref
-	delay(10); //Alow for >1 clock cycle to set values
+	// Not sure that this actually does anything
+	//ADMUX = 0b00000000; //Setup voltage ref
+	//delay(10); //Alow for >1 clock cycle to set values
+	// From tests, it does not.
+
 	ADCSRA = 0b10000111; //Enable ADC, set clock divider to max to deal with high impedance input
 	delay(10); //Alow for >1 clock cycle to set values
 	float Vcc = 3.3;
