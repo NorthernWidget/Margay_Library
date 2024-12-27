@@ -349,7 +349,7 @@ void Margay::I2Ctest()
 	bool initialStateExternalI2C = digitalRead(I2C_SW);
 
 	switchExternalI2C(ON);
-	
+
 	int Error = 0;
 	bool I2C_Test = true;
 
@@ -506,7 +506,7 @@ void Margay::batTest()
 	Serial.println("%");
 }
 
-void Margay::initADC(uint8_t desiredResolution) 
+void Margay::initADC(uint8_t desiredResolution)
 {
 	// Serial.print("ADC should be on"); // DEBUG
 	adc.Begin(I2C_ADR_OB[1]); //Initalize external ADC
@@ -728,7 +728,7 @@ void Margay::blinkGood()
 float Margay::getVoltage()  //Get voltage from Ax pin
 {
 	// voltage reads from the on-board ADC, but to read the Ax pin at the same time as external
-	// sensors, need access to the ADC. However, we do not want to change the state of the I2C 
+	// sensors, need access to the ADC. However, we do not want to change the state of the I2C
 	// bus communication by taking a voltage reading. So we have logic here to make the switch.
 
 	// first check whether external I2C connnections are on by testing pin I2C_SW (HIGH is on)
@@ -836,11 +836,11 @@ void Margay::switchExternalI2C(bool desiredState)
 
 void Margay::farmGateI2C(bool initStateI2C)
 {
-	// This closes the farm gate at the end of a function that uses external I2C bus. 
+	// This closes the farm gate at the end of a function that uses external I2C bus.
 	// It works by by checking if the current state of I2C Comms (class variable)
-	// matches the starting state (argument to this function). If they do not match (XOR), 
+	// matches the starting state (argument to this function). If they do not match (XOR),
 	// and it was on at the start, then turn on. Otherwise, turn off.
-	
+
 	if ((initStateI2C == !externalI2COn) && initStateI2C) {
 		switchExternalI2C(ON);
 	} else {
@@ -853,11 +853,11 @@ void Margay::addDataPoint(String (*update)(void)) //Reads new data and writes da
 	String data = "";
 	if(Model >= MODEL_2v0) EnviroSense.begin(0x77); //Re-initialize BME280  //FIX??
 	// Serial.println("Called Update"); //DEBUG!
-	
+
 	bool initialStateExternalI2C = digitalRead(I2C_SW);
 
 	switchExternalI2C(ON);
-	data = (*update)(); //Run external update function	
+	data = (*update)(); //Run external update function
 
 	// make sure I2C Bus is returned to initial state
 	farmGateI2C(initialStateExternalI2C);
@@ -866,7 +866,7 @@ void Margay::addDataPoint(String (*update)(void)) //Reads new data and writes da
 
 }
 
-void Margay::_addDataPoint(String data) 
+void Margay::_addDataPoint(String data)
 {
 	// Serial.println("Request OB Vals"); //DEBUG!
 	// Briefly flash an LED to show that data are being logged
@@ -879,7 +879,7 @@ void Margay::_addDataPoint(String data)
 	digitalWrite(BlueLED, HIGH); //OFF
 	// Serial.println("Got OB Vals");  //DEBUG!
 	logStr(data);
-	// Serial.println("Logged Data"); //DEBUG!	
+	// Serial.println("Logged Data"); //DEBUG!
 }
 
 //ISRs
