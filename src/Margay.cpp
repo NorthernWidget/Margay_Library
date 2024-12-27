@@ -626,7 +626,7 @@ float Margay::getTemp(temp_val val)
 {
 	float Vcc = 3.3;
 	if(val == therm_val) {
-		float val = float(analogRead(ThermSense_Pin))*(Vcc/1024.0);
+		float val = float(analogRead(ThermSense_Pin))*(Vcc/1023.0);
 		float TempData = tempConvert(val, Vcc, 10000.0, A, B, C, D, 10000.0);
 		TempData = TempData - 273.15; //Get temp from on board thermistor
 		return TempData;
@@ -679,9 +679,9 @@ String Margay::getOnBoardVals()
 
 	if(Model < MODEL_2v0) {  //For older thermistor models
 		float val = float(analogRead(ThermSense_Pin));
-		float Comp = (1.8/3.3)*1024.0/analogRead(VRef_Pin);  //Find compensation value with VRef due to Vcc error
+		float Comp = (1.8/3.3)*1023.0/analogRead(VRef_Pin);  //Find compensation value with VRef due to Vcc error
 		if(Model == 0) Comp = 1.0; //Overide comp calculation since many v0.0 models do not have ref equiped
-		val = val*Comp*(Vcc/1024.0); //Compensate for ref voltage error
+		val = val*Comp*(Vcc/1023.0); //Compensate for ref voltage error
 		//  float Vout = Vcc - val;
 		//  Serial.println(val); //DEBUG!
 		//  Serial.println(Vout);  //DEBUG!
