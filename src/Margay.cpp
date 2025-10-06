@@ -645,10 +645,10 @@ float Margay::getBatVoltage()
 
 	float VAux = 3.3; // Voltage reference for ATMega1284p ADC
 	float BatADC10bit = analogRead(BatSense_Pin); //Get (divided) battery ADC val
-	//VRef is having issues: often approx 0.9
+	//VRef is having issues: often approx 0.9 <-- This was from the hardware component; fixed now
 	// Therefore, instead we will just use the 3V3 regulator as our basis
-	//float Comp = (1.8/3.3)*1024.0/analogRead(VRef_Pin);  //Find compensation value with VRef due to Vcc error
-	//if(Model == 0) Comp = 1.0; //Overide comp calculation since many v0.0 models do not have ref equiped
+	float Comp = (1.8/3.3)*1023./analogRead(VRef_Pin);  //Find compensation value with VRef due to larger uncertainty with Vcc
+	if(Model == 0) Comp = 1.0; //Overide comp calculation since many v0.0 models do not have ref equiped
 	// Should divide by 1023. instead of 1024: 0-1023
 	//BatVoltage = BatVoltage*BatteryDivider*Comp*(Vcc/1024.0); //Compensate for voltage divider and ref voltage error
 	float BatVoltage = BatADC10bit/1023. * VAux * BatteryDivider;
