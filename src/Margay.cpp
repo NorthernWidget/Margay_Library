@@ -915,13 +915,6 @@ void Margay::dateTimeSD(uint16_t* date, uint16_t* time)
 }
 
 void Margay::isr0() { selfPointer->buttonLog(); }
-
-// ISR(PCINT0_vect)
-// {
-// 	manualLog = true;
-// }
-
-// ISR(PCINT0_vect) {
 void Margay::isr1() { selfPointer->writeDataToSD(); }
 void Margay::isr2() { selfPointer->extIntCounter(); }
 
