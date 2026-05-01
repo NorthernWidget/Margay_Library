@@ -232,20 +232,13 @@ int Margay::begin(uint8_t *Vals, uint8_t numVals, String header_)
 
 	LED_Color(OFF);
 
-	// Wire.begin();
 	pinMode(SD_CS, OUTPUT);
-	// SPI.setDataMode(SPI_MODE0);
-	// SPI.setClockDivider(SPI_CLOCK_DIV2); //Sts SPI clock to 4 MHz for an 8 MHz system clock
 
 	SdFile::dateTimeCallback(dateTimeSD); //Setup SD file time setting
 	attachInterrupt(digitalPinToInterrupt(RTCInt), Margay::isr1, FALLING); //Attach an interrupt driven by the interrupt from RTC, logs data
 	if(Model < 2) attachInterrupt(digitalPinToInterrupt(LogInt), Margay::isr0, FALLING);	//Attach an interrupt driven by the manual log button, sets logging flag and logs data
-	// AttachPCI(LogInt, buttonLog, FALLING); //Attach an interrupt driven by the manual log button, sets logging flag and logs data (using pin change interrupts)
-	// enableInterrupt(LogInt, buttonLog, FALLING);
 	else { //If using Model > v2.2, use PCINT for log button
 		*digitalPinToPCMSK(LogInt) |= bit (digitalPinToPCMSKbit(LogInt));  // enable pin
-		// PCIFR  |= 0xFE; // clear any outstanding interrupt
-		// PCICR  |= 0x01; // enable interrupt for the group
 		PCIFR  |= bit (digitalPinToPCICRbit(LogInt)); // clear any outstanding interrupt
 	    PCICR  |= bit (digitalPinToPCICRbit(LogInt)); // enable interrupt for the group
 	}
