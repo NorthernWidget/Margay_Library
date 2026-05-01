@@ -160,8 +160,6 @@ class Margay
 		float C = 1.019153E-05;
 		float D = 9.093712E-07;
 		String LogTimeDate = "2063/04/05 20:00:00";
-		// float Temp[5] = {0}; //Temp Downhole, Temp on board, Temp RTC, Temp Baro
-		// float Pressure[2] = {0}; //Downhole pressure, Atmospheric pressure (if applicable)
 		bool OBError = false;
 		bool SensorError = false;
 		bool TimeError = false;
@@ -173,7 +171,6 @@ class Margay
 		String Header = "";
 		const char HexMap[16] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'}; //used for conversion to HEX of string
 		char SN[20] = {0}; //Used to store device serial number, 19 chars + null terminator
-		// String SN = "FFFF-FFFF-FFFF-FFFF";
 		uint8_t NumADR = 0;
 		uint8_t I2C_ADR[16] = {0}; //Change length??
 		uint8_t NumADR_OB = 1;

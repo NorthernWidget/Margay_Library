@@ -201,6 +201,8 @@ int Margay::begin(uint8_t *Vals, uint8_t numVals, String header_)
 	}
 
 	Serial.print(SN); //Print compiled string
+	if(strcmp(SN, "FFFF-FFFF-FFFF-FFFF") == 0)
+		Serial.println("WARNING: no serial number programmed in EEPROM");
 	Serial.print("\n\n");
 	Serial.println("\nInitializing...\n"); //DEBUG!
 	delay(100);
