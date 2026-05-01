@@ -73,7 +73,7 @@ class Margay
 
   public:
     Margay(board model_ = MODEL_2v2, build specs_ = BUILD_B);
-      int begin(uint8_t *Vals, uint8_t numVals, String header_);
+      int begin(uint8_t *vals, uint8_t numVals, String header_);
     int begin(String header_ = "");
 
     int logStr(String val);
@@ -93,8 +93,8 @@ class Margay
 
     void initADC(uint8_t desiredResolution);
     void resetWDT();
-    void powerOB(bool State);
-    void powerAux(bool State);
+    void powerOB(bool state);
+    void powerAux(bool state);
 
     //Pin definitions
     int SD_CS = 4;
@@ -125,7 +125,7 @@ class Margay
     const String LibVersion = "0.3.0";
 
   protected:
-    float tempConvert(float V, float Vcc, float R,
+    float tempConvert(float V, float vcc, float R,
         float A, float B, float C, float D, float R25);
     void blinkGood();
     void virtual writeDataToSD();

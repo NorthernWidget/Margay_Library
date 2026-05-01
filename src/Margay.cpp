@@ -152,7 +152,7 @@ Margay::Margay(board model_, build specs_) {
   Specs = specs_; //Store build info locally
 }
 
-int Margay::begin(uint8_t *Vals, uint8_t numVals, String header_) {
+int Margay::begin(uint8_t *vals, uint8_t numVals, String header_) {
   powerOB(ON);  //Turn on on-board power
   powerAux(ON); //Turn on external auxilary power
   pinMode(WDHold, OUTPUT);
@@ -162,7 +162,7 @@ int Margay::begin(uint8_t *Vals, uint8_t numVals, String header_) {
 
   pinMode(VSwitch_Pin, OUTPUT); //Setup switch control as output
 
-  memcpy(I2C_ADR, Vals, sizeof(I2C_ADR)); //Copy array
+  memcpy(I2C_ADR, vals, sizeof(I2C_ADR)); //Copy array
   NumADR = numVals; //Copy length of array
   if (ExtIntPin == 255) {
     Header = header_; //Copy user defined header
@@ -185,15 +185,15 @@ int Margay::begin(uint8_t *Vals, uint8_t numVals, String header_) {
   Serial.print("SN = ");
   int EEPROMLen = EEPROM.length(); //Copy value for faster access
   int val = 0; //Value to read temp EEPROM values into
-  int Pos = 0; //used to keep track of position in SN string
+  int pos = 0; //used to keep track of position in SN string
   for (int i = EEPROMLen - 8; i < EEPROMLen; i++) {  //Read out Serial Number
     val = EEPROM.read(i);  //Read SN values as individual bytes from EEPROM
     // Load upper and lower nibbles of each EEPROM byte into SN string,
     // post-incrementing the position index each time
-    SN[Pos++] = HexMap[(val >> 4)];
-    SN[Pos++] = HexMap[(val % 0x10)];
+    SN[pos++] = HexMap[(val >> 4)];
+    SN[pos++] = HexMap[(val % 0x10)];
     if (i % 2 == 1 && i < EEPROMLen - 1) {
-      SN[Pos++] = '-';  //Place - between each SN category, post inc pos
+      SN[pos++] = '-';  //Place - between each SN category, post inc pos
     }
     SN[19] = '\0'; //Null terminate string
   }
@@ -205,16 +205,16 @@ int Margay::begin(uint8_t *Vals, uint8_t numVals, String header_) {
   Serial.println("\nInitializing...\n"); //DEBUG!
   delay(100);
   if (Serial.available()) {  //If time setting info available
-    String DateTimeTemp = Serial.readString();
-    Serial.println(DateTimeTemp);  //DEBUG!
-    int DateTimeVals[6] = {0};
+    String dateTimeTemp = Serial.readString();
+    Serial.println(dateTimeTemp);  //DEBUG!
+    int dateTimeVals[6] = {0};
     for (int i = 0; i < 6; i++) {
-      DateTimeVals[i] = DateTimeTemp.substring(2*i, 2*(i+1)).toInt();
+      dateTimeVals[i] = dateTimeTemp.substring(2*i, 2*(i+1)).toInt();
       Serial.print(i); Serial.print("  "); //DEBUG!
-      Serial.println(DateTimeVals[i]); //DEBUG!
+      Serial.println(dateTimeVals[i]); //DEBUG!
     }
-    RTC.setTime(2000 + DateTimeVals[0], DateTimeVals[1], DateTimeVals[2],
-                DateTimeVals[3], DateTimeVals[4], DateTimeVals[5]);
+    RTC.setTime(2000 + dateTimeVals[0], dateTimeVals[1], dateTimeVals[2],
+                dateTimeVals[3], dateTimeVals[4], dateTimeVals[5]);
   }
 
   getTime(); //Get time to pass to computer
@@ -322,8 +322,8 @@ ISR (PCINT0_vect) { // handle pin change interrupt for D8 to D13 here
 }
 
 int Margay::begin(String header_) {
-  uint8_t Dummy[1] = {0};
-  return begin(Dummy, 0, header_); //Call generalized begin function
+  uint8_t dummy[1] = {0};
+  return begin(dummy, 0, header_); //Call generalized begin function
 }
 
 void Margay::I2Ctest() {
@@ -331,18 +331,18 @@ void Margay::I2Ctest() {
 
   switchExternalI2C(ON);
 
-  int Error = 0;
-  bool I2C_Test = true;
+  int error = 0;
+  bool i2cTest = true;
 
   Serial.print("I2C: ");
   for (int i = 0; i < NumADR; i++) {
     Wire.beginTransmission(I2C_ADR[i]);
-    Error = Wire.endTransmission();
-    if (Error != 0) {
-      if (I2C_Test) Serial.println(" Fail");
+    error = Wire.endTransmission();
+    if (error != 0) {
+      if (i2cTest) Serial.println(" Fail");
       Serial.print("   Fail At: ");
       Serial.println(I2C_ADR[i], HEX);
-      I2C_Test = false;
+      i2cTest = false;
       SensorError = true;
     }
   }
@@ -352,17 +352,17 @@ void Margay::I2Ctest() {
 
   for (int i = 0; i < NumADR_OB; i++) {
     Wire.beginTransmission(I2C_ADR_OB[i]);
-    Error = Wire.endTransmission();
-    if (Error != 0) {
-      if (I2C_Test) Serial.println(" Fail");
+    error = Wire.endTransmission();
+    if (error != 0) {
+      if (i2cTest) Serial.println(" Fail");
       Serial.print("   Fail At: ");
       Serial.println(I2C_ADR_OB[i], HEX);
-      I2C_Test = false;
+      i2cTest = false;
       OBError = true;
     }
   }
 
-  if (I2C_Test) Serial.println("PASS");
+  if (i2cTest) Serial.println("PASS");
 
   // make sure I2C Bus is returned to initial state
   farmGateI2C(initialStateExternalI2C);
@@ -370,112 +370,112 @@ void Margay::I2Ctest() {
 
 
 void Margay::SDtest() {
-  bool SDErrorTemp = false;
+  bool sdErrorTemp = false;
 
   // SD_CD is pulled up: HIGH=1 if not present
   // SD card being inserted closes a switch to pull it LOW
   pinMode(SD_CD, INPUT);
-  bool CardNotPresent = digitalRead(SD_CD);
+  bool cardNotPresent = digitalRead(SD_CD);
 
   Serial.print("SD: ");
   delay(5); //DEBUG!
-  if (CardNotPresent) {
+  if (cardNotPresent) {
     Serial.println(F(" NO CARD"));
-    SDErrorTemp = true;
+    sdErrorTemp = true;
     SDError = true; //Card not inserted
   }
   else if (!SD.begin(SD_CS)) {
     OBError = true;
-    SDErrorTemp = true;
+    sdErrorTemp = true;
   }
 
   // If card is present, do the following:
-  if (!CardNotPresent) {
+  if (!cardNotPresent) {
     SD.mkdir("NW");  //Create NW folder (if not already present)
     SD.chdir("/NW"); //Move file pointer into NW folder (at root level)
     SD.mkdir(SN); //Make directory with serial number as name
     SD.chdir(SN); //Move into this directory
     //Change directory to SN# named dir
     SD.mkdir("Logs"); //Use???
-    String FileNameTest = "HWTest";
-    (FileNameTest + ".txt").toCharArray(FileNameTestC, 11);
+    String fileNameTest = "HWTest";
+    (fileNameTest + ".txt").toCharArray(FileNameTestC, 11);
     SD.remove(FileNameTestC); //Remove any previous files
 
     // Seed with a random process to ensure randomness
     randomSeed(analogRead(A7));
     // Generate a random number between 0 and 30557
     // (the number of words in Hamlet)
-    int RandVal = random(30557);
-    char RandDigits[6] = {0};
-    // Convert RandVal into a series of digits
-    sprintf(RandDigits, "%d", RandVal);
+    int randVal = random(30557);
+    char randDigits[6] = {0};
+    // Convert randVal into a series of digits
+    sprintf(randDigits, "%d", randVal);
     // Find the length of the digit string
-    int RandLength = (int)((ceil(log10(RandVal))+1)*sizeof(char));
-    File DataWrite = SD.open(FileNameTestC, FILE_WRITE);
-    if (DataWrite) {
-      DataWrite.println(RandVal);
-      DataWrite.println("\nHe was a man. Take him for all in all.");
-      DataWrite.println("I shall not look upon his like again.");
-      DataWrite.println("-Hamlet, Act 1, Scene 2");
+    int randLength = (int)((ceil(log10(randVal))+1)*sizeof(char));
+    File dataWrite = SD.open(FileNameTestC, FILE_WRITE);
+    if (dataWrite) {
+      dataWrite.println(randVal);
+      dataWrite.println("\nHe was a man. Take him for all in all.");
+      dataWrite.println("I shall not look upon his like again.");
+      dataWrite.println("-Hamlet, Act 1, Scene 2");
     }
-    DataWrite.close();
-    char TestDigits[6] = {0};
-    File DataRead = SD.open(FileNameTestC, FILE_READ);
-    if (DataRead) {
-      DataRead.read(TestDigits, RandLength);
-      for (int i = 0; i < RandLength - 1; i++){ //Test random value string
-        if (TestDigits[i] != RandDigits[i]) {
-          SDErrorTemp = true;
+    dataWrite.close();
+    char testDigits[6] = {0};
+    File dataRead = SD.open(FileNameTestC, FILE_READ);
+    if (dataRead) {
+      dataRead.read(testDigits, randLength);
+      for (int i = 0; i < randLength - 1; i++){ //Test random value string
+        if (testDigits[i] != randDigits[i]) {
+          sdErrorTemp = true;
           OBError = true;
         }
       }
     }
-    DataRead.close();
+    dataRead.close();
 
     keep_SPCR=SPCR;
   }
 
   // If card is inserted and still does not connect properly, throw error
-  if (SDError && !CardNotPresent) Serial.println("FAIL");
+  if (SDError && !cardNotPresent) Serial.println("FAIL");
   // If card is inserted AND connects properly, return success
-  else if (!SDError && !CardNotPresent) Serial.println("PASS");
+  else if (!SDError && !cardNotPresent) Serial.println("PASS");
 }
 
 void Margay::clockTest() {
-  int Error = 1;
-  uint8_t TestSeconds = 0;
-  bool OscStop = false;
+  int error = 1;
+  uint8_t testSeconds = 0;
+  bool oscStop = false;
 
   Serial.print("Clock: ");
   Wire.beginTransmission(I2C_ADR_OB[0]);
   Wire.write(0xFF);
-  Error = Wire.endTransmission();
+  error = Wire.endTransmission();
 
-  if (Error == 0) {
+  if (error == 0) {
     getTime(); //FIX!
-    TestSeconds = RTC.getValue(5);
+    testSeconds = RTC.getValue(5);
     delay(1100);
-    if (RTC.getValue(5) == TestSeconds) {
+    if (RTC.getValue(5) == testSeconds) {
       OBError = true; //If clock is not incrementing
-      OscStop = true; //Oscilator not running
+      oscStop = true; //Oscilator not running
     }
   }
 
-  unsigned int YearNow = RTC.getValue(0);
+  unsigned int yearNow = RTC.getValue(0);
 
   // If value is 2000, work around Y2K bug by setting time
   // to Jan 1st, midnight, 2049
-  if (YearNow == 00) {
+  if (yearNow == 00) {
     TimeError = true;
     Serial.println(" PASS, BAD TIME");
   }
 
-  if (Error != 0) {
+  if (error != 0) {
     Serial.println(" FAIL");
     OBError = true;
   }
 
-  else if (Error == 0 && OscStop == false && TimeError == false) {
+  else if (error == 0 && oscStop == false && TimeError == false) {
     Serial.println(" PASS");
   }
 }
@@ -499,16 +499,16 @@ void Margay::initADC(uint8_t desiredResolution) {
 }
 
 void Margay::powerTest() {
-  int Error = 0;
+  int error = 0;
 
   digitalWrite(Ext3v3Ctrl, HIGH); //Turn off power to outputs
 
   Serial.print("Power: ");
   Wire.beginTransmission(I2C_ADR[1]);
-  Error = Wire.endTransmission();
-  if (Error == 0) Serial.println(" FAIL");
+  error = Wire.endTransmission();
+  if (error == 0) Serial.println(" FAIL");
 
-  if (Error != 0) Serial.println(" PASS");
+  if (error != 0) Serial.println(" PASS");
 
   digitalWrite(Ext3v3Ctrl, LOW); //Turn power back on
 }
@@ -530,21 +530,21 @@ void Margay::initLogFile() {
   SD.chdir(SN);  //Move into specific numbered sub folder
   SD.chdir("Logs"); //Move into the logs sub-folder
   //Perform same search, but do so inside of "SD:NW/sn/Logs"
-  char NumCharArray[6];
-  String FileName = "Log";
-  int FileNum = 1;
-  sprintf(NumCharArray, "%05d", FileNum);
-  (FileName + String(NumCharArray) + ".txt").toCharArray(FileNameC, 13);
+  char numCharArray[6];
+  String fileName = "Log";
+  int fileNum = 1;
+  sprintf(numCharArray, "%05d", fileNum);
+  (fileName + String(numCharArray) + ".txt").toCharArray(FileNameC, 13);
   while (SD.exists(FileNameC)) {
-    FileNum += 1;
-    sprintf(NumCharArray, "%05d", FileNum);
-    (FileName + String(NumCharArray) + ".txt").toCharArray(FileNameC, 13);
+    fileNum += 1;
+    sprintf(numCharArray, "%05d", fileNum);
+    (fileName + String(numCharArray) + ".txt").toCharArray(FileNameC, 13);
   }
   Serial.print("FileNameC: ");
   Serial.println(FileNameC);
   // Make string of onboard characteristics as first line of data
-  String InitData = "Lib = " + String(LibVersion) + " SN = " + String(SN);
-  logStr(InitData);
+  String initData = "Lib = " + String(LibVersion) + " SN = " + String(SN);
+  logStr(initData);
   // Log concatenated header (old loggers lack BME280)
   if (Model < MODEL_2v0)
     logStr("Time [UTC], Temp OB [C], Temp RTC [C], Bat [V], " + Header);
@@ -574,21 +574,21 @@ int Margay::logStr(String val) {
 }
 
 void Margay::LED_Color(unsigned long val) { //Set color of onboard led
-  int Red = 0; //Red led color
-  int Green = 0;  //Green led color
-  int Blue = 0;  //Blue led color
-  int Lum = 0;  //Luminosity
+  int red = 0; //red led color
+  int green = 0;  //green led color
+  int blue = 0;  //blue led color
+  int lum = 0;  //Luminosity
 
   //Parse all values from single val
-  Blue = val & 0xFF;
-  Green = (val >> 8) & 0xFF;
-  Red = (val >> 16) & 0xFF;
-  Lum = (val >> 24) & 0xFF;
-  //  Lum = 255 - Lum; //Invert since LEDs are open drain
+  blue = val & 0xFF;
+  green = (val >> 8) & 0xFF;
+  red = (val >> 16) & 0xFF;
+  lum = (val >> 24) & 0xFF;
+  //  lum = 255 - lum; //Invert since LEDs are open drain
 
-  analogWrite(RedLED, 255 - (Red * Lum)/0xFF);
-  analogWrite(GreenLED, 255 - (Green * Lum)/0xFF);
-  analogWrite(BlueLED, 255 - (Blue * Lum)/0xFF);
+  analogWrite(RedLED, 255 - (red * lum)/0xFF);
+  analogWrite(GreenLED, 255 - (green * lum)/0xFF);
+  analogWrite(BlueLED, 255 - (blue * lum)/0xFF);
 }
 
 void Margay::getTime() {
@@ -597,16 +597,16 @@ void Margay::getTime() {
 }
 
 float Margay::getTemp(temp_val val) {
-  float Vcc = 3.3;
+  float vcc = 3.3;
   if (val == therm_val) {
-    float val = float(analogRead(ThermSense_Pin))*(Vcc/1023.0);
-    float TempData = tempConvert(val, Vcc, 10000.0, A, B, C, D, 10000.0);
-    TempData = TempData - 273.15; //Get temp from on board thermistor
-    return TempData;
+    float val = float(analogRead(ThermSense_Pin))*(vcc/1023.0);
+    float tempData = tempConvert(val, vcc, 10000.0, A, B, C, D, 10000.0);
+    tempData = tempData - 273.15; //Get temp from on board thermistor
+    return tempData;
   }
   if (val == RTC_val) {
-    float RTCTemp = RTC.getTemp();  //Get Temp from RTC
-    return RTCTemp;
+    float rtcTemp = RTC.getTemp();  //Get Temp from RTC
+    return rtcTemp;
   }
 }
 
@@ -616,19 +616,19 @@ float Margay::getBatVoltage() {
   ADCSRA = 0b10000111;
   delay(10); //Alow for >1 clock cycle to set values
 
-  float VAux = 3.3; // Voltage reference for ATMega1284p ADC
-  float BatADC10bit = analogRead(BatSense_Pin); //Get (divided) battery ADC val
+  float vAux = 3.3; // Voltage reference for ATMega1284p ADC
+  float batADC10bit = analogRead(BatSense_Pin); //Get (divided) battery ADC val
   //VRef is having issues: often approx 0.9 <-- This was from the hardware component; fixed now
   // Therefore, instead we will just use the 3V3 regulator as our basis
-  // Find compensation value with VRef due to larger uncertainty with Vcc
-  float Comp = (1.8/3.3)*1023./analogRead(VRef_Pin);
+  // Find compensation value with VRef due to larger uncertainty with vcc
+  float comp = (1.8/3.3)*1023./analogRead(VRef_Pin);
   // Override comp calculation since many v0.0 models do not have ref equipped
-  if (Model == 0) Comp = 1.0;
+  if (Model == 0) comp = 1.0;
   // Should divide by 1023. instead of 1024: 0-1023
-  //BatVoltage = BatVoltage*BatteryDivider*Comp*(Vcc/1024.0);
+  //batVoltage = batVoltage*BatteryDivider*comp*(vcc/1024.0);
   //  Compensate for voltage divider and ref voltage error
-  float BatVoltage = BatADC10bit/1023. * VAux * BatteryDivider;
-  return BatVoltage;
+  float batVoltage = batADC10bit/1023. * vAux * BatteryDivider;
+  return batVoltage;
 }
 
 float Margay::getBatPer() {
@@ -641,62 +641,62 @@ float Margay::getBatPer() {
   float C = -4.0063;
   float val = getBatVoltage()/3.0; //Divide to get cell voltage
   // Return percentage of remaining battery energy
-  float Per = ((A*pow(val, 2) + B*val + C)*2 - 1)*100.0;
-  if (Per < 0) return 0;  //Do not allow return of non-sensical values
+  float per = ((A*pow(val, 2) + B*val + C)*2 - 1)*100.0;
+  if (per < 0) return 0;  //Do not allow return of non-sensical values
   // Is this appropriate? Float voltage could be higher than specified
   // and still be correct
-  if (Per > 100) return 100;
-  return Per;
+  if (per > 100) return 100;
+  return per;
 }
 
 String Margay::getOnBoardVals() {
   //Get onboard temp, RTC temp, and battery voltage, referance voltage
   // float VRef = analogRead(VRef_Pin);
-  float Vcc = 3.3; //(1.8/VRef)*3.3; //Compensate for Vcc using VRef
-  // Serial.println(Vcc); //DEBUG!
-  float TempData = 0; //FIX!!! Dumb!
+  float vcc = 3.3; //(1.8/VRef)*3.3; //Compensate for vcc using VRef
+  // Serial.println(vcc); //DEBUG!
+  float tempData = 0; //FIX!!! Dumb!
 
   if (Model < MODEL_2v0) {  //For older thermistor models
     float val = float(analogRead(ThermSense_Pin));
-    // Find compensation value with VRef due to Vcc error
-    float Comp = (1.8/3.3)*1023.0/analogRead(VRef_Pin);
+    // Find compensation value with VRef due to vcc error
+    float comp = (1.8/3.3)*1023.0/analogRead(VRef_Pin);
     // Override comp calculation since many v0.0 models do not have ref equipped
-    if (Model == 0) Comp = 1.0;
-    val = val*Comp*(Vcc/1023.0); //Compensate for ref voltage error
-    //  float Vout = Vcc - val;
+    if (Model == 0) comp = 1.0;
+    val = val*comp*(vcc/1023.0); //Compensate for ref voltage error
+    //  float Vout = vcc - val;
     //  Serial.println(val); //DEBUG!
     //  Serial.println(Vout);  //DEBUG!
-    TempData = tempConvert(val, Vcc*Comp, 10000.0, A, B, C, D, 10000.0);
-    TempData = TempData - 273.15; //Get temp from on board thermistor
+    tempData = tempConvert(val, vcc*comp, 10000.0, A, B, C, D, 10000.0);
+    tempData = tempData - 273.15; //Get temp from on board thermistor
   }
 
   // delay(10);
   // Get battery voltage, including voltage divider in math
-  float BatVoltage = getBatVoltage();
+  float batVoltage = getBatVoltage();
 
   // Temp[3] = Clock.getTemperature(); //Get tempreture from RTC //FIX!
-  float RTCTemp = RTC.getTemp();  //Get Temp from RTC
+  float rtcTemp = RTC.getTemp();  //Get Temp from RTC
   getTime(); //FIX!
   if (Model < MODEL_2v0)
-    return LogTimeDate + "," + String(TempData) + ","
-           + String(RTCTemp) + "," + String(BatVoltage) + ",";
+    return LogTimeDate + "," + String(tempData) + ","
+           + String(rtcTemp) + "," + String(batVoltage) + ",";
   else
     return LogTimeDate + "," + String(EnviroSense.GetString())
-           + String(RTCTemp) + "," + String(BatVoltage) + ",";
+           + String(rtcTemp) + "," + String(batVoltage) + ",";
 }
 
-float Margay::tempConvert(float V, float Vcc, float R,
+float Margay::tempConvert(float V, float vcc, float R,
     float A, float B, float C, float D, float R25) {
   //  Serial.print("R = "); //DEBUG!
   //  Serial.println(R); //DEBUG!
-  float Rt = ((Vcc/V)*R) - R;
-  //  Serial.print("Rt = "); //DEBUG!
-  //  Serial.println(Rt); //DEBUG!
-  float LogRt = log(Rt/R25);
-  //  Serial.print("LogRt = "); //DEBUG!
-  //  Serial.println(LogRt); //DEBUG!
-  float T = 1.0/(A + B*LogRt + C*pow(LogRt, 2.0) + D*pow(LogRt, 3.0));
-  return T;
+  float rt = ((vcc/V)*R) - R;
+  //  Serial.print("rt = "); //DEBUG!
+  //  Serial.println(rt); //DEBUG!
+  float logRt = log(rt/R25);
+  //  Serial.print("logRt = "); //DEBUG!
+  //  Serial.println(logRt); //DEBUG!
+  float t = 1.0/(A + B*logRt + C*pow(logRt, 2.0) + D*pow(logRt, 3.0));
+  return t;
 }
 
 void Margay::blinkGood() {
@@ -858,7 +858,7 @@ void Margay::addDataPoint(String (*update)(void)) {
 }
 
 void Margay::_addDataPoint(String data) {
-  // Serial.println("Request OB Vals"); //DEBUG!
+  // Serial.println("Request OB vals"); //DEBUG!
   // Briefly flash an LED to show that data are being logged
   // without needing to waste extra time/power with a delay.
   // This step should always take the same amount of time
@@ -867,7 +867,7 @@ void Margay::_addDataPoint(String data) {
   digitalWrite(BlueLED, LOW); //ON
   data = getOnBoardVals() + data; //Prepend on board readings
   digitalWrite(BlueLED, HIGH); //OFF
-  // Serial.println("Got OB Vals");  //DEBUG!
+  // Serial.println("Got OB vals");  //DEBUG!
   logStr(data);
   // Serial.println("Logged Data"); //DEBUG!
 }
@@ -911,18 +911,18 @@ void Margay::resetExtIntCount(uint16_t start) {
   ExtInt_count = start;
 }
 
-void Margay::powerAux(bool State) {
+void Margay::powerAux(bool state) {
   pinMode(Ext3v3Ctrl, OUTPUT); //Setup outputs for robustness
-  if (State) powerOB(ON); //Turn on on-board power if required
+  if (state) powerOB(ON); //Turn on on-board power if required
   if (Model >= MODEL_2v0) {  //use positive logic for Model v2.0 and newer
-    digitalWrite(Ext3v3Ctrl, State); //Switch 3v3 Aux power
+    digitalWrite(Ext3v3Ctrl, state); //Switch 3v3 Aux power
   }
-  else digitalWrite(Ext3v3Ctrl, !State); //Switch 3v3 Aux power
+  else digitalWrite(Ext3v3Ctrl, !state); //Switch 3v3 Aux power
 }
 
-void Margay::powerOB(bool State) {
+void Margay::powerOB(bool state) {
   pinMode(BatSwitch, OUTPUT);
-  digitalWrite(BatSwitch, State); //Set bat switch for onboard 3v3/main power
+  digitalWrite(BatSwitch, state); //Set bat switch for onboard 3v3/main power
 }
 
 void Margay::dateTimeSD(uint16_t* date, uint16_t* time) {
