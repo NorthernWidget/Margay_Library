@@ -158,10 +158,6 @@ int Margay::begin(uint8_t *Vals, uint8_t numVals, String header_)
 	powerOB(ON);  //Turn on on-board power
 	powerAux(ON); //Turn on external auxilary power
 	pinMode(WDHold, OUTPUT);
-	// pinMode(BatSwitch, OUTPUT);
-	// digitalWrite(BatSwitch, HIGH);
-	// pinMode(Ext3v3Ctrl, OUTPUT);
-	// digitalWrite(Ext3v3Ctrl, HIGH); //Make sure external power is on
 
 	pinMode(AuxLED, OUTPUT);
 	digitalWrite(AuxLED, LOW); //Turn built in LED on
