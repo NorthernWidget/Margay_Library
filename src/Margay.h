@@ -125,7 +125,8 @@ class Margay
     const String LibVersion = "0.3.0";
 
   protected:
-    float tempConvert(float V, float Vcc, float R, float A, float B, float C, float D, float R25);
+    float tempConvert(float V, float Vcc, float R,
+        float A, float B, float C, float D, float R25);
     void blinkGood();
     void virtual writeDataToSD();
     void virtual buttonLog();
@@ -133,8 +134,8 @@ class Margay
     static void isr1();
     static void isr2();
     static Margay* selfPointer;
-      static void dateTimeSD(uint16_t* date, uint16_t* time);
-      void switchExternalI2C(bool desiredState);
+    static void dateTimeSD(uint16_t* date, uint16_t* time);
+    void switchExternalI2C(bool desiredState);
     void sleepNow();
     void turnOffSDcard();
     void turnOnSDcard();
@@ -165,11 +166,14 @@ class Margay
     bool SDError = false;
     bool BatError = false;
     bool BatWarning = false;
-    float BatVoltageError = 3.3; //Low battery alert will trigger if voltage drops below this value
-    float BatPercentageWarning = 50; //Percentage at which a warning will be indicated
+    float BatVoltageError = 3.3; // alert if voltage drops below this
+    float BatPercentageWarning = 50; // warn if charge % drops below this
     String Header = "";
-    const char HexMap[16] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'}; //used for conversion to HEX of string
-    char SN[20] = {0}; //Used to store device serial number, 19 chars + null terminator
+    const char HexMap[16] = {
+      '0', '1', '2', '3', '4', '5', '6', '7',
+      '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'
+    }; // hex digit lookup table
+    char SN[20] = {0}; // serial number: 19 chars + null terminator
     uint8_t NumADR = 0;
     uint8_t I2C_ADR[16] = {0}; //Change length??
     uint8_t NumADR_OB = 1;
