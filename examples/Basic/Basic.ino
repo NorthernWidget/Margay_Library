@@ -23,7 +23,7 @@ Margay Logger(MODEL_2v2); //Define which version of Margay is being used
 
 void setup() {
   Logger.begin(); //Pass header info to logger
-  // init(); //Call initialization if other sensors are used
+  // initSensors(); //Call initialization if other sensors are used
 }
 
 void loop() {
@@ -36,7 +36,7 @@ String update()
 	return ""; //Append readings together, sperated by commas, here
 }
 
-void init() 
+void initSensors()
 {
-  //Put sensors initializations here
+  //Put sensor initializations here
 }
