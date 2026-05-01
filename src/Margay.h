@@ -144,6 +144,8 @@ class Margay
     uint8_t D0 = 3; //ADD TO DOCUMENTATION!
 
     uint8_t NCells = 3; // number of cells in series in battery pack
+    float BatVoltageError = 3.3; // trigger error if battery drops below this voltage
+    float BatPercentageWarning = 50; // trigger warning if charge drops below this percentage
     const String LibVersion = "1.1.1";
 
   protected:
@@ -188,8 +190,6 @@ class Margay
     bool SDError = false;
     bool BatError = false;
     bool BatWarning = false;
-    float BatVoltageError = 3.3; // alert if voltage drops below this
-    float BatPercentageWarning = 50; // warn if charge % drops below this
     String Header = "";
     const char HexMap[16] = {
       '0', '1', '2', '3', '4', '5', '6', '7',
