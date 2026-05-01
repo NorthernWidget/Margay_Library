@@ -765,9 +765,11 @@ void Margay::run(String (*update)(void), unsigned long logInterval) //Pass in fu
 
 	AwakeCount++;
 
+	// @bschulz1701: AwakeCount was designed to give ~5 run() iterations after
+	// an RTC wake before returning to sleep, reset to 0 by the RTC ISR
+	// (writeDataToSD). Since addDataPoint() blocks within a single run() call,
+	// the 5-count may be unnecessary. Consider simplifying or removing.
 	if(AwakeCount > 5) {
-	//    AwakeCount = 0;
-		// Serial.println(millis()); //DEBUG!
 		sleepNow();
 	}
 	delay(1);
