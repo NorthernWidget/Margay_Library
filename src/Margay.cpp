@@ -165,7 +165,6 @@ int Margay::begin(uint8_t *Vals, uint8_t numVals, String header_)
 	pinMode(VSwitch_Pin, OUTPUT); //Setup switch control as output
 
 	memcpy(I2C_ADR, Vals, sizeof(I2C_ADR)); //Copy array
-	// memcpy(I2C_ADR, Vals, numVals); //Copy array  //DEBUG??
 	NumADR = numVals; //Copy length of array
 	if (ExtIntPin == 255)
 	{
@@ -176,7 +175,6 @@ int Margay::begin(uint8_t *Vals, uint8_t numVals, String header_)
 		Header = header_ + ext_int_header_entry;
   }
 
-	// NumADR_OB = 2; //DEBUG!
 	RTC.begin(); //Initalize RTC
 	RTC.clearAlarm(); //
 	initADC(18);
@@ -198,7 +196,6 @@ int Margay::begin(uint8_t *Vals, uint8_t numVals, String header_)
 		SN[Pos++] = HexMap[(val % 0x10)]; //Load lower nibble of hex value, post inc pos
 		if(i % 2 == 1 && i < EEPROMLen - 1) {
 			SN[Pos++] = '-';  //Place - between each SN category, post inc pos
-			// Pos += 1;
 		}
 		SN[19] = '\0'; //Null terminate string
 	}
@@ -293,8 +290,6 @@ int Margay::begin(uint8_t *Vals, uint8_t numVals, String header_)
 
 	Serial.print("\nReady to Log...\n\n");
 	NewLog = true; //Set flag to begin new log file
-
-	// delay(2000);
 
 	if (ExtIntPin != 255)
 	{
