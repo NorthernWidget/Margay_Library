@@ -10,17 +10,6 @@ Andy Wickert
 #include <Margay.h>
 #include <Arduino.h>
 
-// #include <PCINT.h>
-
-
-
-// extern void AttachPCI(byte Pin, void (*UserFunc)(void), int Mode);
-// extern void enableInterrupt(uint8_t interruptDesignator, void (*userFunction)(void), uint8_t mode);
-// uint8_t LogInt = 28; //DEBUG!
-
-// *digitalPinToPCMSK(LogInt) |= bit (digitalPinToPCMSKbit(LogInt));  // enable pin
-
-
 
 volatile bool manualLog = false; // Global for interrupt access
 
