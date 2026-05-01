@@ -33,8 +33,7 @@ Margay::Margay(board model_, build specs_)
 		ThermSense_Pin = 1;
 		BatSense_Pin = 2;
 
-		// VSwitch_Pin = 3;
-		VSwitch_Pin = 12; //DEBUG!??
+		VSwitch_Pin = 12;
 		SD_CD = 1;
 
 		Ext3v3Ctrl = 22;
@@ -76,8 +75,7 @@ Margay::Margay(board model_, build specs_)
 		ThermSense_Pin = 1;
 		BatSense_Pin = 0;
 
-		// VSwitch_Pin = 3;
-		VSwitch_Pin = 12; //DEBUG!??
+		VSwitch_Pin = 12;
 		SD_CD = 1;
 
 		Ext3v3Ctrl = 19;
