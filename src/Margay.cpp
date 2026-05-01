@@ -715,15 +715,13 @@ float Margay::getVoltage()  //Get voltage from Ax pin
 
 void Margay::run(String (*update)(void), unsigned long logInterval) //Pass in function which returns string of data
 {
-	// Serial.println("BANG!"); //DEBUG!
+	// Print note that that logging has started
+	// Serial.println("Log Started!"); //DEBUG!
 	// Serial.println(millis()); //DEBUG!
 	if(NewLog) {
-		// Serial.println("Log Started!"); //DEBUG
 		// LogEvent = true;
-		// unsigned long TempLogInterval = logInterval; //ANDY, Fix with addition of function??
-		RTC.setAlarm(logInterval); //DEBUG!
+		RTC.setAlarm(logInterval);
 		initLogFile(); //Start a new file each time log button is pressed
-
 		//Add inital data point
 		addDataPoint(update);
 		NewLog = false;  //Clear flag once log is started
@@ -732,13 +730,11 @@ void Margay::run(String (*update)(void), unsigned long logInterval) //Pass in fu
 	}
 
 	if(LogEvent) {
-		// Serial.println("Log!"); //DEBUG!
+		// Serial.println("Log Event!"); //DEBUG!
 		// RTC.setAlarm(logInterval);  //Set/reset alarm //DEBUG!
 		addDataPoint(update); //Write values to SD
 		LogEvent = false; //Clear log flag
-		// Serial.println("BANG!"); //DEBUG!
 		RTC.setAlarm(logInterval);  //Set/reset alarm
-		// Serial.println("ResetTimer"); //DEBUG!
 		resetWDT(); //Clear alarm
 	}
 
