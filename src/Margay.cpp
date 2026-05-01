@@ -1038,73 +1038,29 @@ void Margay::sleepNow()         // here we put the arduino to sleep
 void Margay::turnOffSDcard()
 {
 delay(6);
-                                       // disable SPI
-// power_spi_disable();                     // disable SPI clock
-// DDRB &= ~((1<<DDB5) | (1<<DDB7) | (1<<DDB6) | (1<<DDB4));   // set All SPI pins to INPUT
-// pinMode(SD_CD, INPUT);
-// DDRC &= ~((1<<DDC0) | (1<<DDC1));
 pinMode(16, INPUT);
 pinMode(17, INPUT);
-// digitalWrite(8, LOW);
-// digitalWrite(9, LOW);
 pinMode(8, INPUT);
 pinMode(9, INPUT);
-// digitalWrite(16, HIGH);
-// digitalWrite(17, HIGH);
-//digitalWrite(SD_CS, HIGH);
-// digitalWrite(5, LOW);
-// // Note: you must disconnect the LED on pin 13 or you’ll bleed current through the limit resistor
-// // LowPower.powerDown(SLEEP_1S, ADC_OFF, BOD_OFF); // wait 1 second before pulling the plug!
 delay(6);
-// digitalWrite(Ext3v3Ctrl, HIGH); //MODEL <= v1
-// digitalWrite(Ext3v3Ctrl, LOW);  //turn off external 3v3 rail
-// digitalWrite(BatSwitch, LOW); //Turn off battery connection to sense divider
 powerAux(OFF); //turn off external 3v3 rail
 powerOB(OFF); //Turn off battery connection to sense divider
-// digitalWrite(BatRailCtrl, HIGH);
 delay(1);
 digitalWrite(SD_CS, LOW);
 delay(20);
-// SPCR = SPCR & 0b11101111;
 SPCR = 0;
 power_spi_disable();
-// SPI.end();
 delay(10);
-// pinMode(5, OUTPUT);d
-// digitalWrite(5, LOW);
-// DDRB &= ~((1<<DDB5));
-// PORTB &= ~(1<<PORTB5); //Set port B5 (MOSI) LOW
-// DDRB &= ~((1<<DDB5) | (1<<DDB7) | (1<<DDB6) | (1<<DDB4));
-// PORTB |= ((1<<DDB5) | (1<<DDB7) | (1<<DDB6) | (1<<DDB4));     // set ALL SPI pins HIGH (~30k pullup)
-// digitalWrite(SD_CS, LOW);
-// pinMode(SD_CS, INPUT);
 delay(6);
 }
 
 void Margay::turnOnSDcard()
 {
-// pinMode(SD_CS, OUTPUT);
-// SPI.begin();
-// sd.begin(SD_CS);
-// DDRB |= ((1<<DDB5));
-// digitalWrite(SD_CS, HIGH);
-// digitalWrite(Ext3v3Ctrl, HIGH);  //turn off external 3v3 rail
-// digitalWrite(BatSwitch, HIGH); //Turn off battery connection to sense divider
 powerOB(ON); //Turn on battery connection to sense divider
 powerAux(ON); //turn on external 3v3 rail
 delay(6);                                            // let the card settle
-// some cards will fail on power-up unless SS is pulled up  ( &  D0/MISO as well? )
-// DDRC = DDRC | ((1<<DDC0) | (1<<DDC1));
-// DDRB = DDRB | (1<<DDB7) | (1<<DDB5) | (1<<DDB4); // set SCLK(D13), MOSI(D11) & SS(D10) as OUTPUT
-// Note: | is an OR operation so  the other pins stay as they were.                (MISO stays as INPUT)
-// PORTB = PORTB & ~(1<<DDB7);  // disable pin 13 SCLK pull-up – leave pull-up in place on the other 3 lines
 power_spi_enable();                      // enable the SPI clock
 SPCR=keep_SPCR;                          // enable SPI peripheral
-// delay(20);
-// digitalWrite(BatRailCtrl, LOW);
-// digitalWrite(Ext3v3Ctrl, LOW); //MODEL <= v1
 delay(10);
-// digitalWrite(3, HIGH); //DEBUG!
 SD.begin(SD_CS, SD_SCK_MHZ(8));
-// digitalWrite(3, LOW); //DEBUG!
 }
