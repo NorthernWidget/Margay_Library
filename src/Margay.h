@@ -122,7 +122,7 @@ class Margay
     uint8_t RX = 10; //ADD TO DOCUMENTATION!
     uint8_t D0 = 3; //ADD TO DOCUMENTATION!
 
-    const String LibVersion = "0.3.0";
+    const String LibVersion = "1.1.1";
 
   protected:
     float tempConvert(float V, float vcc, float R,
