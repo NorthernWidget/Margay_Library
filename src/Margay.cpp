@@ -585,14 +585,14 @@ int Margay::logStr(String val)
 	// if the file is available, write to it:
 	if (DataFile) {
 		DataFile.println(val);
-	   // return 0;
+		DataFile.close();
+		return 0;
 	}
 	// if the file isn't open, pop up an error:
 	else {
-	   // return -1;
+		DataFile.close();
+		return -1;
 	}
-
-	DataFile.close();
 }
 
 void Margay::LED_Color(unsigned long val) //Set color of onboard led
