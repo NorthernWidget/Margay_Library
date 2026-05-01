@@ -147,7 +147,6 @@ class Margay
 		void powerTest();
 		void enviroStats();
 		void extIntCounter();
-		int freeMemory(); //DEBUG!
 		void _addDataPoint(String data);
 		void farmGateI2C(bool initialStateExternalI2C);
 
