@@ -311,7 +311,7 @@ int Margay::begin(uint8_t *vals, uint8_t numVals, String header_) {
   LED_Color(OFF);
 }
 
-ISR (PCINT0_vect) { // handle pin change interrupt for D8 to D13 here
+ISR (PCINT0_vect) { // handle pin change interrupt for D24-D31 (Port A) on ATmega1284p
   // NOTE: PCINT fires on both rising and falling edges. The current
   // implementation sets manualLog unconditionally. If the button is still
   // held when the logger finishes processing and re-enters sleep, the
