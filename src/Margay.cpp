@@ -907,19 +907,12 @@ void Margay::powerOB(bool State)
 
 void Margay::dateTimeSD(uint16_t* date, uint16_t* time)
 {
-	// DateTime now = RTC.now();
-	// sprintf(timestamp, "%02d:%02d:%02d %2d/%2d/%2d \n", now.hour(),now.minute(),now.second(),now.month(),now.day(),now.year()-2000);
-	// Serial.println("yy");
-	// Serial.println(timestamp);
 	// return date using FAT_DATE macro to format fields
-	// Serial.println(selfPointer->RTC.getValue(0)); //DEBUG!
 	*date = FAT_DATE(selfPointer->RTC.getValue(0) + 2000, selfPointer->RTC.getValue(1), selfPointer->RTC.getValue(2));
 
 	// return time using FAT_TIME macro to format fields
 	*time = FAT_TIME(selfPointer->RTC.getValue(3), selfPointer->RTC.getValue(4), selfPointer->RTC.getValue(5));
 }
-
-void Margay::dateTimeSD_Glob(uint16_t* date, uint16_t* time) {selfPointer->dateTimeSD(date, time);}  //Fix dumb name!
 
 void Margay::isr0() { selfPointer->buttonLog(); }
 
