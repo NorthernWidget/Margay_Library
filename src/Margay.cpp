@@ -42,7 +42,7 @@ Margay::Margay(board model_, build specs_) {
     RX = 10;
     ExtInt = 11; //Legacy inclusion
     RTCInt = 2;
-    LogInt = 28; //ADJUST TO USE PC INT!!!!
+    LogInt = 28;
 
     WDHold = 23;
     BatSwitch = 19;
