@@ -596,17 +596,23 @@ void Margay::getTime() {
   LogTimeDate = RTC.getTime(0);
 }
 
-float Margay::getTemp(temp_val val) {
+float Margay::getTemp(temp_source sensor) {
   float vcc = 3.3;
-  if (val == therm_val) {
-    float val = float(analogRead(ThermSense_Pin))*(vcc/1023.0);
-    float tempData = tempConvert(val, vcc, 10000.0, A, B, C, D, 10000.0);
-    tempData = tempData - 273.15; //Get temp from on board thermistor
+  // Get temp from on board thermistor
+  if (sensor == thermistor_temp_sensor) {
+    float adcVoltage = float(analogRead(ThermSense_Pin))*(vcc/1023.0);
+    float tempData = tempConvert(adcVoltage, vcc, 10000.0, A, B, C, D, 10000.0);
+    tempData = tempData - 273.15;
     return tempData;
   }
-  if (val == RTC_val) {
-    float rtcTemp = RTC.getTemp();  //Get Temp from RTC
+  // Get Temp from RTC
+  else if (sensor == RTC_temp_sensor) {
+    float rtcTemp = RTC.getTemp();
     return rtcTemp;
+  }
+  else {
+    // Obvious temperature error value that no sensor would give
+    return -1234; 
   }
 }
 

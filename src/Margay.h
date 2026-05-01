@@ -60,10 +60,10 @@ enum build
   BUILD_D = 3
 };
 
-enum temp_val
+enum temp_source
 {
-  therm_val = 0,
-  RTC_val = 1
+  thermistor_temp_sensor = 0,
+  RTC_temp_sensor = 1
 };
 
 ////////////////////////////PIN DEFINITIONS///////////////////////
@@ -87,7 +87,16 @@ class Margay
     uint16_t getExtIntCount(bool reset0 = true);
     void resetExtIntCount(uint16_t start = 0);
 
-    float getTemp(temp_val val = therm_val);
+    /**
+     * @brief Read temperature from an on-board sensor.
+     *
+     * @param sensor Temperature source. Options:
+     *               - thermistor_temp_sensor (0): on-board NTC thermistor
+     *               - RTC_temp_sensor (1): DS3231 RTC internal sensor
+     *               Defaults to thermistor_temp_sensor.
+     * @return Temperature in degrees Celsius, or -1234 on invalid input.
+     */
+    float getTemp(temp_source sensor = thermistor_temp_sensor);
     float getBatVoltage();
     float getBatPer();
 
