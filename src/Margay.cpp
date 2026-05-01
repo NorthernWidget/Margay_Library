@@ -108,7 +108,7 @@ Margay::Margay(board model_, build specs_) {
 
     else if (specs_ == BUILD_D) {
       NumADR_OB = 2; //Tell system to search additional ADRs
-      I2C_ADR_OB[1] = 0x6A; //Use 0x6B on board ADC (MCP3421A3)
+      I2C_ADR_OB[1] = 0x6A; //Use 0x6A on board ADC (MCP3421A2)
     }
   }
   else {
