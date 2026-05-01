@@ -303,10 +303,13 @@ int Margay::begin(uint8_t *Vals, uint8_t numVals, String header_)
 
 ISR (PCINT0_vect) // handle pin change interrupt for D8 to D13 here
 {
-	// boolean PinVal = (PINA & digitalPinToBitMask(28));
-    // if(PinVal == LOW) manualLog = true; //Set flag to manually record an additional data point; //Only fun the function if trigger criteria is true
-    // digitalWrite(14, LOW); //DEBUG!
-    manualLog = true; //DEBUG!
+    // NOTE: PCINT fires on both rising and falling edges. The current
+    // implementation sets manualLog unconditionally. If the button is still
+    // held when the logger finishes processing and re-enters sleep, the
+    // rising edge on release will trigger a second log entry. Consider
+    // checking pin state to fire only on the falling edge (button press):
+    //   if (!(PINA & digitalPinToBitMask(28))) manualLog = true;
+    manualLog = true;
 }
 
 int Margay::begin(String header_)
