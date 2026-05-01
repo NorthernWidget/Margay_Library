@@ -137,8 +137,8 @@ class Margay
     float tempConvert(float V, float vcc, float R,
         float A, float B, float C, float D, float R25);
     void blinkGood();
-    void virtual writeDataToSD();
-    void virtual buttonLog();
+    virtual void writeDataToSD();
+    virtual void buttonLog();
     static void isr0();
     static void isr1();
     static void isr2();
