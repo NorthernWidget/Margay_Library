@@ -484,11 +484,11 @@ void Margay::batTest() {
   // Set error flag if below min voltage
   if (getBatVoltage() < BatVoltageError) BatError = true;
   // Set warning flag if below set percentage
-  if (getBatPer() < BatPercentageWarning) BatWarning = true;
+  if (getBatPercentage() < BatPercentageWarning) BatWarning = true;
   Serial.print("Bat = ");
   Serial.print(getBatVoltage());
   Serial.print("V\t");
-  Serial.print(getBatPer());
+  Serial.print(getBatPercentage());
   Serial.println("%");
 }
 
@@ -637,22 +637,22 @@ float Margay::getBatVoltage() {
   return batVoltage;
 }
 
-float Margay::getBatPer() {
+float Margay::getBatPercentage() {
   // NOTE: Fit developed for Duracell AA, should work well for most alkalines,
   // but no guarantee given on accuracy
-  // From 305 to 100% capacity, should be accurate to within 1%
+  // From 30% to 100% capacity, should be accurate to within 1%
   // (for data taken at 25C)
-  float A = -1.9809;
-  float B = 6.2931;
-  float C = -4.0063;
-  float val = getBatVoltage()/3.0; //Divide to get cell voltage
+  float batA = -1.9809;
+  float batB = 6.2931;
+  float batC = -4.0063;
+  float cellVoltage = getBatVoltage()/NCells; //Divide to get per-cell voltage
   // Return percentage of remaining battery energy
-  float per = ((A*pow(val, 2) + B*val + C)*2 - 1)*100.0;
-  if (per < 0) return 0;  //Do not allow return of non-sensical values
+  float percentage = ((batA*pow(cellVoltage, 2) + batB*cellVoltage + batC)*2 - 1)*100.0;
+  if (percentage < 0) return 0;  //Do not allow return of non-sensical values
   // Is this appropriate? Float voltage could be higher than specified
   // and still be correct
-  if (per > 100) return 100;
-  return per;
+  if (percentage > 100) return 100;
+  return percentage;
 }
 
 String Margay::getOnBoardVals() {

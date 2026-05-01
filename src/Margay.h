@@ -98,7 +98,19 @@ class Margay
      */
     float getTemp(temp_source sensor = thermistor_temp_sensor);
     float getBatVoltage();
-    float getBatPer();
+
+    /**
+     * @brief Estimate remaining battery charge as a percentage.
+     *
+     * Uses a quadratic fit developed for Duracell AA alkaline cells.
+     * Should generalise well to most alkalines; accuracy not guaranteed
+     * for other chemistries. Accurate to within ~1% from 30% to 100%
+     * capacity at 25°C. Configure the number of cells in series via
+     * the public member variable NCells (default 3).
+     *
+     * @return Battery charge percentage clamped to [0, 100].
+     */
+    float getBatPercentage();
 
     void initADC(uint8_t desiredResolution);
     void resetWDT();
@@ -177,6 +189,7 @@ class Margay
     bool BatWarning = false;
     float BatVoltageError = 3.3; // alert if voltage drops below this
     float BatPercentageWarning = 50; // warn if charge % drops below this
+    uint8_t NCells = 3; // number of cells in series in battery pack
     String Header = "";
     const char HexMap[16] = {
       '0', '1', '2', '3', '4', '5', '6', '7',
