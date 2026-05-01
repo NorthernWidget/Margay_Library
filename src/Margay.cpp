@@ -515,7 +515,6 @@ void Margay::enviroStats()
 
 void Margay::initLogFile()
 {
-	// SD.chdir("/"); //Return to root to define starting state
 	SD.chdir("/NW");  //Move into northern widget folder from root
 	SD.chdir(SN);  //Move into specific numbered sub folder
 	SD.chdir("Logs"); //Move into the logs sub-folder
@@ -524,8 +523,6 @@ void Margay::initLogFile()
     String FileName = "Log";
     int FileNum = 1;
     sprintf(NumCharArray, "%05d", FileNum);
-    //Serial.print("NumString: ");
-    //Serial.println(ns);
     (FileName + String(NumCharArray) + ".txt").toCharArray(FileNameC, 13);
     while(SD.exists(FileNameC)) {
       FileNum += 1;
@@ -536,18 +533,13 @@ void Margay::initLogFile()
     Serial.println(FileNameC);
   	String InitData = "Lib = " + String(LibVersion) + " SN = " + String(SN);  //Make string of onboard characteristics
   	logStr(InitData); //Log as first line of data
-  	// logStr("Drink. Drink. Drink. Drink. Don't Think. Drive. Kill. Get drunk a lot. And work 40 hours a week. Drink. Drink. Drink. Drink. Don't Think. Drive. Kill. Get drunk a lot. And work 40 hours a week. "); //DEBUG!
-    // logStr(Header); //DEBUG!
     if(Model < MODEL_2v0) logStr("Time [UTC], Temp OB [C], Temp RTC [C], Bat [V], " + Header); //Log concatonated header (for old loggers)
     else logStr("Time [UTC], PresOB [mBar], RH_OB [%], TempOB [C], Temp RTC [C], Bat [V], " + Header); //Log concatonated header (for new loggers)
-    // logStr("Time [UTC], PresOB [mBar], RH_OB [%], TempOB [C], Temp RTC [C], Bat [V], " + Header); //Log concatonated header (for new loggers)
 }
 
 int Margay::logStr(String val)
 {
 	Serial.println(val); //Echo to serial monitor
-	// SD.begin(SD_CS); //DEBUG!
-	// SD.chdir("/"); //Return to root to define starting state
 	SD.chdir("/NW");  //Move into northern widget folder from root
 	SD.chdir(SN);  //Move into specific numbered sub folder
 	SD.chdir("Logs"); //Move into the logs sub-folder
