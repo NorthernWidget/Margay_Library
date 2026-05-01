@@ -17,26 +17,26 @@ Distributed as-is; no warranty is given.
 // String Header = ""; //Information header, name of each reading seperated by commas 
 // uint8_t I2CVals[1] = {}; //List of I2C values to look for (other than on board ones)
 
-unsigned long UpdateRate = 5; //Number of seconds between readings 
+unsigned long updateRate = 5; //Number of seconds between readings 
 
 Margay Logger(MODEL_2v2); //Define which version of Margay is being used
 
 void setup() {
   Logger.begin(); //Pass header info to logger
-  // Init(); //Call initialization if other sensors are used
+  // init(); //Call initialization if other sensors are used
 }
 
 void loop() {
-  Logger.run(Update, UpdateRate);
+  Logger.run(update, updateRate);
 }
 
-String Update() 
+String update() 
 {
 	//Call sensor readings here
 	return ""; //Append readings together, sperated by commas, here
 }
 
-void Init() 
+void init() 
 {
   //Put sensors initializations here
 }
