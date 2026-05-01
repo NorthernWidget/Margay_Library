@@ -73,8 +73,8 @@ class Margay
 
   public:
     Margay(board model_ = MODEL_2v2, build specs_ = BUILD_B);
-      int begin(uint8_t *vals, uint8_t numVals, String header_);
-    int begin(String header_ = "");
+      void begin(uint8_t *vals, uint8_t numVals, String header_);
+    void begin(String header_ = "");
 
     int logStr(String val);
     void LED_Color(unsigned long val);

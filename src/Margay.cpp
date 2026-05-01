@@ -152,7 +152,7 @@ Margay::Margay(board model_, build specs_) {
   Specs = specs_; //Store build info locally
 }
 
-int Margay::begin(uint8_t *vals, uint8_t numVals, String header_) {
+void Margay::begin(uint8_t *vals, uint8_t numVals, String header_) {
   powerOB(ON);  //Turn on on-board power
   powerAux(ON); //Turn on external auxilary power
   pinMode(WDHold, OUTPUT);
@@ -321,9 +321,9 @@ ISR (PCINT0_vect) { // handle pin change interrupt for D24-D31 (Port A) on ATmeg
   manualLog = true;
 }
 
-int Margay::begin(String header_) {
+void Margay::begin(String header_) {
   uint8_t dummy[1] = {0};
-  return begin(dummy, 0, header_); //Call generalized begin function
+  begin(dummy, 0, header_); //Call generalized begin function
 }
 
 void Margay::I2Ctest() {
