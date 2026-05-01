@@ -580,8 +580,6 @@ void Margay::LED_Color(unsigned long val) //Set color of onboard led
 void Margay::getTime()
 {
 	//Update global time string
-	// DateTime TimeStamp = RTC.now();
-	// LogTimeDate = String(TimeStamp.year()) + "/" + String(TimeStamp.month()) + "/" + String(TimeStamp.day()) + " " + String(TimeStamp.hour()) + ":" + String(TimeStamp.minute()) + ":" + String(TimeStamp.second());
 	LogTimeDate = RTC.getTime(0);
 }
 
