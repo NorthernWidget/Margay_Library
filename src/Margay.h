@@ -162,7 +162,7 @@ class Margay
 		bool OBError = false;
 		bool SensorError = false;
 		bool TimeError = false;
-		bool SDError = false; //USE??
+		bool SDError = false;
 		bool BatError = false;
 		bool BatWarning = false;
 		float BatVoltageError = 3.3; //Low battery alert will trigger if voltage drops below this value
