@@ -217,7 +217,7 @@ int Margay::begin(uint8_t *Vals, uint8_t numVals, String header_)
 			SN[Pos++] = '-';  //Place - between each SN category, post inc pos
 			// Pos += 1;
 		}
-		SN[19] = NULL; //Null terminate string
+		SN[19] = '\0'; //Null terminate string
 	}
 
 	Serial.print(SN); //Print compiled string
@@ -340,8 +340,8 @@ ISR (PCINT0_vect) // handle pin change interrupt for D8 to D13 here
 
 int Margay::begin(String header_)
 {
-	uint8_t Dummy[1] = {NULL};
-	begin(Dummy, 0, header_); //Call generalized begin function
+	uint8_t Dummy[1] = {0};
+	return begin(Dummy, 0, header_); //Call generalized begin function
 }
 
 void Margay::I2Ctest()
