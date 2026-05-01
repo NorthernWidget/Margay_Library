@@ -210,8 +210,8 @@ class Margay
     volatile bool NewLog = false; //Used to tell system to start a new log
     volatile int AwakeCount = 0;
 
-    char FileNameC[11]; //Used for file handling
-    char FileNameTestC[11]; //Used for file handling
+    char FileNameC[13]; // "LogNNNNN.txt" (12 chars) + null terminator
+    char FileNameTestC[11]; // "HWTest.txt" (10 chars) + null terminator
     bool SD_Init = false;
     bool externalI2COn = false;
     SdFat SD;
