@@ -365,7 +365,6 @@ void Margay::I2Ctest()
 void Margay::SDtest()
 {
 	bool SDErrorTemp = false;
-	// bool SD_Test = true;
 
   // SD_CD is pulled up: HIGH=1 if not present
   // SD card being inserted closes a switch to pull it LOW
@@ -453,8 +452,6 @@ void Margay::clockTest()
 	unsigned int YearNow = RTC.getValue(0);
 
 	if(YearNow == 00) {  //If value is 2000, work around Y2K bug by setting time to Jan 1st, midnight, 2049
-		// if(YearNow <= 00) RTC.setTime(2018, 01, 01, 00, 00, 00);  //Only reset if Y2K
-		// getTime(); //Update local time
 		TimeError = true;
 		Serial.println(" PASS, BAD TIME");
 	}
