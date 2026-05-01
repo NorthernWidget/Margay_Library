@@ -995,23 +995,7 @@ void Margay::sleepNow()         // here we put the arduino to sleep
      * sleep mode: SLEEP_MODE_PWR_DOWN
      *
      */
-    // MCUCR = bit (BODS) | bit (BODSE);
-    // MCUCR = bit (BODS);
-//  wdt_disable();  //DEBUG!??
-  // power_adc_disable(); // ADC converter
-  // // power_spi_disable(); // SPI
-  // power_usart0_disable();// Serial (USART)
-  // power_timer1_disable();// Timer 1
-  // power_timer2_disable();// Timer 2
-  // ADCSRA = 0;
   turnOffSDcard();
-  // digitalWrite(Ext3v3Ctrl, HIGH); //Turn off extenral rail
-  // SPI.end(); //Turn off SPI
-  // digitalWrite(SD_CS, LOW);
-  // pinMode(SD_CS, INPUT); //Disconnect SD chip slect pin
-  // pinMode(5, INPUT); //Set all SPI pins as inputs, will be reversed be beginning SPI again
-  // pinMode(6, INPUT);
-  // pinMode(7, INPUT);
   	digitalWrite(VSwitch_Pin, LOW); //DEBUG!
   	keep_ADCSRA = ADCSRA;
     set_sleep_mode(SLEEP_MODE_PWR_DOWN);   // sleep mode is set here
@@ -1022,16 +1006,8 @@ void Margay::sleepNow()         // here we put the arduino to sleep
 
     sleep_cpu();
     sleep_disable();
-	// pinMode(3, OUTPUT); //DEBUG!
-    // detachInterrupt(0);      // disables interrupt 0 on pin 2 so the
-//    ADCSRA = 1; //Turn ADC back on
-    // digitalWrite(Ext3v3Ctrl, LOW); //turn external rail back on
-    // digitalWrite(SD_CS, HIGH);
-//     SPI.begin();
     turnOnSDcard();
 	ADCSRA = 135; //DEBUG!
-	// digitalWrite(VSwitch_Pin, HIGH);  //DEBUG!
-    // pinMode(SD_CS, OUTPUT); //Disconnect SD chip slect pin
 
 }
 
