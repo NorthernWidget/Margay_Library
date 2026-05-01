@@ -240,7 +240,7 @@ void Margay::begin(uint8_t *vals, uint8_t numVals, String header_) {
     // Attach ISR driven by manual log button, sets logging flag and logs data
     attachInterrupt(digitalPinToInterrupt(LogInt), Margay::isr0, FALLING);
   }
-  else { //If using Model > v2.2, use PCINT for log button; enable pin first
+  else { //Model >= v2.0: use PCINT for log button (LogInt = D28, PA4); enable pin first
     *digitalPinToPCMSK(LogInt) |= bit(digitalPinToPCMSKbit(LogInt)); // enable
     PCIFR |= bit(digitalPinToPCICRbit(LogInt)); // clear outstanding interrupt
     PCICR |= bit(digitalPinToPCICRbit(LogInt)); // enable interrupt group
