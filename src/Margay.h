@@ -147,7 +147,7 @@ class Margay
     uint8_t NCells = 3; // number of cells in series in battery pack
     float BatVoltageError = 3.3; // trigger error if battery drops below this voltage
     float BatPercentageWarning = 50; // trigger warning if charge drops below this percentage
-    const String LibVersion = "1.1.1";
+    const String LibVersion = "1.2.0";
 
   protected:
     float tempConvert(float V, float vcc, float R,
