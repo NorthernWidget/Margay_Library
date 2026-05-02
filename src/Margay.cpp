@@ -649,7 +649,7 @@ float Margay::getBatVoltage() {
   // Maybe not necessary: seems to be set this way anyway
   // Enable ADC, set clock divider to max to deal with high impedance input
   ADCSRA = 0b10000111;
-  delay(10); //Alow for >1 clock cycle to set values
+  delay(10); //Allow for >1 clock cycle to set values
 
   float vAux = 3.3; // Voltage reference for ATMega1284p ADC
   float batADC10bit = analogRead(BatSense_Pin); //Get (divided) battery ADC val
