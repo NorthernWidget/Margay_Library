@@ -183,6 +183,10 @@ void Margay::begin(uint8_t *vals, uint8_t numVals, String header_) {
   Serial.begin(38400); //DEBUG!
   Serial.print("Lib = ");
   Serial.println(LibVersion);
+  Serial.print("Model = ");
+  Serial.print(Model);
+  Serial.print("  Build = ");
+  Serial.println(Specs);
   Serial.print("SN = ");
   int EEPROMLen = EEPROM.length(); //Copy value for faster access
   int val = 0; //Value to read temp EEPROM values into
