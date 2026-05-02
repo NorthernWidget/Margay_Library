@@ -32,8 +32,8 @@ Andy Wickert
 #define GOLD 0xFFFFD700L
 #define ORANGE 0xFFFFA500L
 #define PURPLE 0xFF800080L
-#define CYAN 0xFF00FFFF
-#define BLACK_ALERT 0x802019FF
+#define CYAN 0xFF00FFFFL
+#define BLACK_ALERT 0x802019FFL
 
 #define ON 1
 #define OFF 0
