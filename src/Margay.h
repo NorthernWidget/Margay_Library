@@ -106,9 +106,10 @@ class Margay
      * Should generalise well to most alkalines; accuracy not guaranteed
      * for other chemistries. Accurate to within ~1% from 30% to 100%
      * capacity at 25°C. Configure the number of cells in series via
-     * the public member variable NCells (default 3).
+     * the public member variable NCells (default 3). NCells must be > 0;
+     * setting it to 0 will print an error to Serial and return -1.
      *
-     * @return Battery charge percentage clamped to [0, 100].
+     * @return Charge percentage in [0, 100], or -1 if NCells == 0.
      */
     float getBatPercentage();
 

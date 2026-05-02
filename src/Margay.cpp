@@ -638,6 +638,10 @@ float Margay::getBatVoltage() {
 }
 
 float Margay::getBatPercentage() {
+  if (NCells == 0) {
+    Serial.println(F("getBatPercentage: NCells must be > 0"));
+    return -1;
+  }
   // NOTE: Fit developed for Duracell AA, should work well for most alkalines,
   // but no guarantee given on accuracy
   // From 30% to 100% capacity, should be accurate to within 1%
