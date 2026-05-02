@@ -594,7 +594,6 @@ int Margay::logStr(String val) {
   }
   // if the file isn't open, pop up an error:
   else {
-    DataFile.close();
     return -1;
   }
 }
