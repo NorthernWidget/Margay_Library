@@ -155,7 +155,7 @@ Margay::Margay(board model_, build specs_) {
 void Margay::begin(uint8_t *vals, uint8_t numVals, String header_) {
   powerOB(ON);  //Turn on on-board power
   powerAux(ON); //Turn on external auxiliary power
-  pinMode(WDHold, OUTPUT);
+  if (WDHold != 255) pinMode(WDHold, OUTPUT);
 
   pinMode(AuxLED, OUTPUT);
   digitalWrite(AuxLED, LOW); //Turn built in LED on
@@ -835,6 +835,7 @@ void Margay::run(String (*update)(void), unsigned long logInterval) {
 
 // Send a pulse to "feed" the watchdog timer
 void Margay::resetWDT() {
+  if (WDHold == 255) return; // No watchdog timer on this board model
   digitalWrite(WDHold, HIGH); //Set DONE pin high
   delayMicroseconds(5); //Wait a short pulse
   digitalWrite(WDHold, LOW);
@@ -957,6 +958,7 @@ void Margay::powerAux(bool state) {
 }
 
 void Margay::powerOB(bool state) {
+  if (BatSwitch == 255) return; // No battery switch on this board model
   pinMode(BatSwitch, OUTPUT);
   digitalWrite(BatSwitch, state); //Set bat switch for onboard 3v3/main power
 }
