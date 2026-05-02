@@ -213,7 +213,6 @@ class Margay
 
     char FileNameC[13]; // "LogNNNNN.txt" (12 chars) + null terminator
     char FileNameTestC[11]; // "HWTest.txt" (10 chars) + null terminator
-    bool SD_Init = false;
     bool externalI2COn = false;
     SdFat SD;
     byte  keep_SPCR;
