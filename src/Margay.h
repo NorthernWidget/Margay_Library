@@ -185,6 +185,7 @@ class Margay
     float C = 1.019153E-05;
     float D = 9.093712E-07;
     String LogTimeDate = "2063/04/05 20:00:00";
+    bool i2cTruncated = false; // true if numVals passed to begin() exceeded I2C_ADR capacity
     bool OnBoardError = false;
     bool SensorError = false;
     bool TimeError = false;

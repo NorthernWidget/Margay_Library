@@ -162,8 +162,7 @@ void Margay::begin(uint8_t *vals, uint8_t numVals, String header_) {
 
   pinMode(VSwitch_Pin, OUTPUT); //Setup switch control as output
 
-  if (numVals > sizeof(I2C_ADR))
-    Serial.println(F("begin: too many I2C addresses, truncating to 128"));
+  i2cTruncated = (numVals > sizeof(I2C_ADR));
   NumADR = min(numVals, (uint8_t)sizeof(I2C_ADR));
   for (uint8_t i = 0; i < NumADR; i++) I2C_ADR[i] = vals[i];
   if (ExtIntPin == 255) {
@@ -337,6 +336,8 @@ void Margay::I2Ctest() {
   bool i2cTest = true;
 
   Serial.print("I2C: ");
+  if (i2cTruncated)
+    Serial.println(F("WARNING: address list truncated to 128"));
   for (int i = 0; i < NumADR; i++) {
     Wire.beginTransmission(I2C_ADR[i]);
     error = Wire.endTransmission();
