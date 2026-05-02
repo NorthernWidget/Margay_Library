@@ -1,34 +1,70 @@
 #######################################
-# Syntax Coloring Map Logger
+# Syntax Coloring Map: Margay Library
 #######################################
 
 #######################################
 # Datatypes (KEYWORD1)
 #######################################
 
-Margay	KEYWORD1
+Margay		KEYWORD1
+board		KEYWORD1
+build		KEYWORD1
+temp_source	KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)
 #######################################
 
 begin			KEYWORD2
-LogStr			KEYWORD2
-LED_Color 		KEYWORD2
-Run				KEYWORD2
+logStr			KEYWORD2
+LED_Color		KEYWORD2
+run			KEYWORD2
+getVoltage		KEYWORD2
+addDataPoint		KEYWORD2
+initLogFile		KEYWORD2
+setExtInt		KEYWORD2
+getExtIntCount		KEYWORD2
+resetExtIntCount	KEYWORD2
+getTemp			KEYWORD2
+getBatVoltage		KEYWORD2
+getBatPercentage	KEYWORD2
+initADC			KEYWORD2
+resetWDT		KEYWORD2
+powerOB			KEYWORD2
+powerAux		KEYWORD2
 
 #######################################
 # Constants (LITERAL1)
 #######################################
 
-RED		LITERAL1
-GREEN	LITSRAL1
-BLUE	LITSRAL1
-MAROON	LITSRAL1
-GOLD	LITSRAL1
-ORANGE	LITSRAL1
-PURPLE	LITSRAL1
-CYAN	LITSRAL1
-BLACK_ALERT LITSRAL1
-OFF		LITSRAL1
+# Board models
+MODEL_0v0	LITERAL1
+MODEL_1v0	LITERAL1
+MODEL_2v0	LITERAL1
+MODEL_2v1	LITERAL1
+MODEL_2v2	LITERAL1
 
+# Build variants
+BUILD_A		LITERAL1
+BUILD_B		LITERAL1
+BUILD_C		LITERAL1
+BUILD_D		LITERAL1
+
+# Temperature source
+thermistor_temp_sensor	LITERAL1
+RTC_temp_sensor		LITERAL1
+
+# LED colours
+RED		LITERAL1
+GREEN		LITERAL1
+BLUE		LITERAL1
+MAROON		LITERAL1
+GOLD		LITERAL1
+ORANGE		LITERAL1
+PURPLE		LITERAL1
+CYAN		LITERAL1
+BLACK_ALERT	LITERAL1
+
+# Power state
+ON		LITERAL1
+OFF		LITERAL1
