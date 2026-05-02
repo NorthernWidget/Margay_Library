@@ -1020,6 +1020,10 @@ void Margay::sleepNow() {         // here we put the arduino to sleep
 
 void Margay::turnOffSDcard() {
   delay(6);
+  // NOTE: these are SCL (D16/PC0), SDA (D17/PC1), RX0 (D8/PD0), TX0 (D9/PD1)
+  // — not SD card pins. They are released here to prevent current leakage
+  // during sleep, but logically belong in sleepNow(). Deferred: moving them
+  // changes the order of operations relative to power cutoff and SPCR = 0.
   pinMode(16, INPUT);
   pinMode(17, INPUT);
   pinMode(8, INPUT);
