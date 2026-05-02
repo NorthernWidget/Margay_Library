@@ -933,15 +933,30 @@ void Margay::setExtInt(uint8_t n, String header_entry) {
 }
 
 uint16_t Margay::getExtIntCount(bool reset0) {
+  // ExtInt_count is a 16-bit volatile shared with isr2. On 8-bit AVR, a
+  // 16-bit read is two instructions; if isr2 fires between them the read
+  // is torn (e.g. low byte 0xFF before + high byte 0x01 after = 0x01FF
+  // instead of the correct 0x0100). Folding the optional reset into the
+  // same cli/sei block closes a second race: a tip arriving between a
+  // separate read and reset would be silently zeroed out and lost.
+  //
+  // cli() defers rather than discards interrupts — any tip that arrives
+  // during the critical section is held pending and fires immediately
+  // after sei(), so it is correctly counted in the next reading.
+  cli();
   uint16_t out = ExtInt_count;
-  if (reset0) {
-    resetExtIntCount(0);
-  }
+  if (reset0) ExtInt_count = 0;
+  sei();
   return out;
 }
 
 void Margay::resetExtIntCount(uint16_t start) {
+  // Protect the 16-bit write with cli/sei so isr2 cannot increment
+  // ExtInt_count between the two store bytes. As with getExtIntCount,
+  // any interrupt arriving during cli is deferred, not dropped.
+  cli();
   ExtInt_count = start;
+  sei();
 }
 
 void Margay::powerAux(bool state) {
