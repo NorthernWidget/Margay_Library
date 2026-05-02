@@ -2,7 +2,7 @@
 #include "Margay.h"
 #include <TP_Downhole.h>
 
-TP_Downhole Sensor; //Initalize TP-Downhole sensor
+TP_Downhole Sensor; //Initialize TP-Downhole sensor
 
 String Header = "Pressure [mBar],Temp DH [C]"; //Information header
 uint8_t I2CVals[2] = {0x6A, 0x77}; 

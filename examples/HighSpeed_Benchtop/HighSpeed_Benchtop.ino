@@ -4,7 +4,7 @@ Demo script for high speed benchtop (high power) data logging.
 
 Bobby Schulz @ Northern Widget LLC
 1/2/2019
-https://github.com/NorthernWidget-Skunkworks/Margay_Library
+https://github.com/NorthernWidget/Margay_Library
 
 Intended for sensor evaluation and calibration. 
 Demo is constructed around BME280 and TP-Downhole units
@@ -18,8 +18,8 @@ Distributed as-is; no warranty is given.
 #include "TP_Downhole.h"
 #include "BME.h"
 
-TP_Downhole DH; //Initalize TP-Downhole sensor
-BME RH; //Initialzie BME280
+TP_Downhole DH; //Initialize TP-Downhole sensor
+BME RH; //Initialize BME280
 
 String Header = ""; //Information header
 uint8_t I2CVals[3] = {0x6A, 0x77, 0x76}; 
@@ -56,7 +56,7 @@ void Init()
 {
 	DH.begin(TP5v1);
 	RH.begin(0x76);
- //Setup TP-Downhole for higher speed sensing by reducing resolution of temp mesurments 
+ //Setup TP-Downhole for higher speed sensing by reducing resolution of temp measurements 
 	DH.ThermRes = 12; 
 	DH.TempRes = ADC_256;
 	DH.ThermRes = ADC_4096;
