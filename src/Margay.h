@@ -171,14 +171,14 @@ class Margay
     void clockTest();
     void batTest();
     void powerTest();
-    void enviroStats();
+    void bme280Readings();
     void extIntCounter();
     void _addDataPoint(String data);
     void farmGateI2C(bool initialStateExternalI2C);
 
     DS3231_Logger RTC;
     MCP3421 adc;
-    BME EnviroSense;
+    BME bme280;
 
     float A = 0.003354016;
     float B = 0.0003074038;

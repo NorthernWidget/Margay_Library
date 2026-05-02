@@ -175,7 +175,7 @@ void Margay::begin(uint8_t *vals, uint8_t numVals, String header_) {
   RTC.begin(); //Initalize RTC
   RTC.clearAlarm(); //
   initADC(18);
-  EnviroSense.begin(0x77); //Initalize onboard temp/pressure/RH sensor (BME280)
+  bme280.begin(0x77); //Initalize onboard temp/pressure/RH sensor (BME280)
 
 
   ADCSRA = 0b10000111; //Confiure on board ADC for low speed, and enable
@@ -259,7 +259,7 @@ void Margay::begin(uint8_t *vals, uint8_t numVals, String header_) {
   batTest();
   powerTest();
   // Only print out environmental variables if BME280 is on board
-  if (Model >= MODEL_2v0) enviroStats();
+  if (Model >= MODEL_2v0) bme280Readings();
 
   digitalWrite(AuxLED, HIGH);
 
@@ -530,8 +530,8 @@ void Margay::powerTest() {
   powerAux(ON);
   // Adafruit_BME280::begin() issues a soft-reset then delays >=300ms for
   // calibration — the sensor is fully ready when begin() returns, so no
-  // additional settling delay is needed before enviroStats() is called.
-  EnviroSense.begin(0x77);
+  // additional settling delay is needed before bme280Readings() is called.
+  bme280.begin(0x77);
   farmGateI2C(initialStateExternalI2C); // restore I2C bus to its prior state
 
   if (error == 0) {
@@ -542,15 +542,15 @@ void Margay::powerTest() {
   }
 }
 
-void Margay::enviroStats() {
+void Margay::bme280Readings() {
   Serial.print("Temp = ");
-  Serial.print(EnviroSense.GetTemperature());
+  Serial.print(bme280.GetTemperature());
   Serial.println("C");
   Serial.print("Pressure = ");
-  Serial.print(EnviroSense.GetPressure());
+  Serial.print(bme280.GetPressure());
   Serial.println(" mBar");
   Serial.print("RH = ");
-  Serial.print(EnviroSense.GetHumidity());
+  Serial.print(bme280.GetHumidity());
   Serial.println("%");
 }
 
@@ -720,7 +720,7 @@ String Margay::getOnBoardVals() {
     return LogTimeDate + "," + String(tempData) + ","
            + String(rtcTemp) + "," + String(batVoltage) + ",";
   else
-    return LogTimeDate + "," + String(EnviroSense.GetString())
+    return LogTimeDate + "," + String(bme280.GetString())
            + String(rtcTemp) + "," + String(batVoltage) + ",";
 }
 
@@ -881,7 +881,7 @@ void Margay::farmGateI2C(bool initStateI2C) {
 void Margay::addDataPoint(String (*update)(void)) {
   String data = "";
   //Re-initialize BME280  //FIX??
-  if (Model >= MODEL_2v0) EnviroSense.begin(0x77);
+  if (Model >= MODEL_2v0) bme280.begin(0x77);
   // Serial.println("Called Update"); //DEBUG!
 
   bool initialStateExternalI2C = digitalRead(I2C_SW);
