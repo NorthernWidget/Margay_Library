@@ -1033,7 +1033,6 @@ void Margay::turnOffSDcard() {
   SPCR = 0;
   power_spi_disable();
   delay(10);
-  delay(6);
 }
 
 void Margay::turnOnSDcard() {
