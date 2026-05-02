@@ -397,8 +397,8 @@ void Margay::SDtest() {
     sdTestFailed = true;
   }
 
-  // If card is present, do the following:
-  if (!cardNotPresent) {
+  // If card is present and initialised successfully, do the following:
+  if (!cardNotPresent && !sdTestFailed) {
     SD.mkdir("NW");  //Create NW folder (if not already present)
     SD.chdir("/NW"); //Move file pointer into NW folder (at root level)
     SD.mkdir(SN); //Make directory with serial number as name
