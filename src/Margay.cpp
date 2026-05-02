@@ -410,14 +410,14 @@ void Margay::SDtest() {
 
     // Seed with a random process to ensure randomness
     randomSeed(analogRead(A7));
-    // Generate a random number between 0 and 30557
-    // (the number of words in Hamlet)
-    int randVal = random(30557);
+    // Generate a random number between 1 and 30557
+    // (the number of words in Hamlet); start at 1 to avoid log10(0)
+    int randVal = random(1, 30557);
     char randDigits[6] = {0};
     // Convert randVal into a series of digits
     sprintf(randDigits, "%d", randVal);
-    // Find the length of the digit string
-    int randLength = (int)((ceil(log10(randVal))+1)*sizeof(char));
+    // +1: println appends \r; loop uses randLength-1 to skip it
+    int randLength = strlen(randDigits) + 1;
     File dataWrite = SD.open(FileNameTestC, FILE_WRITE);
     if (dataWrite) {
       dataWrite.println(randVal);

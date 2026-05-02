@@ -119,7 +119,7 @@ class Margay
     void powerAux(bool state);
 
     //Pin definitions
-    int SD_CS = 4;
+    uint8_t SD_CS = 4;
     uint8_t AuxLED = 20;
     uint8_t RedLED = 13;
     uint8_t GreenLED = 15;
