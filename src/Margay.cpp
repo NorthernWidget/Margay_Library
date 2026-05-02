@@ -174,7 +174,7 @@ void Margay::begin(uint8_t *vals, uint8_t numVals, String header_) {
 
   RTC.begin(); //Initialize RTC
   RTC.clearAlarm(); //
-  initADC(18);
+  if (NumADR_OB > 1) initADC(18); // Only BUILD_B/C/D have an on-board ADC
   bme280.begin(0x77); //Initialize onboard temp/pressure/RH sensor (BME280)
 
 
@@ -765,8 +765,10 @@ float Margay::getVoltage() {  //Get voltage from Ax pin
   float val = 0;
 
   switchExternalI2C(OFF);
-  initADC(18); // initialize ADC
-  val = adc.GetVoltage();
+  if (NumADR_OB > 1) { // Only BUILD_B/C/D have an on-board ADC
+    initADC(18);
+    val = adc.GetVoltage();
+  }
 
   // make sure I2C Bus is returned to initial state
   farmGateI2C(initialStateExternalI2C);
