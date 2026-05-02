@@ -287,7 +287,7 @@ void Margay::begin(uint8_t *vals, uint8_t numVals, String header_) {
   // Battery charge % is at a concerning level; recommend replacing batteries
   if (BatWarning && !BatError) {
     for (int i = 0; i < 10; i++) {
-      LED_Color(GOLD); //Sd card not inserted
+      LED_Color(GOLD); //Low battery charge warning
       delay(100);
       LED_Color(OFF);
       delay(100);
