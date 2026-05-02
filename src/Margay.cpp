@@ -50,7 +50,7 @@ Margay::Margay(board model_, build specs_) {
     BatteryDivider = 2.0;
 
     if (specs_ == BUILD_A) {
-      NumADR_OB = 1; //Only check for clock presance
+      NumADR_OB = 1; //Only check for clock presence
     }
 
     else if (specs_ == BUILD_B) {
@@ -92,7 +92,7 @@ Margay::Margay(board model_, build specs_) {
     BatteryDivider = 2.0;
 
     if (specs_ == BUILD_A) {
-      NumADR_OB = 1; //Only check for clock presance
+      NumADR_OB = 1; //Only check for clock presence
     }
 
     else if (specs_ == BUILD_B) {
@@ -134,7 +134,7 @@ Margay::Margay(board model_, build specs_) {
     BatteryDivider = 9.0;
 
     if (specs_ == BUILD_A) {  //Setup sub builds
-      NumADR_OB = 1; //Only check for clock presance
+      NumADR_OB = 1; //Only check for clock presence
     }
 
     else if (specs_ == BUILD_B) {
