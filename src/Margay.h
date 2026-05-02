@@ -185,10 +185,10 @@ class Margay
     float C = 1.019153E-05;
     float D = 9.093712E-07;
     String LogTimeDate = "2063/04/05 20:00:00";
-    bool OBError = false;
+    bool OnBoardError = false;
     bool SensorError = false;
     bool TimeError = false;
-    bool SDError = false;
+    bool SDCardMissing = false;
     bool BatError = false;
     bool BatWarning = false;
     String Header = "";

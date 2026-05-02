@@ -257,7 +257,7 @@ void Margay::begin(uint8_t *vals, uint8_t numVals, String header_) {
 
   digitalWrite(AuxLED, HIGH);
 
-  if (OBError) {
+  if (OnBoardError) {
     LED_Color(RED); //On board failure
     delay(2000);
   }
@@ -269,7 +269,7 @@ void Margay::begin(uint8_t *vals, uint8_t numVals, String header_) {
     LED_Color(CYAN); //Time set error
     delay(2000);
   }
-  if (SDError) {
+  if (SDCardMissing) {
     LED_Color(PURPLE); //Sd card not inserted
     delay(2000);
   }
@@ -294,7 +294,7 @@ void Margay::begin(uint8_t *vals, uint8_t numVals, String header_) {
     }
   }
   //Include battery error in test??
-  if (!OBError && !SensorError && !TimeError && !SDError) {
+  if (!OnBoardError && !SensorError && !TimeError && !SDCardMissing) {
     LED_Color(GREEN);
     delay(2000);
   }
@@ -358,7 +358,7 @@ void Margay::I2Ctest() {
       Serial.print("   Fail At: ");
       Serial.println(I2C_ADR_OB[i], HEX);
       i2cTest = false;
-      OBError = true;
+      OnBoardError = true;
     }
   }
 
@@ -370,7 +370,7 @@ void Margay::I2Ctest() {
 
 
 void Margay::SDtest() {
-  bool sdErrorTemp = false;
+  bool sdTestFailed = false;
 
   // SD_CD is pulled up: HIGH=1 if not present
   // SD card being inserted closes a switch to pull it LOW
@@ -381,12 +381,12 @@ void Margay::SDtest() {
   delay(5); //DEBUG!
   if (cardNotPresent) {
     Serial.println(F(" NO CARD"));
-    sdErrorTemp = true;
-    SDError = true; //Card not inserted
+    sdTestFailed = true;
+    SDCardMissing = true; //Card not inserted
   }
   else if (!SD.begin(SD_CS)) {
-    OBError = true;
-    sdErrorTemp = true;
+    OnBoardError = true;
+    sdTestFailed = true;
   }
 
   // If card is present, do the following:
@@ -425,8 +425,8 @@ void Margay::SDtest() {
       dataRead.read(testDigits, randLength);
       for (int i = 0; i < randLength - 1; i++){ //Test random value string
         if (testDigits[i] != randDigits[i]) {
-          sdErrorTemp = true;
-          OBError = true;
+          sdTestFailed = true;
+          OnBoardError = true;
         }
       }
     }
@@ -436,9 +436,9 @@ void Margay::SDtest() {
   }
 
   // If card is inserted and still does not connect properly, throw error
-  if (sdErrorTemp && !cardNotPresent) Serial.println("FAIL");
+  if (sdTestFailed && !cardNotPresent) Serial.println("FAIL");
   // If card is inserted AND connects properly, return success
-  else if (!sdErrorTemp && !cardNotPresent) Serial.println("PASS");
+  else if (!sdTestFailed && !cardNotPresent) Serial.println("PASS");
 }
 
 void Margay::clockTest() {
@@ -456,7 +456,7 @@ void Margay::clockTest() {
     testSeconds = RTC.getValue(5);
     delay(1100);
     if (RTC.getValue(5) == testSeconds) {
-      OBError = true; //If clock is not incrementing
+      OnBoardError = true; //If clock is not incrementing
       oscStop = true; //Oscilator not running
     }
   }
@@ -473,7 +473,7 @@ void Margay::clockTest() {
 
   if (error != 0) {
     Serial.println(" FAIL");
-    OBError = true;
+    OnBoardError = true;
   }
 
   else if (error == 0 && oscStop == false && TimeError == false) {
