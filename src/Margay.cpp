@@ -162,8 +162,10 @@ void Margay::begin(uint8_t *vals, uint8_t numVals, String header_) {
 
   pinMode(VSwitch_Pin, OUTPUT); //Setup switch control as output
 
-  memcpy(I2C_ADR, vals, sizeof(I2C_ADR)); //Copy array
-  NumADR = numVals; //Copy length of array
+  if (numVals > sizeof(I2C_ADR))
+    Serial.println(F("begin: too many I2C addresses, truncating to 128"));
+  NumADR = min(numVals, (uint8_t)sizeof(I2C_ADR));
+  for (uint8_t i = 0; i < NumADR; i++) I2C_ADR[i] = vals[i];
   if (ExtIntPin == 255) {
     Header = header_; //Copy user defined header
   }

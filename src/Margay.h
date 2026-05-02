@@ -198,7 +198,7 @@ class Margay
     }; // hex digit lookup table
     char SN[20] = {0}; // serial number: 19 chars + null terminator
     uint8_t NumADR = 0;
-    uint8_t I2C_ADR[16] = {0}; //Change length??
+    uint8_t I2C_ADR[128] = {0}; // one slot per usable 7-bit I2C address
     uint8_t NumADR_OB = 1;
     uint8_t I2C_ADR_OB[2] = {0x68}; //ADC, Clock
 
