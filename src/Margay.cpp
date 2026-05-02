@@ -436,9 +436,9 @@ void Margay::SDtest() {
   }
 
   // If card is inserted and still does not connect properly, throw error
-  if (SDError && !cardNotPresent) Serial.println("FAIL");
+  if (sdErrorTemp && !cardNotPresent) Serial.println("FAIL");
   // If card is inserted AND connects properly, return success
-  else if (!SDError && !cardNotPresent) Serial.println("PASS");
+  else if (!sdErrorTemp && !cardNotPresent) Serial.println("PASS");
 }
 
 void Margay::clockTest() {
