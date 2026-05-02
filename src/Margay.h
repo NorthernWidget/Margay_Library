@@ -135,7 +135,7 @@ class Margay
     uint8_t Ext3v3Ctrl = 19;
     uint8_t I2C_SW = 21;
     uint8_t PG = 18;
-    uint8_t ExtInt = 11;
+    uint8_t ExtInt = 11; // Currently doing nothing
     uint8_t RTCInt = 10;
     uint8_t LogInt = 2;
     uint8_t WDHold = 23; //ADD TO DOCUMENTATION!
