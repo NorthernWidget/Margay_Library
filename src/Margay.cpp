@@ -481,14 +481,16 @@ void Margay::clockTest() {
 }
 
 void Margay::batTest() {
+  float batVoltage = getBatVoltage();
+  float batPercentage = getBatPercentage();
   // Set error flag if below min voltage
-  if (getBatVoltage() < BatVoltageError) BatError = true;
+  if (batVoltage < BatVoltageError) BatError = true;
   // Set warning flag if below set percentage
-  if (getBatPercentage() < BatPercentageWarning) BatWarning = true;
+  if (batPercentage < BatPercentageWarning) BatWarning = true;
   Serial.print("Bat = ");
-  Serial.print(getBatVoltage());
+  Serial.print(batVoltage);
   Serial.print("V\t");
-  Serial.print(getBatPercentage());
+  Serial.print(batPercentage);
   Serial.println("%");
 }
 
