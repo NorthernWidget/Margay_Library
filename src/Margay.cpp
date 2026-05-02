@@ -465,27 +465,24 @@ void Margay::clockTest() {
     delay(1100);
     if (RTC.getValue(5) == testSeconds) {
       OnBoardError = true; // If clock is not incrementing
-      oscStop = true; // Oscillator not running
+      oscStop = true;      // Oscillator not running
+      Serial.println(" FAIL (oscillator stopped)");
     }
-  }
-
-  unsigned int yearNow = RTC.getValue(0);
-
-  // DS3231 powers on at Jan 1, 2000 (year register = 0). If the year
-  // is still 0, the clock has not been set — timestamps will read as
-  // 2000, which is an obviously wrong but identifiable sentinel value.
-  if (yearNow == 00) {
-    TimeError = true;
-    Serial.println(" PASS, BAD TIME");
-  }
-
-  if (error != 0) {
+    if (!oscStop) {
+      // DS3231 powers on at Jan 1, 2000 (year register = 0). If the year
+      // is still 0, the clock has not been set — timestamps will read as
+      // 2000, which is an obviously wrong but identifiable sentinel value.
+      unsigned int yearNow = RTC.getValue(0);
+      if (yearNow == 0) {
+        TimeError = true;
+        Serial.println(" PASS, BAD TIME");
+      } else {
+        Serial.println(" PASS");
+      }
+    }
+  } else {
     Serial.println(" FAIL");
     OnBoardError = true;
-  }
-
-  else if (error == 0 && oscStop == false && TimeError == false) {
-    Serial.println(" PASS");
   }
 }
 
