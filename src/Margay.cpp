@@ -463,8 +463,9 @@ void Margay::clockTest() {
 
   unsigned int yearNow = RTC.getValue(0);
 
-  // If value is 2000, work around Y2K bug by setting time
-  // to Jan 1st, midnight, 2049
+  // DS3231 powers on at Jan 1, 2000 (year register = 0). If the year
+  // is still 0, the clock has not been set — timestamps will read as
+  // 2000, which is an obviously wrong but identifiable sentinel value.
   if (yearNow == 00) {
     TimeError = true;
     Serial.println(" PASS, BAD TIME");
