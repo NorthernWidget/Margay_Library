@@ -868,13 +868,7 @@ void Margay::farmGateI2C(bool initStateI2C) {
   // function). If they do not match (XOR), and it was on at the start,
   // then turn on. Otherwise, turn off.
 
-  if ((initStateI2C == !externalI2COn) && initStateI2C) {
-    switchExternalI2C(ON);
-  }
-
-  else {
-    switchExternalI2C(OFF);
-  }
+  switchExternalI2C(initStateI2C);
 }
 
 // Reads new data and writes data to SD
