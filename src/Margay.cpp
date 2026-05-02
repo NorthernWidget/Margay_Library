@@ -154,7 +154,7 @@ Margay::Margay(board model_, build specs_) {
 
 void Margay::begin(uint8_t *vals, uint8_t numVals, String header_) {
   powerOB(ON);  //Turn on on-board power
-  powerAux(ON); //Turn on external auxilary power
+  powerAux(ON); //Turn on external auxiliary power
   pinMode(WDHold, OUTPUT);
 
   pinMode(AuxLED, OUTPUT);
@@ -172,13 +172,13 @@ void Margay::begin(uint8_t *vals, uint8_t numVals, String header_) {
     Header = header_ + ext_int_header_entry;
   }
 
-  RTC.begin(); //Initalize RTC
+  RTC.begin(); //Initialize RTC
   RTC.clearAlarm(); //
   initADC(18);
-  bme280.begin(0x77); //Initalize onboard temp/pressure/RH sensor (BME280)
+  bme280.begin(0x77); //Initialize onboard temp/pressure/RH sensor (BME280)
 
 
-  ADCSRA = 0b10000111; //Confiure on board ADC for low speed, and enable
+  ADCSRA = 0b10000111; //Configure on board ADC for low speed, and enable
 
   Serial.begin(38400); //DEBUG!
   Serial.print("Lib = ");
@@ -464,8 +464,8 @@ void Margay::clockTest() {
     testSeconds = RTC.getValue(5);
     delay(1100);
     if (RTC.getValue(5) == testSeconds) {
-      OnBoardError = true; //If clock is not incrementing
-      oscStop = true; //Oscilator not running
+      OnBoardError = true; // If clock is not incrementing
+      oscStop = true; // Oscillator not running
     }
   }
 
@@ -505,7 +505,7 @@ void Margay::batTest() {
 
 void Margay::initADC(uint8_t desiredResolution) {
   // Serial.print("ADC should be on"); // DEBUG
-  adc.Begin(I2C_ADR_OB[1]); //Initalize external ADC
+  adc.Begin(I2C_ADR_OB[1]); //Initialize external ADC
   adc.SetResolution(desiredResolution);
 }
 
@@ -689,7 +689,7 @@ float Margay::getBatPercentage() {
 }
 
 String Margay::getOnBoardVals() {
-  //Get onboard temp, RTC temp, and battery voltage, referance voltage
+  // Get onboard temp, RTC temp, and battery voltage, reference voltage
   // float VRef = analogRead(VRef_Pin);
   float vcc = 3.3; //(1.8/VRef)*3.3; //Compensate for vcc using VRef
   // Serial.println(vcc); //DEBUG!
@@ -713,7 +713,7 @@ String Margay::getOnBoardVals() {
   // Get battery voltage, including voltage divider in math
   float batVoltage = getBatVoltage();
 
-  // Temp[3] = Clock.getTemperature(); //Get tempreture from RTC //FIX!
+  // Temp[3] = Clock.getTemperature(); //Get temperature from RTC //FIX!
   float rtcTemp = RTC.getTemp();  //Get Temp from RTC
   getTime(); //FIX!
   if (Model < MODEL_2v0)
@@ -813,7 +813,7 @@ void Margay::run(String (*update)(void), unsigned long logInterval) {
   if (ExtIntTripped) {  // Defaults to just counter for now
     // Serial.println("TIP!"); //DEBUG!
     ExtInt_count ++;
-    ExtIntTripped = false; // Clear interrupt flag flag
+    ExtIntTripped = false; // Clear interrupt flag
     resetWDT(); //Clear alarm
     delay(150); //Hard-code for now; tipping bucket "debounce"
     attachInterrupt(digitalPinToInterrupt(ExtIntPin), Margay::isr2, FALLING);
