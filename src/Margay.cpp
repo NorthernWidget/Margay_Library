@@ -257,6 +257,7 @@ void Margay::begin(uint8_t *vals, uint8_t numVals, String header_) {
   clockTest();
   SDtest();
   batTest();
+  powerTest();
   // Only print out environmental variables if BME280 is on board
   if (Model >= MODEL_2v0) enviroStats();
 
@@ -509,18 +510,36 @@ void Margay::initADC(uint8_t desiredResolution) {
 }
 
 void Margay::powerTest() {
-  int error = 0;
-
-  digitalWrite(Ext3v3Ctrl, HIGH); //Turn off power to outputs
+  // BME280 at 0x77 is on the AUX rail on Model >= 2v0; skip on older boards
+  if (Model < MODEL_2v0) {
+    Serial.println(F("Power: SKIP (not supported on this board)"));
+    return;
+  }
 
   Serial.print("Power: ");
-  Wire.beginTransmission(I2C_ADR[1]);
-  error = Wire.endTransmission();
-  if (error == 0) Serial.println(" FAIL");
 
-  if (error != 0) Serial.println(" PASS");
+  bool initialStateExternalI2C = digitalRead(I2C_SW);
+  switchExternalI2C(OFF); // BME280 is on the internal I2C bus
 
-  digitalWrite(Ext3v3Ctrl, LOW); //Turn power back on
+  powerAux(OFF); // cut AUX rail
+  delay(10);     // allow capacitors to discharge
+
+  Wire.beginTransmission(0x77);
+  int error = Wire.endTransmission();
+
+  powerAux(ON);
+  // Adafruit_BME280::begin() issues a soft-reset then delays >=300ms for
+  // calibration — the sensor is fully ready when begin() returns, so no
+  // additional settling delay is needed before enviroStats() is called.
+  EnviroSense.begin(0x77);
+  farmGateI2C(initialStateExternalI2C); // restore I2C bus to its prior state
+
+  if (error == 0) {
+    Serial.println("FAIL"); // BME280 still responded — AUX rail not cut
+    OnBoardError = true;
+  } else {
+    Serial.println("PASS");
+  }
 }
 
 void Margay::enviroStats() {
