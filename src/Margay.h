@@ -49,7 +49,8 @@ enum board
     MODEL_1v0 = 1,
     MODEL_2v0 = 2,
     MODEL_2v1 = 2,
-    MODEL_2v2 = 2
+    MODEL_2v2 = 2,
+    MODEL_3v0 = 3
 };
 
 enum build
@@ -72,7 +73,7 @@ class Margay
 {
 
   public:
-    Margay(board model_ = MODEL_2v2, build specs_ = BUILD_B);
+    Margay(board model_ = MODEL_3v0, build specs_ = BUILD_B);
       void begin(uint8_t *vals, uint8_t numVals, String header_);
     void begin(String header_ = "");
 

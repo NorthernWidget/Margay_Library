@@ -21,7 +21,7 @@ volatile uint16_t ExtInt_count = 0; // Global for the external interrupt
 Margay* Margay::selfPointer;
 
 Margay::Margay(board model_, build specs_) {
-  if (model_ == 2) {
+  if (model_ == 2 || model_ == 3) {
     SD_CS = 4;
     AuxLED = 20;
     RedLED = 13;
