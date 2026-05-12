@@ -1,42 +1,41 @@
 /******************************************************************************
 Basic.ino
 Most basic logger example.
-Reports only onboard sensors (BME280 - temperature/pressure/humidity) and device diagnostics, does so every 5 seconds
+Reports only onboard sensors (BME280 - temperature/pressure/humidity) and
+device diagnostics. Intended as a first test program to run.
 
-Bobby Schulz @ Northern Widget LLC
+Andy Wickert, Bobby Schulz @ Northern Widget LLC
 8/8/2024
 https://github.com/NorthernWidget/Margay_Library
-
-Intended as a first test program to run. 
 
 Distributed as-is; no warranty is given.
 ******************************************************************************/
 
 #include "Margay.h"
 
-// String Header = ""; //Information header, name of each reading separated by commas 
-// uint8_t I2CVals[1] = {}; //List of I2C values to look for (other than on board ones)
+// Empty header and I2C list: no external sensors
+String header = "";
+uint8_t I2CVals[] = {};
 
-unsigned long updateRate = 5; //Number of seconds between readings 
+// Number of seconds between readings
+uint32_t updateRate = 5;
 
-Margay Logger(MODEL_2v2); //Define which version of Margay is being used
+Margay Logger(MODEL_3v0); // Update to match your hardware version
 
 void setup() {
-  Logger.begin(); //Pass header info to logger
-  // initSensors(); //Call initialization if other sensors are used
+    Logger.begin(I2CVals, sizeof(I2CVals), header);
+    initialize();
 }
 
 void loop() {
-  Logger.run(update, updateRate);
+    Logger.run(update, updateRate);
 }
 
-String update() 
-{
-	//Call sensor readings here
-	return ""; //Append readings together, separated by commas, here
+String update() {
+    initialize();
+    return "";
 }
 
-void initSensors()
-{
-  //Put sensor initializations here
+void initialize() {
+    // Place any sensor initialization calls here
 }
