@@ -1,0 +1,792 @@
+
+
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.28.0 by Michael Rose
+  Copyright 2013-2026 Michael Rose - mademistakes.com | @mmistakes
+  Copyright 2024-2026 iBug - ibugone.com | @iBug
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    
+<meta charset="utf-8">
+
+
+<!-- begin _includes/seo.html --><title>src/Margay.h - Margay Library</title>
+<meta name="description" content="Arduino library for the Margay data logger">
+
+
+  <meta name="author" content="Northern Widget">
+  
+
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Margay Library">
+<meta property="og:title" content="src/Margay.h">
+<meta property="og:url" content="https://docs.northernwidget.com/Margay_Library/Files/Margay_8h/">
+
+
+  <meta property="og:description" content="Arduino library for the Margay data logger">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="canonical" href="https://docs.northernwidget.com/Margay_Library/Files/Margay_8h/">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/Margay_Library/feed.xml" type="application/atom+xml" rel="alternate" title="Margay Library Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/Margay_Library/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    
+<nav class="skip-links" aria-label="Skip links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav" aria-label="Primary navigation">
+        
+        <a class="site-title" href="/Margay_Library/">
+          Margay Library
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/"
+                
+                
+              >Quick-Start Guide</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+
+
+<div id="main" role="main">
+  
+
+  <div class="sidebar sticky">
+  
+  
+    
+      
+      
+      
+      
+    
+    
+      
+<nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">Toggle Menu</label>
+  <ul class="nav__items">
+    
+      
+      
+        <li>
+          
+            <a href="/Margay_Library/"><span class="nav__sub-title">Overview</span></a>
+          
+
+          
+        </li>
+      
+        <li>
+          
+            <a href="/Margay_Library/Classes/classMargay/"><span class="nav__sub-title">Margay Class</span></a>
+          
+
+          
+        </li>
+      
+        <li>
+          
+            <a href="/Margay_Library/Classes/index_classes/"><span class="nav__sub-title">Classes</span></a>
+          
+
+          
+        </li>
+      
+        <li>
+          
+            <a href="/Margay_Library/Files/index_files/"><span class="nav__sub-title">Files</span></a>
+          
+
+          
+        </li>
+      
+    
+  </ul>
+</nav>
+
+    
+  
+  
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="src/Margay.h">
+    
+    
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="https://docs.northernwidget.com/Margay_Library/Files/Margay_8h/" itemprop="url">src/Margay.h
+</a>
+          </h1>
+          
+
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc" aria-label="Table of contents">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#classes">Classes</a></li><li><a href="#types">Types</a></li><li><a href="#defines">Defines</a></li><li><a href="#types-documentation">Types Documentation</a><ul><li><a href="#enum-board">enum board</a></li><li><a href="#enum-build">enum build</a></li><li><a href="#enum-temp_source">enum temp_source</a></li></ul></li><li><a href="#macros-documentation">Macros Documentation</a><ul><li><a href="#define-red">define RED</a></li><li><a href="#define-green">define GREEN</a></li><li><a href="#define-blue">define BLUE</a></li><li><a href="#define-maroon">define MAROON</a></li><li><a href="#define-gold">define GOLD</a></li><li><a href="#define-orange">define ORANGE</a></li><li><a href="#define-purple">define PURPLE</a></li><li><a href="#define-cyan">define CYAN</a></li><li><a href="#define-black_alert">define BLACK_ALERT</a></li><li><a href="#define-on">define ON</a></li><li><a href="#define-off">define OFF</a></li><li><a href="#define-cbi">define cbi</a></li></ul></li><li><a href="#source-code">Source code</a></li></ul>
+            </nav>
+          </aside>
+        
+        <h2 id="classes">Classes</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>class</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/">Margay</a></strong></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="types">Types</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>enum</td>
+      <td><strong><a href="/Margay_Library/Files/Margay_8h/#enum-board">board</a></strong> { MODEL_0v0 = 0, MODEL_1v0 = 1, MODEL_2v0 = 2, MODEL_2v1 = 2, MODEL_2v2 = 2, MODEL_3v0 = 3}</td>
+    </tr>
+    <tr>
+      <td>enum</td>
+      <td><strong><a href="/Margay_Library/Files/Margay_8h/#enum-build">build</a></strong> { BUILD_A = 0, BUILD_B = 1, BUILD_C = 2, BUILD_D = 3}</td>
+    </tr>
+    <tr>
+      <td>enum</td>
+      <td><strong><a href="/Margay_Library/Files/Margay_8h/#enum-temp-source">temp_source</a></strong> { thermistor_temp_sensor = 0, RTC_temp_sensor = 1}</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="defines">Defines</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td> </td>
+      <td><strong><a href="/Margay_Library/Files/Margay_8h/#define-red">RED</a></strong></td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td><strong><a href="/Margay_Library/Files/Margay_8h/#define-green">GREEN</a></strong></td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td><strong><a href="/Margay_Library/Files/Margay_8h/#define-blue">BLUE</a></strong></td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td><strong><a href="/Margay_Library/Files/Margay_8h/#define-maroon">MAROON</a></strong></td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td><strong><a href="/Margay_Library/Files/Margay_8h/#define-gold">GOLD</a></strong></td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td><strong><a href="/Margay_Library/Files/Margay_8h/#define-orange">ORANGE</a></strong></td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td><strong><a href="/Margay_Library/Files/Margay_8h/#define-purple">PURPLE</a></strong></td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td><strong><a href="/Margay_Library/Files/Margay_8h/#define-cyan">CYAN</a></strong></td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td><strong><a href="/Margay_Library/Files/Margay_8h/#define-black-alert">BLACK_ALERT</a></strong></td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td><strong><a href="/Margay_Library/Files/Margay_8h/#define-on">ON</a></strong></td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td><strong><a href="/Margay_Library/Files/Margay_8h/#define-off">OFF</a></strong></td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td><strong><a href="/Margay_Library/Files/Margay_8h/#define-cbi">cbi</a></strong>(sfr, bit)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="types-documentation">Types Documentation</h2>
+
+<h3 id="enum-board">enum board</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Enumerator</th>
+      <th>Value</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>MODEL_0v0</td>
+      <td>0</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>MODEL_1v0</td>
+      <td>1</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>MODEL_2v0</td>
+      <td>2</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>MODEL_2v1</td>
+      <td>2</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>MODEL_2v2</td>
+      <td>2</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>MODEL_3v0</td>
+      <td>3</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="enum-build">enum build</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Enumerator</th>
+      <th>Value</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>BUILD_A</td>
+      <td>0</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>BUILD_B</td>
+      <td>1</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>BUILD_C</td>
+      <td>2</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>BUILD_D</td>
+      <td>3</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="enum-temp_source">enum temp_source</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Enumerator</th>
+      <th>Value</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>thermistor_temp_sensor</td>
+      <td>0</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>RTC_temp_sensor</td>
+      <td>1</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="macros-documentation">Macros Documentation</h2>
+
+<h3 id="define-red">define RED</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#define RED 0xFFFF0000L
+</span></code></pre></div></div>
+
+<h3 id="define-green">define GREEN</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#define GREEN 0xFF00FF00L
+</span></code></pre></div></div>
+
+<h3 id="define-blue">define BLUE</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#define BLUE 0xFF0000FFL
+</span></code></pre></div></div>
+
+<h3 id="define-maroon">define MAROON</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#define MAROON 0xFF800000L
+</span></code></pre></div></div>
+
+<h3 id="define-gold">define GOLD</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#define GOLD 0xFFFFD700L
+</span></code></pre></div></div>
+
+<h3 id="define-orange">define ORANGE</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#define ORANGE 0xFFFFA500L
+</span></code></pre></div></div>
+
+<h3 id="define-purple">define PURPLE</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#define PURPLE 0xFF800080L
+</span></code></pre></div></div>
+
+<h3 id="define-cyan">define CYAN</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#define CYAN 0xFF00FFFFL
+</span></code></pre></div></div>
+
+<h3 id="define-black_alert">define BLACK_ALERT</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#define BLACK_ALERT 0x802019FFL
+</span></code></pre></div></div>
+
+<h3 id="define-on">define ON</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#define ON 1
+</span></code></pre></div></div>
+
+<h3 id="define-off">define OFF</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#define OFF 0
+</span></code></pre></div></div>
+
+<h3 id="define-cbi">define cbi</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#define cbi(
+</span>    <span class="n">sfr</span><span class="p">,</span>
+    <span class="n">bit</span>
+<span class="p">)</span>
+<span class="p">(</span><span class="n">_SFR_BYTE</span><span class="p">(</span><span class="n">sfr</span><span class="p">)</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="n">_BV</span><span class="p">(</span><span class="n">bit</span><span class="p">))</span>
+</code></pre></div></div>
+
+<h2 id="source-code">Source code</h2>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*
+Margay Library
+Licensed: GNU GPL v3
+
+Written by:
+Bobby Schulz
+Andy Wickert
+*/</span>
+
+
+<span class="cp">#ifndef MARGAY_h
+#define MARGAY_h
+</span>
+<span class="cp">#include</span> <span class="cpf">&lt;Arduino.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;Wire.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;SPI.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;avr/pgmspace.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;avr/sleep.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;avr/wdt.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;avr/power.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;EEPROM.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">"DS3231_Logger.h"</span><span class="cp">
+#include</span> <span class="cpf">"MCP3421.h"</span><span class="cp">
+#include</span> <span class="cpf">"SdFat.h"</span><span class="cp">
+#include</span> <span class="cpf">"BME.h"</span><span class="cp">
+</span>
+
+<span class="cp">#define RED 0xFFFF0000L
+#define GREEN 0xFF00FF00L
+#define BLUE 0xFF0000FFL
+#define MAROON 0xFF800000L
+#define GOLD 0xFFFFD700L
+#define ORANGE 0xFFFFA500L
+#define PURPLE 0xFF800080L
+#define CYAN 0xFF00FFFFL
+#define BLACK_ALERT 0x802019FFL
+</span>
+<span class="cp">#define ON 1
+#define OFF 0
+</span>
+<span class="c1">//Define CBI macro</span>
+<span class="cp">#ifndef cbi
+#define cbi(sfr, bit) (_SFR_BYTE(sfr) &amp;= ~_BV(bit))
+#endif
+</span>
+<span class="k">enum</span> <span class="n">board</span>
+<span class="p">{</span>
+    <span class="n">MODEL_0v0</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">MODEL_1v0</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">MODEL_2v0</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">MODEL_2v1</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">MODEL_2v2</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">MODEL_3v0</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="p">};</span>
+
+<span class="k">enum</span> <span class="n">build</span>
+<span class="p">{</span>
+  <span class="n">BUILD_A</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="n">BUILD_B</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="n">BUILD_C</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+  <span class="n">BUILD_D</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="p">};</span>
+
+<span class="k">enum</span> <span class="n">temp_source</span>
+<span class="p">{</span>
+  <span class="n">thermistor_temp_sensor</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="n">RTC_temp_sensor</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="p">};</span>
+
+
+<span class="k">class</span> <span class="nc">Margay</span>
+<span class="p">{</span>
+
+  <span class="nl">public:</span>
+    <span class="n">Margay</span><span class="p">(</span><span class="n">board</span> <span class="n">model_</span> <span class="o">=</span> <span class="n">MODEL_3v0</span><span class="p">,</span> <span class="n">build</span> <span class="n">specs_</span> <span class="o">=</span> <span class="n">BUILD_B</span><span class="p">);</span>
+      <span class="kt">void</span> <span class="n">begin</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="o">*</span><span class="n">vals</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="n">numVals</span><span class="p">,</span> <span class="n">String</span> <span class="n">header_</span><span class="p">);</span>
+    <span class="kt">void</span> <span class="n">begin</span><span class="p">(</span><span class="n">String</span> <span class="n">header_</span> <span class="o">=</span> <span class="s">""</span><span class="p">);</span>
+
+    <span class="kt">int</span> <span class="n">logStr</span><span class="p">(</span><span class="n">String</span> <span class="n">val</span><span class="p">);</span>
+    <span class="kt">void</span> <span class="n">LED_Color</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">val</span><span class="p">);</span>
+    <span class="kt">void</span> <span class="n">run</span><span class="p">(</span><span class="n">String</span> <span class="p">(</span><span class="o">*</span><span class="n">f</span><span class="p">)(</span><span class="kt">void</span><span class="p">),</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">logInterval</span><span class="p">);</span>
+    <span class="kt">float</span> <span class="n">getVoltage</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="n">addDataPoint</span><span class="p">(</span><span class="n">String</span> <span class="p">(</span><span class="o">*</span><span class="n">update</span><span class="p">)(</span><span class="kt">void</span><span class="p">));</span>
+    <span class="kt">void</span> <span class="n">initLogFile</span><span class="p">();</span>
+
+    <span class="kt">void</span> <span class="n">setExtInt</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="n">n</span><span class="p">,</span> <span class="n">String</span> <span class="n">header_entry</span> <span class="o">=</span> <span class="s">"nInterrupts,"</span><span class="p">);</span>
+    <span class="kt">uint16_t</span> <span class="n">getExtIntCount</span><span class="p">(</span><span class="kt">bool</span> <span class="n">reset0</span> <span class="o">=</span> <span class="nb">true</span><span class="p">);</span>
+    <span class="kt">void</span> <span class="n">resetExtIntCount</span><span class="p">(</span><span class="kt">uint16_t</span> <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">);</span>
+
+    <span class="kt">float</span> <span class="n">getTemp</span><span class="p">(</span><span class="n">temp_source</span> <span class="n">sensor</span> <span class="o">=</span> <span class="n">thermistor_temp_sensor</span><span class="p">);</span>
+    <span class="kt">float</span> <span class="n">getBatVoltage</span><span class="p">();</span>
+
+    <span class="kt">float</span> <span class="n">getBatPercentage</span><span class="p">();</span>
+
+    <span class="kt">void</span> <span class="n">initADC</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="n">desiredResolution</span><span class="p">);</span>
+    <span class="kt">void</span> <span class="n">resetWDT</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="n">powerOB</span><span class="p">(</span><span class="kt">bool</span> <span class="n">state</span><span class="p">);</span>
+    <span class="kt">void</span> <span class="n">powerAux</span><span class="p">(</span><span class="kt">bool</span> <span class="n">state</span><span class="p">);</span>
+
+    <span class="c1">//Pin definitions</span>
+    <span class="kt">uint8_t</span> <span class="n">SD_CS</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+    <span class="kt">uint8_t</span> <span class="n">AuxLED</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+    <span class="kt">uint8_t</span> <span class="n">RedLED</span> <span class="o">=</span> <span class="mi">13</span><span class="p">;</span>
+    <span class="kt">uint8_t</span> <span class="n">GreenLED</span> <span class="o">=</span> <span class="mi">15</span><span class="p">;</span>
+    <span class="kt">uint8_t</span> <span class="n">BlueLED</span> <span class="o">=</span> <span class="mi">14</span><span class="p">;</span>
+
+    <span class="kt">uint8_t</span> <span class="n">VRef_Pin</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="kt">uint8_t</span> <span class="n">ThermSense_Pin</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="kt">uint8_t</span> <span class="n">BatSense_Pin</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="kt">uint8_t</span> <span class="n">VSwitch_Pin</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+    <span class="kt">uint8_t</span> <span class="n">SD_CD</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+    <span class="kt">uint8_t</span> <span class="n">Ext3v3Ctrl</span> <span class="o">=</span> <span class="mi">19</span><span class="p">;</span>
+    <span class="kt">uint8_t</span> <span class="n">I2C_SW</span> <span class="o">=</span> <span class="mi">21</span><span class="p">;</span>
+    <span class="kt">uint8_t</span> <span class="n">PG</span> <span class="o">=</span> <span class="mi">18</span><span class="p">;</span>
+    <span class="kt">uint8_t</span> <span class="n">ExtInt</span> <span class="o">=</span> <span class="mi">11</span><span class="p">;</span> <span class="c1">// Currently doing nothing</span>
+    <span class="kt">uint8_t</span> <span class="n">RTCInt</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+    <span class="kt">uint8_t</span> <span class="n">LogInt</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="kt">uint8_t</span> <span class="n">WDHold</span> <span class="o">=</span> <span class="mi">23</span><span class="p">;</span> <span class="c1">//ADD TO DOCUMENTATION!</span>
+    <span class="kt">uint8_t</span> <span class="n">BatSwitch</span> <span class="o">=</span> <span class="mi">22</span><span class="p">;</span> <span class="c1">//ADD TO DOCUMENTATION!</span>
+    <span class="kt">uint8_t</span> <span class="n">TX</span> <span class="o">=</span> <span class="mi">11</span><span class="p">;</span> <span class="c1">//ADD TO DOCUMENTATION!</span>
+    <span class="kt">uint8_t</span> <span class="n">RX</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span> <span class="c1">//ADD TO DOCUMENTATION!</span>
+    <span class="kt">uint8_t</span> <span class="n">D0</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span> <span class="c1">//ADD TO DOCUMENTATION!</span>
+
+    <span class="kt">uint8_t</span> <span class="n">NCells</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span> <span class="c1">// number of cells in series in battery pack</span>
+    <span class="kt">float</span> <span class="n">BatVoltageError</span> <span class="o">=</span> <span class="mf">3.3</span><span class="p">;</span> <span class="c1">// trigger error if battery drops below this voltage</span>
+    <span class="kt">float</span> <span class="n">BatPercentageWarning</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span> <span class="c1">// trigger warning if charge drops below this percentage</span>
+    <span class="k">const</span> <span class="n">String</span> <span class="n">LibVersion</span> <span class="o">=</span> <span class="s">"1.2.0"</span><span class="p">;</span>
+
+  <span class="nl">protected:</span>
+    <span class="kt">float</span> <span class="n">tempConvert</span><span class="p">(</span><span class="kt">float</span> <span class="n">V</span><span class="p">,</span> <span class="kt">float</span> <span class="n">vcc</span><span class="p">,</span> <span class="kt">float</span> <span class="n">R</span><span class="p">,</span>
+        <span class="kt">float</span> <span class="n">A</span><span class="p">,</span> <span class="kt">float</span> <span class="n">B</span><span class="p">,</span> <span class="kt">float</span> <span class="n">C</span><span class="p">,</span> <span class="kt">float</span> <span class="n">D</span><span class="p">,</span> <span class="kt">float</span> <span class="n">R25</span><span class="p">);</span>
+    <span class="kt">void</span> <span class="n">blinkGood</span><span class="p">();</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">writeDataToSD</span><span class="p">();</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">buttonLog</span><span class="p">();</span>
+    <span class="k">static</span> <span class="kt">void</span> <span class="n">isr0</span><span class="p">();</span>
+    <span class="k">static</span> <span class="kt">void</span> <span class="n">isr1</span><span class="p">();</span>
+    <span class="k">static</span> <span class="kt">void</span> <span class="n">isr2</span><span class="p">();</span>
+    <span class="k">static</span> <span class="n">Margay</span><span class="o">*</span> <span class="n">selfPointer</span><span class="p">;</span>
+    <span class="k">static</span> <span class="kt">void</span> <span class="n">dateTimeSD</span><span class="p">(</span><span class="kt">uint16_t</span><span class="o">*</span> <span class="n">date</span><span class="p">,</span> <span class="kt">uint16_t</span><span class="o">*</span> <span class="n">time</span><span class="p">);</span>
+    <span class="kt">void</span> <span class="n">switchExternalI2C</span><span class="p">(</span><span class="kt">bool</span> <span class="n">desiredState</span><span class="p">);</span>
+    <span class="kt">void</span> <span class="n">sleepNow</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="n">turnOffSDcard</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="n">turnOnSDcard</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="n">getTime</span><span class="p">();</span>
+    <span class="n">String</span> <span class="n">getOnBoardVals</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="n">I2Ctest</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="n">SDtest</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="n">clockTest</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="n">batTest</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="n">powerTest</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="n">bme280Readings</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="n">extIntCounter</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="n">_addDataPoint</span><span class="p">(</span><span class="n">String</span> <span class="n">data</span><span class="p">);</span>
+    <span class="kt">void</span> <span class="n">farmGateI2C</span><span class="p">(</span><span class="kt">bool</span> <span class="n">initialStateExternalI2C</span><span class="p">);</span>
+
+    <span class="n">DS3231_Logger</span> <span class="n">RTC</span><span class="p">;</span>
+    <span class="n">MCP3421</span> <span class="n">adc</span><span class="p">;</span>
+    <span class="n">BME</span> <span class="n">bme280</span><span class="p">;</span>
+
+    <span class="kt">float</span> <span class="n">A</span> <span class="o">=</span> <span class="mf">0.003354016</span><span class="p">;</span>
+    <span class="kt">float</span> <span class="n">B</span> <span class="o">=</span> <span class="mf">0.0003074038</span><span class="p">;</span>
+    <span class="kt">float</span> <span class="n">C</span> <span class="o">=</span> <span class="mf">1.019153E-05</span><span class="p">;</span>
+    <span class="kt">float</span> <span class="n">D</span> <span class="o">=</span> <span class="mf">9.093712E-07</span><span class="p">;</span>
+    <span class="n">String</span> <span class="n">LogTimeDate</span> <span class="o">=</span> <span class="s">"2063/04/05 20:00:00"</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">i2cTruncated</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span> <span class="c1">// true if numVals passed to begin() exceeded I2C_ADR capacity</span>
+    <span class="kt">bool</span> <span class="n">OnBoardError</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">SensorError</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">TimeError</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">SDCardMissing</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">BatError</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">BatWarning</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="n">String</span> <span class="n">Header</span> <span class="o">=</span> <span class="s">""</span><span class="p">;</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="n">HexMap</span><span class="p">[</span><span class="mi">16</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="sc">'0'</span><span class="p">,</span> <span class="sc">'1'</span><span class="p">,</span> <span class="sc">'2'</span><span class="p">,</span> <span class="sc">'3'</span><span class="p">,</span> <span class="sc">'4'</span><span class="p">,</span> <span class="sc">'5'</span><span class="p">,</span> <span class="sc">'6'</span><span class="p">,</span> <span class="sc">'7'</span><span class="p">,</span>
+      <span class="sc">'8'</span><span class="p">,</span> <span class="sc">'9'</span><span class="p">,</span> <span class="sc">'A'</span><span class="p">,</span> <span class="sc">'B'</span><span class="p">,</span> <span class="sc">'C'</span><span class="p">,</span> <span class="sc">'D'</span><span class="p">,</span> <span class="sc">'E'</span><span class="p">,</span> <span class="sc">'F'</span>
+    <span class="p">};</span> <span class="c1">// hex digit lookup table</span>
+    <span class="kt">char</span> <span class="n">SN</span><span class="p">[</span><span class="mi">20</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span> <span class="c1">// serial number: 19 chars + null terminator</span>
+    <span class="kt">uint8_t</span> <span class="n">NumADR</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">uint8_t</span> <span class="n">I2C_ADR</span><span class="p">[</span><span class="mi">128</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span> <span class="c1">// one slot per usable 7-bit I2C address</span>
+    <span class="kt">uint8_t</span> <span class="n">NumADR_OB</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="kt">uint8_t</span> <span class="n">I2C_ADR_OB</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mh">0x68</span><span class="p">};</span> <span class="c1">//ADC, Clock</span>
+
+    <span class="kt">float</span> <span class="n">BatteryDivider</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">;</span> <span class="c1">//Default for v1.0</span>
+
+    <span class="n">board</span> <span class="n">Model</span><span class="p">;</span>
+    <span class="n">build</span> <span class="n">Specs</span><span class="p">;</span>
+
+    <span class="k">volatile</span> <span class="kt">bool</span> <span class="n">LogEvent</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span> <span class="c1">//Used to test if logging should begin yet</span>
+    <span class="k">volatile</span> <span class="kt">bool</span> <span class="n">NewLog</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span> <span class="c1">//Used to tell system to start a new log</span>
+    <span class="k">volatile</span> <span class="kt">int</span> <span class="n">AwakeCount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="kt">char</span> <span class="n">FileNameC</span><span class="p">[</span><span class="mi">13</span><span class="p">];</span> <span class="c1">// "LogNNNNN.txt" (12 chars) + null terminator</span>
+    <span class="kt">char</span> <span class="n">FileNameTestC</span><span class="p">[</span><span class="mi">11</span><span class="p">];</span> <span class="c1">// "HWTest.txt" (10 chars) + null terminator</span>
+    <span class="kt">bool</span> <span class="n">externalI2COn</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="n">SdFat</span> <span class="n">SD</span><span class="p">;</span>
+    <span class="n">byte</span>  <span class="n">keep_SPCR</span><span class="p">;</span>
+    <span class="n">byte</span> <span class="n">keep_ADCSRA</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="cp">#endif
+</span></code></pre></div></div>
+
+<hr />
+
+<p>Updated on 2026-05-13 at 15:07:19 +0000</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+  
+
+  
+
+
+        
+
+
+
+      </footer>
+
+      
+
+      
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/Margay_Library/feed.xml"><i class="fas fa-fw fa-square-rss" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://docs.northernwidget.com">Margay Library</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+
+  <script src="/Margay_Library/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

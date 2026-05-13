@@ -1,0 +1,792 @@
+
+
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.28.0 by Michael Rose
+  Copyright 2013-2026 Michael Rose - mademistakes.com | @mmistakes
+  Copyright 2024-2026 iBug - ibugone.com | @iBug
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    
+<meta charset="utf-8">
+
+
+<!-- begin _includes/seo.html --><title>Margay - Margay Library</title>
+<meta name="description" content="Arduino library for the Margay data logger">
+
+
+  <meta name="author" content="Northern Widget">
+  
+
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Margay Library">
+<meta property="og:title" content="Margay">
+<meta property="og:url" content="https://docs.northernwidget.com/Margay_Library/Classes/classMargay/">
+
+
+  <meta property="og:description" content="Arduino library for the Margay data logger">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="canonical" href="https://docs.northernwidget.com/Margay_Library/Classes/classMargay/">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/Margay_Library/feed.xml" type="application/atom+xml" rel="alternate" title="Margay Library Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/Margay_Library/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    
+<nav class="skip-links" aria-label="Skip links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav" aria-label="Primary navigation">
+        
+        <a class="site-title" href="/Margay_Library/">
+          Margay Library
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/"
+                
+                
+              >Quick-Start Guide</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+
+
+<div id="main" role="main">
+  
+
+  <div class="sidebar sticky">
+  
+  
+    
+      
+      
+      
+      
+    
+    
+      
+<nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">Toggle Menu</label>
+  <ul class="nav__items">
+    
+      
+      
+        <li>
+          
+            <a href="/Margay_Library/"><span class="nav__sub-title">Overview</span></a>
+          
+
+          
+        </li>
+      
+        <li>
+          
+            <a href="/Margay_Library/Classes/classMargay/"><span class="nav__sub-title">Margay Class</span></a>
+          
+
+          
+        </li>
+      
+        <li>
+          
+            <a href="/Margay_Library/Classes/index_classes/"><span class="nav__sub-title">Classes</span></a>
+          
+
+          
+        </li>
+      
+        <li>
+          
+            <a href="/Margay_Library/Files/index_files/"><span class="nav__sub-title">Files</span></a>
+          
+
+          
+        </li>
+      
+    
+  </ul>
+</nav>
+
+    
+  
+  
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Margay">
+    
+    
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="https://docs.northernwidget.com/Margay_Library/Classes/classMargay/" itemprop="url">Margay
+</a>
+          </h1>
+          
+
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc" aria-label="Table of contents">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#public-functions">Public Functions</a></li><li><a href="#public-attributes">Public Attributes</a></li><li><a href="#public-functions-documentation">Public Functions Documentation</a><ul><li><a href="#function-margay">function Margay</a></li><li><a href="#function-begin">function begin</a></li><li><a href="#function-begin-1">function begin</a></li><li><a href="#function-logstr">function logStr</a></li><li><a href="#function-led_color">function LED_Color</a></li><li><a href="#function-run">function run</a></li><li><a href="#function-getvoltage">function getVoltage</a></li><li><a href="#function-adddatapoint">function addDataPoint</a></li><li><a href="#function-initlogfile">function initLogFile</a></li><li><a href="#function-setextint">function setExtInt</a></li><li><a href="#function-getextintcount">function getExtIntCount</a></li><li><a href="#function-resetextintcount">function resetExtIntCount</a></li><li><a href="#function-gettemp">function getTemp</a></li><li><a href="#function-getbatvoltage">function getBatVoltage</a></li><li><a href="#function-getbatpercentage">function getBatPercentage</a></li><li><a href="#function-initadc">function initADC</a></li><li><a href="#function-resetwdt">function resetWDT</a></li><li><a href="#function-powerob">function powerOB</a></li><li><a href="#function-poweraux">function powerAux</a></li></ul></li><li><a href="#public-attributes-documentation">Public Attributes Documentation</a><ul><li><a href="#variable-sd_cs">variable SD_CS</a></li><li><a href="#variable-auxled">variable AuxLED</a></li><li><a href="#variable-redled">variable RedLED</a></li><li><a href="#variable-greenled">variable GreenLED</a></li><li><a href="#variable-blueled">variable BlueLED</a></li><li><a href="#variable-vref_pin">variable VRef_Pin</a></li><li><a href="#variable-thermsense_pin">variable ThermSense_Pin</a></li><li><a href="#variable-batsense_pin">variable BatSense_Pin</a></li><li><a href="#variable-vswitch_pin">variable VSwitch_Pin</a></li><li><a href="#variable-sd_cd">variable SD_CD</a></li><li><a href="#variable-ext3v3ctrl">variable Ext3v3Ctrl</a></li><li><a href="#variable-i2c_sw">variable I2C_SW</a></li><li><a href="#variable-pg">variable PG</a></li><li><a href="#variable-extint">variable ExtInt</a></li><li><a href="#variable-rtcint">variable RTCInt</a></li><li><a href="#variable-logint">variable LogInt</a></li><li><a href="#variable-wdhold">variable WDHold</a></li><li><a href="#variable-batswitch">variable BatSwitch</a></li><li><a href="#variable-tx">variable TX</a></li><li><a href="#variable-rx">variable RX</a></li><li><a href="#variable-d0">variable D0</a></li><li><a href="#variable-ncells">variable NCells</a></li><li><a href="#variable-batvoltageerror">variable BatVoltageError</a></li><li><a href="#variable-batpercentagewarning">variable BatPercentageWarning</a></li><li><a href="#variable-libversion">variable LibVersion</a></li></ul></li></ul>
+            </nav>
+          </aside>
+        
+        <h2 id="public-functions">Public Functions</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td> </td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-margay">Margay</a></strong>(board model_ =MODEL_3v0, build specs_ =BUILD_B)</td>
+    </tr>
+    <tr>
+      <td>void</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-begin">begin</a></strong>(uint8<em>t * vals, uint8_t numVals, String header</em>)</td>
+    </tr>
+    <tr>
+      <td>void</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-begin">begin</a></strong>(String header_ =””)</td>
+    </tr>
+    <tr>
+      <td>int</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-logstr">logStr</a></strong>(String val)</td>
+    </tr>
+    <tr>
+      <td>void</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-led-color">LED_Color</a></strong>(unsigned long val)</td>
+    </tr>
+    <tr>
+      <td>void</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-run">run</a></strong>(String(*)(void) f, unsigned long logInterval)</td>
+    </tr>
+    <tr>
+      <td>float</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-getvoltage">getVoltage</a></strong>()</td>
+    </tr>
+    <tr>
+      <td>void</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-adddatapoint">addDataPoint</a></strong>(String(*)(void) update)</td>
+    </tr>
+    <tr>
+      <td>void</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-initlogfile">initLogFile</a></strong>()</td>
+    </tr>
+    <tr>
+      <td>void</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-setextint">setExtInt</a></strong>(uint8_t n, String header_entry =”nInterrupts,”)</td>
+    </tr>
+    <tr>
+      <td>uint16_t</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-getextintcount">getExtIntCount</a></strong>(bool reset0 =true)</td>
+    </tr>
+    <tr>
+      <td>void</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-resetextintcount">resetExtIntCount</a></strong>(uint16_t start =0)</td>
+    </tr>
+    <tr>
+      <td>float</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-gettemp">getTemp</a></strong>(temp_source sensor =thermistor_temp_sensor)<br />Read temperature from an on-board sensor.</td>
+    </tr>
+    <tr>
+      <td>float</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-getbatvoltage">getBatVoltage</a></strong>()</td>
+    </tr>
+    <tr>
+      <td>float</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-getbatpercentage">getBatPercentage</a></strong>()<br />Estimate remaining battery charge as a percentage.</td>
+    </tr>
+    <tr>
+      <td>void</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-initadc">initADC</a></strong>(uint8_t desiredResolution)</td>
+    </tr>
+    <tr>
+      <td>void</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-resetwdt">resetWDT</a></strong>()</td>
+    </tr>
+    <tr>
+      <td>void</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-powerob">powerOB</a></strong>(bool state)</td>
+    </tr>
+    <tr>
+      <td>void</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-poweraux">powerAux</a></strong>(bool state)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="public-attributes">Public Attributes</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>uint8_t</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-sd-cs">SD_CS</a></strong></td>
+    </tr>
+    <tr>
+      <td>uint8_t</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-auxled">AuxLED</a></strong></td>
+    </tr>
+    <tr>
+      <td>uint8_t</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-redled">RedLED</a></strong></td>
+    </tr>
+    <tr>
+      <td>uint8_t</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-greenled">GreenLED</a></strong></td>
+    </tr>
+    <tr>
+      <td>uint8_t</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-blueled">BlueLED</a></strong></td>
+    </tr>
+    <tr>
+      <td>uint8_t</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-vref-pin">VRef_Pin</a></strong></td>
+    </tr>
+    <tr>
+      <td>uint8_t</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-thermsense-pin">ThermSense_Pin</a></strong></td>
+    </tr>
+    <tr>
+      <td>uint8_t</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-batsense-pin">BatSense_Pin</a></strong></td>
+    </tr>
+    <tr>
+      <td>uint8_t</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-vswitch-pin">VSwitch_Pin</a></strong></td>
+    </tr>
+    <tr>
+      <td>uint8_t</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-sd-cd">SD_CD</a></strong></td>
+    </tr>
+    <tr>
+      <td>uint8_t</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-ext3v3ctrl">Ext3v3Ctrl</a></strong></td>
+    </tr>
+    <tr>
+      <td>uint8_t</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-i2c-sw">I2C_SW</a></strong></td>
+    </tr>
+    <tr>
+      <td>uint8_t</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-pg">PG</a></strong></td>
+    </tr>
+    <tr>
+      <td>uint8_t</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-extint">ExtInt</a></strong></td>
+    </tr>
+    <tr>
+      <td>uint8_t</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-rtcint">RTCInt</a></strong></td>
+    </tr>
+    <tr>
+      <td>uint8_t</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-logint">LogInt</a></strong></td>
+    </tr>
+    <tr>
+      <td>uint8_t</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-wdhold">WDHold</a></strong></td>
+    </tr>
+    <tr>
+      <td>uint8_t</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-batswitch">BatSwitch</a></strong></td>
+    </tr>
+    <tr>
+      <td>uint8_t</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-tx">TX</a></strong></td>
+    </tr>
+    <tr>
+      <td>uint8_t</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-rx">RX</a></strong></td>
+    </tr>
+    <tr>
+      <td>uint8_t</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-d0">D0</a></strong></td>
+    </tr>
+    <tr>
+      <td>uint8_t</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-ncells">NCells</a></strong></td>
+    </tr>
+    <tr>
+      <td>float</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-batvoltageerror">BatVoltageError</a></strong></td>
+    </tr>
+    <tr>
+      <td>float</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-batpercentagewarning">BatPercentageWarning</a></strong></td>
+    </tr>
+    <tr>
+      <td>const String</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-libversion">LibVersion</a></strong></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="public-functions-documentation">Public Functions Documentation</h2>
+
+<h3 id="function-margay">function Margay</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Margay</span><span class="p">(</span>
+    <span class="n">board</span> <span class="n">model_</span> <span class="o">=</span><span class="n">MODEL_3v0</span><span class="p">,</span>
+    <span class="n">build</span> <span class="n">specs_</span> <span class="o">=</span><span class="n">BUILD_B</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="function-begin">function begin</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">begin</span><span class="p">(</span>
+    <span class="kt">uint8_t</span> <span class="o">*</span> <span class="n">vals</span><span class="p">,</span>
+    <span class="kt">uint8_t</span> <span class="n">numVals</span><span class="p">,</span>
+    <span class="n">String</span> <span class="n">header_</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="function-begin-1">function begin</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">begin</span><span class="p">(</span>
+    <span class="n">String</span> <span class="n">header_</span> <span class="o">=</span><span class="s">""</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="function-logstr">function logStr</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">logStr</span><span class="p">(</span>
+    <span class="n">String</span> <span class="n">val</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="function-led_color">function LED_Color</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">LED_Color</span><span class="p">(</span>
+    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">val</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="function-run">function run</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">run</span><span class="p">(</span>
+    <span class="n">String</span><span class="p">(</span><span class="o">*</span><span class="p">)(</span><span class="kt">void</span><span class="p">)</span> <span class="n">f</span><span class="p">,</span>
+    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">logInterval</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="function-getvoltage">function getVoltage</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">float</span> <span class="n">getVoltage</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h3 id="function-adddatapoint">function addDataPoint</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">addDataPoint</span><span class="p">(</span>
+    <span class="n">String</span><span class="p">(</span><span class="o">*</span><span class="p">)(</span><span class="kt">void</span><span class="p">)</span> <span class="n">update</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="function-initlogfile">function initLogFile</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">initLogFile</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h3 id="function-setextint">function setExtInt</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">setExtInt</span><span class="p">(</span>
+    <span class="kt">uint8_t</span> <span class="n">n</span><span class="p">,</span>
+    <span class="n">String</span> <span class="n">header_entry</span> <span class="o">=</span><span class="s">"nInterrupts,"</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="function-getextintcount">function getExtIntCount</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint16_t</span> <span class="n">getExtIntCount</span><span class="p">(</span>
+    <span class="kt">bool</span> <span class="n">reset0</span> <span class="o">=</span><span class="nb">true</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="function-resetextintcount">function resetExtIntCount</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">resetExtIntCount</span><span class="p">(</span>
+    <span class="kt">uint16_t</span> <span class="n">start</span> <span class="o">=</span><span class="mi">0</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="function-gettemp">function getTemp</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">float</span> <span class="n">getTemp</span><span class="p">(</span>
+    <span class="n">temp_source</span> <span class="n">sensor</span> <span class="o">=</span><span class="n">thermistor_temp_sensor</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p>Read temperature from an on-board sensor.</p>
+
+<p><strong>Parameters</strong>:</p>
+
+<ul>
+  <li>
+    <p><strong>sensor</strong> Temperature source. Options:</p>
+  </li>
+  <li>thermistor_temp_sensor (0): on-board NTC thermistor</li>
+  <li>RTC_temp_sensor (1): DS3231 RTC internal sensor Defaults to thermistor_temp_sensor.</li>
+</ul>
+
+<p><strong>Return</strong>: Temperature in degrees Celsius, or -1234 on invalid input.</p>
+
+<h3 id="function-getbatvoltage">function getBatVoltage</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">float</span> <span class="n">getBatVoltage</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h3 id="function-getbatpercentage">function getBatPercentage</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">float</span> <span class="n">getBatPercentage</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>Estimate remaining battery charge as a percentage.</p>
+
+<p><strong>Return</strong>: Charge percentage in [0, 100], or -1 if NCells == 0.</p>
+
+<p>Uses a quadratic fit developed for Duracell AA alkaline cells. Should generalise well to most alkalines; accuracy not guaranteed for other chemistries. Accurate to within ~1% from 30% to 100% capacity at 25°C. Configure the number of cells in series via the public member variable NCells (default 3). NCells must be &gt; 0; setting it to 0 will print an error to Serial and return -1.</p>
+
+<h3 id="function-initadc">function initADC</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">initADC</span><span class="p">(</span>
+    <span class="kt">uint8_t</span> <span class="n">desiredResolution</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="function-resetwdt">function resetWDT</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">resetWDT</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h3 id="function-powerob">function powerOB</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">powerOB</span><span class="p">(</span>
+    <span class="kt">bool</span> <span class="n">state</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="function-poweraux">function powerAux</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">powerAux</span><span class="p">(</span>
+    <span class="kt">bool</span> <span class="n">state</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="public-attributes-documentation">Public Attributes Documentation</h2>
+
+<h3 id="variable-sd_cs">variable SD_CS</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint8_t</span> <span class="n">SD_CS</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="variable-auxled">variable AuxLED</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint8_t</span> <span class="n">AuxLED</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="variable-redled">variable RedLED</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint8_t</span> <span class="n">RedLED</span> <span class="o">=</span> <span class="mi">13</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="variable-greenled">variable GreenLED</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint8_t</span> <span class="n">GreenLED</span> <span class="o">=</span> <span class="mi">15</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="variable-blueled">variable BlueLED</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint8_t</span> <span class="n">BlueLED</span> <span class="o">=</span> <span class="mi">14</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="variable-vref_pin">variable VRef_Pin</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint8_t</span> <span class="n">VRef_Pin</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="variable-thermsense_pin">variable ThermSense_Pin</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint8_t</span> <span class="n">ThermSense_Pin</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="variable-batsense_pin">variable BatSense_Pin</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint8_t</span> <span class="n">BatSense_Pin</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="variable-vswitch_pin">variable VSwitch_Pin</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint8_t</span> <span class="n">VSwitch_Pin</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="variable-sd_cd">variable SD_CD</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint8_t</span> <span class="n">SD_CD</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="variable-ext3v3ctrl">variable Ext3v3Ctrl</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint8_t</span> <span class="n">Ext3v3Ctrl</span> <span class="o">=</span> <span class="mi">19</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="variable-i2c_sw">variable I2C_SW</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint8_t</span> <span class="n">I2C_SW</span> <span class="o">=</span> <span class="mi">21</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="variable-pg">variable PG</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint8_t</span> <span class="n">PG</span> <span class="o">=</span> <span class="mi">18</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="variable-extint">variable ExtInt</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint8_t</span> <span class="n">ExtInt</span> <span class="o">=</span> <span class="mi">11</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="variable-rtcint">variable RTCInt</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint8_t</span> <span class="n">RTCInt</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="variable-logint">variable LogInt</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint8_t</span> <span class="n">LogInt</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="variable-wdhold">variable WDHold</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint8_t</span> <span class="n">WDHold</span> <span class="o">=</span> <span class="mi">23</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="variable-batswitch">variable BatSwitch</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint8_t</span> <span class="n">BatSwitch</span> <span class="o">=</span> <span class="mi">22</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="variable-tx">variable TX</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint8_t</span> <span class="n">TX</span> <span class="o">=</span> <span class="mi">11</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="variable-rx">variable RX</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint8_t</span> <span class="n">RX</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="variable-d0">variable D0</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint8_t</span> <span class="n">D0</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="variable-ncells">variable NCells</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint8_t</span> <span class="n">NCells</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="variable-batvoltageerror">variable BatVoltageError</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">float</span> <span class="n">BatVoltageError</span> <span class="o">=</span> <span class="mf">3.3</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="variable-batpercentagewarning">variable BatPercentageWarning</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">float</span> <span class="n">BatPercentageWarning</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="variable-libversion">variable LibVersion</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">const</span> <span class="n">String</span> <span class="n">LibVersion</span> <span class="o">=</span> <span class="s">"1.2.0"</span><span class="p">;</span>
+</code></pre></div></div>
+
+<hr />
+
+<p>Updated on 2026-05-13 at 15:07:19 +0000</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+  
+
+  
+
+
+        
+
+
+
+      </footer>
+
+      
+
+      
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/Margay_Library/feed.xml"><i class="fas fa-fw fa-square-rss" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://docs.northernwidget.com">Margay Library</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+
+  <script src="/Margay_Library/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

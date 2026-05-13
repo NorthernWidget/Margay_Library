@@ -1,0 +1,403 @@
+
+
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.28.0 by Michael Rose
+  Copyright 2013-2026 Michael Rose - mademistakes.com | @mmistakes
+  Copyright 2024-2026 iBug - ibugone.com | @iBug
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    
+<meta charset="utf-8">
+
+
+<!-- begin _includes/seo.html --><title>Margay Library</title>
+<meta name="description" content="Arduino library for the Margay data logger">
+
+
+  <meta name="author" content="Northern Widget">
+  
+
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Margay Library">
+<meta property="og:title" content="Margay Library">
+<meta property="og:url" content="https://docs.northernwidget.com/Margay_Library/">
+
+
+  <meta property="og:description" content="Arduino library for the Margay data logger">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="canonical" href="https://docs.northernwidget.com/Margay_Library/">
+
+
+
+
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+    "name": null,
+    "url": "https://docs.northernwidget.com/Margay_Library/"
+}
+</script>
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/Margay_Library/feed.xml" type="application/atom+xml" rel="alternate" title="Margay Library Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/Margay_Library/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    
+<nav class="skip-links" aria-label="Skip links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav" aria-label="Primary navigation">
+        
+        <a class="site-title" href="/Margay_Library/">
+          Margay Library
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/"
+                
+                
+              >Quick-Start Guide</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+
+
+<div id="main" role="main">
+  
+
+  <div class="sidebar sticky">
+  
+  
+    
+      
+      
+      
+      
+    
+    
+      
+<nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">Toggle Menu</label>
+  <ul class="nav__items">
+    
+      
+      
+        <li>
+          
+            <a href="/Margay_Library/"><span class="nav__sub-title">Overview</span></a>
+          
+
+          
+        </li>
+      
+        <li>
+          
+            <a href="/Margay_Library/Classes/classMargay/"><span class="nav__sub-title">Margay Class</span></a>
+          
+
+          
+        </li>
+      
+        <li>
+          
+            <a href="/Margay_Library/Classes/index_classes/"><span class="nav__sub-title">Classes</span></a>
+          
+
+          
+        </li>
+      
+        <li>
+          
+            <a href="/Margay_Library/Files/index_files/"><span class="nav__sub-title">Files</span></a>
+          
+
+          
+        </li>
+      
+    
+  </ul>
+</nav>
+
+    
+  
+  
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    
+    
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          
+          
+
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+        <p><a href="https://zenodo.org/badge/latestdoi/139644223"><img src="https://zenodo.org/badge/139644223.svg" alt="DOI" /></a></p>
+
+<h1 id="margay-logger-library">Margay Logger Library</h1>
+<p>This library is designed to facilitate the simple and modular usage of the Margay data logger</p>
+
+<h2 id="installation">Installation:</h2>
+
+<h2 id="examples">Examples:</h2>
+
+<h2 id="operation">Operation:</h2>
+
+<h3 id="logging-start">Logging Start:</h3>
+<p>Using this library, logging begins automatically once power is applied. If error conditions are found, they will be indicated by status lights, but the logger will attempt to continue if possible. The following should represent the light sequence.</p>
+
+<ul>
+  <li>On power application
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">AUX</code> light will illuminate <strong>green</strong>, will stay on while testing</li>
+    </ul>
+  </li>
+  <li>After testing is complete
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">AUX</code> light will turn <strong>off</strong></li>
+      <li><code class="language-plaintext highlighter-rouge">STAT</code> light will illuminate with various colors depending on the status of the logger
+        <ul>
+          <li><strong>Green</strong> -&gt; All systems check out OK, logging will proceed</li>
+          <li><strong>Orange</strong> -&gt; A sensor system is not registering properly, some sensor data may be missing or incorrect</li>
+          <li><strong>Cyan</strong> -&gt; Clock time is incorrect, but otherwise working correctly</li>
+          <li><strong>Pink</strong> -&gt; SD card is not inserted</li>
+          <li><strong>Red</strong> -&gt; Critical on board component (<a href="https://en.wikipedia.org/wiki/Jesus_nut">Jesus Nut</a>) is not functioning correctly, such as SD card or clock, logging will likely not be able to proceed</li>
+          <li><strong>Yellow, Fast Blinking</strong> -&gt; Battery capacity (assuming 3 series alkaline cells) is less than 50% of operational range. Device will still function fine, but operational time is less than ideal.</li>
+          <li><strong>Red, Fast Blinking</strong> -&gt; Battery voltage is less than 3.3v. Functionality of hardware no longer guaranteed beyond this point.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>After display of status code(s)
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">STAT</code> light will blink blue to indicate logging (or attempted logging) has begun</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="troubleshooting">Troubleshooting:</h3>
+<p>If an error code is received try the following steps:</p>
+
+<ul>
+  <li><strong>General</strong>
+    <ul>
+      <li>Disconnect and reconnect power, both USB and battery (<a href="https://i.imgur.com/Yj6dB3W.gif">Turn it off and back on again</a>)</li>
+      <li>Verify the quality of all screw terminal connections by gently tugging on the wires and making sure they stay in place, if not, remove and re-tighten the connection</li>
+      <li>Ensure sensors and/or cables are not damaged, this can result in shorts or other problems</li>
+      <li>Make sure batteries have sufficient voltage to run the logger, when the battery voltage drops below <em>3.3v</em>, malfunctions can occur</li>
+    </ul>
+  </li>
+  <li><strong>Orange</strong>
+    <ul>
+      <li>Verify correct polarity of sensor connection</li>
+      <li>Ensure the right sensor is connected</li>
+      <li>Verify the screw terminals are well connected to the wires (a loose connection can cause a failure)</li>
+      <li>Make sure battery power is applied, some sensors can fail otherwise</li>
+    </ul>
+  </li>
+  <li><strong>Cyan</strong>
+    <ul>
+      <li>Connect the logger to a computer and reset the clock using the <a href="https://github.com/NorthernWidget/SetTime_GUI">Northern Widget Time Set GUI</a></li>
+    </ul>
+  </li>
+  <li><strong>Pink</strong>
+    <ul>
+      <li>Insert the SD card, or make sure card is fully seated</li>
+    </ul>
+  </li>
+  <li><strong>Red</strong>
+    <ul>
+      <li>Attempt power cycle</li>
+      <li>Try different SD card</li>
+      <li>Disconnect all sensors</li>
+      <li>If none of the previous steps remove the red light, contact <a href="http://www.northernwidget.com/contact/">Northern Widget</a> for further support</li>
+    </ul>
+  </li>
+  <li><strong>Yellow, Fast Blinking</strong>
+    <ul>
+      <li>Replace batteries</li>
+    </ul>
+  </li>
+  <li><strong>Red, Fast Blinking</strong>
+    <ul>
+      <li><em>If</em> this error occurs while also connected over USB, check proper connection of batteries</li>
+      <li>Replace batteries</li>
+    </ul>
+  </li>
+</ul>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+  
+
+  
+
+
+        
+
+
+
+      </footer>
+
+      
+
+      
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/Margay_Library/feed.xml"><i class="fas fa-fw fa-square-rss" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://docs.northernwidget.com">Margay Library</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+
+  <script src="/Margay_Library/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

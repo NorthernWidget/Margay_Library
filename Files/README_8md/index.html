@@ -1,0 +1,373 @@
+
+
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.28.0 by Michael Rose
+  Copyright 2013-2026 Michael Rose - mademistakes.com | @mmistakes
+  Copyright 2024-2026 iBug - ibugone.com | @iBug
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js">
+  <head>
+    
+<meta charset="utf-8">
+
+
+<!-- begin _includes/seo.html --><title>README.md - Margay Library</title>
+<meta name="description" content="Arduino library for the Margay data logger">
+
+
+  <meta name="author" content="Northern Widget">
+  
+
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Margay Library">
+<meta property="og:title" content="README.md">
+<meta property="og:url" content="https://docs.northernwidget.com/Margay_Library/Files/README_8md/">
+
+
+  <meta property="og:description" content="Arduino library for the Margay data logger">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="canonical" href="https://docs.northernwidget.com/Margay_Library/Files/README_8md/">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/Margay_Library/feed.xml" type="application/atom+xml" rel="alternate" title="Margay Library Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/Margay_Library/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    
+<nav class="skip-links" aria-label="Skip links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav" aria-label="Primary navigation">
+        
+        <a class="site-title" href="/Margay_Library/">
+          Margay Library
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/"
+                
+                
+              >Quick-Start Guide</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+
+
+<div id="main" role="main">
+  
+
+  <div class="sidebar sticky">
+  
+  
+    
+      
+      
+      
+      
+    
+    
+      
+<nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">Toggle Menu</label>
+  <ul class="nav__items">
+    
+      
+      
+        <li>
+          
+            <a href="/Margay_Library/"><span class="nav__sub-title">Overview</span></a>
+          
+
+          
+        </li>
+      
+        <li>
+          
+            <a href="/Margay_Library/Classes/classMargay/"><span class="nav__sub-title">Margay Class</span></a>
+          
+
+          
+        </li>
+      
+        <li>
+          
+            <a href="/Margay_Library/Classes/index_classes/"><span class="nav__sub-title">Classes</span></a>
+          
+
+          
+        </li>
+      
+        <li>
+          
+            <a href="/Margay_Library/Files/index_files/"><span class="nav__sub-title">Files</span></a>
+          
+
+          
+        </li>
+      
+    
+  </ul>
+</nav>
+
+    
+  
+  
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="README.md">
+    
+    
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="https://docs.northernwidget.com/Margay_Library/Files/README_8md/" itemprop="url">README.md
+</a>
+          </h1>
+          
+
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc" aria-label="Table of contents">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#source-code">Source code</a></li></ul>
+            </nav>
+          </aside>
+        
+        <h2 id="source-code">Source code</h2>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="nv">![DOI</span><span class="p">](</span><span class="sx">https://zenodo.org/badge/139644223.svg</span><span class="p">)</span>](https://zenodo.org/badge/latestdoi/139644223)
+
+<span class="gh"># Margay Logger Library</span>
+This library is designed to facilitate the simple and modular usage of the Margay data logger
+
+<span class="gu">## Installation:</span>
+
+<span class="gu">## Examples:</span>
+
+<span class="gu">## Operation:</span>
+
+<span class="gu">### Logging Start:</span>
+Using this library, logging begins automatically once power is applied. If error conditions are found, they will be indicated by status lights, but the logger will attempt to continue if possible. The following should represent the light sequence.
+<span class="p">
+-</span> On power application
+<span class="p">    -</span> <span class="sb">`AUX`</span> light will illuminate <span class="gs">**green**</span>, will stay on while testing
+<span class="p">-</span> After testing is complete
+<span class="p">    -</span> <span class="sb">`AUX`</span> light will turn <span class="gs">**off**</span>
+<span class="p">    -</span> <span class="sb">`STAT`</span> light will illuminate with various colors depending on the status of the logger 
+<span class="p">        -</span> <span class="gs">**Green**</span> -&gt; All systems check out OK, logging will proceed 
+<span class="p">        -</span> <span class="gs">**Orange**</span> -&gt; A sensor system is not registering properly, some sensor data may be missing or incorrect 
+<span class="p">        -</span> <span class="gs">**Cyan**</span> -&gt; Clock time is incorrect, but otherwise working correctly 
+<span class="p">        -</span> <span class="gs">**Pink**</span> -&gt; SD card is not inserted 
+<span class="p">        -</span> <span class="gs">**Red**</span> -&gt; Critical on board component (<span class="p">[</span><span class="nv">Jesus Nut</span><span class="p">](</span><span class="sx">https://en.wikipedia.org/wiki/Jesus_nut</span><span class="p">)</span>) is not functioning correctly, such as SD card or clock, logging will likely not be able to proceed
+<span class="p">        -</span> <span class="gs">**Yellow, Fast Blinking**</span> -&gt; Battery capacity (assuming 3 series alkaline cells) is less than 50% of operational range. Device will still function fine, but operational time is less than ideal.
+<span class="p">        -</span> <span class="gs">**Red, Fast Blinking**</span> -&gt; Battery voltage is less than 3.3v. Functionality of hardware no longer guaranteed beyond this point.  
+<span class="p">-</span> After display of status code(s)
+<span class="p">    -</span> <span class="sb">`STAT`</span> light will blink blue to indicate logging (or attempted logging) has begun
+
+<span class="gu">### Troubleshooting:</span>
+If an error code is received try the following steps:
+<span class="p">
+-</span> <span class="gs">**General**</span>
+<span class="p">    -</span> Disconnect and reconnect power, both USB and battery (<span class="p">[</span><span class="nv">Turn it off and back on again</span><span class="p">](</span><span class="sx">https://i.imgur.com/Yj6dB3W.gif</span><span class="p">)</span>)
+<span class="p">    -</span> Verify the quality of all screw terminal connections by gently tugging on the wires and making sure they stay in place, if not, remove and re-tighten the connection 
+<span class="p">    -</span> Ensure sensors and/or cables are not damaged, this can result in shorts or other problems
+<span class="p">    -</span> Make sure batteries have sufficient voltage to run the logger, when the battery voltage drops below <span class="ge">*3.3v*</span>, malfunctions can occur 
+<span class="p">-</span> <span class="gs">**Orange**</span>
+<span class="p">    -</span> Verify correct polarity of sensor connection
+<span class="p">    -</span> Ensure the right sensor is connected
+<span class="p">    -</span> Verify the screw terminals are well connected to the wires (a loose connection can cause a failure)
+<span class="p">    -</span> Make sure battery power is applied, some sensors can fail otherwise
+<span class="p">-</span> <span class="gs">**Cyan**</span>
+<span class="p">    -</span> Connect the logger to a computer and reset the clock using the <span class="p">[</span><span class="nv">Northern Widget Time Set GUI</span><span class="p">](</span><span class="sx">https://github.com/NorthernWidget/SetTime_GUI</span><span class="p">)</span>
+<span class="p">-</span> <span class="gs">**Pink**</span>
+<span class="p">    -</span> Insert the SD card, or make sure card is fully seated 
+<span class="p">-</span> <span class="gs">**Red**</span>
+<span class="p">    -</span> Attempt power cycle 
+<span class="p">    -</span> Try different SD card
+<span class="p">    -</span> Disconnect all sensors
+<span class="p">    -</span> If none of the previous steps remove the red light, contact <span class="p">[</span><span class="nv">Northern Widget</span><span class="p">](</span><span class="sx">http://www.northernwidget.com/contact/</span><span class="p">)</span> for further support 
+<span class="p">-</span> <span class="gs">**Yellow, Fast Blinking**</span> 
+<span class="p">    -</span> Replace batteries
+<span class="p">-</span> <span class="gs">**Red, Fast Blinking**</span> 
+<span class="p">    -</span> <span class="ge">*If*</span> this error occurs while also connected over USB, check proper connection of batteries
+<span class="p">    -</span> Replace batteries
+</code></pre></div></div>
+
+<hr />
+
+<p>Updated on 2026-05-13 at 15:07:19 +0000</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+  
+
+  
+
+
+        
+
+
+
+      </footer>
+
+      
+
+      
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/Margay_Library/feed.xml"><i class="fas fa-fw fa-square-rss" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://docs.northernwidget.com">Margay Library</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+
+  <script src="/Margay_Library/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>
