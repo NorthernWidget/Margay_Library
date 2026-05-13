@@ -19,7 +19,15 @@ jobs:
       - name: Build Doxygen XML
         run: doxygen doxygen_NW.cfg
 
+      - name: Cache Doxybook2
+        id: cache-doxybook2
+        uses: actions/cache@v4
+        with:
+          path: doxybook2
+          key: doxybook2-v1.4.0-linux-amd64
+
       - name: Download Doxybook2
+        if: steps.cache-doxybook2.outputs.cache-hit != 'true'
         run: |
           wget -q https://github.com/matusnovak/doxybook2/releases/download/v1.4.0/doxybook2-linux-amd64-v1.4.0.zip
           unzip -q doxybook2-linux-amd64-v1.4.0.zip -d doxybook2
