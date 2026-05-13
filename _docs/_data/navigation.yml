@@ -1,0 +1,9 @@
+api:
+  - title: "Overview"
+    url: /
+  - title: "Margay Class"
+    url: /Classes/classMargay/
+  - title: "Classes"
+    url: /Classes/index_classes/
+  - title: "Files"
+    url: /Files/index_files/
