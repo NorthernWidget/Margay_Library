@@ -15,7 +15,7 @@
 <meta charset="utf-8">
 
 
-<!-- begin _includes/seo.html --><title>Pages - Margay Library</title>
+<!-- begin _includes/seo.html --><title>LED color constants - Margay Library</title>
 <meta name="description" content="Arduino library for the Margay data logger">
 
 
@@ -26,8 +26,8 @@
 <meta property="og:type" content="website">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Margay Library">
-<meta property="og:title" content="Pages">
-<meta property="og:url" content="https://docs.northernwidget.com/Margay_Library/Pages/index_pages/">
+<meta property="og:title" content="LED color constants">
+<meta property="og:url" content="https://docs.northernwidget.com/Margay_Library/Modules/group__colors/">
 
 
   <meta property="og:description" content="Arduino library for the Margay data logger">
@@ -45,7 +45,7 @@
 
 
 
-<link rel="canonical" href="https://docs.northernwidget.com/Margay_Library/Pages/index_pages/">
+<link rel="canonical" href="https://docs.northernwidget.com/Margay_Library/Modules/group__colors/">
 
 
 
@@ -201,7 +201,7 @@
 
 
   <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="Pages">
+    <meta itemprop="headline" content="LED color constants">
     
     
     
@@ -210,7 +210,7 @@
       
         <header>
           <h1 id="page-title" class="page__title p-name" itemprop="headline">
-            <a href="https://docs.northernwidget.com/Margay_Library/Pages/index_pages/" itemprop="url">Pages
+            <a href="https://docs.northernwidget.com/Margay_Library/Modules/group__colors/" itemprop="url">LED color constants
 </a>
           </h1>
           
@@ -225,13 +225,113 @@
           <aside class="sidebar__right sticky">
             <nav class="toc" aria-label="Table of contents">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
-              
+              <ul class="toc__menu"><li><a href="#defines">Defines</a></li><li><a href="#detailed-description">Detailed Description</a></li><li><a href="#macros-documentation">Macros Documentation</a><ul><li><a href="#define-red">define RED</a></li><li><a href="#define-green">define GREEN</a></li><li><a href="#define-blue">define BLUE</a></li><li><a href="#define-maroon">define MAROON</a></li><li><a href="#define-gold">define GOLD</a></li><li><a href="#define-orange">define ORANGE</a></li><li><a href="#define-purple">define PURPLE</a></li><li><a href="#define-cyan">define CYAN</a></li><li><a href="#define-black_alert">define BLACK_ALERT</a></li></ul></li></ul>
             </nav>
           </aside>
         
-        <ul>
-  <li><strong>page <a href="/Margay_Library/Pages/md_README/#page-md-readme">README</a></strong></li>
-</ul>
+        <p><a href="#detailed-description">More…</a></p>
+
+<h2 id="defines">Defines</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td> </td>
+      <td><strong><a href="/Margay_Library/Modules/group__colors/#define-red">RED</a></strong></td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td><strong><a href="/Margay_Library/Modules/group__colors/#define-green">GREEN</a></strong></td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td><strong><a href="/Margay_Library/Modules/group__colors/#define-blue">BLUE</a></strong></td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td><strong><a href="/Margay_Library/Modules/group__colors/#define-maroon">MAROON</a></strong></td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td><strong><a href="/Margay_Library/Modules/group__colors/#define-gold">GOLD</a></strong></td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td><strong><a href="/Margay_Library/Modules/group__colors/#define-orange">ORANGE</a></strong></td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td><strong><a href="/Margay_Library/Modules/group__colors/#define-purple">PURPLE</a></strong></td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td><strong><a href="/Margay_Library/Modules/group__colors/#define-cyan">CYAN</a></strong></td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td><strong><a href="/Margay_Library/Modules/group__colors/#define-black-alert">BLACK_ALERT</a></strong> <br />Deep blue-violet; used internally for error states.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="detailed-description">Detailed Description</h2>
+
+<p>Packed 32-bit LED color values. Format: 0xLLRRGGBB where LL = luminosity, RR = red, GG = green, BB = blue. Pass to LED_Color().</p>
+
+<h2 id="macros-documentation">Macros Documentation</h2>
+
+<h3 id="define-red">define RED</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#define RED 0xFFFF0000L
+</code></pre></div></div>
+
+<h3 id="define-green">define GREEN</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#define GREEN 0xFF00FF00L
+</code></pre></div></div>
+
+<h3 id="define-blue">define BLUE</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#define BLUE 0xFF0000FFL
+</code></pre></div></div>
+
+<h3 id="define-maroon">define MAROON</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#define MAROON 0xFF800000L
+</code></pre></div></div>
+
+<h3 id="define-gold">define GOLD</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#define GOLD 0xFFFFD700L
+</code></pre></div></div>
+
+<h3 id="define-orange">define ORANGE</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#define ORANGE 0xFFFFA500L
+</code></pre></div></div>
+
+<h3 id="define-purple">define PURPLE</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#define PURPLE 0xFF800080L
+</code></pre></div></div>
+
+<h3 id="define-cyan">define CYAN</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#define CYAN 0xFF00FFFFL
+</code></pre></div></div>
+
+<h3 id="define-black_alert">define BLACK_ALERT</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#define BLACK_ALERT 0x802019FFL
+</code></pre></div></div>
+
+<p>Deep blue-violet; used internally for error states.</p>
 
 <hr />
 
