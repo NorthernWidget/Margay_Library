@@ -3,6 +3,12 @@
 # Margay Logger Library
 This library is designed to facilitate the simple and modular usage of the Margay data logger
 
+## Citation
+
+If you use this library in a publication, please cite (temporary citation until a dedicated Margay paper is published):
+
+**Wickert, A. D., K. R. Barnhart, W. H. Armstrong, M. Romero, B. Schulz, G.-H. C. Ng, C. T. Sandell, J. La Frenierre, S. B. Penprase, M. Van Wyk de Vries, and K. R. MacGregor (2024), [Automated ablation stakes to constrain temperature-index melt models](https://doi.org/10.1017/aog.2024.21), *Ann. Glaciol.*, *64*(92), 425–438, doi:10.1017/aog.2024.21.**
+
 ## Installation:
 
 ## Examples:
