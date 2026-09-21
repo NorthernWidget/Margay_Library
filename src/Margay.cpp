@@ -502,8 +502,8 @@ void Margay::batTest() {
 
 void Margay::initADC(uint8_t desiredResolution) {
   // Serial.print("ADC should be on"); // DEBUG
-  adc.Begin(I2C_ADR_OB[1]); //Initialize external ADC
-  adc.SetResolution(desiredResolution);
+  adc.begin(I2C_ADR_OB[1]); //Initialize external ADC
+  adc.setResolution(desiredResolution);
 }
 
 void Margay::powerTest() {
@@ -766,7 +766,7 @@ float Margay::getVoltage() {  //Get voltage from Ax pin
   switchExternalI2C(OFF);
   if (NumADR_OB > 1) { // Only BUILD_B/C/D have an on-board ADC
     initADC(18);
-    val = adc.GetVoltage();
+    val = adc.getVoltage();
   }
 
   // make sure I2C Bus is returned to initial state
