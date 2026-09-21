@@ -2,14 +2,14 @@
 
 <!doctype html>
 <!--
-  Minimal Mistakes Jekyll Theme 4.28.0 by Michael Rose
+  Minimal Mistakes Jekyll Theme 4.28.1 by Michael Rose
   Copyright 2013-2026 Michael Rose - mademistakes.com | @mmistakes
   Copyright 2024-2026 iBug - ibugone.com | @iBug
   Free for personal and commercial use under the MIT license
   https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
 -->
 
-<html lang="en" class="no-js">
+<html lang="en" class="no-js" dir="ltr">
   <head>
     
 <meta charset="utf-8">
@@ -85,7 +85,7 @@
 
   </head>
 
-  <body class="layout--single" dir="ltr">
+  <body class="layout--single">
     
 <nav class="skip-links" aria-label="Skip links">
   <ul>
@@ -821,8 +821,8 @@ Andy Wickert
 
 <span class="kt">void</span> <span class="n">Margay</span><span class="o">::</span><span class="n">initADC</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="n">desiredResolution</span><span class="p">)</span> <span class="p">{</span>
   <span class="c1">// Serial.print("ADC should be on"); // DEBUG</span>
-  <span class="n">adc</span><span class="p">.</span><span class="n">Begin</span><span class="p">(</span><span class="n">I2C_ADR_OB</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span> <span class="c1">//Initialize external ADC</span>
-  <span class="n">adc</span><span class="p">.</span><span class="n">SetResolution</span><span class="p">(</span><span class="n">desiredResolution</span><span class="p">);</span>
+  <span class="n">adc</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="n">I2C_ADR_OB</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span> <span class="c1">//Initialize external ADC</span>
+  <span class="n">adc</span><span class="p">.</span><span class="n">setResolution</span><span class="p">(</span><span class="n">desiredResolution</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="kt">void</span> <span class="n">Margay</span><span class="o">::</span><span class="n">powerTest</span><span class="p">()</span> <span class="p">{</span>
@@ -1085,7 +1085,7 @@ Andy Wickert
   <span class="n">switchExternalI2C</span><span class="p">(</span><span class="n">OFF</span><span class="p">);</span>
   <span class="k">if</span> <span class="p">(</span><span class="n">NumADR_OB</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// Only BUILD_B/C/D have an on-board ADC</span>
     <span class="n">initADC</span><span class="p">(</span><span class="mi">18</span><span class="p">);</span>
-    <span class="n">val</span> <span class="o">=</span> <span class="n">adc</span><span class="p">.</span><span class="n">GetVoltage</span><span class="p">();</span>
+    <span class="n">val</span> <span class="o">=</span> <span class="n">adc</span><span class="p">.</span><span class="n">getVoltage</span><span class="p">();</span>
   <span class="p">}</span>
 
   <span class="c1">// make sure I2C Bus is returned to initial state</span>
@@ -1380,7 +1380,7 @@ Andy Wickert
 
 <hr />
 
-<p>Updated on 2026-06-02 at 18:29:05 +0000</p>
+<p>Updated on 2026-09-21 at 22:16:19 +0000</p>
 
         
       </section>

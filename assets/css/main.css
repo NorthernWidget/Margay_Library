@@ -4,7 +4,7 @@
    ========================================================================== */
 /* Copyright comment */
 /*!
- * Minimal Mistakes Jekyll Theme 4.28.0 by Michael Rose
+ * Minimal Mistakes Jekyll Theme 4.28.1 by Michael Rose
  * Copyright 2013-2026 Michael Rose - mademistakes.com | @mmistakes
  * Copyright 2024-2026 iBug - ibugone.com | @iBug
  * Free for personal and commercial use under the MIT license
@@ -626,7 +626,7 @@ audio:not([controls]) {
 }
 
 a {
-  color: rgb(47.2, 124.8, 148.8);
+  color: rgb(18.5098039216%, 48.9411764706%, 58.3529411765%);
 }
 
 /* Apply focus state */
@@ -848,10 +848,10 @@ blockquote cite::before {
 
 /* links */
 a:visited {
-  color: rgb(78.37, 144.33, 164.73);
+  color: rgb(30.7333333333%, 56.6%, 64.6%);
 }
 a:hover {
-  color: rgb(35.4, 93.6, 111.6);
+  color: rgb(13.8823529412%, 36.7058823529%, 43.7647058824%);
   outline: 0;
 }
 
@@ -874,7 +874,7 @@ hr {
   display: block;
   margin: 1em 0;
   border: 0;
-  border-top: 1px solid rgb(241.7, 242.5, 243.1);
+  border-top: 1px solid rgb(94.7843137255%, 95.0980392157%, 95.3333333333%);
 }
 
 /* lists */
@@ -938,7 +938,7 @@ figure.third figcaption {
 /* Figure captions */
 figcaption {
   margin-bottom: 0.5em;
-  color: rgb(99.8, 103, 105.4);
+  color: rgb(39.137254902%, 40.3921568627%, 41.3333333333%);
   font-family: Georgia, Times, serif;
   font-size: 0.75em;
 }
@@ -947,7 +947,7 @@ figcaption a {
   transition: all 0.2s ease-in-out;
 }
 figcaption a:hover {
-  color: rgb(35.4, 93.6, 111.6);
+  color: rgb(13.8823529412%, 36.7058823529%, 43.7647058824%);
 }
 
 /* Fix IE9 SVG bug */
@@ -1027,7 +1027,7 @@ input[type=submit],
 form {
   margin-bottom: 5px;
   padding: 1em;
-  background-color: rgb(241.7, 242.5, 243.1);
+  background-color: rgb(94.7843137255%, 95.0980392157%, 95.3333333333%);
 }
 form fieldset {
   margin-bottom: 5px;
@@ -1096,7 +1096,7 @@ select {
   margin-bottom: 0.5em;
   color: #3d4144;
   background-color: #fff;
-  border: rgb(241.7, 242.5, 243.1);
+  border: rgb(94.7843137255%, 95.0980392157%, 95.3333333333%);
   border-radius: 4px;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.125);
 }
@@ -1237,7 +1237,7 @@ select:focus {
      ========================================================================== */
 .help-block,
 .help-inline {
-  color: rgb(99.8, 103, 105.4);
+  color: rgb(39.137254902%, 40.3921568627%, 41.3333333333%);
 }
 
 .help-block {
@@ -1371,8 +1371,8 @@ table + table {
 }
 
 thead {
-  background-color: rgb(241.7, 242.5, 243.1);
-  border-bottom: 2px solid rgb(181.275, 181.875, 182.325);
+  background-color: rgb(94.7843137255%, 95.0980392157%, 95.3333333333%);
+  border-bottom: 2px solid rgb(71.0882352941%, 71.3235294118%, 71.5%);
 }
 
 th {
@@ -1383,7 +1383,7 @@ th {
 
 td {
   padding: 0.5em;
-  border-bottom: 1px solid rgb(181.275, 181.875, 182.325);
+  border-bottom: 1px solid rgb(71.0882352941%, 71.3235294118%, 71.5%);
 }
 
 tr,
@@ -1397,7 +1397,7 @@ th {
    ========================================================================== */
 @-webkit-keyframes intro {
   0% {
-    opacity: 0;
+    opacity: 0.01;
   }
   100% {
     opacity: 1;
@@ -1405,7 +1405,7 @@ th {
 }
 @keyframes intro {
   0% {
-    opacity: 0;
+    opacity: 0.01;
   }
   100% {
     opacity: 1;
@@ -1450,13 +1450,13 @@ th {
   color: #fff;
 }
 .btn--primary:hover {
-  background-color: rgb(88.8, 95.2, 100);
+  background-color: rgb(34.8235294118%, 37.3333333333%, 39.2156862745%);
   color: #fff;
 }
 .btn--inverse {
   background-color: #fff;
   color: #3d4144;
-  border: 1px solid rgb(241.7, 242.5, 243.1);
+  border: 1px solid rgb(94.7843137255%, 95.0980392157%, 95.3333333333%);
 }
 .btn--inverse:visited {
   background-color: #fff;
@@ -1488,7 +1488,7 @@ th {
   color: #fff;
 }
 .btn--success:hover {
-  background-color: rgb(50.4, 132.8, 50.4);
+  background-color: rgb(19.7647058824%, 52.0784313725%, 19.7647058824%);
   color: #fff;
 }
 .btn--warning {
@@ -1500,7 +1500,7 @@ th {
   color: #fff;
 }
 .btn--warning:hover {
-  background-color: rgb(171.2, 101.6, 4);
+  background-color: rgb(67.137254902%, 39.8431372549%, 1.568627451%);
   color: #fff;
 }
 .btn--danger {
@@ -1512,7 +1512,7 @@ th {
   color: #fff;
 }
 .btn--danger:hover {
-  background-color: rgb(190.4, 76, 72.8);
+  background-color: rgb(74.6666666667%, 29.8039215686%, 28.5490196078%);
   color: #fff;
 }
 .btn--info {
@@ -1524,7 +1524,7 @@ th {
   color: #fff;
 }
 .btn--info:hover {
-  background-color: rgb(47.2, 124.8, 148.8);
+  background-color: rgb(18.5098039216%, 48.9411764706%, 58.3529411765%);
   color: #fff;
 }
 .btn--bluesky {
@@ -1536,7 +1536,7 @@ th {
   color: #fff;
 }
 .btn--bluesky:hover {
-  background-color: rgb(12.8, 104.8, 203.2);
+  background-color: rgb(5.0196078431%, 41.0980392157%, 79.6862745098%);
   color: #fff;
 }
 .btn--facebook {
@@ -1548,7 +1548,7 @@ th {
   color: #fff;
 }
 .btn--facebook:hover {
-  background-color: rgb(47.2, 71.2, 121.6);
+  background-color: rgb(18.5098039216%, 27.9215686275%, 47.6862745098%);
   color: #fff;
 }
 .btn--linkedin {
@@ -1560,7 +1560,7 @@ th {
   color: #fff;
 }
 .btn--linkedin:hover {
-  background-color: rgb(0, 98.4, 145.6);
+  background-color: rgb(0%, 38.5882352941%, 57.0980392157%);
   color: #fff;
 }
 .btn--mastodon {
@@ -1572,7 +1572,7 @@ th {
   color: #fff;
 }
 .btn--mastodon:hover {
-  background-color: rgb(34.4, 115.2, 173.6);
+  background-color: rgb(13.4901960784%, 45.1764705882%, 68.0784313725%);
   color: #fff;
 }
 .btn--twitter {
@@ -1584,7 +1584,7 @@ th {
   color: #fff;
 }
 .btn--twitter:hover {
-  background-color: rgb(68, 137.6, 190.4);
+  background-color: rgb(26.6666666667%, 53.9607843137%, 74.6666666667%);
   color: #fff;
 }
 .btn--x {
@@ -1657,9 +1657,9 @@ th {
   font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
   font-size: 0.75em !important;
   text-indent: initial; /* override*/
-  background-color: rgb(241.7, 242.5, 243.1);
+  background-color: rgb(94.7843137255%, 95.0980392157%, 95.3333333333%);
   border-radius: 4px;
-  box-shadow: 0 1px 1px rgba(188.5, 192.5, 195.5, 0.25);
+  box-shadow: 0 1px 1px rgba(73.9215686275%, 75.4901960784%, 76.6666666667%, 0.25);
 }
 .notice h4,
 .markdown-alert h4 {
@@ -1685,19 +1685,19 @@ th {
 }
 .notice a,
 .markdown-alert a {
-  color: rgb(169.65, 173.25, 175.95);
+  color: rgb(66.5294117647%, 67.9411764706%, 69%);
 }
 .notice a:hover,
 .markdown-alert a:hover {
-  color: rgb(94.25, 96.25, 97.75);
+  color: rgb(36.9607843137%, 37.7450980392%, 38.3333333333%);
 }
 blockquote.notice, blockquote.markdown-alert {
-  border-inline-start-color: rgb(169.65, 173.25, 175.95);
+  border-inline-start-color: rgb(66.5294117647%, 67.9411764706%, 69%);
 }
 
 .notice code,
 .markdown-alert code {
-  background-color: rgb(248.35, 248.75, 249.05);
+  background-color: rgb(97.3921568627%, 97.5490196078%, 97.6666666667%);
 }
 .notice pre code,
 .markdown-alert pre code {
@@ -1717,7 +1717,7 @@ blockquote.notice, blockquote.markdown-alert {
   font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
   font-size: 0.75em !important;
   text-indent: initial; /* override*/
-  background-color: rgb(226.2, 227.8, 229);
+  background-color: rgb(88.7058823529%, 89.3333333333%, 89.8039215686%);
   border-radius: 4px;
   box-shadow: 0 1px 1px rgba(111, 119, 125, 0.25);
 }
@@ -1745,19 +1745,19 @@ blockquote.notice, blockquote.markdown-alert {
 }
 .notice--primary a,
 .markdown-alert-important a {
-  color: rgb(99.9, 107.1, 112.5);
+  color: rgb(39.1764705882%, 42%, 44.1176470588%);
 }
 .notice--primary a:hover,
 .markdown-alert-important a:hover {
-  color: rgb(55.5, 59.5, 62.5);
+  color: rgb(21.7647058824%, 23.3333333333%, 24.5098039216%);
 }
 blockquote.notice--primary, blockquote.markdown-alert-important {
-  border-inline-start-color: rgb(99.9, 107.1, 112.5);
+  border-inline-start-color: rgb(39.1764705882%, 42%, 44.1176470588%);
 }
 
 .notice--primary code,
 .markdown-alert-important code {
-  background-color: rgb(240.6, 241.4, 242);
+  background-color: rgb(94.3529411765%, 94.6666666667%, 94.9019607843%);
 }
 .notice--primary pre code,
 .markdown-alert-important pre code {
@@ -1777,7 +1777,7 @@ blockquote.notice--primary, blockquote.markdown-alert-important {
   font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
   font-size: 0.75em !important;
   text-indent: initial; /* override*/
-  background-color: rgb(215.8, 235.2, 241.2);
+  background-color: rgb(84.6274509804%, 92.2352941176%, 94.5882352941%);
   border-radius: 4px;
   box-shadow: 0 1px 1px rgba(59, 156, 186, 0.25);
 }
@@ -1805,19 +1805,19 @@ blockquote.notice--primary, blockquote.markdown-alert-important {
 }
 .notice--info a,
 .markdown-alert-note a {
-  color: rgb(53.1, 140.4, 167.4);
+  color: rgb(20.8235294118%, 55.0588235294%, 65.6470588235%);
 }
 .notice--info a:hover,
 .markdown-alert-note a:hover {
-  color: rgb(29.5, 78, 93);
+  color: rgb(11.568627451%, 30.5882352941%, 36.4705882353%);
 }
 blockquote.notice--info, blockquote.markdown-alert-note {
-  border-inline-start-color: rgb(53.1, 140.4, 167.4);
+  border-inline-start-color: rgb(20.8235294118%, 55.0588235294%, 65.6470588235%);
 }
 
 .notice--info code,
 .markdown-alert-note code {
-  background-color: rgb(235.4, 245.1, 248.1);
+  background-color: rgb(92.3137254902%, 96.1176470588%, 97.2941176471%);
 }
 .notice--info pre code,
 .markdown-alert-note pre code {
@@ -1837,7 +1837,7 @@ blockquote.notice--info, blockquote.markdown-alert-note {
   font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
   font-size: 0.75em !important;
   text-indent: initial; /* override*/
-  background-color: rgb(246.8, 229.4, 205);
+  background-color: rgb(96.7843137255%, 89.9607843137%, 80.3921568627%);
   border-radius: 4px;
   box-shadow: 0 1px 1px rgba(214, 127, 5, 0.25);
 }
@@ -1865,19 +1865,19 @@ blockquote.notice--info, blockquote.markdown-alert-note {
 }
 .notice--warning a,
 .markdown-alert-warning a {
-  color: rgb(192.6, 114.3, 4.5);
+  color: rgb(75.5294117647%, 44.8235294118%, 1.7647058824%);
 }
 .notice--warning a:hover,
 .markdown-alert-warning a:hover {
-  color: rgb(107, 63.5, 2.5);
+  color: rgb(41.9607843137%, 24.9019607843%, 0.9803921569%);
 }
 blockquote.notice--warning, blockquote.markdown-alert-warning {
-  border-inline-start-color: rgb(192.6, 114.3, 4.5);
+  border-inline-start-color: rgb(75.5294117647%, 44.8235294118%, 1.7647058824%);
 }
 
 .notice--warning code,
 .markdown-alert-warning code {
-  background-color: rgb(250.9, 242.2, 230);
+  background-color: rgb(98.3921568627%, 94.9803921569%, 90.1960784314%);
 }
 .notice--warning pre code,
 .markdown-alert-warning pre code {
@@ -1897,7 +1897,7 @@ blockquote.notice--warning, blockquote.markdown-alert-warning {
   font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
   font-size: 0.75em !important;
   text-indent: initial; /* override*/
-  background-color: rgb(216.6, 237.2, 216.6);
+  background-color: rgb(84.9411764706%, 93.0196078431%, 84.9411764706%);
   border-radius: 4px;
   box-shadow: 0 1px 1px rgba(63, 166, 63, 0.25);
 }
@@ -1925,19 +1925,19 @@ blockquote.notice--warning, blockquote.markdown-alert-warning {
 }
 .notice--success a,
 .markdown-alert-tip a {
-  color: rgb(56.7, 149.4, 56.7);
+  color: rgb(22.2352941176%, 58.5882352941%, 22.2352941176%);
 }
 .notice--success a:hover,
 .markdown-alert-tip a:hover {
-  color: rgb(31.5, 83, 31.5);
+  color: rgb(12.3529411765%, 32.5490196078%, 12.3529411765%);
 }
 blockquote.notice--success, blockquote.markdown-alert-tip {
-  border-inline-start-color: rgb(56.7, 149.4, 56.7);
+  border-inline-start-color: rgb(22.2352941176%, 58.5882352941%, 22.2352941176%);
 }
 
 .notice--success code,
 .markdown-alert-tip code {
-  background-color: rgb(235.8, 246.1, 235.8);
+  background-color: rgb(92.4705882353%, 96.5098039216%, 92.4705882353%);
 }
 .notice--success pre code,
 .markdown-alert-tip pre code {
@@ -1957,7 +1957,7 @@ blockquote.notice--success, blockquote.markdown-alert-tip {
   font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
   font-size: 0.75em !important;
   text-indent: initial; /* override*/
-  background-color: rgb(251.6, 223, 222.2);
+  background-color: rgb(98.6666666667%, 87.4509803922%, 87.137254902%);
   border-radius: 4px;
   box-shadow: 0 1px 1px rgba(238, 95, 91, 0.25);
 }
@@ -1985,19 +1985,19 @@ blockquote.notice--success, blockquote.markdown-alert-tip {
 }
 .notice--danger a,
 .markdown-alert-caution a {
-  color: rgb(214.2, 85.5, 81.9);
+  color: rgb(84%, 33.5294117647%, 32.1176470588%);
 }
 .notice--danger a:hover,
 .markdown-alert-caution a:hover {
-  color: rgb(119, 47.5, 45.5);
+  color: rgb(46.6666666667%, 18.6274509804%, 17.8431372549%);
 }
 blockquote.notice--danger, blockquote.markdown-alert-caution {
-  border-inline-start-color: rgb(214.2, 85.5, 81.9);
+  border-inline-start-color: rgb(84%, 33.5294117647%, 32.1176470588%);
 }
 
 .notice--danger code,
 .markdown-alert-caution code {
-  background-color: rgb(253.3, 239, 238.6);
+  background-color: rgb(99.3333333333%, 93.7254901961%, 93.568627451%);
 }
 .notice--danger pre code,
 .markdown-alert-caution pre code {
@@ -2013,7 +2013,7 @@ blockquote.notice--danger, blockquote.markdown-alert-caution {
    ========================================================================== */
 .masthead {
   position: relative;
-  border-bottom: 1px solid rgb(241.7, 242.5, 243.1);
+  border-bottom: 1px solid rgb(94.7843137255%, 95.0980392157%, 95.3333333333%);
   -webkit-animation: intro 0.3s both;
   animation: intro 0.3s both;
   -webkit-animation-delay: 0.15s;
@@ -2191,19 +2191,19 @@ blockquote.notice--danger, blockquote.markdown-alert-caution {
   line-height: 1.5;
   text-align: center;
   text-decoration: none;
-  color: rgb(99.8, 103, 105.4);
-  border: 1px solid rgb(181.275, 181.875, 182.325);
+  color: rgb(39.137254902%, 40.3921568627%, 41.3333333333%);
+  border: 1px solid rgb(71.0882352941%, 71.3235294118%, 71.5%);
   border-radius: 0;
 }
 .pagination li a:hover {
-  color: rgb(35.4, 93.6, 111.6);
+  color: rgb(13.8823529412%, 36.7058823529%, 43.7647058824%);
 }
 .pagination li a.current, .pagination li a.current.disabled {
   color: #fff;
   background: #6f777d;
 }
 .pagination li a.disabled {
-  color: rgba(99.8, 103, 105.4, 0.5);
+  color: rgba(39.137254902%, 40.3921568627%, 41.3333333333%, 0.5);
   pointer-events: none;
   cursor: not-allowed;
 }
@@ -2231,12 +2231,12 @@ blockquote.notice--danger, blockquote.markdown-alert-caution {
   font-weight: bold;
   text-align: center;
   text-decoration: none;
-  color: rgb(99.8, 103, 105.4);
-  border: 1px solid rgb(181.275, 181.875, 182.325);
+  color: rgb(39.137254902%, 40.3921568627%, 41.3333333333%);
+  border: 1px solid rgb(71.0882352941%, 71.3235294118%, 71.5%);
   border-radius: 4px;
 }
 .pagination--pager:hover {
-  background-color: rgb(99.8, 103, 105.4);
+  background-color: rgb(39.137254902%, 40.3921568627%, 41.3333333333%);
   color: #fff;
 }
 .pagination--pager:first-child {
@@ -2249,7 +2249,7 @@ blockquote.notice--danger, blockquote.markdown-alert-caution {
   border-end-start-radius: 0;
 }
 .pagination--pager.disabled {
-  color: rgba(99.8, 103, 105.4, 0.5);
+  color: rgba(39.137254902%, 40.3921568627%, 41.3333333333%, 0.5);
   pointer-events: none;
   cursor: not-allowed;
 }
@@ -2261,7 +2261,7 @@ blockquote.notice--danger, blockquote.markdown-alert-caution {
 .page__comments + .pagination {
   margin-top: 2em;
   padding-top: 2em;
-  border-top: 1px solid rgb(241.7, 242.5, 243.1);
+  border-top: 1px solid rgb(94.7843137255%, 95.0980392157%, 95.3333333333%);
 }
 
 /*
@@ -2287,7 +2287,7 @@ blockquote.notice--danger, blockquote.markdown-alert-caution {
   transition: none;
 }
 .greedy-nav a:hover {
-  color: rgb(83.25, 89.25, 93.75);
+  color: rgb(32.6470588235%, 35%, 36.7647058824%);
 }
 .greedy-nav a.site-logo {
   margin-inline-start: 0;
@@ -2353,7 +2353,7 @@ blockquote.notice--danger, blockquote.markdown-alert-caution {
   inset-inline-end: 0;
   margin-top: 15px;
   padding: 5px;
-  border: 1px solid rgb(241.7, 242.5, 243.1);
+  border: 1px solid rgb(94.7843137255%, 95.0980392157%, 95.3333333333%);
   border-radius: 4px;
   background: #fff;
   -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
@@ -2368,8 +2368,8 @@ blockquote.notice--danger, blockquote.markdown-alert-caution {
   font-size: 1em;
 }
 .greedy-nav .hidden-links a:hover {
-  color: rgb(83.25, 89.25, 93.75);
-  background: rgb(219, 221, 222.5);
+  color: rgb(32.6470588235%, 35%, 36.7647058824%);
+  background: rgb(85.8823529412%, 86.6666666667%, 87.2549019608%);
 }
 .greedy-nav .hidden-links::before {
   content: "";
@@ -2379,7 +2379,7 @@ blockquote.notice--danger, blockquote.markdown-alert-caution {
   width: 0;
   border-style: solid;
   border-width: 0 10px 10px;
-  border-color: rgb(241.7, 242.5, 243.1) transparent;
+  border-color: rgb(94.7843137255%, 95.0980392157%, 95.3333333333%) transparent;
   display: block;
   z-index: 0;
 }
@@ -2397,7 +2397,7 @@ blockquote.notice--danger, blockquote.markdown-alert-caution {
 }
 .greedy-nav .hidden-links li {
   display: block;
-  border-bottom: 1px solid rgb(241.7, 242.5, 243.1);
+  border-bottom: 1px solid rgb(94.7843137255%, 95.0980392157%, 95.3333333333%);
 }
 .greedy-nav .hidden-links li:last-child {
   border-bottom: none;
@@ -2427,7 +2427,7 @@ blockquote.notice--danger, blockquote.markdown-alert-caution {
     color: #7a8288;
     font-size: 0.75em;
     font-weight: bold;
-    border: 1px solid rgb(188.5, 192.5, 195.5);
+    border: 1px solid rgb(73.9215686275%, 75.4901960784%, 76.6666666667%);
     border-radius: 4px;
     z-index: 20;
     -webkit-transition: 0.2s ease-out;
@@ -2558,7 +2558,7 @@ blockquote.notice--danger, blockquote.markdown-alert-caution {
   font-size: 0.75em;
   font-weight: bold;
   text-transform: uppercase;
-  border-bottom: 1px solid rgb(241.7, 242.5, 243.1);
+  border-bottom: 1px solid rgb(94.7843137255%, 95.0980392157%, 95.3333333333%);
 }
 
 /*
@@ -2568,7 +2568,7 @@ blockquote.notice--danger, blockquote.markdown-alert-caution {
   font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
   color: #7a8288;
   background-color: #fff;
-  border: 1px solid rgb(241.7, 242.5, 243.1);
+  border: 1px solid rgb(94.7843137255%, 95.0980392157%, 95.3333333333%);
   border-radius: 4px;
   -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.125);
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.125);
@@ -2581,7 +2581,7 @@ blockquote.notice--danger, blockquote.markdown-alert-caution {
   border-start-end-radius: 4px;
 }
 .toc .active a {
-  background-color: rgb(226.2, 227.8, 229);
+  background-color: rgb(88.7058823529%, 89.3333333333%, 89.8039215686%);
   color: #3d4144;
 }
 
@@ -2600,10 +2600,10 @@ blockquote.notice--danger, blockquote.markdown-alert-caution {
 .toc__menu a {
   display: block;
   padding: 0.25rem 0.75rem;
-  color: rgb(99.8, 103, 105.4);
+  color: rgb(39.137254902%, 40.3921568627%, 41.3333333333%);
   font-weight: bold;
   line-height: 1.5;
-  border-bottom: 1px solid rgb(241.7, 242.5, 243.1);
+  border-bottom: 1px solid rgb(94.7843137255%, 95.0980392157%, 95.3333333333%);
 }
 .toc__menu a:hover {
   color: #3d4144;
@@ -2641,12 +2641,12 @@ blockquote.notice--danger, blockquote.markdown-alert-caution {
   margin-inline: 0;
   width: 100%;
   margin-top: 3em;
-  color: rgb(99.8, 103, 105.4);
+  color: rgb(39.137254902%, 40.3921568627%, 41.3333333333%);
   -webkit-animation: intro 0.3s both;
   animation: intro 0.3s both;
   -webkit-animation-delay: 0.45s;
   animation-delay: 0.45s;
-  background-color: rgb(241.7, 242.5, 243.1);
+  background-color: rgb(94.7843137255%, 95.0980392157%, 95.3333333333%);
 }
 .page__footer footer {
   clear: both;
@@ -2678,7 +2678,7 @@ blockquote.notice--danger, blockquote.markdown-alert-caution {
 .page__footer .fab,
 .page__footer .far,
 .page__footer .fal {
-  color: rgb(99.8, 103, 105.4);
+  color: rgb(39.137254902%, 40.3921568627%, 41.3333333333%);
 }
 
 .page__footer-copyright {
@@ -2730,7 +2730,7 @@ blockquote.notice--danger, blockquote.markdown-alert-caution {
   transition: 0.2s;
 }
 .search__toggle:hover {
-  color: rgb(83.25, 89.25, 93.75);
+  color: rgb(32.6470588235%, 35%, 36.7647058824%);
 }
 
 .search-icon {
@@ -3529,7 +3529,7 @@ body:hover .visually-hidden button {
 .greedy-nav__toggle:hover .navicon,
 .greedy-nav__toggle:hover .navicon:before,
 .greedy-nav__toggle:hover .navicon:after {
-  background: rgb(83.25, 89.25, 93.75);
+  background: rgb(32.6470588235%, 35%, 36.7647058824%);
 }
 .greedy-nav__toggle:hover.close .navicon {
   background: transparent;
@@ -3602,7 +3602,7 @@ body:hover .visually-hidden button {
   min-height: 0;
   z-index: 9999;
   background: #fff;
-  border: 1px solid rgb(241.7, 242.5, 243.1);
+  border: 1px solid rgb(94.7843137255%, 95.0980392157%, 95.3333333333%);
   border-radius: 4px;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.125);
 }
@@ -3615,19 +3615,19 @@ body:hover .visually-hidden button {
 }
 .modal__actions {
   padding: 0.5em 1em;
-  border-top: 1px solid rgb(241.7, 242.5, 243.1);
+  border-top: 1px solid rgb(94.7843137255%, 95.0980392157%, 95.3333333333%);
 }
 
 /*
    Footnotes
    ========================================================================== */
 .footnote {
-  color: rgb(155.25, 161.25, 165.75);
+  color: rgb(60.8823529412%, 63.2352941176%, 65%);
   text-decoration: none;
 }
 
 .footnotes {
-  color: rgb(155.25, 161.25, 165.75);
+  color: rgb(60.8823529412%, 63.2352941176%, 65%);
 }
 .footnotes ol,
 .footnotes li,
@@ -3839,7 +3839,7 @@ body {
 
 .page__content h2 {
   padding-bottom: 0.5em;
-  border-bottom: 1px solid rgb(241.7, 242.5, 243.1);
+  border-bottom: 1px solid rgb(94.7843137255%, 95.0980392157%, 95.3333333333%);
 }
 .page__content h1 .header-link, .page__content h2 .header-link, .page__content h3 .header-link, .page__content h4 .header-link, .page__content h5 .header-link, .page__content h6 .header-link {
   position: relative;
@@ -4015,7 +4015,7 @@ body {
 .page__share {
   margin-top: 2em;
   padding-top: 1em;
-  border-top: 1px solid rgb(241.7, 242.5, 243.1);
+  border-top: 1px solid rgb(94.7843137255%, 95.0980392157%, 95.3333333333%);
 }
 @media (max-width: 37.5em) {
   .page__share .btn span {
@@ -4041,7 +4041,7 @@ body {
    ========================================================================== */
 .page__meta, .comment__date {
   margin-top: 2em;
-  color: rgb(99.8, 103, 105.4);
+  color: rgb(39.137254902%, 40.3921568627%, 41.3333333333%);
   font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
   font-size: 0.75em;
 }
@@ -4079,12 +4079,12 @@ body {
   margin-bottom: 8px;
   padding: 5px 10px;
   text-decoration: none;
-  border: 1px solid rgb(181.275, 181.875, 182.325);
+  border: 1px solid rgb(71.0882352941%, 71.3235294118%, 71.5%);
   border-radius: 4px;
 }
 .page__taxonomy-item:hover {
   text-decoration: none;
-  color: rgb(35.4, 93.6, 111.6);
+  color: rgb(13.8823529412%, 36.7058823529%, 43.7647058824%);
 }
 
 .taxonomy__section {
@@ -4092,7 +4092,7 @@ body {
   padding-bottom: 1em;
 }
 .taxonomy__section:not(:last-child) {
-  border-bottom: solid 1px rgb(241.7, 242.5, 243.1);
+  border-bottom: solid 1px rgb(94.7843137255%, 95.0980392157%, 95.3333333333%);
 }
 .taxonomy__section .archive__item-title {
   margin-top: 0;
@@ -4107,11 +4107,11 @@ body {
 
 .taxonomy__title {
   margin-bottom: 0.5em;
-  color: rgb(99.8, 103, 105.4);
+  color: rgb(39.137254902%, 40.3921568627%, 41.3333333333%);
 }
 
 .taxonomy__count {
-  color: rgb(99.8, 103, 105.4);
+  color: rgb(39.137254902%, 40.3921568627%, 41.3333333333%);
 }
 
 .taxonomy__index {
@@ -4138,13 +4138,13 @@ body {
   justify-content: space-between;
   color: inherit;
   text-decoration: none;
-  border-bottom: 1px solid rgb(241.7, 242.5, 243.1);
+  border-bottom: 1px solid rgb(94.7843137255%, 95.0980392157%, 95.3333333333%);
 }
 
 .back-to-top {
   display: block;
   clear: both;
-  color: rgb(99.8, 103, 105.4);
+  color: rgb(39.137254902%, 40.3921568627%, 41.3333333333%);
   font-size: 0.6em;
   text-transform: uppercase;
   text-align: end;
@@ -4166,7 +4166,7 @@ body {
   margin-bottom: 10px;
   padding-top: 2rem;
   font-size: 0.75em;
-  border-top: 1px solid rgb(241.7, 242.5, 243.1);
+  border-top: 1px solid rgb(94.7843137255%, 95.0980392157%, 95.3333333333%);
   text-transform: uppercase;
 }
 
@@ -4197,7 +4197,7 @@ body {
   margin: 1em 0;
 }
 .comment:not(:last-child) {
-  border-bottom: 1px solid rgb(241.7, 242.5, 243.1);
+  border-bottom: 1px solid rgb(94.7843137255%, 95.0980392157%, 95.3333333333%);
 }
 
 .comment__avatar-wrapper {
@@ -4222,7 +4222,7 @@ body {
     width: 80px;
     height: 80px;
     padding: 5px;
-    border: 1px solid rgb(241.7, 242.5, 243.1);
+    border: 1px solid rgb(94.7843137255%, 95.0980392157%, 95.3333333333%);
   }
 }
 
@@ -4265,7 +4265,7 @@ body {
   float: inline-start;
   margin-top: 2em;
   padding-top: 1em;
-  border-top: 1px solid rgb(241.7, 242.5, 243.1);
+  border-top: 1px solid rgb(94.7843137255%, 95.0980392157%, 95.3333333333%);
 }
 @media (min-width: 64em) {
   .page__related {
@@ -4339,8 +4339,8 @@ body {
   margin: 1.414em 0 0.5em;
   padding-bottom: 0.5em;
   font-size: 1em;
-  color: rgb(99.8, 103, 105.4);
-  border-bottom: 1px solid rgb(241.7, 242.5, 243.1);
+  color: rgb(39.137254902%, 40.3921568627%, 41.3333333333%);
+  border-bottom: 1px solid rgb(94.7843137255%, 95.0980392157%, 95.3333333333%);
 }
 .archive__subtitle + .list__item .archive__item-title {
   margin-top: 0.5em;
@@ -4526,7 +4526,7 @@ body {
 }
 .feature__wrapper {
   margin-bottom: 2em;
-  border-bottom: 1px solid rgb(241.7, 242.5, 243.1);
+  border-bottom: 1px solid rgb(94.7843137255%, 95.0980392157%, 95.3333333333%);
 }
 .feature__wrapper .archive__item-title {
   margin-bottom: 0;
@@ -4826,7 +4826,7 @@ body {
 @media (min-width: 64em) {
   .author__avatar img {
     padding: 5px;
-    border: 1px solid rgb(241.7, 242.5, 243.1);
+    border: 1px solid rgb(94.7843137255%, 95.0980392157%, 95.3333333333%);
   }
 }
 
@@ -4923,7 +4923,7 @@ body {
   margin-top: 15px;
   padding: 10px;
   list-style-type: none;
-  border: 1px solid rgb(241.7, 242.5, 243.1);
+  border: 1px solid rgb(94.7843137255%, 95.0980392157%, 95.3333333333%);
   border-radius: 4px;
   background: #fff;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
@@ -4952,7 +4952,7 @@ body {
   width: 0;
   border-style: solid;
   border-width: 0 10px 10px;
-  border-color: rgb(241.7, 242.5, 243.1) transparent;
+  border-color: rgb(94.7843137255%, 95.0980392157%, 95.3333333333%) transparent;
   z-index: 0;
 }
 @media (min-width: 64em) {
