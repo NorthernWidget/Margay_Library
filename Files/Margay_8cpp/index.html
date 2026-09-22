@@ -225,7 +225,7 @@
           <aside class="sidebar__right sticky">
             <nav class="toc" aria-label="Table of contents">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
-              <ul class="toc__menu"><li><a href="#functions">Functions</a></li><li><a href="#attributes">Attributes</a></li><li><a href="#functions-documentation">Functions Documentation</a><ul><li><a href="#function-isr">function ISR</a></li></ul></li><li><a href="#attributes-documentation">Attributes Documentation</a><ul><li><a href="#variable-manuallog">variable manualLog</a></li><li><a href="#variable-extintpin">variable ExtIntPin</a></li><li><a href="#variable-ext_int_header_entry">variable ext_int_header_entry</a></li><li><a href="#variable-extinttripped">variable ExtIntTripped</a></li><li><a href="#variable-extint_count">variable ExtInt_count</a></li></ul></li><li><a href="#source-code">Source code</a></li></ul>
+              <ul class="toc__menu"><li><a href="#functions">Functions</a></li><li><a href="#attributes">Attributes</a></li><li><a href="#functions-documentation">Functions Documentation</a><ul><li><a href="#function-crc8">function crc8</a></li><li><a href="#function-isr">function ISR</a></li></ul></li><li><a href="#attributes-documentation">Attributes Documentation</a><ul><li><a href="#variable-manuallog">variable manualLog</a></li><li><a href="#variable-extintpin">variable ExtIntPin</a></li><li><a href="#variable-ext_int_header_entry">variable ext_int_header_entry</a></li><li><a href="#variable-extinttripped">variable ExtIntTripped</a></li><li><a href="#variable-extint_count">variable ExtInt_count</a></li></ul></li><li><a href="#source-code">Source code</a></li></ul>
             </nav>
           </aside>
         
@@ -239,6 +239,10 @@
     </tr>
   </thead>
   <tbody>
+    <tr>
+      <td>uint8_t</td>
+      <td><strong><a href="/Margay_Library/Files/Margay_8cpp/#function-crc8">crc8</a></strong>(const uint8_t * data, uint8_t len)</td>
+    </tr>
     <tr>
       <td> </td>
       <td><strong><a href="/Margay_Library/Files/Margay_8cpp/#function-isr">ISR</a></strong>(PCINT0_vect )</td>
@@ -280,6 +284,14 @@
 </table>
 
 <h2 id="functions-documentation">Functions Documentation</h2>
+
+<h3 id="function-crc8">function crc8</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">static</span> <span class="kt">uint8_t</span> <span class="n">crc8</span><span class="p">(</span>
+    <span class="k">const</span> <span class="kt">uint8_t</span> <span class="o">*</span> <span class="n">data</span><span class="p">,</span>
+    <span class="kt">uint8_t</span> <span class="n">len</span>
+<span class="p">)</span>
+</code></pre></div></div>
 
 <h3 id="function-isr">function ISR</h3>
 
@@ -327,7 +339,18 @@ Andy Wickert
 */</span>
 
 <span class="cp">#include</span> <span class="cpf">&lt;Margay.h&gt;</span><span class="cp">
-#include</span> <span class="cpf">&lt;Arduino.h&gt;</span><span class="cp">
+</span>
+<span class="c1">// CRC-8/SMBUS (polynomial 0x07, init 0x00) over Page 0 bytes 0x00-0x1D, as</span>
+<span class="c1">// NW-Provision writes it (NW-Device-Specification Page 0 Block 3).</span>
+<span class="k">static</span> <span class="kt">uint8_t</span> <span class="nf">crc8</span><span class="p">(</span><span class="k">const</span> <span class="kt">uint8_t</span><span class="o">*</span> <span class="n">data</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="n">len</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kt">uint8_t</span> <span class="n">crc</span> <span class="o">=</span> <span class="mh">0x00</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">uint8_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">len</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">crc</span> <span class="o">^=</span> <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">uint8_t</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">b</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">;</span> <span class="n">b</span><span class="o">++</span><span class="p">)</span> <span class="n">crc</span> <span class="o">=</span> <span class="p">(</span><span class="n">crc</span> <span class="o">&amp;</span> <span class="mh">0x80</span><span class="p">)</span> <span class="o">?</span> <span class="p">(</span><span class="n">crc</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">^</span> <span class="mh">0x07</span> <span class="o">:</span> <span class="p">(</span><span class="n">crc</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">crc</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="cp">#include</span> <span class="cpf">&lt;Arduino.h&gt;</span><span class="cp">
 </span>
 
 <span class="k">volatile</span> <span class="kt">bool</span> <span class="n">manualLog</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span> <span class="c1">// Global for interrupt access</span>
@@ -494,7 +517,10 @@ Andy Wickert
   <span class="n">RTC</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span> <span class="c1">//Initialize RTC</span>
   <span class="n">RTC</span><span class="p">.</span><span class="n">clearAlarm</span><span class="p">();</span> <span class="c1">//</span>
   <span class="k">if</span> <span class="p">(</span><span class="n">NumADR_OB</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="n">initADC</span><span class="p">(</span><span class="mi">18</span><span class="p">);</span> <span class="c1">// Only BUILD_B/C/D have an on-board ADC</span>
-  <span class="n">bme280</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mh">0x77</span><span class="p">);</span> <span class="c1">//Initialize onboard temp/pressure/RH sensor (BME280)</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">Model</span> <span class="o">&gt;=</span> <span class="n">MODEL_2v0</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">bme280</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mh">0x77</span><span class="p">))</span> <span class="p">{</span> <span class="c1">//Initialize onboard temp/pressure/RH sensor (BME280)</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"BME280 init: FAIL"</span><span class="p">);</span>
+    <span class="n">OnBoardError</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+  <span class="p">}</span>
 
 
   <span class="n">ADCSRA</span> <span class="o">=</span> <span class="mb">0b10000111</span><span class="p">;</span> <span class="c1">//Configure on board ADC for low speed, and enable</span>
@@ -510,19 +536,31 @@ Andy Wickert
   <span class="kt">int</span> <span class="n">EEPROMLen</span> <span class="o">=</span> <span class="n">EEPROM</span><span class="p">.</span><span class="n">length</span><span class="p">();</span> <span class="c1">//Copy value for faster access</span>
   <span class="kt">int</span> <span class="n">val</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">//Value to read temp EEPROM values into</span>
   <span class="kt">int</span> <span class="n">pos</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">//used to keep track of position in SN string</span>
-  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">EEPROMLen</span> <span class="o">-</span> <span class="mi">8</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">EEPROMLen</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>  <span class="c1">//Read out Serial Number</span>
+  <span class="c1">// NW-Device-Specification Page 0 occupies the top 32 bytes of EEPROM.</span>
+  <span class="c1">// Schema 1 (NW-Provision): serial number = Block 2 (offset 0x10-0x17).</span>
+  <span class="c1">// Schema 0 (MargaySetup): serial number = the last 8 bytes.</span>
+  <span class="kt">int</span> <span class="n">page0</span> <span class="o">=</span> <span class="n">EEPROMLen</span> <span class="o">-</span> <span class="mi">32</span><span class="p">;</span>
+  <span class="kt">uint8_t</span> <span class="n">p0</span><span class="p">[</span><span class="mh">0x1F</span><span class="p">];</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mh">0x1F</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="n">p0</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">EEPROM</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="n">page0</span> <span class="o">+</span> <span class="n">i</span><span class="p">);</span>
+  <span class="kt">bool</span> <span class="n">schema1</span> <span class="o">=</span> <span class="p">(</span><span class="n">p0</span><span class="p">[</span><span class="mh">0x00</span><span class="p">]</span> <span class="o">==</span> <span class="mh">0x01</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">p0</span><span class="p">[</span><span class="mh">0x1D</span><span class="p">]</span> <span class="o">==</span> <span class="mh">0x4E</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">crc8</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="mh">0x1E</span><span class="p">)</span> <span class="o">==</span> <span class="n">p0</span><span class="p">[</span><span class="mh">0x1E</span><span class="p">]);</span>
+  <span class="kt">int</span> <span class="n">snStart</span> <span class="o">=</span> <span class="n">schema1</span> <span class="o">?</span> <span class="n">page0</span> <span class="o">+</span> <span class="mh">0x10</span> <span class="o">:</span> <span class="n">EEPROMLen</span> <span class="o">-</span> <span class="mi">8</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">snStart</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">snStart</span> <span class="o">+</span> <span class="mi">8</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>  <span class="c1">//Read out Serial Number</span>
     <span class="n">val</span> <span class="o">=</span> <span class="n">EEPROM</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>  <span class="c1">//Read SN values as individual bytes from EEPROM</span>
     <span class="c1">// Load upper and lower nibbles of each EEPROM byte into SN string,</span>
     <span class="c1">// post-incrementing the position index each time</span>
     <span class="n">SN</span><span class="p">[</span><span class="n">pos</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">HexMap</span><span class="p">[(</span><span class="n">val</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span><span class="p">)];</span>
     <span class="n">SN</span><span class="p">[</span><span class="n">pos</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">HexMap</span><span class="p">[(</span><span class="n">val</span> <span class="o">%</span> <span class="mh">0x10</span><span class="p">)];</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">EEPROMLen</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">((</span><span class="n">i</span> <span class="o">-</span> <span class="n">snStart</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">snStart</span> <span class="o">+</span> <span class="mi">7</span><span class="p">)</span> <span class="p">{</span>
       <span class="n">SN</span><span class="p">[</span><span class="n">pos</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="sc">'-'</span><span class="p">;</span>  <span class="c1">//Place - between each SN category, post inc pos</span>
     <span class="p">}</span>
     <span class="n">SN</span><span class="p">[</span><span class="mi">19</span><span class="p">]</span> <span class="o">=</span> <span class="sc">'\0'</span><span class="p">;</span> <span class="c1">//Null terminate string</span>
   <span class="p">}</span>
 
   <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">SN</span><span class="p">);</span> <span class="c1">//Print compiled string</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">schema1</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"  (Schema 1, HW v"</span><span class="p">);</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">p0</span><span class="p">[</span><span class="mh">0x08</span><span class="p">]);</span> <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"."</span><span class="p">);</span> <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">p0</span><span class="p">[</span><span class="mh">0x09</span><span class="p">]);</span> <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">")"</span><span class="p">);</span>
+  <span class="p">}</span>
   <span class="k">if</span> <span class="p">(</span><span class="n">strcmp</span><span class="p">(</span><span class="n">SN</span><span class="p">,</span> <span class="s">"FFFF-FFFF-FFFF-FFFF"</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
     <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"WARNING: no serial number programmed in EEPROM"</span><span class="p">);</span>
   <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n\n</span><span class="s">"</span><span class="p">);</span>
@@ -860,13 +898,13 @@ Andy Wickert
 
 <span class="kt">void</span> <span class="n">Margay</span><span class="o">::</span><span class="n">bme280Readings</span><span class="p">()</span> <span class="p">{</span>
   <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"Temp = "</span><span class="p">);</span>
-  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">bme280</span><span class="p">.</span><span class="n">GetTemperature</span><span class="p">());</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">bme280</span><span class="p">.</span><span class="n">getTemperature</span><span class="p">());</span>
   <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"C"</span><span class="p">);</span>
   <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"Pressure = "</span><span class="p">);</span>
-  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">bme280</span><span class="p">.</span><span class="n">GetPressure</span><span class="p">());</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">bme280</span><span class="p">.</span><span class="n">getPressure</span><span class="p">());</span>
   <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">" mBar"</span><span class="p">);</span>
   <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"RH = "</span><span class="p">);</span>
-  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">bme280</span><span class="p">.</span><span class="n">GetHumidity</span><span class="p">());</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">bme280</span><span class="p">.</span><span class="n">getHumidity</span><span class="p">());</span>
   <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"%"</span><span class="p">);</span>
 <span class="p">}</span>
 
@@ -1035,7 +1073,7 @@ Andy Wickert
     <span class="k">return</span> <span class="n">LogTimeDate</span> <span class="o">+</span> <span class="s">","</span> <span class="o">+</span> <span class="n">String</span><span class="p">(</span><span class="n">tempData</span><span class="p">)</span> <span class="o">+</span> <span class="s">","</span>
            <span class="o">+</span> <span class="n">String</span><span class="p">(</span><span class="n">rtcTemp</span><span class="p">)</span> <span class="o">+</span> <span class="s">","</span> <span class="o">+</span> <span class="n">String</span><span class="p">(</span><span class="n">batVoltage</span><span class="p">)</span> <span class="o">+</span> <span class="s">","</span><span class="p">;</span>
   <span class="k">else</span>
-    <span class="k">return</span> <span class="n">LogTimeDate</span> <span class="o">+</span> <span class="s">","</span> <span class="o">+</span> <span class="n">String</span><span class="p">(</span><span class="n">bme280</span><span class="p">.</span><span class="n">GetString</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">LogTimeDate</span> <span class="o">+</span> <span class="s">","</span> <span class="o">+</span> <span class="n">String</span><span class="p">(</span><span class="n">bme280</span><span class="p">.</span><span class="n">getString</span><span class="p">())</span>
            <span class="o">+</span> <span class="n">String</span><span class="p">(</span><span class="n">rtcTemp</span><span class="p">)</span> <span class="o">+</span> <span class="s">","</span> <span class="o">+</span> <span class="n">String</span><span class="p">(</span><span class="n">batVoltage</span><span class="p">)</span> <span class="o">+</span> <span class="s">","</span><span class="p">;</span>
 <span class="p">}</span>
 
@@ -1380,7 +1418,7 @@ Andy Wickert
 
 <hr />
 
-<p>Updated on 2026-09-21 at 22:16:19 +0000</p>
+<p>Updated on 2026-09-22 at 02:28:37 +0000</p>
 
         
       </section>
