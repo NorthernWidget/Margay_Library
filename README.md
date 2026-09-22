@@ -70,3 +70,5 @@ If an error code is received try the following steps:
 - **Red, Fast Blinking** 
 	- *If* this error occurs while also connected over USB, check proper connection of batteries
 	- Replace batteries
+
+**Full API reference:** https://docs.northernwidget.com/Margay_Library/
