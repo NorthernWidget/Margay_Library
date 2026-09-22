@@ -8,6 +8,17 @@ Andy Wickert
 */
 
 #include <Margay.h>
+
+// CRC-8/SMBUS (polynomial 0x07, init 0x00) over Page 0 bytes 0x00-0x1D, as
+// NW-Provision writes it (NW-Device-Specification Page 0 Block 3).
+static uint8_t crc8(const uint8_t* data, uint8_t len) {
+  uint8_t crc = 0x00;
+  for (uint8_t i = 0; i < len; i++) {
+    crc ^= data[i];
+    for (uint8_t b = 0; b < 8; b++) crc = (crc & 0x80) ? (crc << 1) ^ 0x07 : (crc << 1);
+  }
+  return crc;
+}
 #include <Arduino.h>
 
 
@@ -194,19 +205,31 @@ void Margay::begin(uint8_t *vals, uint8_t numVals, String header_) {
   int EEPROMLen = EEPROM.length(); //Copy value for faster access
   int val = 0; //Value to read temp EEPROM values into
   int pos = 0; //used to keep track of position in SN string
-  for (int i = EEPROMLen - 8; i < EEPROMLen; i++) {  //Read out Serial Number
+  // NW-Device-Specification Page 0 occupies the top 32 bytes of EEPROM.
+  // Schema 1 (NW-Provision): serial number = Block 2 (offset 0x10-0x17).
+  // Schema 0 (MargaySetup): serial number = the last 8 bytes.
+  int page0 = EEPROMLen - 32;
+  uint8_t p0[0x1F];
+  for (int i = 0; i < 0x1F; i++) p0[i] = EEPROM.read(page0 + i);
+  bool schema1 = (p0[0x00] == 0x01) && (p0[0x1D] == 0x4E) && (crc8(p0, 0x1E) == p0[0x1E]);
+  int snStart = schema1 ? page0 + 0x10 : EEPROMLen - 8;
+  for (int i = snStart; i < snStart + 8; i++) {  //Read out Serial Number
     val = EEPROM.read(i);  //Read SN values as individual bytes from EEPROM
     // Load upper and lower nibbles of each EEPROM byte into SN string,
     // post-incrementing the position index each time
     SN[pos++] = HexMap[(val >> 4)];
     SN[pos++] = HexMap[(val % 0x10)];
-    if (i % 2 == 1 && i < EEPROMLen - 1) {
+    if ((i - snStart) % 2 == 1 && i < snStart + 7) {
       SN[pos++] = '-';  //Place - between each SN category, post inc pos
     }
     SN[19] = '\0'; //Null terminate string
   }
 
   Serial.print(SN); //Print compiled string
+  if (schema1) {
+    Serial.print("  (Schema 1, HW v");
+    Serial.print(p0[0x08]); Serial.print("."); Serial.print(p0[0x09]); Serial.print(")");
+  }
   if (strcmp(SN, "FFFF-FFFF-FFFF-FFFF") == 0)
     Serial.println("WARNING: no serial number programmed in EEPROM");
   Serial.print("\n\n");
