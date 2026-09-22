@@ -149,6 +149,17 @@ class Margay
     int logStr(String val);
 
     /**
+     * @brief Note a one-word condition for the current log row.
+     * @details The word goes in the Note column, the last column of every
+     * row, written without a comma after it so the row ends cleanly. It is
+     * also printed to Serial and shown as an orange pulse on the LED. Several
+     * notes in one interval are joined with ';'. Cleared after each row.
+     * Typical words: NoACK, OldFirmware, NotSchema1, LiDARTimeout.
+     * @param word One word (no commas) naming the condition.
+     */
+    void note(const String& word);
+
+    /**
      * @brief Set the on-board RGB LED to a packed color value.
      * @details The color format is 0xLLRRGGBB: byte 3 = luminosity,
      * byte 2 = red, byte 1 = green, byte 0 = blue. Use the predefined
@@ -390,6 +401,7 @@ class Margay
     bool BatError = false;
     bool BatWarning = false;
     String Header = "";
+    String Note = ""; // pending word(s) for the Note column of the next row
     const char HexMap[16] = {
       '0', '1', '2', '3', '4', '5', '6', '7',
       '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'

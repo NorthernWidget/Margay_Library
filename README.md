@@ -33,6 +33,16 @@ Using this library, logging begins automatically once power is applied. If error
 - After display of status code(s)
 	- `STAT` light will blink blue to indicate logging (or attempted logging) has begun
 
+### Note column:
+
+Every log file ends each row with a `Note` column, the last column, written without a comma after it so rows end cleanly (each sensor ends its own fields with a comma for the next). It is empty when all is well. A sketch or sensor reports a condition for the current row with one word, no commas:
+
+```c++
+if (!rangefinder.begin()) Logger.note("NoACK");
+```
+
+The word is written in the row, printed to the serial monitor as `Note: NoACK`, and shown as an orange pulse on the LED. Several notes in one interval are joined with `;`. Measurement columns keep `-9999` for a failed reading.
+
 ### Troubleshooting:
 If an error code is received try the following steps:
 

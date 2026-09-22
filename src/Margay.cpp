@@ -598,11 +598,13 @@ void Margay::initLogFile() {
   String initData = "Lib = " + String(LibVersion) + " SN = " + String(SN);
   logStr(initData);
   // Log concatenated header (old loggers lack BME280)
+  // Note is always the last column and carries no comma after it: every
+  // sensor ends its fields with a comma for the next, so this ends the row.
   if (Model < MODEL_2v0)
-    logStr("Time [UTC], Temp OB [C], Temp RTC [C], Bat [V], " + Header);
+    logStr("Time [UTC], Temp OB [C], Temp RTC [C], Bat [V], " + Header + "Note");
   else  // new loggers include pressure and RH from BME280
     logStr("Time [UTC], PresOB [mBar], RH_OB [%], TempOB [C], "
-           "Temp RTC [C], Bat [V], " + Header);
+           "Temp RTC [C], Bat [V], " + Header + "Note");
 }
 
 int Margay::logStr(String val) {
@@ -923,11 +925,22 @@ void Margay::_addDataPoint(String data) {
   // unless there is a significant library or xtal change
   pinMode(BlueLED, OUTPUT);
   digitalWrite(BlueLED, LOW); //ON
-  data = getOnBoardVals() + data; //Prepend on board readings
+  data = getOnBoardVals() + data + Note; //Prepend on board readings; Note column last
+  Note = ""; //One row's worth of notes
   digitalWrite(BlueLED, HIGH); //OFF
   // Serial.println("Got OB vals");  //DEBUG!
   logStr(data);
   // Serial.println("Logged Data"); //DEBUG!
+}
+
+void Margay::note(const String& word) {
+  if (Note.length() > 0) Note += ";";
+  Note += word;
+  Serial.print(F("Note: "));
+  Serial.println(word);
+  LED_Color(ORANGE);
+  delay(300);
+  LED_Color(OFF);
 }
 
 //ISRs
