@@ -175,7 +175,10 @@ void Margay::begin(uint8_t *vals, uint8_t numVals, String header_) {
   RTC.begin(); //Initialize RTC
   RTC.clearAlarm(); //
   if (NumADR_OB > 1) initADC(18); // Only BUILD_B/C/D have an on-board ADC
-  bme280.begin(0x77); //Initialize onboard temp/pressure/RH sensor (BME280)
+  if (Model >= MODEL_2v0 && !bme280.begin(0x77)) { //Initialize onboard temp/pressure/RH sensor (BME280)
+    Serial.println("BME280 init: FAIL");
+    OnBoardError = true;
+  }
 
 
   ADCSRA = 0b10000111; //Configure on board ADC for low speed, and enable
