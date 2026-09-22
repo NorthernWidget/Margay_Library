@@ -541,13 +541,13 @@ void Margay::powerTest() {
 
 void Margay::bme280Readings() {
   Serial.print("Temp = ");
-  Serial.print(bme280.GetTemperature());
+  Serial.print(bme280.getTemperature());
   Serial.println("C");
   Serial.print("Pressure = ");
-  Serial.print(bme280.GetPressure());
+  Serial.print(bme280.getPressure());
   Serial.println(" mBar");
   Serial.print("RH = ");
-  Serial.print(bme280.GetHumidity());
+  Serial.print(bme280.getHumidity());
   Serial.println("%");
 }
 
@@ -716,7 +716,7 @@ String Margay::getOnBoardVals() {
     return LogTimeDate + "," + String(tempData) + ","
            + String(rtcTemp) + "," + String(batVoltage) + ",";
   else
-    return LogTimeDate + "," + String(bme280.GetString())
+    return LogTimeDate + "," + String(bme280.getString())
            + String(rtcTemp) + "," + String(batVoltage) + ",";
 }
 
