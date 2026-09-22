@@ -225,7 +225,7 @@
           <aside class="sidebar__right sticky">
             <nav class="toc" aria-label="Table of contents">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
-              <ul class="toc__menu"><li><a href="#source-code">Source code</a></li></ul>
+              <ul class="toc__menu"><li><a href="#source-code">Source code</a><ul><li><a href="#troubleshooting">Troubleshooting:</a></li></ul></li></ul>
             </nav>
           </aside>
         
@@ -266,38 +266,73 @@ Using this library, logging begins automatically once power is applied. If error
 <span class="p">-</span> After display of status code(s)
 <span class="p">    -</span> <span class="sb">`STAT`</span> light will blink blue to indicate logging (or attempted logging) has begun
 
-<span class="gu">### Troubleshooting:</span>
-If an error code is received try the following steps:
-<span class="p">
--</span> <span class="gs">**General**</span>
-<span class="p">    -</span> Disconnect and reconnect power, both USB and battery (<span class="p">[</span><span class="nv">Turn it off and back on again</span><span class="p">](</span><span class="sx">https://i.imgur.com/Yj6dB3W.gif</span><span class="p">)</span>)
-<span class="p">    -</span> Verify the quality of all screw terminal connections by gently tugging on the wires and making sure they stay in place, if not, remove and re-tighten the connection 
-<span class="p">    -</span> Ensure sensors and/or cables are not damaged, this can result in shorts or other problems
-<span class="p">    -</span> Make sure batteries have sufficient voltage to run the logger, when the battery voltage drops below <span class="ge">*3.3v*</span>, malfunctions can occur 
-<span class="p">-</span> <span class="gs">**Orange**</span>
-<span class="p">    -</span> Verify correct polarity of sensor connection
-<span class="p">    -</span> Ensure the right sensor is connected
-<span class="p">    -</span> Verify the screw terminals are well connected to the wires (a loose connection can cause a failure)
-<span class="p">    -</span> Make sure battery power is applied, some sensors can fail otherwise
-<span class="p">-</span> <span class="gs">**Cyan**</span>
-<span class="p">    -</span> Connect the logger to a computer and reset the clock using the <span class="p">[</span><span class="nv">Northern Widget Time Set GUI</span><span class="p">](</span><span class="sx">https://github.com/NorthernWidget/SetTime_GUI</span><span class="p">)</span>
-<span class="p">-</span> <span class="gs">**Pink**</span>
-<span class="p">    -</span> Insert the SD card, or make sure card is fully seated 
-<span class="p">-</span> <span class="gs">**Red**</span>
-<span class="p">    -</span> Attempt power cycle 
-<span class="p">    -</span> Try different SD card
-<span class="p">    -</span> Disconnect all sensors
-<span class="p">    -</span> If none of the previous steps remove the red light, contact <span class="p">[</span><span class="nv">Northern Widget</span><span class="p">](</span><span class="sx">http://www.northernwidget.com/contact/</span><span class="p">)</span> for further support 
-<span class="p">-</span> <span class="gs">**Yellow, Fast Blinking**</span> 
-<span class="p">    -</span> Replace batteries
-<span class="p">-</span> <span class="gs">**Red, Fast Blinking**</span> 
-<span class="p">    -</span> <span class="ge">*If*</span> this error occurs while also connected over USB, check proper connection of batteries
-<span class="p">    -</span> Replace batteries
+<span class="gu">### Note column:</span>
+
+Every log file ends each row with a <span class="sb">`Note`</span> column, the last column, written without a comma after it so rows end cleanly (each sensor ends its own fields with a comma for the next). It is empty when all is well. A sketch or sensor reports a condition for the current row with one word, no commas:
+
+<span class="p">```</span><span class="nl">c++
+</span><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">rangefinder</span><span class="p">.</span><span class="n">begin</span><span class="p">())</span> <span class="n">Logger</span><span class="p">.</span><span class="n">note</span><span class="p">(</span><span class="s">"NoACK"</span><span class="p">);</span>
 </code></pre></div></div>
+
+<p>The word is written in the row, printed to the serial monitor as <code class="language-plaintext highlighter-rouge">Note: NoACK</code>, and shown as an orange pulse on the LED. Several notes in one interval are joined with <code class="language-plaintext highlighter-rouge">;</code>. Measurement columns keep <code class="language-plaintext highlighter-rouge">-9999</code> for a failed reading.</p>
+
+<h3 id="troubleshooting">Troubleshooting:</h3>
+<p>If an error code is received try the following steps:</p>
+
+<ul>
+  <li><strong>General</strong>
+    <ul>
+      <li>Disconnect and reconnect power, both USB and battery (<a href="https://i.imgur.com/Yj6dB3W.gif">Turn it off and back on again</a>)</li>
+      <li>Verify the quality of all screw terminal connections by gently tugging on the wires and making sure they stay in place, if not, remove and re-tighten the connection</li>
+      <li>Ensure sensors and/or cables are not damaged, this can result in shorts or other problems</li>
+      <li>Make sure batteries have sufficient voltage to run the logger, when the battery voltage drops below <em>3.3v</em>, malfunctions can occur</li>
+    </ul>
+  </li>
+  <li><strong>Orange</strong>
+    <ul>
+      <li>Verify correct polarity of sensor connection</li>
+      <li>Ensure the right sensor is connected</li>
+      <li>Verify the screw terminals are well connected to the wires (a loose connection can cause a failure)</li>
+      <li>Make sure battery power is applied, some sensors can fail otherwise</li>
+    </ul>
+  </li>
+  <li><strong>Cyan</strong>
+    <ul>
+      <li>Connect the logger to a computer and reset the clock using the <a href="https://github.com/NorthernWidget/SetTime_GUI">Northern Widget Time Set GUI</a></li>
+    </ul>
+  </li>
+  <li><strong>Pink</strong>
+    <ul>
+      <li>Insert the SD card, or make sure card is fully seated</li>
+    </ul>
+  </li>
+  <li><strong>Red</strong>
+    <ul>
+      <li>Attempt power cycle</li>
+      <li>Try different SD card</li>
+      <li>Disconnect all sensors</li>
+      <li>If none of the previous steps remove the red light, contact <a href="http://www.northernwidget.com/contact/">Northern Widget</a> for further support</li>
+    </ul>
+  </li>
+  <li><strong>Yellow, Fast Blinking</strong>
+    <ul>
+      <li>Replace batteries</li>
+    </ul>
+  </li>
+  <li><strong>Red, Fast Blinking</strong>
+    <ul>
+      <li><em>If</em> this error occurs while also connected over USB, check proper connection of batteries</li>
+      <li>Replace batteries</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>Full API reference:</strong> https://docs.northernwidget.com/Margay_Library/
+```</p>
 
 <hr />
 
-<p>Updated on 2026-09-22 at 02:28:37 +0000</p>
+<p>Updated on 2026-09-22 at 16:55:54 +0000</p>
 
         
       </section>

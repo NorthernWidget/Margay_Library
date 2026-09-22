@@ -278,6 +278,15 @@
   </li>
 </ul>
 
+<h3 id="note-column">Note column:</h3>
+
+<p>Every log file ends each row with a <code class="language-plaintext highlighter-rouge">Note</code> column, the last column, written without a comma after it so rows end cleanly (each sensor ends its own fields with a comma for the next). It is empty when all is well. A sketch or sensor reports a condition for the current row with one word, no commas:</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">rangefinder</span><span class="p">.</span><span class="n">begin</span><span class="p">())</span> <span class="n">Logger</span><span class="p">.</span><span class="n">note</span><span class="p">(</span><span class="s">"NoACK"</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>The word is written in the row, printed to the serial monitor as <code class="language-plaintext highlighter-rouge">Note: NoACK</code>, and shown as an orange pulse on the LED. Several notes in one interval are joined with <code class="language-plaintext highlighter-rouge">;</code>. Measurement columns keep <code class="language-plaintext highlighter-rouge">-9999</code> for a failed reading.</p>
+
 <h3 id="troubleshooting">Troubleshooting:</h3>
 <p>If an error code is received try the following steps:</p>
 
@@ -328,6 +337,8 @@
     </ul>
   </li>
 </ul>
+
+<p><strong>Full API reference:</strong> https://docs.northernwidget.com/Margay_Library/</p>
 
         
       </section>

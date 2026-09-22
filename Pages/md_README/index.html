@@ -225,7 +225,7 @@
           <aside class="sidebar__right sticky">
             <nav class="toc" aria-label="Table of contents">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
-              <ul class="toc__menu"><li><a href="#margay-logger-library">Margay Logger Library</a><ul><li><a href="#citation">Citation</a></li><li><a href="#installation">Installation:</a></li><li><a href="#examples">Examples:</a></li><li><a href="#operation">Operation:</a><ul><li><a href="#logging-start">Logging Start:</a></li><li><a href="#troubleshooting">Troubleshooting:</a></li></ul></li></ul></li></ul>
+              <ul class="toc__menu"><li><a href="#margay-logger-library">Margay Logger Library</a><ul><li><a href="#citation">Citation</a></li><li><a href="#installation">Installation:</a></li><li><a href="#examples">Examples:</a></li><li><a href="#operation">Operation:</a><ul><li><a href="#logging-start">Logging Start:</a></li><li><a href="#note-column">Note column:</a></li><li><a href="#troubleshooting">Troubleshooting:</a></li></ul></li></ul></li></ul>
             </nav>
           </aside>
         
@@ -280,6 +280,17 @@
   </li>
 </ul>
 
+<h3 id="note-column">Note column:</h3>
+
+<p>Every log file ends each row with a <code class="language-plaintext highlighter-rouge">Note</code> column, the last column, written without a comma after it so rows end cleanly (each sensor ends its own fields with a comma for the next). It is empty when all is well. A sketch or sensor reports a condition for the current row with one word, no commas:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+ <span class="o">++</span>
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">rangefinder</span><span class="p">.</span><span class="n">begin</span><span class="p">())</span> <span class="n">Logger</span><span class="p">.</span><span class="n">note</span><span class="p">(</span><span class="s">"NoACK"</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>The word is written in the row, printed to the serial monitor as <code class="language-plaintext highlighter-rouge">Note: NoACK</code>, and shown as an orange pulse on the LED. Several notes in one interval are joined with <code class="language-plaintext highlighter-rouge">;</code>. Measurement columns keep <code class="language-plaintext highlighter-rouge">-9999</code> for a failed reading.</p>
+
 <h3 id="troubleshooting">Troubleshooting:</h3>
 
 <p>If an error code is received try the following steps:</p>
@@ -327,14 +338,15 @@
   <li><strong>Red, Fast Blinking</strong>
     <ul>
       <li><em>If</em> this error occurs while also connected over USB, check proper connection of batteries</li>
-      <li>Replace batteries</li>
+      <li>Replace batteries
+<strong>Full API reference:</strong><a href="https://docs.northernwidget.com/Margay_Library/">https://docs.northernwidget.com/Margay_Library/</a></li>
     </ul>
   </li>
 </ul>
 
 <hr />
 
-<p>Updated on 2026-09-22 at 02:28:37 +0000</p>
+<p>Updated on 2026-09-22 at 16:55:54 +0000</p>
 
         
       </section>

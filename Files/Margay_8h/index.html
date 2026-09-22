@@ -515,6 +515,8 @@ Andy Wickert
 
     <span class="kt">int</span> <span class="n">logStr</span><span class="p">(</span><span class="n">String</span> <span class="n">val</span><span class="p">);</span>
 
+    <span class="kt">void</span> <span class="n">note</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">word</span><span class="p">);</span>
+
     <span class="kt">void</span> <span class="n">LED_Color</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">val</span><span class="p">);</span>
 
     <span class="kt">void</span> <span class="n">run</span><span class="p">(</span><span class="n">String</span> <span class="p">(</span><span class="o">*</span><span class="n">f</span><span class="p">)(</span><span class="kt">void</span><span class="p">),</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">logInterval</span><span class="p">);</span>
@@ -631,6 +633,7 @@ Andy Wickert
     <span class="kt">bool</span> <span class="n">BatError</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
     <span class="kt">bool</span> <span class="n">BatWarning</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
     <span class="n">String</span> <span class="n">Header</span> <span class="o">=</span> <span class="s">""</span><span class="p">;</span>
+    <span class="n">String</span> <span class="n">Note</span> <span class="o">=</span> <span class="s">""</span><span class="p">;</span> <span class="c1">// pending word(s) for the Note column of the next row</span>
     <span class="k">const</span> <span class="kt">char</span> <span class="n">HexMap</span><span class="p">[</span><span class="mi">16</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
       <span class="sc">'0'</span><span class="p">,</span> <span class="sc">'1'</span><span class="p">,</span> <span class="sc">'2'</span><span class="p">,</span> <span class="sc">'3'</span><span class="p">,</span> <span class="sc">'4'</span><span class="p">,</span> <span class="sc">'5'</span><span class="p">,</span> <span class="sc">'6'</span><span class="p">,</span> <span class="sc">'7'</span><span class="p">,</span>
       <span class="sc">'8'</span><span class="p">,</span> <span class="sc">'9'</span><span class="p">,</span> <span class="sc">'A'</span><span class="p">,</span> <span class="sc">'B'</span><span class="p">,</span> <span class="sc">'C'</span><span class="p">,</span> <span class="sc">'D'</span><span class="p">,</span> <span class="sc">'E'</span><span class="p">,</span> <span class="sc">'F'</span>
@@ -663,7 +666,7 @@ Andy Wickert
 
 <hr />
 
-<p>Updated on 2026-09-22 at 02:28:37 +0000</p>
+<p>Updated on 2026-09-22 at 16:55:54 +0000</p>
 
         
       </section>

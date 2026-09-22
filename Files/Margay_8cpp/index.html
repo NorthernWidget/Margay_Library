@@ -929,11 +929,13 @@ Andy Wickert
   <span class="n">String</span> <span class="n">initData</span> <span class="o">=</span> <span class="s">"Lib = "</span> <span class="o">+</span> <span class="n">String</span><span class="p">(</span><span class="n">LibVersion</span><span class="p">)</span> <span class="o">+</span> <span class="s">" SN = "</span> <span class="o">+</span> <span class="n">String</span><span class="p">(</span><span class="n">SN</span><span class="p">);</span>
   <span class="n">logStr</span><span class="p">(</span><span class="n">initData</span><span class="p">);</span>
   <span class="c1">// Log concatenated header (old loggers lack BME280)</span>
+  <span class="c1">// Note is always the last column and carries no comma after it: every</span>
+  <span class="c1">// sensor ends its fields with a comma for the next, so this ends the row.</span>
   <span class="k">if</span> <span class="p">(</span><span class="n">Model</span> <span class="o">&lt;</span> <span class="n">MODEL_2v0</span><span class="p">)</span>
-    <span class="n">logStr</span><span class="p">(</span><span class="s">"Time [UTC], Temp OB [C], Temp RTC [C], Bat [V], "</span> <span class="o">+</span> <span class="n">Header</span><span class="p">);</span>
+    <span class="n">logStr</span><span class="p">(</span><span class="s">"Time [UTC], Temp OB [C], Temp RTC [C], Bat [V], "</span> <span class="o">+</span> <span class="n">Header</span> <span class="o">+</span> <span class="s">"Note"</span><span class="p">);</span>
   <span class="k">else</span>  <span class="c1">// new loggers include pressure and RH from BME280</span>
     <span class="n">logStr</span><span class="p">(</span><span class="s">"Time [UTC], PresOB [mBar], RH_OB [%], TempOB [C], "</span>
-           <span class="s">"Temp RTC [C], Bat [V], "</span> <span class="o">+</span> <span class="n">Header</span><span class="p">);</span>
+           <span class="s">"Temp RTC [C], Bat [V], "</span> <span class="o">+</span> <span class="n">Header</span> <span class="o">+</span> <span class="s">"Note"</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="kt">int</span> <span class="n">Margay</span><span class="o">::</span><span class="n">logStr</span><span class="p">(</span><span class="n">String</span> <span class="n">val</span><span class="p">)</span> <span class="p">{</span>
@@ -1254,11 +1256,22 @@ Andy Wickert
   <span class="c1">// unless there is a significant library or xtal change</span>
   <span class="n">pinMode</span><span class="p">(</span><span class="n">BlueLED</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
   <span class="n">digitalWrite</span><span class="p">(</span><span class="n">BlueLED</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span> <span class="c1">//ON</span>
-  <span class="n">data</span> <span class="o">=</span> <span class="n">getOnBoardVals</span><span class="p">()</span> <span class="o">+</span> <span class="n">data</span><span class="p">;</span> <span class="c1">//Prepend on board readings</span>
+  <span class="n">data</span> <span class="o">=</span> <span class="n">getOnBoardVals</span><span class="p">()</span> <span class="o">+</span> <span class="n">data</span> <span class="o">+</span> <span class="n">Note</span><span class="p">;</span> <span class="c1">//Prepend on board readings; Note column last</span>
+  <span class="n">Note</span> <span class="o">=</span> <span class="s">""</span><span class="p">;</span> <span class="c1">//One row's worth of notes</span>
   <span class="n">digitalWrite</span><span class="p">(</span><span class="n">BlueLED</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span> <span class="c1">//OFF</span>
   <span class="c1">// Serial.println("Got OB vals");  //DEBUG!</span>
   <span class="n">logStr</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
   <span class="c1">// Serial.println("Logged Data"); //DEBUG!</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">Margay</span><span class="o">::</span><span class="n">note</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">word</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">Note</span><span class="p">.</span><span class="n">length</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="n">Note</span> <span class="o">+=</span> <span class="s">";"</span><span class="p">;</span>
+  <span class="n">Note</span> <span class="o">+=</span> <span class="n">word</span><span class="p">;</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">F</span><span class="p">(</span><span class="s">"Note: "</span><span class="p">));</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">word</span><span class="p">);</span>
+  <span class="n">LED_Color</span><span class="p">(</span><span class="n">ORANGE</span><span class="p">);</span>
+  <span class="n">delay</span><span class="p">(</span><span class="mi">300</span><span class="p">);</span>
+  <span class="n">LED_Color</span><span class="p">(</span><span class="n">OFF</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="c1">//ISRs</span>
@@ -1418,7 +1431,7 @@ Andy Wickert
 
 <hr />
 
-<p>Updated on 2026-09-22 at 02:28:37 +0000</p>
+<p>Updated on 2026-09-22 at 16:55:54 +0000</p>
 
         
       </section>
