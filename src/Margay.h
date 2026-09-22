@@ -22,7 +22,7 @@ Andy Wickert
 #include "DS3231_Logger.h"
 #include "MCP3421.h"
 #include "SdFat.h"
-#include <BME.h>
+#include <NW_BME280.h>
 
 
 /// @defgroup colors LED color constants
