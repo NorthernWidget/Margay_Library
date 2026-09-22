@@ -20,7 +20,7 @@ Distributed as-is; no warranty is given.
 Margay Logger(MODEL_3v0); // Update to match your hardware version
 Apis rangefinder;
 
-uint8_t I2CVals[] = {ADR_DEFAULT};
+uint8_t I2CVals[] = {Apis::DEFAULT_ADDRESS};
 String header = "";
 uint32_t updateRate = 60; // Seconds between readings
 
