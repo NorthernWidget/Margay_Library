@@ -229,7 +229,9 @@ void Margay::begin(uint8_t *vals, uint8_t numVals, String header_) {
   if (schema1) {
     Serial.print("  (Schema 1, HW v");
     Serial.print(p0[0x08]); Serial.print("."); Serial.print(p0[0x09]); Serial.print(")");
+    HWVersion = String(p0[0x08]) + "." + String(p0[0x09]); //For the status file's boot row
   }
+  else HWVersion = String(Model); //Schema 0: the model number the sketch declared
   if (strcmp(SN, "FFFF-FFFF-FFFF-FFFF") == 0)
     Serial.println("WARNING: no serial number programmed in EEPROM");
   Serial.print("\n\n");
@@ -588,12 +590,17 @@ void Margay::initLogFile() {
     sprintf(numCharArray, "%05d", fileNum);
     (fileName + String(numCharArray) + ".csv").toCharArray(FileNameC, 13);
   }
+  ("sta" + String(numCharArray) + ".csv").toCharArray(FileNameStaC, 13); //The status file, same number
   Serial.print("FileNameC: ");
   Serial.println(FileNameC);
-  // Make string of onboard characteristics as first line of data
-  String initData = "Lib = " + String(LibVersion) + " SN = " + String(SN);
-  logStr(initData);
-  // Log concatenated header (old loggers lack BME280)
+  // The status file: one row per report, boot and check, from this logger and
+  // from every device on it (NW-Device-Specification Report register). Its
+  // boot row carries what the data file's first line used to: library
+  // version and serial number, with the hardware version beside them.
+  statusStr("Time,Trigger,Device,Serial,HW,FW,Code,Note,Page0,Page1,Page2");
+  getTime();
+  statusStr(LogTimeDate + ",boot,Margay," + String(SN) + "," + HWVersion + "," + String(LibVersion) + ",0x00,None,,,");
+  // The data file starts with its header row (old loggers lack BME280)
   // Note is always the last column and carries no comma after it: every
   // sensor ends its fields with a comma for the next, so this ends the row.
   if (Model < MODEL_2v0)
@@ -616,6 +623,21 @@ int Margay::logStr(String val) {
     return 0;
   }
   // if the file isn't open, pop up an error:
+  else {
+    return -1;
+  }
+}
+
+int Margay::statusStr(String val) {
+  Serial.println(val); //Echo to serial monitor
+  SD.chdir("/");  //The card's root
+  SD.chdir(SN);  //Move into this logger's folder, named by its serial number
+  File StatusFile = SD.open(FileNameStaC, FILE_WRITE);
+  if (StatusFile) {
+    StatusFile.println(val);
+    StatusFile.close();
+    return 0;
+  }
   else {
     return -1;
   }

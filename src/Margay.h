@@ -147,6 +147,15 @@ class Margay
      * @return 0 on success, -1 if the log file could not be opened.
      */
     int logStr(String val);
+    /**
+     * @brief Append one row to the status file (sta<n>.csv beside log<n>.csv).
+     * @details Columns: Time,Trigger,Device,Serial,HW,FW,Code,Note,Page0,Page1,Page2.
+     * The logger writes its own boot row at every new file; a sketch writes a
+     * device's row with the logger's time, a trigger word, and the device's
+     * printStatus() line (NW_Core), whenever the device's reportKind() is not 0.
+     * @return 0 written, -1 the file could not be opened
+     */
+    int statusStr(String val);
 
     /**
      * @brief Note a one-word condition for the current log row.
@@ -422,6 +431,8 @@ class Margay
     volatile int AwakeCount = 0;
 
     char FileNameC[13]; // "logNNNNN.csv" (12 chars) + null terminator
+    char FileNameStaC[13]; // "staNNNNN.csv", the status file with the same number
+    String HWVersion = ""; // "3.0" from Page 0 (Schema 1), else the model number; for the status file's boot row
     char FileNameTestC[11]; // "HWTest.txt" (10 chars) + null terminator
     bool externalI2COn = false;
     SdFat SD;
