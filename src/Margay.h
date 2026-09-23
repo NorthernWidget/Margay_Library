@@ -176,7 +176,7 @@ class Margay
      * row, written without a comma after it so the row ends cleanly. It is
      * also printed to Serial and shown as an orange pulse on the LED. Several
      * notes in one interval are joined with ';'. Cleared after each row.
-     * Typical words: NoACK, OldFirmware, NotSchema1, LiDARTimeout.
+     * Typical words: NotAnswering, OldFirmware, NotSchema1, LiDARTimeout.
      * @param word One word (no commas) naming the condition.
      */
     void note(const String& word);
