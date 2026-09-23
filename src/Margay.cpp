@@ -579,14 +579,14 @@ void Margay::initLogFile() {
   SD.chdir(SN);  //Move into this logger's folder, named by its serial number
   //Find the first unused file number in "SD:/sn/"
   char numCharArray[6];
-  String fileName = "Log";
+  String fileName = "log";
   int fileNum = 1;
   sprintf(numCharArray, "%05d", fileNum);
-  (fileName + String(numCharArray) + ".txt").toCharArray(FileNameC, 13);
+  (fileName + String(numCharArray) + ".csv").toCharArray(FileNameC, 13);
   while (SD.exists(FileNameC)) {
     fileNum += 1;
     sprintf(numCharArray, "%05d", fileNum);
-    (fileName + String(numCharArray) + ".txt").toCharArray(FileNameC, 13);
+    (fileName + String(numCharArray) + ".csv").toCharArray(FileNameC, 13);
   }
   Serial.print("FileNameC: ");
   Serial.println(FileNameC);
