@@ -454,6 +454,7 @@ Andy Wickert
 #include</span> <span class="cpf">&lt;avr/wdt.h&gt;</span><span class="cp">
 #include</span> <span class="cpf">&lt;avr/power.h&gt;</span><span class="cp">
 #include</span> <span class="cpf">&lt;EEPROM.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;NW_Core.h&gt;</span><span class="c1">   // NW_Sensor: the view the status file takes of a sensor</span><span class="cp">
 #include</span> <span class="cpf">"DS3231_Logger.h"</span><span class="cp">
 #include</span> <span class="cpf">"MCP3421.h"</span><span class="cp">
 #include</span> <span class="cpf">"SdFat.h"</span><span class="cp">
@@ -503,7 +504,7 @@ Andy Wickert
 <span class="p">};</span>
 
 
-<span class="k">class</span> <span class="nc">Margay</span>
+<span class="k">class</span> <span class="nc">Margay</span> <span class="o">:</span> <span class="k">public</span> <span class="n">NW_Sensor</span>
 <span class="p">{</span>
 
   <span class="nl">public:</span>
@@ -515,38 +516,47 @@ Andy Wickert
 
     <span class="kt">int</span> <span class="n">logStr</span><span class="p">(</span><span class="n">String</span> <span class="n">val</span><span class="p">);</span>
     <span class="kt">int</span> <span class="n">statusStr</span><span class="p">(</span><span class="n">String</span> <span class="n">val</span><span class="p">);</span>
+    <span class="kt">bool</span> <span class="n">watch</span><span class="p">(</span><span class="n">NW_Sensor</span><span class="o">&amp;</span> <span class="n">sensor</span><span class="p">);</span>
 
-    <span class="kt">void</span> <span class="n">note</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">word</span><span class="p">);</span>
+    <span class="c1">// --- NW_Sensor: Margay is a Schema 1 device and watches itself ---</span>
+    <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">name</span><span class="p">()</span> <span class="k">const</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="s">"Margay"</span><span class="p">;</span> <span class="p">}</span>
+    <span class="kt">uint8_t</span> <span class="n">reportKind</span><span class="p">()</span> <span class="k">override</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">reportIsFault</span><span class="p">()</span> <span class="k">override</span><span class="p">;</span>
+    <span class="kt">uint8_t</span> <span class="n">bootReportKind</span><span class="p">()</span> <span class="k">override</span><span class="p">;</span>
+    <span class="kt">void</span> <span class="n">clearBootReport</span><span class="p">()</span> <span class="k">override</span><span class="p">;</span>
+    <span class="kt">size_t</span> <span class="n">printStatus</span><span class="p">(</span><span class="n">Print</span><span class="o">&amp;</span> <span class="n">out</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">boot</span> <span class="o">=</span> <span class="nb">false</span><span class="p">)</span> <span class="k">override</span><span class="p">;</span>
 
-    <span class="kt">void</span> <span class="n">LED_Color</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">val</span><span class="p">);</span>
+    <span class="kt">void</span> <span class="nf">note</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">word</span><span class="p">);</span>
 
-    <span class="kt">void</span> <span class="n">run</span><span class="p">(</span><span class="n">String</span> <span class="p">(</span><span class="o">*</span><span class="n">f</span><span class="p">)(</span><span class="kt">void</span><span class="p">),</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">logInterval</span><span class="p">);</span>
+    <span class="kt">void</span> <span class="nf">LED_Color</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">val</span><span class="p">);</span>
 
-    <span class="kt">float</span> <span class="n">getVoltage</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="nf">run</span><span class="p">(</span><span class="n">String</span> <span class="p">(</span><span class="o">*</span><span class="n">f</span><span class="p">)(</span><span class="kt">void</span><span class="p">),</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">logInterval</span><span class="p">);</span>
 
-    <span class="kt">void</span> <span class="n">addDataPoint</span><span class="p">(</span><span class="n">String</span> <span class="p">(</span><span class="o">*</span><span class="n">update</span><span class="p">)(</span><span class="kt">void</span><span class="p">));</span>
+    <span class="kt">float</span> <span class="nf">getVoltage</span><span class="p">();</span>
 
-    <span class="kt">void</span> <span class="n">initLogFile</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="nf">addDataPoint</span><span class="p">(</span><span class="n">String</span> <span class="p">(</span><span class="o">*</span><span class="n">update</span><span class="p">)(</span><span class="kt">void</span><span class="p">));</span>
 
-    <span class="kt">void</span> <span class="n">setExtInt</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="n">n</span><span class="p">,</span> <span class="n">String</span> <span class="n">header_entry</span> <span class="o">=</span> <span class="s">"nInterrupts,"</span><span class="p">);</span>
+    <span class="kt">void</span> <span class="nf">initLogFile</span><span class="p">();</span>
 
-    <span class="kt">uint16_t</span> <span class="n">getExtIntCount</span><span class="p">(</span><span class="kt">bool</span> <span class="n">reset0</span> <span class="o">=</span> <span class="nb">true</span><span class="p">);</span>
+    <span class="kt">void</span> <span class="nf">setExtInt</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="n">n</span><span class="p">,</span> <span class="n">String</span> <span class="n">header_entry</span> <span class="o">=</span> <span class="s">"nInterrupts,"</span><span class="p">);</span>
 
-    <span class="kt">void</span> <span class="n">resetExtIntCount</span><span class="p">(</span><span class="kt">uint16_t</span> <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="kt">uint16_t</span> <span class="nf">getExtIntCount</span><span class="p">(</span><span class="kt">bool</span> <span class="n">reset0</span> <span class="o">=</span> <span class="nb">true</span><span class="p">);</span>
 
-    <span class="kt">float</span> <span class="n">getTemp</span><span class="p">(</span><span class="n">temp_source</span> <span class="n">sensor</span> <span class="o">=</span> <span class="n">thermistor_temp_sensor</span><span class="p">);</span>
+    <span class="kt">void</span> <span class="nf">resetExtIntCount</span><span class="p">(</span><span class="kt">uint16_t</span> <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">);</span>
 
-    <span class="kt">float</span> <span class="n">getBatVoltage</span><span class="p">();</span>
+    <span class="kt">float</span> <span class="nf">getTemp</span><span class="p">(</span><span class="n">temp_source</span> <span class="n">sensor</span> <span class="o">=</span> <span class="n">thermistor_temp_sensor</span><span class="p">);</span>
 
-    <span class="kt">float</span> <span class="n">getBatPercentage</span><span class="p">();</span>
+    <span class="kt">float</span> <span class="nf">getBatVoltage</span><span class="p">();</span>
 
-    <span class="kt">void</span> <span class="n">initADC</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="n">desiredResolution</span><span class="p">);</span>
+    <span class="kt">float</span> <span class="nf">getBatPercentage</span><span class="p">();</span>
 
-    <span class="kt">void</span> <span class="n">resetWDT</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="nf">initADC</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="n">desiredResolution</span><span class="p">);</span>
 
-    <span class="kt">void</span> <span class="n">powerOB</span><span class="p">(</span><span class="kt">bool</span> <span class="n">state</span><span class="p">);</span>
+    <span class="kt">void</span> <span class="nf">resetWDT</span><span class="p">();</span>
 
-    <span class="kt">void</span> <span class="n">powerAux</span><span class="p">(</span><span class="kt">bool</span> <span class="n">state</span><span class="p">);</span>
+    <span class="kt">void</span> <span class="nf">powerOB</span><span class="p">(</span><span class="kt">bool</span> <span class="n">state</span><span class="p">);</span>
+
+    <span class="kt">void</span> <span class="nf">powerAux</span><span class="p">(</span><span class="kt">bool</span> <span class="n">state</span><span class="p">);</span>
 
     <span class="c1">// -----------------------------------------------------------------------</span>
     <span class="c1">// Public pin definitions</span>
@@ -590,32 +600,32 @@ Andy Wickert
     <span class="kt">float</span> <span class="n">BatPercentageWarning</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>  
     <span class="k">const</span> <span class="n">String</span> <span class="n">LibVersion</span> <span class="o">=</span> <span class="s">"1.2.0"</span><span class="p">;</span> 
 
-  <span class="nl">protected:</span>
-    <span class="kt">float</span> <span class="n">tempConvert</span><span class="p">(</span><span class="kt">float</span> <span class="n">V</span><span class="p">,</span> <span class="kt">float</span> <span class="n">vcc</span><span class="p">,</span> <span class="kt">float</span> <span class="n">R</span><span class="p">,</span>
+  <span class="k">protected</span><span class="o">:</span>
+    <span class="kt">float</span> <span class="nf">tempConvert</span><span class="p">(</span><span class="kt">float</span> <span class="n">V</span><span class="p">,</span> <span class="kt">float</span> <span class="n">vcc</span><span class="p">,</span> <span class="kt">float</span> <span class="n">R</span><span class="p">,</span>
         <span class="kt">float</span> <span class="n">A</span><span class="p">,</span> <span class="kt">float</span> <span class="n">B</span><span class="p">,</span> <span class="kt">float</span> <span class="n">C</span><span class="p">,</span> <span class="kt">float</span> <span class="n">D</span><span class="p">,</span> <span class="kt">float</span> <span class="n">R25</span><span class="p">);</span>
-    <span class="kt">void</span> <span class="n">blinkGood</span><span class="p">();</span>
-    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">writeDataToSD</span><span class="p">();</span>
-    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">buttonLog</span><span class="p">();</span>
-    <span class="k">static</span> <span class="kt">void</span> <span class="n">isr0</span><span class="p">();</span>
-    <span class="k">static</span> <span class="kt">void</span> <span class="n">isr1</span><span class="p">();</span>
-    <span class="k">static</span> <span class="kt">void</span> <span class="n">isr2</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="nf">blinkGood</span><span class="p">();</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">writeDataToSD</span><span class="p">();</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">buttonLog</span><span class="p">();</span>
+    <span class="k">static</span> <span class="kt">void</span> <span class="nf">isr0</span><span class="p">();</span>
+    <span class="k">static</span> <span class="kt">void</span> <span class="nf">isr1</span><span class="p">();</span>
+    <span class="k">static</span> <span class="kt">void</span> <span class="nf">isr2</span><span class="p">();</span>
     <span class="k">static</span> <span class="n">Margay</span><span class="o">*</span> <span class="n">selfPointer</span><span class="p">;</span>
-    <span class="k">static</span> <span class="kt">void</span> <span class="n">dateTimeSD</span><span class="p">(</span><span class="kt">uint16_t</span><span class="o">*</span> <span class="n">date</span><span class="p">,</span> <span class="kt">uint16_t</span><span class="o">*</span> <span class="n">time</span><span class="p">);</span>
-    <span class="kt">void</span> <span class="n">switchExternalI2C</span><span class="p">(</span><span class="kt">bool</span> <span class="n">desiredState</span><span class="p">);</span>
-    <span class="kt">void</span> <span class="n">sleepNow</span><span class="p">();</span>
-    <span class="kt">void</span> <span class="n">turnOffSDcard</span><span class="p">();</span>
-    <span class="kt">void</span> <span class="n">turnOnSDcard</span><span class="p">();</span>
-    <span class="kt">void</span> <span class="n">getTime</span><span class="p">();</span>
-    <span class="n">String</span> <span class="n">getOnBoardVals</span><span class="p">();</span>
-    <span class="kt">void</span> <span class="n">I2Ctest</span><span class="p">();</span>
-    <span class="kt">void</span> <span class="n">SDtest</span><span class="p">();</span>
-    <span class="kt">void</span> <span class="n">clockTest</span><span class="p">();</span>
-    <span class="kt">void</span> <span class="n">batTest</span><span class="p">();</span>
-    <span class="kt">void</span> <span class="n">powerTest</span><span class="p">();</span>
-    <span class="kt">void</span> <span class="n">bme280Readings</span><span class="p">();</span>
-    <span class="kt">void</span> <span class="n">extIntCounter</span><span class="p">();</span>
-    <span class="kt">void</span> <span class="n">_addDataPoint</span><span class="p">(</span><span class="n">String</span> <span class="n">data</span><span class="p">);</span>
-    <span class="kt">void</span> <span class="n">farmGateI2C</span><span class="p">(</span><span class="kt">bool</span> <span class="n">initialStateExternalI2C</span><span class="p">);</span>
+    <span class="k">static</span> <span class="kt">void</span> <span class="nf">dateTimeSD</span><span class="p">(</span><span class="kt">uint16_t</span><span class="o">*</span> <span class="n">date</span><span class="p">,</span> <span class="kt">uint16_t</span><span class="o">*</span> <span class="n">time</span><span class="p">);</span>
+    <span class="kt">void</span> <span class="nf">switchExternalI2C</span><span class="p">(</span><span class="kt">bool</span> <span class="n">desiredState</span><span class="p">);</span>
+    <span class="kt">void</span> <span class="nf">sleepNow</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="nf">turnOffSDcard</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="nf">turnOnSDcard</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="nf">getTime</span><span class="p">();</span>
+    <span class="n">String</span> <span class="nf">getOnBoardVals</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="nf">I2Ctest</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="nf">SDtest</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="nf">clockTest</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="nf">batTest</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="nf">powerTest</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="nf">bme280Readings</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="nf">extIntCounter</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="nf">_addDataPoint</span><span class="p">(</span><span class="n">String</span> <span class="n">data</span><span class="p">);</span>
+    <span class="kt">void</span> <span class="nf">farmGateI2C</span><span class="p">(</span><span class="kt">bool</span> <span class="n">initialStateExternalI2C</span><span class="p">);</span>
 
     <span class="n">DS3231_Logger</span> <span class="n">RTC</span><span class="p">;</span>
     <span class="n">MCP3421</span> <span class="n">adc</span><span class="p">;</span>
@@ -656,6 +666,21 @@ Andy Wickert
 
     <span class="kt">char</span> <span class="n">FileNameC</span><span class="p">[</span><span class="mi">13</span><span class="p">];</span> <span class="c1">// "logNNNNN.csv" (12 chars) + null terminator</span>
     <span class="kt">char</span> <span class="n">FileNameStaC</span><span class="p">[</span><span class="mi">13</span><span class="p">];</span> <span class="c1">// "staNNNNN.csv", the status file with the same number</span>
+    <span class="k">static</span> <span class="k">const</span> <span class="kt">uint8_t</span> <span class="n">MaxWatched</span> <span class="o">=</span> <span class="mi">8</span><span class="p">;</span>
+    <span class="n">NW_Pages</span> <span class="n">Pages</span><span class="p">;</span>         <span class="c1">// Margay's own Schema 1 pages: 0-1 from EEPROM, 2-3 its reading of itself</span>
+    <span class="n">NW_Report</span> <span class="n">BootReport</span><span class="p">;</span>   <span class="c1">// what the logger reported at boot, until its row is written</span>
+    <span class="kt">bool</span> <span class="n">SDTestFailed</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span> <span class="c1">// the boot write-and-read-back on the card failed</span>
+    <span class="kt">bool</span> <span class="n">ClockError</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span> <span class="c1">// the DS3231 did not answer, or its oscillator is stopped</span>
+    <span class="kt">bool</span> <span class="n">BMEError</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>   <span class="c1">// the BME280 did not answer (models 2.0 and up)</span>
+    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">LogInterval</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// seconds, from run(); served on Page 3</span>
+    <span class="kt">uint16_t</span> <span class="n">FileNum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>   <span class="c1">// the number of the current log and status file pair</span>
+    <span class="kt">uint8_t</span> <span class="nf">chipFaults</span><span class="p">();</span>    <span class="c1">// Margay's chip-fault bits for Block 0: SDCard, Clock, BME280, SensorBus, Battery</span>
+    <span class="kt">void</span> <span class="nf">fillPages</span><span class="p">();</span>        <span class="c1">// Page 2 and 3 from the logger's own readings, then endReading()</span>
+    <span class="n">NW_Sensor</span><span class="o">*</span> <span class="n">Watched</span><span class="p">[</span><span class="n">MaxWatched</span><span class="p">];</span> <span class="c1">// sensors whose reports go to the status file (watch())</span>
+    <span class="kt">uint8_t</span> <span class="n">NumWatched</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">DeviceBootRows</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span> <span class="c1">// the first reading's boot rows have been written</span>
+    <span class="kt">int</span> <span class="nf">statusRow</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">trigger</span><span class="p">,</span> <span class="n">NW_Sensor</span><span class="o">&amp;</span> <span class="n">sensor</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">boot</span><span class="p">);</span> <span class="c1">// one device row: time, trigger, printStatus()</span>
+    <span class="kt">void</span> <span class="nf">reportRows</span><span class="p">();</span> <span class="c1">// after a reading: the rows the watched sensors' reports call for</span>
     <span class="n">String</span> <span class="n">HWVersion</span> <span class="o">=</span> <span class="s">""</span><span class="p">;</span> <span class="c1">// "3.0" from Page 0 (Schema 1), else the model number; for the status file's boot row</span>
     <span class="kt">char</span> <span class="n">FileNameTestC</span><span class="p">[</span><span class="mi">11</span><span class="p">];</span> <span class="c1">// "HWTest.txt" (10 chars) + null terminator</span>
     <span class="kt">bool</span> <span class="n">externalI2COn</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
@@ -669,7 +694,7 @@ Andy Wickert
 
 <hr />
 
-<p>Updated on 2026-09-23 at 20:12:55 +0000</p>
+<p>Updated on 2026-09-23 at 20:56:47 +0000</p>
 
         
       </section>

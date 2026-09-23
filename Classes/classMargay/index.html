@@ -225,13 +225,15 @@
           <aside class="sidebar__right sticky">
             <nav class="toc" aria-label="Table of contents">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
-              <ul class="toc__menu"><li><a href="#public-functions">Public Functions</a></li><li><a href="#public-attributes">Public Attributes</a></li><li><a href="#detailed-description">Detailed Description</a></li><li><a href="#public-functions-documentation">Public Functions Documentation</a><ul><li><a href="#function-margay">function Margay</a></li><li><a href="#function-begin">function begin</a></li><li><a href="#function-begin-1">function begin</a></li><li><a href="#function-logstr">function logStr</a></li><li><a href="#function-statusstr">function statusStr</a></li><li><a href="#function-note">function note</a></li><li><a href="#function-led_color">function LED_Color</a></li><li><a href="#function-run">function run</a></li><li><a href="#function-getvoltage">function getVoltage</a></li><li><a href="#function-adddatapoint">function addDataPoint</a></li><li><a href="#function-initlogfile">function initLogFile</a></li><li><a href="#function-setextint">function setExtInt</a></li><li><a href="#function-getextintcount">function getExtIntCount</a></li><li><a href="#function-resetextintcount">function resetExtIntCount</a></li><li><a href="#function-gettemp">function getTemp</a></li><li><a href="#function-getbatvoltage">function getBatVoltage</a></li><li><a href="#function-getbatpercentage">function getBatPercentage</a></li><li><a href="#function-initadc">function initADC</a></li><li><a href="#function-resetwdt">function resetWDT</a></li><li><a href="#function-powerob">function powerOB</a></li><li><a href="#function-poweraux">function powerAux</a></li></ul></li><li><a href="#public-attributes-documentation">Public Attributes Documentation</a><ul><li><a href="#variable-sd_cs">variable SD_CS</a></li><li><a href="#variable-auxled">variable AuxLED</a></li><li><a href="#variable-redled">variable RedLED</a></li><li><a href="#variable-greenled">variable GreenLED</a></li><li><a href="#variable-blueled">variable BlueLED</a></li><li><a href="#variable-vref_pin">variable VRef_Pin</a></li><li><a href="#variable-thermsense_pin">variable ThermSense_Pin</a></li><li><a href="#variable-batsense_pin">variable BatSense_Pin</a></li><li><a href="#variable-vswitch_pin">variable VSwitch_Pin</a></li><li><a href="#variable-sd_cd">variable SD_CD</a></li><li><a href="#variable-ext3v3ctrl">variable Ext3v3Ctrl</a></li><li><a href="#variable-i2c_sw">variable I2C_SW</a></li><li><a href="#variable-pg">variable PG</a></li><li><a href="#variable-extint">variable ExtInt</a></li><li><a href="#variable-rtcint">variable RTCInt</a></li><li><a href="#variable-logint">variable LogInt</a></li><li><a href="#variable-wdhold">variable WDHold</a></li><li><a href="#variable-batswitch">variable BatSwitch</a></li><li><a href="#variable-tx">variable TX</a></li><li><a href="#variable-rx">variable RX</a></li><li><a href="#variable-d0">variable D0</a></li><li><a href="#variable-ncells">variable NCells</a></li><li><a href="#variable-batvoltageerror">variable BatVoltageError</a></li><li><a href="#variable-batpercentagewarning">variable BatPercentageWarning</a></li><li><a href="#variable-libversion">variable LibVersion</a></li></ul></li></ul>
+              <ul class="toc__menu"><li><a href="#public-functions">Public Functions</a></li><li><a href="#public-attributes">Public Attributes</a></li><li><a href="#detailed-description">Detailed Description</a></li><li><a href="#public-functions-documentation">Public Functions Documentation</a><ul><li><a href="#function-margay">function Margay</a></li><li><a href="#function-begin">function begin</a></li><li><a href="#function-begin-1">function begin</a></li><li><a href="#function-logstr">function logStr</a></li><li><a href="#function-statusstr">function statusStr</a></li><li><a href="#function-watch">function watch</a></li><li><a href="#function-name">function name</a></li><li><a href="#function-reportkind">function reportKind</a></li><li><a href="#function-reportisfault">function reportIsFault</a></li><li><a href="#function-bootreportkind">function bootReportKind</a></li><li><a href="#function-clearbootreport">function clearBootReport</a></li><li><a href="#function-printstatus">function printStatus</a></li><li><a href="#function-note">function note</a></li><li><a href="#function-led_color">function LED_Color</a></li><li><a href="#function-run">function run</a></li><li><a href="#function-getvoltage">function getVoltage</a></li><li><a href="#function-adddatapoint">function addDataPoint</a></li><li><a href="#function-initlogfile">function initLogFile</a></li><li><a href="#function-setextint">function setExtInt</a></li><li><a href="#function-getextintcount">function getExtIntCount</a></li><li><a href="#function-resetextintcount">function resetExtIntCount</a></li><li><a href="#function-gettemp">function getTemp</a></li><li><a href="#function-getbatvoltage">function getBatVoltage</a></li><li><a href="#function-getbatpercentage">function getBatPercentage</a></li><li><a href="#function-initadc">function initADC</a></li><li><a href="#function-resetwdt">function resetWDT</a></li><li><a href="#function-powerob">function powerOB</a></li><li><a href="#function-poweraux">function powerAux</a></li></ul></li><li><a href="#public-attributes-documentation">Public Attributes Documentation</a><ul><li><a href="#variable-sd_cs">variable SD_CS</a></li><li><a href="#variable-auxled">variable AuxLED</a></li><li><a href="#variable-redled">variable RedLED</a></li><li><a href="#variable-greenled">variable GreenLED</a></li><li><a href="#variable-blueled">variable BlueLED</a></li><li><a href="#variable-vref_pin">variable VRef_Pin</a></li><li><a href="#variable-thermsense_pin">variable ThermSense_Pin</a></li><li><a href="#variable-batsense_pin">variable BatSense_Pin</a></li><li><a href="#variable-vswitch_pin">variable VSwitch_Pin</a></li><li><a href="#variable-sd_cd">variable SD_CD</a></li><li><a href="#variable-ext3v3ctrl">variable Ext3v3Ctrl</a></li><li><a href="#variable-i2c_sw">variable I2C_SW</a></li><li><a href="#variable-pg">variable PG</a></li><li><a href="#variable-extint">variable ExtInt</a></li><li><a href="#variable-rtcint">variable RTCInt</a></li><li><a href="#variable-logint">variable LogInt</a></li><li><a href="#variable-wdhold">variable WDHold</a></li><li><a href="#variable-batswitch">variable BatSwitch</a></li><li><a href="#variable-tx">variable TX</a></li><li><a href="#variable-rx">variable RX</a></li><li><a href="#variable-d0">variable D0</a></li><li><a href="#variable-ncells">variable NCells</a></li><li><a href="#variable-batvoltageerror">variable BatVoltageError</a></li><li><a href="#variable-batpercentagewarning">variable BatPercentageWarning</a></li><li><a href="#variable-libversion">variable LibVersion</a></li></ul></li></ul>
             </nav>
           </aside>
         
         <p>Arduino library for the <a href="">Margay</a> data logger.  <a href="#detailed-description">More…</a></p>
 
 <p><code class="language-plaintext highlighter-rouge">#include &lt;Margay.h&gt;</code></p>
+
+<p>Inherits from NW_Sensor</p>
 
 <h2 id="public-functions">Public Functions</h2>
 
@@ -262,6 +264,34 @@
     <tr>
       <td>int</td>
       <td><strong><a href="/Margay_Library/Classes/classMargay/#function-statusstr">statusStr</a></strong>(String val)<br />Append one row to the status file (sta<n>.csv beside log<n>.csv).</n></n></td>
+    </tr>
+    <tr>
+      <td>bool</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-watch">watch</a></strong>(NW_Sensor &amp; sensor)<br />Register a sensor whose reports the status file should carry.</td>
+    </tr>
+    <tr>
+      <td>const char *</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-name">name</a></strong>() const override<br />“Margay”.</td>
+    </tr>
+    <tr>
+      <td>uint8_t</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-reportkind">reportKind</a></strong>() override<br />Kind of the logger’s own report latched during the last reading (0 = none).</td>
+    </tr>
+    <tr>
+      <td>bool</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-reportisfault">reportIsFault</a></strong>() override</td>
+    </tr>
+    <tr>
+      <td>uint8_t</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-bootreportkind">bootReportKind</a></strong>() override<br />The report at boot: LoggingStarted (0xF0), or the first fault <a href="/Margay_Library/Classes/classMargay/#function-begin">begin()</a> found.</td>
+    </tr>
+    <tr>
+      <td>void</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-clearbootreport">clearBootReport</a></strong>() override</td>
+    </tr>
+    <tr>
+      <td>size_t</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-printstatus">printStatus</a></strong>(Print &amp; out, bool boot =false) override<br />The logger’s own status line: name, serial, hardware version, library version, report code and note word, Pages 0-2 in hex (its reading of itself: battery, onboard environment, clock). The same columns as a sensor’s.</td>
     </tr>
     <tr>
       <td>void</td>
@@ -546,7 +576,61 @@
 
 <p><strong>Return</strong>: 0 written, -1 the file could not be opened</p>
 
-<p>Columns: Time,Trigger,Device,Serial,HW,FW,Code,Note,Page0,Page1,Page2. The logger writes its own boot row at every new file; a sketch writes a device’s row with the logger’s time, a trigger word, and the device’s printStatus() line (NW_Core), whenever the device’s reportKind() is not 0.</p>
+<p>Columns: Time,Trigger,Device,Serial,HW,FW,Code,Note,Page0,Page1,Page2. The logger writes its own boot row at every new file; a sketch writes a device’s row with the logger’s time, a trigger word, and the device’s <a href="/Margay_Library/Classes/classMargay/#function-printstatus">printStatus()</a> line (NW_Core), whenever the device’s <a href="/Margay_Library/Classes/classMargay/#function-reportkind">reportKind()</a> is not 0.</p>
+
+<h3 id="function-watch">function watch</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">bool</span> <span class="n">watch</span><span class="p">(</span>
+    <span class="n">NW_Sensor</span> <span class="o">&amp;</span> <span class="n">sensor</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p>Register a sensor whose reports the status file should carry.</p>
+
+<p><strong>Return</strong>: false if the list is full</p>
+
+<p>Call once per sensor in setup(). After every reading the logger writes a row for each watched sensor whose report says something happened: a report captured with the reading (trigger “report”), and a report the sensor captured at its boot other than the reset a logger expects when it powers the rail (trigger “boot”). The first reading writes a boot row for every watched sensor, whatever it says, so the file records each device’s identity and versions. Up to MaxWatched sensors.</p>
+
+<h3 id="function-name">function name</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">inline</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">name</span><span class="p">()</span> <span class="k">const</span> <span class="k">override</span>
+</code></pre></div></div>
+
+<p>“Margay”.</p>
+
+<h3 id="function-reportkind">function reportKind</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint8_t</span> <span class="n">reportKind</span><span class="p">()</span> <span class="k">override</span>
+</code></pre></div></div>
+
+<p>Kind of the logger’s own report latched during the last reading (0 = none).</p>
+
+<h3 id="function-reportisfault">function reportIsFault</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">bool</span> <span class="n">reportIsFault</span><span class="p">()</span> <span class="k">override</span>
+</code></pre></div></div>
+
+<h3 id="function-bootreportkind">function bootReportKind</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint8_t</span> <span class="n">bootReportKind</span><span class="p">()</span> <span class="k">override</span>
+</code></pre></div></div>
+
+<p>The report at boot: LoggingStarted (0xF0), or the first fault <a href="/Margay_Library/Classes/classMargay/#function-begin">begin()</a> found.</p>
+
+<h3 id="function-clearbootreport">function clearBootReport</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">clearBootReport</span><span class="p">()</span> <span class="k">override</span>
+</code></pre></div></div>
+
+<h3 id="function-printstatus">function printStatus</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">size_t</span> <span class="n">printStatus</span><span class="p">(</span>
+    <span class="n">Print</span> <span class="o">&amp;</span> <span class="n">out</span><span class="p">,</span>
+    <span class="kt">bool</span> <span class="n">boot</span> <span class="o">=</span><span class="nb">false</span>
+<span class="p">)</span> <span class="k">override</span>
+</code></pre></div></div>
+
+<p>The logger’s own status line: name, serial, hardware version, library version, report code and note word, Pages 0-2 in hex (its reading of itself: battery, onboard environment, clock). The same columns as a sensor’s.</p>
 
 <h3 id="function-note">function note</h3>
 
@@ -563,7 +647,7 @@
   <li><strong>word</strong> One word (no commas) naming the condition.</li>
 </ul>
 
-<p>The word goes in the Note column, the last column of every row, written without a comma after it so the row ends cleanly. It is also printed to Serial and shown as an orange pulse on the LED. Several notes in one interval are joined with ‘;’. Cleared after each row. Typical words: NoACK, OldFirmware, NotSchema1, LiDARTimeout.</p>
+<p>The word goes in the Note column, the last column of every row, written without a comma after it so the row ends cleanly. It is also printed to Serial and shown as an orange pulse on the LED. Several notes in one interval are joined with ‘;’. Cleared after each row. Typical words: NotAnswering, OldFirmware, NotSchema1, LiDARTimeout.</p>
 
 <h3 id="function-led_color">function LED_Color</h3>
 
@@ -976,7 +1060,7 @@
 
 <hr />
 
-<p>Updated on 2026-09-23 at 20:12:55 +0000</p>
+<p>Updated on 2026-09-23 at 20:56:47 +0000</p>
 
         
       </section>

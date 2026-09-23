@@ -225,7 +225,7 @@
           <aside class="sidebar__right sticky">
             <nav class="toc" aria-label="Table of contents">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
-              <ul class="toc__menu"><li><a href="#functions">Functions</a></li><li><a href="#attributes">Attributes</a></li><li><a href="#functions-documentation">Functions Documentation</a><ul><li><a href="#function-crc8">function crc8</a></li><li><a href="#function-isr">function ISR</a></li></ul></li><li><a href="#attributes-documentation">Attributes Documentation</a><ul><li><a href="#variable-manuallog">variable manualLog</a></li><li><a href="#variable-extintpin">variable ExtIntPin</a></li><li><a href="#variable-ext_int_header_entry">variable ext_int_header_entry</a></li><li><a href="#variable-extinttripped">variable ExtIntTripped</a></li><li><a href="#variable-extint_count">variable ExtInt_count</a></li></ul></li><li><a href="#source-code">Source code</a></li></ul>
+              <ul class="toc__menu"><li><a href="#functions">Functions</a></li><li><a href="#attributes">Attributes</a></li><li><a href="#functions-documentation">Functions Documentation</a><ul><li><a href="#function-crc8">function crc8</a></li><li><a href="#function-isr">function ISR</a></li></ul></li><li><a href="#attributes-documentation">Attributes Documentation</a><ul><li><a href="#variable-manuallog">variable manualLog</a></li><li><a href="#variable-extintpin">variable ExtIntPin</a></li><li><a href="#variable-ext_int_header_entry">variable ext_int_header_entry</a></li><li><a href="#variable-extinttripped">variable ExtIntTripped</a></li><li><a href="#variable-extint_count">variable ExtInt_count</a></li><li><a href="#variable-margaychips">variable margayChips</a></li><li><a href="#variable-margaywords">variable margayWords</a></li><li><a href="#variable-margaychipwords">variable margayChipWords</a></li></ul></li><li><a href="#source-code">Source code</a></li></ul>
             </nav>
           </aside>
         
@@ -280,6 +280,18 @@
       <td>volatile uint16_t</td>
       <td><strong><a href="/Margay_Library/Files/Margay_8cpp/#variable-extint-count">ExtInt_count</a></strong></td>
     </tr>
+    <tr>
+      <td>const char *const</td>
+      <td><strong><a href="/Margay_Library/Files/Margay_8cpp/#variable-margaychips">margayChips</a></strong></td>
+    </tr>
+    <tr>
+      <td>const char *const</td>
+      <td><strong><a href="/Margay_Library/Files/Margay_8cpp/#variable-margaywords">margayWords</a></strong></td>
+    </tr>
+    <tr>
+      <td>const char *const</td>
+      <td><strong><a href="/Margay_Library/Files/Margay_8cpp/#variable-margaychipwords">margayChipWords</a></strong></td>
+    </tr>
   </tbody>
 </table>
 
@@ -325,6 +337,21 @@
 <h3 id="variable-extint_count">variable ExtInt_count</h3>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">volatile</span> <span class="kt">uint16_t</span> <span class="n">ExtInt_count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="variable-margaychips">variable margayChips</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">static</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="k">const</span> <span class="n">margayChips</span> <span class="o">=</span> <span class="p">{</span><span class="s">"SDCard"</span><span class="p">,</span> <span class="s">"Clock"</span><span class="p">,</span> <span class="s">"BME280"</span><span class="p">,</span> <span class="s">"SensorBus"</span><span class="p">,</span> <span class="s">"Battery"</span><span class="p">};</span>
+</code></pre></div></div>
+
+<h3 id="variable-margaywords">variable margayWords</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">static</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="k">const</span> <span class="n">margayWords</span> <span class="o">=</span> <span class="p">{</span><span class="s">"LoggingStarted"</span><span class="p">,</span> <span class="s">"NewLogFile"</span><span class="p">,</span> <span class="s">"RowNotWritten"</span><span class="p">};</span>
+</code></pre></div></div>
+
+<h3 id="variable-margaychipwords">variable margayChipWords</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">static</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="k">const</span> <span class="n">margayChipWords</span> <span class="o">=</span> <span class="p">{</span><span class="s">"BatteryWarning"</span><span class="p">,</span> <span class="s">"ClockSet"</span><span class="p">};</span>
 </code></pre></div></div>
 
 <h2 id="source-code">Source code</h2>
@@ -520,6 +547,7 @@ Andy Wickert
   <span class="k">if</span> <span class="p">(</span><span class="n">Model</span> <span class="o">&gt;=</span> <span class="n">MODEL_2v0</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">bme280</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mh">0x77</span><span class="p">))</span> <span class="p">{</span> <span class="c1">//Initialize onboard temp/pressure/RH sensor (BME280)</span>
     <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"BME280 init: FAIL"</span><span class="p">);</span>
     <span class="n">OnBoardError</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="n">BMEError</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
   <span class="p">}</span>
 
 
@@ -540,9 +568,9 @@ Andy Wickert
   <span class="c1">// Schema 1 (NW-Provision): serial number = Block 2 (offset 0x10-0x17).</span>
   <span class="c1">// Schema 0 (MargaySetup): serial number = the last 8 bytes.</span>
   <span class="kt">int</span> <span class="n">page0</span> <span class="o">=</span> <span class="n">EEPROMLen</span> <span class="o">-</span> <span class="mi">64</span><span class="p">;</span> <span class="c1">//Schema 1 stored image: Page 0 identity, then Page 1 calibration, at the top of EEPROM (2026-09-23 renumbering)</span>
-  <span class="kt">uint8_t</span> <span class="n">p0</span><span class="p">[</span><span class="mh">0x1F</span><span class="p">];</span>
-  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mh">0x1F</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="n">p0</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">EEPROM</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="n">page0</span> <span class="o">+</span> <span class="n">i</span><span class="p">);</span>
-  <span class="kt">bool</span> <span class="n">schema1</span> <span class="o">=</span> <span class="p">(</span><span class="n">p0</span><span class="p">[</span><span class="mh">0x00</span><span class="p">]</span> <span class="o">==</span> <span class="mh">0x01</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">p0</span><span class="p">[</span><span class="mh">0x1D</span><span class="p">]</span> <span class="o">==</span> <span class="mh">0x4E</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">crc8</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="mh">0x1E</span><span class="p">)</span> <span class="o">==</span> <span class="n">p0</span><span class="p">[</span><span class="mh">0x1E</span><span class="p">]);</span>
+  <span class="n">Pages</span><span class="p">.</span><span class="n">loadStored</span><span class="p">(</span><span class="n">page0</span><span class="p">);</span> <span class="c1">//Margay's own pages: 0 and 1 from EEPROM; 2 and 3 filled at each reading</span>
+  <span class="k">const</span> <span class="kt">uint8_t</span><span class="o">*</span> <span class="n">p0</span> <span class="o">=</span> <span class="n">Pages</span><span class="p">.</span><span class="n">page</span><span class="p">;</span>
+  <span class="kt">bool</span> <span class="n">schema1</span> <span class="o">=</span> <span class="n">Pages</span><span class="p">.</span><span class="n">page0Valid</span><span class="p">();</span>
   <span class="kt">int</span> <span class="n">snStart</span> <span class="o">=</span> <span class="n">schema1</span> <span class="o">?</span> <span class="n">page0</span> <span class="o">+</span> <span class="mh">0x10</span> <span class="o">:</span> <span class="n">EEPROMLen</span> <span class="o">-</span> <span class="mi">8</span><span class="p">;</span>
   <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">snStart</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">snStart</span> <span class="o">+</span> <span class="mi">8</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>  <span class="c1">//Read out Serial Number</span>
     <span class="n">val</span> <span class="o">=</span> <span class="n">EEPROM</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>  <span class="c1">//Read SN values as individual bytes from EEPROM</span>
@@ -563,6 +591,14 @@ Andy Wickert
     <span class="n">HWVersion</span> <span class="o">=</span> <span class="n">String</span><span class="p">(</span><span class="n">p0</span><span class="p">[</span><span class="mh">0x08</span><span class="p">])</span> <span class="o">+</span> <span class="s">"."</span> <span class="o">+</span> <span class="n">String</span><span class="p">(</span><span class="n">p0</span><span class="p">[</span><span class="mh">0x09</span><span class="p">]);</span> <span class="c1">//For the status file's boot row</span>
   <span class="p">}</span>
   <span class="k">else</span> <span class="n">HWVersion</span> <span class="o">=</span> <span class="n">String</span><span class="p">(</span><span class="n">Model</span><span class="p">);</span> <span class="c1">//Schema 0: the model number the sketch declared</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">schema1</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">Pages</span><span class="p">.</span><span class="n">page1Blank</span><span class="p">())</span> <span class="p">{</span> <span class="c1">//Page 1: this board's calibration, written by NW-Provision; the constants otherwise</span>
+    <span class="n">BatteryDivider</span> <span class="o">=</span> <span class="n">Pages</span><span class="p">.</span><span class="n">get16</span><span class="p">(</span><span class="mh">0x20</span><span class="p">)</span> <span class="o">/</span> <span class="mf">1000.0</span><span class="p">;</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">Pages</span><span class="p">.</span><span class="n">getFloat</span><span class="p">(</span><span class="mh">0x22</span><span class="p">);</span> <span class="n">B</span> <span class="o">=</span> <span class="n">Pages</span><span class="p">.</span><span class="n">getFloat</span><span class="p">(</span><span class="mh">0x26</span><span class="p">);</span> <span class="n">C</span> <span class="o">=</span> <span class="n">Pages</span><span class="p">.</span><span class="n">getFloat</span><span class="p">(</span><span class="mh">0x2A</span><span class="p">);</span> <span class="n">D</span> <span class="o">=</span> <span class="n">Pages</span><span class="p">.</span><span class="n">getFloat</span><span class="p">(</span><span class="mh">0x2E</span><span class="p">);</span>
+    <span class="n">BatVoltageError</span> <span class="o">=</span> <span class="n">Pages</span><span class="p">.</span><span class="n">get16</span><span class="p">(</span><span class="mh">0x32</span><span class="p">)</span> <span class="o">/</span> <span class="mf">100.0</span><span class="p">;</span>
+    <span class="n">BatPercentageWarning</span> <span class="o">=</span> <span class="n">Pages</span><span class="p">.</span><span class="n">page</span><span class="p">[</span><span class="mh">0x34</span><span class="p">];</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Calibration from Page 1"</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">schema1</span><span class="p">)</span> <span class="n">Pages</span><span class="p">.</span><span class="n">latchFault</span><span class="p">(</span><span class="mh">0xE3</span><span class="p">);</span> <span class="c1">//Page 0 invalid: unprovisioned or corrupt</span>
   <span class="k">if</span> <span class="p">(</span><span class="n">strcmp</span><span class="p">(</span><span class="n">SN</span><span class="p">,</span> <span class="s">"FFFF-FFFF-FFFF-FFFF"</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
     <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"WARNING: no serial number programmed in EEPROM"</span><span class="p">);</span>
   <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n\n</span><span class="s">"</span><span class="p">);</span>
@@ -579,6 +615,7 @@ Andy Wickert
     <span class="p">}</span>
     <span class="n">RTC</span><span class="p">.</span><span class="n">setTime</span><span class="p">(</span><span class="mi">2000</span> <span class="o">+</span> <span class="n">dateTimeVals</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dateTimeVals</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">dateTimeVals</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
                 <span class="n">dateTimeVals</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">dateTimeVals</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">dateTimeVals</span><span class="p">[</span><span class="mi">5</span><span class="p">]);</span>
+    <span class="n">Pages</span><span class="p">.</span><span class="n">latchNotice</span><span class="p">(</span><span class="mh">0x30</span><span class="p">);</span> <span class="c1">//ClockSet</span>
   <span class="p">}</span>
 
   <span class="n">getTime</span><span class="p">();</span> <span class="c1">//Get time to pass to computer</span>
@@ -665,6 +702,17 @@ Andy Wickert
   <span class="p">}</span>
 
   <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Ready to Log...</span><span class="se">\n\n</span><span class="s">"</span><span class="p">);</span>
+  <span class="c1">//The logger's own report at boot, for its first status row: the first fault the</span>
+  <span class="c1">//self-tests found, else LoggingStarted (unit, kind 16).</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">SDCardMissing</span><span class="p">)</span> <span class="n">Pages</span><span class="p">.</span><span class="n">latchFault</span><span class="p">(</span><span class="mh">0x01</span><span class="p">);</span>
+  <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">SDTestFailed</span><span class="p">)</span> <span class="n">Pages</span><span class="p">.</span><span class="n">latchFault</span><span class="p">(</span><span class="mh">0x05</span><span class="p">);</span>
+  <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">ClockError</span><span class="p">)</span> <span class="n">Pages</span><span class="p">.</span><span class="n">latchFault</span><span class="p">(</span><span class="mh">0x21</span><span class="p">);</span>
+  <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">BMEError</span><span class="p">)</span> <span class="n">Pages</span><span class="p">.</span><span class="n">latchFault</span><span class="p">(</span><span class="mh">0x41</span><span class="p">);</span>
+  <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">SensorError</span><span class="p">)</span> <span class="n">Pages</span><span class="p">.</span><span class="n">latchFault</span><span class="p">(</span><span class="mh">0x61</span><span class="p">);</span>
+  <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">BatError</span><span class="p">)</span> <span class="n">Pages</span><span class="p">.</span><span class="n">latchFault</span><span class="p">(</span><span class="mh">0x84</span><span class="p">);</span>
+  <span class="n">Pages</span><span class="p">.</span><span class="n">latchNotice</span><span class="p">(</span><span class="mh">0xF0</span><span class="p">);</span>
+  <span class="n">BootReport</span> <span class="o">=</span> <span class="n">Pages</span><span class="p">.</span><span class="n">report</span><span class="p">();</span>
+  <span class="n">Pages</span><span class="p">.</span><span class="n">acknowledge</span><span class="p">();</span>
   <span class="n">NewLog</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span> <span class="c1">//Set flag to begin new log file</span>
 
   <span class="k">if</span> <span class="p">(</span><span class="n">ExtIntPin</span> <span class="o">!=</span> <span class="mi">255</span><span class="p">)</span> <span class="p">{</span>
@@ -749,11 +797,13 @@ Andy Wickert
   <span class="k">if</span> <span class="p">(</span><span class="n">cardNotPresent</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">F</span><span class="p">(</span><span class="s">" NO CARD"</span><span class="p">));</span>
     <span class="n">sdTestFailed</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="n">SDTestFailed</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
     <span class="n">SDCardMissing</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span> <span class="c1">//Card not inserted</span>
   <span class="p">}</span>
   <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="o">!</span><span class="n">SD</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="n">SD_CS</span><span class="p">))</span> <span class="p">{</span>
     <span class="n">OnBoardError</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
     <span class="n">sdTestFailed</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="n">SDTestFailed</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
   <span class="p">}</span>
 
   <span class="c1">// If card is present and initialised successfully, do the following:</span>
@@ -790,6 +840,7 @@ Andy Wickert
       <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">randLength</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span> <span class="c1">//Test random value string</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">testDigits</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">randDigits</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="p">{</span>
           <span class="n">sdTestFailed</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+          <span class="n">SDTestFailed</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
           <span class="n">OnBoardError</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
         <span class="p">}</span>
       <span class="p">}</span>
@@ -821,6 +872,7 @@ Andy Wickert
     <span class="n">delay</span><span class="p">(</span><span class="mi">1100</span><span class="p">);</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">RTC</span><span class="p">.</span><span class="n">getValue</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">==</span> <span class="n">testSeconds</span><span class="p">)</span> <span class="p">{</span>
       <span class="n">OnBoardError</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span> <span class="c1">// If clock is not incrementing</span>
+      <span class="n">ClockError</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
       <span class="n">oscStop</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>      <span class="c1">// Oscillator not running</span>
       <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">" FAIL (oscillator stopped)"</span><span class="p">);</span>
     <span class="p">}</span>
@@ -839,6 +891,7 @@ Andy Wickert
   <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
     <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">" FAIL"</span><span class="p">);</span>
     <span class="n">OnBoardError</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="n">ClockError</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
   <span class="p">}</span>
 <span class="p">}</span>
 
@@ -848,7 +901,7 @@ Andy Wickert
   <span class="c1">// Set error flag if below min voltage</span>
   <span class="k">if</span> <span class="p">(</span><span class="n">batVoltage</span> <span class="o">&lt;</span> <span class="n">BatVoltageError</span><span class="p">)</span> <span class="n">BatError</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
   <span class="c1">// Set warning flag if below set percentage</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">batPercentage</span> <span class="o">&lt;</span> <span class="n">BatPercentageWarning</span><span class="p">)</span> <span class="n">BatWarning</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">batPercentage</span> <span class="o">&lt;</span> <span class="n">BatPercentageWarning</span><span class="p">)</span> <span class="p">{</span> <span class="n">BatWarning</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span> <span class="n">Pages</span><span class="p">.</span><span class="n">latchNotice</span><span class="p">(</span><span class="mh">0x90</span><span class="p">);</span> <span class="p">}</span> <span class="c1">//BatteryWarning</span>
   <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"Bat = "</span><span class="p">);</span>
   <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">batVoltage</span><span class="p">);</span>
   <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"V</span><span class="se">\t</span><span class="s">"</span><span class="p">);</span>
@@ -922,15 +975,15 @@ Andy Wickert
     <span class="p">(</span><span class="n">fileName</span> <span class="o">+</span> <span class="n">String</span><span class="p">(</span><span class="n">numCharArray</span><span class="p">)</span> <span class="o">+</span> <span class="s">".csv"</span><span class="p">).</span><span class="n">toCharArray</span><span class="p">(</span><span class="n">FileNameC</span><span class="p">,</span> <span class="mi">13</span><span class="p">);</span>
   <span class="p">}</span>
   <span class="p">(</span><span class="s">"sta"</span> <span class="o">+</span> <span class="n">String</span><span class="p">(</span><span class="n">numCharArray</span><span class="p">)</span> <span class="o">+</span> <span class="s">".csv"</span><span class="p">).</span><span class="n">toCharArray</span><span class="p">(</span><span class="n">FileNameStaC</span><span class="p">,</span> <span class="mi">13</span><span class="p">);</span> <span class="c1">//The status file, same number</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">FileNum</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="n">Pages</span><span class="p">.</span><span class="n">latchNotice</span><span class="p">(</span><span class="mh">0xF1</span><span class="p">);</span> <span class="c1">//NewLogFile: a later pair, not the first</span>
+  <span class="n">FileNum</span> <span class="o">=</span> <span class="n">fileNum</span><span class="p">;</span>
   <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"FileNameC: "</span><span class="p">);</span>
   <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">FileNameC</span><span class="p">);</span>
   <span class="c1">// The status file: one row per report, boot and check, from this logger and</span>
   <span class="c1">// from every device on it (NW-Device-Specification Report register). Its</span>
   <span class="c1">// boot row carries what the data file's first line used to: library</span>
   <span class="c1">// version and serial number, with the hardware version beside them.</span>
-  <span class="n">statusStr</span><span class="p">(</span><span class="s">"Time,Trigger,Device,Serial,HW,FW,Code,Note,Page0,Page1,Page2"</span><span class="p">);</span>
-  <span class="n">getTime</span><span class="p">();</span>
-  <span class="n">statusStr</span><span class="p">(</span><span class="n">LogTimeDate</span> <span class="o">+</span> <span class="s">",boot,Margay,"</span> <span class="o">+</span> <span class="n">String</span><span class="p">(</span><span class="n">SN</span><span class="p">)</span> <span class="o">+</span> <span class="s">","</span> <span class="o">+</span> <span class="n">HWVersion</span> <span class="o">+</span> <span class="s">","</span> <span class="o">+</span> <span class="n">String</span><span class="p">(</span><span class="n">LibVersion</span><span class="p">)</span> <span class="o">+</span> <span class="s">",0x00,None,,,"</span><span class="p">);</span>
+  <span class="n">statusStr</span><span class="p">(</span><span class="s">"Time,Trigger,Device,Serial,HW,FW,Code,Note,Page0,Page1,Page2"</span><span class="p">);</span> <span class="c1">//The logger's own boot row follows at the first reading (it watches itself)</span>
   <span class="c1">// The data file starts with its header row (old loggers lack BME280)</span>
   <span class="c1">// Note is always the last column and carries no comma after it: every</span>
   <span class="c1">// sensor ends its fields with a comma for the next, so this ends the row.</span>
@@ -1153,6 +1206,7 @@ Andy Wickert
 
 <span class="c1">// Pass in function which returns string of data</span>
 <span class="kt">void</span> <span class="n">Margay</span><span class="o">::</span><span class="n">run</span><span class="p">(</span><span class="n">String</span> <span class="p">(</span><span class="o">*</span><span class="n">update</span><span class="p">)(</span><span class="kt">void</span><span class="p">),</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">logInterval</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">LogInterval</span> <span class="o">=</span> <span class="n">logInterval</span><span class="p">;</span> <span class="c1">//Served on Page 3</span>
   <span class="c1">// Print note that that logging has started</span>
   <span class="c1">// Serial.println("Log Started!"); //DEBUG!</span>
   <span class="c1">// Serial.println(millis()); //DEBUG!</span>
@@ -1277,8 +1331,100 @@ Andy Wickert
   <span class="n">Note</span> <span class="o">=</span> <span class="s">""</span><span class="p">;</span> <span class="c1">//One row's worth of notes</span>
   <span class="n">digitalWrite</span><span class="p">(</span><span class="n">BlueLED</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span> <span class="c1">//OFF</span>
   <span class="c1">// Serial.println("Got OB vals");  //DEBUG!</span>
-  <span class="n">logStr</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">logStr</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="n">Pages</span><span class="p">.</span><span class="n">latchNotice</span><span class="p">(</span><span class="mh">0xF2</span><span class="p">);</span> <span class="c1">//RowNotWritten</span>
   <span class="c1">// Serial.println("Logged Data"); //DEBUG!</span>
+  <span class="n">fillPages</span><span class="p">();</span> <span class="c1">//Margay's reading of itself: Page 2, Page 3, Block 0</span>
+  <span class="n">reportRows</span><span class="p">();</span> <span class="c1">//The status file: a row for the logger and every watched sensor with something to report</span>
+<span class="p">}</span>
+
+<span class="kt">uint8_t</span> <span class="n">Margay</span><span class="o">::</span><span class="n">chipFaults</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kt">uint8_t</span> <span class="n">f</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">SDCardMissing</span> <span class="o">||</span> <span class="n">SDTestFailed</span><span class="p">)</span> <span class="n">f</span> <span class="o">|=</span> <span class="mh">0x01</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">ClockError</span><span class="p">)</span> <span class="n">f</span> <span class="o">|=</span> <span class="mh">0x02</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">BMEError</span><span class="p">)</span> <span class="n">f</span> <span class="o">|=</span> <span class="mh">0x04</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">SensorError</span><span class="p">)</span> <span class="n">f</span> <span class="o">|=</span> <span class="mh">0x08</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">BatError</span><span class="p">)</span> <span class="n">f</span> <span class="o">|=</span> <span class="mh">0x10</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">f</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">Margay</span><span class="o">::</span><span class="n">fillPages</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">Pages</span><span class="p">.</span><span class="n">beginReading</span><span class="p">();</span>
+  <span class="kt">float</span> <span class="n">v</span> <span class="o">=</span> <span class="n">getBatVoltage</span><span class="p">();</span>
+  <span class="n">Pages</span><span class="p">.</span><span class="n">put8</span><span class="p">(</span><span class="mh">0x48</span><span class="p">,</span> <span class="p">(</span><span class="kt">uint8_t</span><span class="p">)</span><span class="n">constrain</span><span class="p">(</span><span class="n">getBatPercentage</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">));</span>
+  <span class="n">Pages</span><span class="p">.</span><span class="n">put16</span><span class="p">(</span><span class="mh">0x49</span><span class="p">,</span> <span class="p">(</span><span class="kt">uint16_t</span><span class="p">)(</span><span class="n">v</span> <span class="o">*</span> <span class="mf">100.0</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">));</span>
+  <span class="n">Pages</span><span class="p">.</span><span class="n">put16</span><span class="p">(</span><span class="mh">0x4B</span><span class="p">,</span> <span class="p">(</span><span class="kt">uint16_t</span><span class="p">)(</span><span class="kt">int16_t</span><span class="p">)(</span><span class="n">getTemp</span><span class="p">(</span><span class="n">thermistor_temp_sensor</span><span class="p">)</span> <span class="o">*</span> <span class="mf">100.0</span><span class="p">));</span> <span class="c1">//0 on models without the thermistor path</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">Model</span> <span class="o">&gt;=</span> <span class="n">MODEL_2v0</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">BMEError</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Pages</span><span class="p">.</span><span class="n">put16</span><span class="p">(</span><span class="mh">0x50</span><span class="p">,</span> <span class="p">(</span><span class="kt">uint16_t</span><span class="p">)(</span><span class="kt">int16_t</span><span class="p">)(</span><span class="n">bme280</span><span class="p">.</span><span class="n">getTemperature</span><span class="p">()</span> <span class="o">*</span> <span class="mf">100.0</span><span class="p">));</span>
+    <span class="n">Pages</span><span class="p">.</span><span class="n">put16</span><span class="p">(</span><span class="mh">0x52</span><span class="p">,</span> <span class="p">(</span><span class="kt">uint16_t</span><span class="p">)(</span><span class="n">bme280</span><span class="p">.</span><span class="n">getHumidity</span><span class="p">()</span> <span class="o">*</span> <span class="mf">100.0</span><span class="p">));</span>
+    <span class="n">Pages</span><span class="p">.</span><span class="n">put32</span><span class="p">(</span><span class="mh">0x54</span><span class="p">,</span> <span class="p">(</span><span class="kt">uint32_t</span><span class="p">)(</span><span class="n">bme280</span><span class="p">.</span><span class="n">getPressure</span><span class="p">()</span> <span class="o">*</span> <span class="mf">100.0</span><span class="p">));</span>
+  <span class="p">}</span>
+  <span class="c1">//Clock: Unix seconds from the DS3231's fields (days from civil, proleptic Gregorian)</span>
+  <span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="n">RTC</span><span class="p">.</span><span class="n">getValue</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">mo</span> <span class="o">=</span> <span class="n">RTC</span><span class="p">.</span><span class="n">getValue</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">d</span> <span class="o">=</span> <span class="n">RTC</span><span class="p">.</span><span class="n">getValue</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+  <span class="kt">int32_t</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="p">(</span><span class="n">mo</span> <span class="o">&lt;=</span> <span class="mi">2</span> <span class="o">?</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">);</span>
+  <span class="kt">int32_t</span> <span class="n">era</span> <span class="o">=</span> <span class="p">(</span><span class="n">yy</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">?</span> <span class="n">yy</span> <span class="o">:</span> <span class="n">yy</span> <span class="o">-</span> <span class="mi">399</span><span class="p">)</span> <span class="o">/</span> <span class="mi">400</span><span class="p">;</span>
+  <span class="kt">uint32_t</span> <span class="n">yoe</span> <span class="o">=</span> <span class="p">(</span><span class="kt">uint32_t</span><span class="p">)(</span><span class="n">yy</span> <span class="o">-</span> <span class="n">era</span> <span class="o">*</span> <span class="mi">400</span><span class="p">);</span>
+  <span class="kt">uint32_t</span> <span class="n">doy</span> <span class="o">=</span> <span class="p">(</span><span class="mi">153</span> <span class="o">*</span> <span class="p">(</span><span class="n">mo</span> <span class="o">+</span> <span class="p">(</span><span class="n">mo</span> <span class="o">&gt;</span> <span class="mi">2</span> <span class="o">?</span> <span class="o">-</span><span class="mi">3</span> <span class="o">:</span> <span class="mi">9</span><span class="p">))</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">5</span> <span class="o">+</span> <span class="n">d</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">uint32_t</span> <span class="n">doe</span> <span class="o">=</span> <span class="n">yoe</span> <span class="o">*</span> <span class="mi">365</span> <span class="o">+</span> <span class="n">yoe</span> <span class="o">/</span> <span class="mi">4</span> <span class="o">-</span> <span class="n">yoe</span> <span class="o">/</span> <span class="mi">100</span> <span class="o">+</span> <span class="n">doy</span><span class="p">;</span>
+  <span class="kt">uint32_t</span> <span class="n">days</span> <span class="o">=</span> <span class="p">(</span><span class="kt">uint32_t</span><span class="p">)(</span><span class="n">era</span> <span class="o">*</span> <span class="mi">146097</span> <span class="o">+</span> <span class="p">(</span><span class="kt">int32_t</span><span class="p">)</span><span class="n">doe</span> <span class="o">-</span> <span class="mi">719468</span><span class="p">);</span>
+  <span class="n">Pages</span><span class="p">.</span><span class="n">put32</span><span class="p">(</span><span class="mh">0x58</span><span class="p">,</span> <span class="n">days</span> <span class="o">*</span> <span class="mi">86400UL</span> <span class="o">+</span> <span class="p">(</span><span class="kt">uint32_t</span><span class="p">)</span><span class="n">RTC</span><span class="p">.</span><span class="n">getValue</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="mi">3600UL</span> <span class="o">+</span> <span class="p">(</span><span class="kt">uint32_t</span><span class="p">)</span><span class="n">RTC</span><span class="p">.</span><span class="n">getValue</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">*</span> <span class="mi">60UL</span> <span class="o">+</span> <span class="p">(</span><span class="kt">uint32_t</span><span class="p">)</span><span class="n">RTC</span><span class="p">.</span><span class="n">getValue</span><span class="p">(</span><span class="mi">5</span><span class="p">));</span>
+  <span class="n">Pages</span><span class="p">.</span><span class="n">put16</span><span class="p">(</span><span class="mh">0x5C</span><span class="p">,</span> <span class="p">(</span><span class="kt">uint16_t</span><span class="p">)(</span><span class="kt">int16_t</span><span class="p">)(</span><span class="n">RTC</span><span class="p">.</span><span class="n">getTemp</span><span class="p">()</span> <span class="o">*</span> <span class="mf">100.0</span><span class="p">));</span>
+  <span class="n">Pages</span><span class="p">.</span><span class="n">put16</span><span class="p">(</span><span class="mh">0x60</span><span class="p">,</span> <span class="n">FileNum</span><span class="p">);</span>
+  <span class="n">Pages</span><span class="p">.</span><span class="n">put32</span><span class="p">(</span><span class="mh">0x62</span><span class="p">,</span> <span class="n">LogInterval</span><span class="p">);</span>
+  <span class="n">Pages</span><span class="p">.</span><span class="n">put16</span><span class="p">(</span><span class="mh">0x66</span><span class="p">,</span> <span class="n">getExtIntCount</span><span class="p">(</span><span class="nb">false</span><span class="p">));</span>
+  <span class="n">Pages</span><span class="p">.</span><span class="n">endReading</span><span class="p">(</span><span class="n">chipFaults</span><span class="p">());</span>
+<span class="p">}</span>
+
+<span class="k">static</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="k">const</span> <span class="n">margayChips</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="s">"SDCard"</span><span class="p">,</span> <span class="s">"Clock"</span><span class="p">,</span> <span class="s">"BME280"</span><span class="p">,</span> <span class="s">"SensorBus"</span><span class="p">,</span> <span class="s">"Battery"</span><span class="p">};</span>
+<span class="k">static</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="k">const</span> <span class="n">margayWords</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="s">"LoggingStarted"</span><span class="p">,</span> <span class="s">"NewLogFile"</span><span class="p">,</span> <span class="s">"RowNotWritten"</span><span class="p">};</span>   <span class="c1">//unit kinds 16-18</span>
+<span class="k">static</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="k">const</span> <span class="n">margayChipWords</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="s">"BatteryWarning"</span><span class="p">,</span> <span class="s">"ClockSet"</span><span class="p">};</span>   <span class="c1">//kind 16 on Battery (0x90) and on Clock (0x30): one word each</span>
+
+<span class="kt">uint8_t</span> <span class="n">Margay</span><span class="o">::</span><span class="n">reportKind</span><span class="p">()</span>    <span class="p">{</span> <span class="k">return</span> <span class="n">Pages</span><span class="p">.</span><span class="n">report</span><span class="p">().</span><span class="n">kind</span><span class="p">();</span> <span class="p">}</span>
+<span class="kt">bool</span>    <span class="n">Margay</span><span class="o">::</span><span class="n">reportIsFault</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">Pages</span><span class="p">.</span><span class="n">report</span><span class="p">().</span><span class="n">isFault</span><span class="p">();</span> <span class="p">}</span>
+<span class="kt">uint8_t</span> <span class="n">Margay</span><span class="o">::</span><span class="n">bootReportKind</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">BootReport</span><span class="p">.</span><span class="n">kind</span><span class="p">();</span> <span class="p">}</span>
+<span class="kt">void</span>    <span class="n">Margay</span><span class="o">::</span><span class="n">clearBootReport</span><span class="p">()</span> <span class="p">{</span> <span class="n">BootReport</span><span class="p">.</span><span class="n">code</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">BootReport</span><span class="p">.</span><span class="n">status</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="kt">size_t</span> <span class="n">Margay</span><span class="o">::</span><span class="n">printStatus</span><span class="p">(</span><span class="n">Print</span><span class="o">&amp;</span> <span class="n">out</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">boot</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">const</span> <span class="n">NW_Report</span><span class="o">&amp;</span> <span class="n">r</span> <span class="o">=</span> <span class="n">boot</span> <span class="o">?</span> <span class="n">BootReport</span> <span class="o">:</span> <span class="n">Pages</span><span class="p">.</span><span class="n">report</span><span class="p">();</span>
+  <span class="c1">//Kind 16 means a different thing on the unit, the battery and the clock: choose the word table by chip</span>
+  <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="k">const</span><span class="o">*</span> <span class="n">words</span> <span class="o">=</span> <span class="n">margayWords</span><span class="p">;</span> <span class="kt">uint8_t</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">chip</span><span class="p">()</span> <span class="o">==</span> <span class="mi">4</span><span class="p">)</span> <span class="p">{</span> <span class="n">words</span> <span class="o">=</span> <span class="n">margayChipWords</span><span class="p">;</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="p">}</span>
+  <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">chip</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span> <span class="n">words</span> <span class="o">=</span> <span class="n">margayChipWords</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="p">}</span>
+  <span class="k">return</span> <span class="n">Pages</span><span class="p">.</span><span class="n">printSnapshot</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">margayChips</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">LibVersion</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="o">&amp;</span><span class="n">r</span><span class="p">,</span> <span class="n">words</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">bool</span> <span class="n">Margay</span><span class="o">::</span><span class="n">watch</span><span class="p">(</span><span class="n">NW_Sensor</span><span class="o">&amp;</span> <span class="n">sensor</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">NumWatched</span> <span class="o">&gt;=</span> <span class="n">MaxWatched</span><span class="p">)</span> <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+  <span class="n">Watched</span><span class="p">[</span><span class="n">NumWatched</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">sensor</span><span class="p">;</span>
+  <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">Margay</span><span class="o">::</span><span class="n">statusRow</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">trigger</span><span class="p">,</span> <span class="n">NW_Sensor</span><span class="o">&amp;</span> <span class="n">sensor</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">boot</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">SD</span><span class="p">.</span><span class="n">chdir</span><span class="p">(</span><span class="s">"/"</span><span class="p">);</span>  <span class="c1">//The card's root</span>
+  <span class="n">SD</span><span class="p">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">SN</span><span class="p">);</span>  <span class="c1">//Move into this logger's folder, named by its serial number</span>
+  <span class="n">File</span> <span class="n">StatusFile</span> <span class="o">=</span> <span class="n">SD</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="n">FileNameStaC</span><span class="p">,</span> <span class="n">FILE_WRITE</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">StatusFile</span><span class="p">)</span> <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+  <span class="n">StatusFile</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">LogTimeDate</span><span class="p">);</span> <span class="n">StatusFile</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="sc">','</span><span class="p">);</span>
+  <span class="n">StatusFile</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">trigger</span><span class="p">);</span> <span class="n">StatusFile</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="sc">','</span><span class="p">);</span>
+  <span class="n">sensor</span><span class="p">.</span><span class="n">printStatus</span><span class="p">(</span><span class="n">StatusFile</span><span class="p">,</span> <span class="n">boot</span><span class="p">);</span>
+  <span class="n">StatusFile</span><span class="p">.</span><span class="n">println</span><span class="p">();</span>
+  <span class="n">StatusFile</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">Margay</span><span class="o">::</span><span class="n">reportRows</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">//A reset seen at a sensor's boot (kind 6) is what this logger causes by</span>
+  <span class="c1">//powering the rail for the reading: no row. Any other boot report, and any</span>
+  <span class="c1">//report captured with the reading, gets one. The first reading writes every</span>
+  <span class="c1">//watched sensor's boot row regardless, as the record of what is on the bus.</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int8_t</span> <span class="n">i</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="p">(</span><span class="kt">int8_t</span><span class="p">)</span><span class="n">NumWatched</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">NW_Sensor</span><span class="o">&amp;</span> <span class="n">s</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">?</span> <span class="o">*</span><span class="k">this</span> <span class="o">:</span> <span class="o">*</span><span class="n">Watched</span><span class="p">[</span><span class="n">i</span><span class="p">];</span> <span class="c1">//The logger itself first</span>
+    <span class="kt">uint8_t</span> <span class="n">bootKind</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">bootReportKind</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">DeviceBootRows</span> <span class="o">||</span> <span class="p">(</span><span class="n">bootKind</span> <span class="o">!=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">bootKind</span> <span class="o">!=</span> <span class="mi">6</span><span class="p">))</span> <span class="n">statusRow</span><span class="p">(</span><span class="s">"boot"</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span>
+    <span class="n">s</span><span class="p">.</span><span class="n">clearBootReport</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">reportKind</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="n">statusRow</span><span class="p">(</span><span class="s">"report"</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="nb">false</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="n">Pages</span><span class="p">.</span><span class="n">acknowledge</span><span class="p">();</span> <span class="c1">//The logger's own report is written; the next one may latch</span>
+  <span class="n">DeviceBootRows</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="kt">void</span> <span class="n">Margay</span><span class="o">::</span><span class="n">note</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">word</span><span class="p">)</span> <span class="p">{</span>
@@ -1448,7 +1594,7 @@ Andy Wickert
 
 <hr />
 
-<p>Updated on 2026-09-23 at 20:12:55 +0000</p>
+<p>Updated on 2026-09-23 at 20:56:47 +0000</p>
 
         
       </section>
