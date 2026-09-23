@@ -19,6 +19,7 @@ Andy Wickert
 #include <avr/wdt.h>
 #include <avr/power.h>
 #include <EEPROM.h>
+#include <NW_Core.h>   // NW_Sensor: the view the status file takes of a sensor
 #include "DS3231_Logger.h"
 #include "MCP3421.h"
 #include "SdFat.h"
@@ -156,6 +157,18 @@ class Margay
      * @return 0 written, -1 the file could not be opened
      */
     int statusStr(String val);
+    /**
+     * @brief Register a sensor whose reports the status file should carry.
+     * @details Call once per sensor in setup(). After every reading the logger
+     * writes a row for each watched sensor whose report says something happened:
+     * a report captured with the reading (trigger "report"), and a report the
+     * sensor captured at its boot other than the reset a logger expects when it
+     * powers the rail (trigger "boot"). The first reading writes a boot row for
+     * every watched sensor, whatever it says, so the file records each device's
+     * identity and versions. Up to MARGAY_MAX_WATCHED sensors.
+     * @return false if the list is full
+     */
+    bool watch(NW_Sensor& sensor);
 
     /**
      * @brief Note a one-word condition for the current log row.
@@ -432,6 +445,12 @@ class Margay
 
     char FileNameC[13]; // "logNNNNN.csv" (12 chars) + null terminator
     char FileNameStaC[13]; // "staNNNNN.csv", the status file with the same number
+    static const uint8_t MARGAY_MAX_WATCHED = 8;
+    NW_Sensor* _watched[MARGAY_MAX_WATCHED]; // sensors whose reports go to the status file (watch())
+    uint8_t _nWatched = 0;
+    bool _deviceBootRows = false; // the first reading's boot rows have been written
+    int statusRow(const char* trigger, NW_Sensor& sensor, bool boot); // one device row: time, trigger, printStatus()
+    void reportRows(); // after a reading: the rows the watched sensors' reports call for
     String HWVersion = ""; // "3.0" from Page 0 (Schema 1), else the model number; for the status file's boot row
     char FileNameTestC[11]; // "HWTest.txt" (10 chars) + null terminator
     bool externalI2COn = false;

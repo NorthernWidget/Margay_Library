@@ -948,6 +948,41 @@ void Margay::_addDataPoint(String data) {
   // Serial.println("Got OB vals");  //DEBUG!
   logStr(data);
   // Serial.println("Logged Data"); //DEBUG!
+  reportRows(); //The status file: a row for every watched sensor with something to report
+}
+
+bool Margay::watch(NW_Sensor& sensor) {
+  if (_nWatched >= MARGAY_MAX_WATCHED) return false;
+  _watched[_nWatched++] = &sensor;
+  return true;
+}
+
+int Margay::statusRow(const char* trigger, NW_Sensor& sensor, bool boot) {
+  SD.chdir("/");  //The card's root
+  SD.chdir(SN);  //Move into this logger's folder, named by its serial number
+  File StatusFile = SD.open(FileNameStaC, FILE_WRITE);
+  if (!StatusFile) return -1;
+  StatusFile.print(LogTimeDate); StatusFile.print(',');
+  StatusFile.print(trigger); StatusFile.print(',');
+  sensor.printStatus(StatusFile, boot);
+  StatusFile.println();
+  StatusFile.close();
+  return 0;
+}
+
+void Margay::reportRows() {
+  //A reset seen at a sensor's boot (kind 6) is what this logger causes by
+  //powering the rail for the reading: no row. Any other boot report, and any
+  //report captured with the reading, gets one. The first reading writes every
+  //watched sensor's boot row regardless, as the record of what is on the bus.
+  for (uint8_t i = 0; i < _nWatched; i++) {
+    NW_Sensor& s = *_watched[i];
+    uint8_t bootKind = s.bootReportKind();
+    if (!_deviceBootRows || (bootKind != 0 && bootKind != 6)) statusRow("boot", s, true);
+    s.clearBootReport();
+    if (s.reportKind() != 0) statusRow("report", s, false);
+  }
+  _deviceBootRows = true;
 }
 
 void Margay::note(const String& word) {
