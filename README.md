@@ -43,6 +43,19 @@ if (!rangefinder.begin()) Logger.note("NoACK");
 
 The word is written in the row, printed to the serial monitor as `Note: NoACK`, and shown as an orange pulse on the LED. Several notes in one interval are joined with `;`. Measurement columns keep `-9999` for a failed reading.
 
+### Files on the card:
+
+Everything a Margay writes sits in one folder at the card's root, named by the logger's serial number, so a card that has served several loggers holds one folder per logger and nothing else of ours:
+
+```
+/4D03-0007-002A-0000/
+    log00001.csv    the data: a header row, then one row per reading
+    sta00001.csv    the status file for the same deployment
+    HWTest.txt      the boot self-test
+```
+
+A new pair of files starts at each logging start, numbered from the first unused number. The data file begins with its header row. The status file (`sta`, same number) is a table of reports: `Time,Trigger,Device,Serial,HW,FW,Code,Note,Page0,Page1,Page2`. Its first row is the logger's own boot row, which records the library version, the serial number and the hardware version that the data file's first line used to carry. Rows for the sensors follow whenever a device reports something (a fault, a reset, a stored calibration): the sketch writes the logger's time, a trigger word, and the device's `printStatus()` line through `statusStr()`. The Time column of a status row equals the Time of the data row the report belongs to.
+
 ### Troubleshooting:
 If an error code is received try the following steps:
 
