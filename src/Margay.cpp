@@ -425,12 +425,9 @@ void Margay::SDtest() {
 
   // If card is present and initialised successfully, do the following:
   if (!cardNotPresent && !sdTestFailed) {
-    SD.mkdir("NW");  //Create NW folder (if not already present)
-    SD.chdir("/NW"); //Move file pointer into NW folder (at root level)
-    SD.mkdir(SN); //Make directory with serial number as name
+    SD.chdir("/"); //The card's root
+    SD.mkdir(SN); //Make directory with serial number as name: everything this logger writes lives in it
     SD.chdir(SN); //Move into this directory
-    //Change directory to SN# named dir
-    SD.mkdir("Logs"); //Use???
     String fileNameTest = "HWTest";
     (fileNameTest + ".txt").toCharArray(FileNameTestC, 11);
     SD.remove(FileNameTestC); //Remove any previous files
@@ -578,10 +575,9 @@ void Margay::bme280Readings() {
 }
 
 void Margay::initLogFile() {
-  SD.chdir("/NW");  //Move into northern widget folder from root
-  SD.chdir(SN);  //Move into specific numbered sub folder
-  SD.chdir("Logs"); //Move into the logs sub-folder
-  //Perform same search, but do so inside of "SD:NW/sn/Logs"
+  SD.chdir("/");  //The card's root
+  SD.chdir(SN);  //Move into this logger's folder, named by its serial number
+  //Find the first unused file number in "SD:/sn/"
   char numCharArray[6];
   String fileName = "Log";
   int fileNum = 1;
@@ -609,9 +605,8 @@ void Margay::initLogFile() {
 
 int Margay::logStr(String val) {
   Serial.println(val); //Echo to serial monitor
-  SD.chdir("/NW");  //Move into northern widget folder from root
-  SD.chdir(SN);  //Move into specific numbered sub folder
-  SD.chdir("Logs"); //Move into the logs sub-folder
+  SD.chdir("/");  //The card's root
+  SD.chdir(SN);  //Move into this logger's folder, named by its serial number
   File DataFile = SD.open(FileNameC, FILE_WRITE);
 
   // if the file is available, write to it:
