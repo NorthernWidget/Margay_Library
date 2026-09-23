@@ -514,6 +514,7 @@ Andy Wickert
     <span class="kt">void</span> <span class="n">begin</span><span class="p">(</span><span class="n">String</span> <span class="n">header_</span> <span class="o">=</span> <span class="s">""</span><span class="p">);</span>
 
     <span class="kt">int</span> <span class="n">logStr</span><span class="p">(</span><span class="n">String</span> <span class="n">val</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">statusStr</span><span class="p">(</span><span class="n">String</span> <span class="n">val</span><span class="p">);</span>
 
     <span class="kt">void</span> <span class="n">note</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">word</span><span class="p">);</span>
 
@@ -653,7 +654,9 @@ Andy Wickert
     <span class="k">volatile</span> <span class="kt">bool</span> <span class="n">NewLog</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span> <span class="c1">//Used to tell system to start a new log</span>
     <span class="k">volatile</span> <span class="kt">int</span> <span class="n">AwakeCount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 
-    <span class="kt">char</span> <span class="n">FileNameC</span><span class="p">[</span><span class="mi">13</span><span class="p">];</span> <span class="c1">// "LogNNNNN.txt" (12 chars) + null terminator</span>
+    <span class="kt">char</span> <span class="n">FileNameC</span><span class="p">[</span><span class="mi">13</span><span class="p">];</span> <span class="c1">// "logNNNNN.csv" (12 chars) + null terminator</span>
+    <span class="kt">char</span> <span class="n">FileNameStaC</span><span class="p">[</span><span class="mi">13</span><span class="p">];</span> <span class="c1">// "staNNNNN.csv", the status file with the same number</span>
+    <span class="n">String</span> <span class="n">HWVersion</span> <span class="o">=</span> <span class="s">""</span><span class="p">;</span> <span class="c1">// "3.0" from Page 0 (Schema 1), else the model number; for the status file's boot row</span>
     <span class="kt">char</span> <span class="n">FileNameTestC</span><span class="p">[</span><span class="mi">11</span><span class="p">];</span> <span class="c1">// "HWTest.txt" (10 chars) + null terminator</span>
     <span class="kt">bool</span> <span class="n">externalI2COn</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
     <span class="n">SdFat</span> <span class="n">SD</span><span class="p">;</span>
@@ -666,7 +669,7 @@ Andy Wickert
 
 <hr />
 
-<p>Updated on 2026-09-23 at 04:49:52 +0000</p>
+<p>Updated on 2026-09-23 at 20:12:55 +0000</p>
 
         
       </section>

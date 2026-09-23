@@ -225,7 +225,7 @@
           <aside class="sidebar__right sticky">
             <nav class="toc" aria-label="Table of contents">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
-              <ul class="toc__menu"><li><a href="#public-functions">Public Functions</a></li><li><a href="#public-attributes">Public Attributes</a></li><li><a href="#detailed-description">Detailed Description</a></li><li><a href="#public-functions-documentation">Public Functions Documentation</a><ul><li><a href="#function-margay">function Margay</a></li><li><a href="#function-begin">function begin</a></li><li><a href="#function-begin-1">function begin</a></li><li><a href="#function-logstr">function logStr</a></li><li><a href="#function-note">function note</a></li><li><a href="#function-led_color">function LED_Color</a></li><li><a href="#function-run">function run</a></li><li><a href="#function-getvoltage">function getVoltage</a></li><li><a href="#function-adddatapoint">function addDataPoint</a></li><li><a href="#function-initlogfile">function initLogFile</a></li><li><a href="#function-setextint">function setExtInt</a></li><li><a href="#function-getextintcount">function getExtIntCount</a></li><li><a href="#function-resetextintcount">function resetExtIntCount</a></li><li><a href="#function-gettemp">function getTemp</a></li><li><a href="#function-getbatvoltage">function getBatVoltage</a></li><li><a href="#function-getbatpercentage">function getBatPercentage</a></li><li><a href="#function-initadc">function initADC</a></li><li><a href="#function-resetwdt">function resetWDT</a></li><li><a href="#function-powerob">function powerOB</a></li><li><a href="#function-poweraux">function powerAux</a></li></ul></li><li><a href="#public-attributes-documentation">Public Attributes Documentation</a><ul><li><a href="#variable-sd_cs">variable SD_CS</a></li><li><a href="#variable-auxled">variable AuxLED</a></li><li><a href="#variable-redled">variable RedLED</a></li><li><a href="#variable-greenled">variable GreenLED</a></li><li><a href="#variable-blueled">variable BlueLED</a></li><li><a href="#variable-vref_pin">variable VRef_Pin</a></li><li><a href="#variable-thermsense_pin">variable ThermSense_Pin</a></li><li><a href="#variable-batsense_pin">variable BatSense_Pin</a></li><li><a href="#variable-vswitch_pin">variable VSwitch_Pin</a></li><li><a href="#variable-sd_cd">variable SD_CD</a></li><li><a href="#variable-ext3v3ctrl">variable Ext3v3Ctrl</a></li><li><a href="#variable-i2c_sw">variable I2C_SW</a></li><li><a href="#variable-pg">variable PG</a></li><li><a href="#variable-extint">variable ExtInt</a></li><li><a href="#variable-rtcint">variable RTCInt</a></li><li><a href="#variable-logint">variable LogInt</a></li><li><a href="#variable-wdhold">variable WDHold</a></li><li><a href="#variable-batswitch">variable BatSwitch</a></li><li><a href="#variable-tx">variable TX</a></li><li><a href="#variable-rx">variable RX</a></li><li><a href="#variable-d0">variable D0</a></li><li><a href="#variable-ncells">variable NCells</a></li><li><a href="#variable-batvoltageerror">variable BatVoltageError</a></li><li><a href="#variable-batpercentagewarning">variable BatPercentageWarning</a></li><li><a href="#variable-libversion">variable LibVersion</a></li></ul></li></ul>
+              <ul class="toc__menu"><li><a href="#public-functions">Public Functions</a></li><li><a href="#public-attributes">Public Attributes</a></li><li><a href="#detailed-description">Detailed Description</a></li><li><a href="#public-functions-documentation">Public Functions Documentation</a><ul><li><a href="#function-margay">function Margay</a></li><li><a href="#function-begin">function begin</a></li><li><a href="#function-begin-1">function begin</a></li><li><a href="#function-logstr">function logStr</a></li><li><a href="#function-statusstr">function statusStr</a></li><li><a href="#function-note">function note</a></li><li><a href="#function-led_color">function LED_Color</a></li><li><a href="#function-run">function run</a></li><li><a href="#function-getvoltage">function getVoltage</a></li><li><a href="#function-adddatapoint">function addDataPoint</a></li><li><a href="#function-initlogfile">function initLogFile</a></li><li><a href="#function-setextint">function setExtInt</a></li><li><a href="#function-getextintcount">function getExtIntCount</a></li><li><a href="#function-resetextintcount">function resetExtIntCount</a></li><li><a href="#function-gettemp">function getTemp</a></li><li><a href="#function-getbatvoltage">function getBatVoltage</a></li><li><a href="#function-getbatpercentage">function getBatPercentage</a></li><li><a href="#function-initadc">function initADC</a></li><li><a href="#function-resetwdt">function resetWDT</a></li><li><a href="#function-powerob">function powerOB</a></li><li><a href="#function-poweraux">function powerAux</a></li></ul></li><li><a href="#public-attributes-documentation">Public Attributes Documentation</a><ul><li><a href="#variable-sd_cs">variable SD_CS</a></li><li><a href="#variable-auxled">variable AuxLED</a></li><li><a href="#variable-redled">variable RedLED</a></li><li><a href="#variable-greenled">variable GreenLED</a></li><li><a href="#variable-blueled">variable BlueLED</a></li><li><a href="#variable-vref_pin">variable VRef_Pin</a></li><li><a href="#variable-thermsense_pin">variable ThermSense_Pin</a></li><li><a href="#variable-batsense_pin">variable BatSense_Pin</a></li><li><a href="#variable-vswitch_pin">variable VSwitch_Pin</a></li><li><a href="#variable-sd_cd">variable SD_CD</a></li><li><a href="#variable-ext3v3ctrl">variable Ext3v3Ctrl</a></li><li><a href="#variable-i2c_sw">variable I2C_SW</a></li><li><a href="#variable-pg">variable PG</a></li><li><a href="#variable-extint">variable ExtInt</a></li><li><a href="#variable-rtcint">variable RTCInt</a></li><li><a href="#variable-logint">variable LogInt</a></li><li><a href="#variable-wdhold">variable WDHold</a></li><li><a href="#variable-batswitch">variable BatSwitch</a></li><li><a href="#variable-tx">variable TX</a></li><li><a href="#variable-rx">variable RX</a></li><li><a href="#variable-d0">variable D0</a></li><li><a href="#variable-ncells">variable NCells</a></li><li><a href="#variable-batvoltageerror">variable BatVoltageError</a></li><li><a href="#variable-batpercentagewarning">variable BatPercentageWarning</a></li><li><a href="#variable-libversion">variable LibVersion</a></li></ul></li></ul>
             </nav>
           </aside>
         
@@ -258,6 +258,10 @@
     <tr>
       <td>int</td>
       <td><strong><a href="/Margay_Library/Classes/classMargay/#function-logstr">logStr</a></strong>(String val)<br />Write a string to the SD card log file and echo it to Serial.</td>
+    </tr>
+    <tr>
+      <td>int</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-statusstr">statusStr</a></strong>(String val)<br />Append one row to the status file (sta<n>.csv beside log<n>.csv).</n></n></td>
     </tr>
     <tr>
       <td>void</td>
@@ -530,6 +534,19 @@
 </ul>
 
 <p><strong>Return</strong>: 0 on success, -1 if the log file could not be opened.</p>
+
+<h3 id="function-statusstr">function statusStr</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">statusStr</span><span class="p">(</span>
+    <span class="n">String</span> <span class="n">val</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p>Append one row to the status file (sta<n>.csv beside log<n>.csv).</n></n></p>
+
+<p><strong>Return</strong>: 0 written, -1 the file could not be opened</p>
+
+<p>Columns: Time,Trigger,Device,Serial,HW,FW,Code,Note,Page0,Page1,Page2. The logger writes its own boot row at every new file; a sketch writes a device’s row with the logger’s time, a trigger word, and the device’s printStatus() line (NW_Core), whenever the device’s reportKind() is not 0.</p>
 
 <h3 id="function-note">function note</h3>
 
@@ -959,7 +976,7 @@
 
 <hr />
 
-<p>Updated on 2026-09-23 at 04:49:52 +0000</p>
+<p>Updated on 2026-09-23 at 20:12:55 +0000</p>
 
         
       </section>

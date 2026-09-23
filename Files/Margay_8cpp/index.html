@@ -536,10 +536,10 @@ Andy Wickert
   <span class="kt">int</span> <span class="n">EEPROMLen</span> <span class="o">=</span> <span class="n">EEPROM</span><span class="p">.</span><span class="n">length</span><span class="p">();</span> <span class="c1">//Copy value for faster access</span>
   <span class="kt">int</span> <span class="n">val</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">//Value to read temp EEPROM values into</span>
   <span class="kt">int</span> <span class="n">pos</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">//used to keep track of position in SN string</span>
-  <span class="c1">// NW-Device-Specification Page 0 occupies the top 32 bytes of EEPROM.</span>
+  <span class="c1">// NW-Device-Specification: the stored image (Page 0 identity, Page 1 calibration) occupies the top 64 bytes of EEPROM, Page 0 first.</span>
   <span class="c1">// Schema 1 (NW-Provision): serial number = Block 2 (offset 0x10-0x17).</span>
   <span class="c1">// Schema 0 (MargaySetup): serial number = the last 8 bytes.</span>
-  <span class="kt">int</span> <span class="n">page0</span> <span class="o">=</span> <span class="n">EEPROMLen</span> <span class="o">-</span> <span class="mi">32</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">page0</span> <span class="o">=</span> <span class="n">EEPROMLen</span> <span class="o">-</span> <span class="mi">64</span><span class="p">;</span> <span class="c1">//Schema 1 stored image: Page 0 identity, then Page 1 calibration, at the top of EEPROM (2026-09-23 renumbering)</span>
   <span class="kt">uint8_t</span> <span class="n">p0</span><span class="p">[</span><span class="mh">0x1F</span><span class="p">];</span>
   <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mh">0x1F</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="n">p0</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">EEPROM</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="n">page0</span> <span class="o">+</span> <span class="n">i</span><span class="p">);</span>
   <span class="kt">bool</span> <span class="n">schema1</span> <span class="o">=</span> <span class="p">(</span><span class="n">p0</span><span class="p">[</span><span class="mh">0x00</span><span class="p">]</span> <span class="o">==</span> <span class="mh">0x01</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">p0</span><span class="p">[</span><span class="mh">0x1D</span><span class="p">]</span> <span class="o">==</span> <span class="mh">0x4E</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">crc8</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="mh">0x1E</span><span class="p">)</span> <span class="o">==</span> <span class="n">p0</span><span class="p">[</span><span class="mh">0x1E</span><span class="p">]);</span>
@@ -560,7 +560,9 @@ Andy Wickert
   <span class="k">if</span> <span class="p">(</span><span class="n">schema1</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"  (Schema 1, HW v"</span><span class="p">);</span>
     <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">p0</span><span class="p">[</span><span class="mh">0x08</span><span class="p">]);</span> <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"."</span><span class="p">);</span> <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">p0</span><span class="p">[</span><span class="mh">0x09</span><span class="p">]);</span> <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">")"</span><span class="p">);</span>
+    <span class="n">HWVersion</span> <span class="o">=</span> <span class="n">String</span><span class="p">(</span><span class="n">p0</span><span class="p">[</span><span class="mh">0x08</span><span class="p">])</span> <span class="o">+</span> <span class="s">"."</span> <span class="o">+</span> <span class="n">String</span><span class="p">(</span><span class="n">p0</span><span class="p">[</span><span class="mh">0x09</span><span class="p">]);</span> <span class="c1">//For the status file's boot row</span>
   <span class="p">}</span>
+  <span class="k">else</span> <span class="n">HWVersion</span> <span class="o">=</span> <span class="n">String</span><span class="p">(</span><span class="n">Model</span><span class="p">);</span> <span class="c1">//Schema 0: the model number the sketch declared</span>
   <span class="k">if</span> <span class="p">(</span><span class="n">strcmp</span><span class="p">(</span><span class="n">SN</span><span class="p">,</span> <span class="s">"FFFF-FFFF-FFFF-FFFF"</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
     <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"WARNING: no serial number programmed in EEPROM"</span><span class="p">);</span>
   <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n\n</span><span class="s">"</span><span class="p">);</span>
@@ -756,12 +758,9 @@ Andy Wickert
 
   <span class="c1">// If card is present and initialised successfully, do the following:</span>
   <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">cardNotPresent</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">sdTestFailed</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">SD</span><span class="p">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s">"NW"</span><span class="p">);</span>  <span class="c1">//Create NW folder (if not already present)</span>
-    <span class="n">SD</span><span class="p">.</span><span class="n">chdir</span><span class="p">(</span><span class="s">"/NW"</span><span class="p">);</span> <span class="c1">//Move file pointer into NW folder (at root level)</span>
-    <span class="n">SD</span><span class="p">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">SN</span><span class="p">);</span> <span class="c1">//Make directory with serial number as name</span>
+    <span class="n">SD</span><span class="p">.</span><span class="n">chdir</span><span class="p">(</span><span class="s">"/"</span><span class="p">);</span> <span class="c1">//The card's root</span>
+    <span class="n">SD</span><span class="p">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">SN</span><span class="p">);</span> <span class="c1">//Make directory with serial number as name: everything this logger writes lives in it</span>
     <span class="n">SD</span><span class="p">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">SN</span><span class="p">);</span> <span class="c1">//Move into this directory</span>
-    <span class="c1">//Change directory to SN# named dir</span>
-    <span class="n">SD</span><span class="p">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s">"Logs"</span><span class="p">);</span> <span class="c1">//Use???</span>
     <span class="n">String</span> <span class="n">fileNameTest</span> <span class="o">=</span> <span class="s">"HWTest"</span><span class="p">;</span>
     <span class="p">(</span><span class="n">fileNameTest</span> <span class="o">+</span> <span class="s">".txt"</span><span class="p">).</span><span class="n">toCharArray</span><span class="p">(</span><span class="n">FileNameTestC</span><span class="p">,</span> <span class="mi">11</span><span class="p">);</span>
     <span class="n">SD</span><span class="p">.</span><span class="n">remove</span><span class="p">(</span><span class="n">FileNameTestC</span><span class="p">);</span> <span class="c1">//Remove any previous files</span>
@@ -909,26 +908,30 @@ Andy Wickert
 <span class="p">}</span>
 
 <span class="kt">void</span> <span class="n">Margay</span><span class="o">::</span><span class="n">initLogFile</span><span class="p">()</span> <span class="p">{</span>
-  <span class="n">SD</span><span class="p">.</span><span class="n">chdir</span><span class="p">(</span><span class="s">"/NW"</span><span class="p">);</span>  <span class="c1">//Move into northern widget folder from root</span>
-  <span class="n">SD</span><span class="p">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">SN</span><span class="p">);</span>  <span class="c1">//Move into specific numbered sub folder</span>
-  <span class="n">SD</span><span class="p">.</span><span class="n">chdir</span><span class="p">(</span><span class="s">"Logs"</span><span class="p">);</span> <span class="c1">//Move into the logs sub-folder</span>
-  <span class="c1">//Perform same search, but do so inside of "SD:NW/sn/Logs"</span>
+  <span class="n">SD</span><span class="p">.</span><span class="n">chdir</span><span class="p">(</span><span class="s">"/"</span><span class="p">);</span>  <span class="c1">//The card's root</span>
+  <span class="n">SD</span><span class="p">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">SN</span><span class="p">);</span>  <span class="c1">//Move into this logger's folder, named by its serial number</span>
+  <span class="c1">//Find the first unused file number in "SD:/sn/"</span>
   <span class="kt">char</span> <span class="n">numCharArray</span><span class="p">[</span><span class="mi">6</span><span class="p">];</span>
-  <span class="n">String</span> <span class="n">fileName</span> <span class="o">=</span> <span class="s">"Log"</span><span class="p">;</span>
+  <span class="n">String</span> <span class="n">fileName</span> <span class="o">=</span> <span class="s">"log"</span><span class="p">;</span>
   <span class="kt">int</span> <span class="n">fileNum</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
   <span class="n">sprintf</span><span class="p">(</span><span class="n">numCharArray</span><span class="p">,</span> <span class="s">"%05d"</span><span class="p">,</span> <span class="n">fileNum</span><span class="p">);</span>
-  <span class="p">(</span><span class="n">fileName</span> <span class="o">+</span> <span class="n">String</span><span class="p">(</span><span class="n">numCharArray</span><span class="p">)</span> <span class="o">+</span> <span class="s">".txt"</span><span class="p">).</span><span class="n">toCharArray</span><span class="p">(</span><span class="n">FileNameC</span><span class="p">,</span> <span class="mi">13</span><span class="p">);</span>
+  <span class="p">(</span><span class="n">fileName</span> <span class="o">+</span> <span class="n">String</span><span class="p">(</span><span class="n">numCharArray</span><span class="p">)</span> <span class="o">+</span> <span class="s">".csv"</span><span class="p">).</span><span class="n">toCharArray</span><span class="p">(</span><span class="n">FileNameC</span><span class="p">,</span> <span class="mi">13</span><span class="p">);</span>
   <span class="k">while</span> <span class="p">(</span><span class="n">SD</span><span class="p">.</span><span class="n">exists</span><span class="p">(</span><span class="n">FileNameC</span><span class="p">))</span> <span class="p">{</span>
     <span class="n">fileNum</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
     <span class="n">sprintf</span><span class="p">(</span><span class="n">numCharArray</span><span class="p">,</span> <span class="s">"%05d"</span><span class="p">,</span> <span class="n">fileNum</span><span class="p">);</span>
-    <span class="p">(</span><span class="n">fileName</span> <span class="o">+</span> <span class="n">String</span><span class="p">(</span><span class="n">numCharArray</span><span class="p">)</span> <span class="o">+</span> <span class="s">".txt"</span><span class="p">).</span><span class="n">toCharArray</span><span class="p">(</span><span class="n">FileNameC</span><span class="p">,</span> <span class="mi">13</span><span class="p">);</span>
+    <span class="p">(</span><span class="n">fileName</span> <span class="o">+</span> <span class="n">String</span><span class="p">(</span><span class="n">numCharArray</span><span class="p">)</span> <span class="o">+</span> <span class="s">".csv"</span><span class="p">).</span><span class="n">toCharArray</span><span class="p">(</span><span class="n">FileNameC</span><span class="p">,</span> <span class="mi">13</span><span class="p">);</span>
   <span class="p">}</span>
+  <span class="p">(</span><span class="s">"sta"</span> <span class="o">+</span> <span class="n">String</span><span class="p">(</span><span class="n">numCharArray</span><span class="p">)</span> <span class="o">+</span> <span class="s">".csv"</span><span class="p">).</span><span class="n">toCharArray</span><span class="p">(</span><span class="n">FileNameStaC</span><span class="p">,</span> <span class="mi">13</span><span class="p">);</span> <span class="c1">//The status file, same number</span>
   <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"FileNameC: "</span><span class="p">);</span>
   <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">FileNameC</span><span class="p">);</span>
-  <span class="c1">// Make string of onboard characteristics as first line of data</span>
-  <span class="n">String</span> <span class="n">initData</span> <span class="o">=</span> <span class="s">"Lib = "</span> <span class="o">+</span> <span class="n">String</span><span class="p">(</span><span class="n">LibVersion</span><span class="p">)</span> <span class="o">+</span> <span class="s">" SN = "</span> <span class="o">+</span> <span class="n">String</span><span class="p">(</span><span class="n">SN</span><span class="p">);</span>
-  <span class="n">logStr</span><span class="p">(</span><span class="n">initData</span><span class="p">);</span>
-  <span class="c1">// Log concatenated header (old loggers lack BME280)</span>
+  <span class="c1">// The status file: one row per report, boot and check, from this logger and</span>
+  <span class="c1">// from every device on it (NW-Device-Specification Report register). Its</span>
+  <span class="c1">// boot row carries what the data file's first line used to: library</span>
+  <span class="c1">// version and serial number, with the hardware version beside them.</span>
+  <span class="n">statusStr</span><span class="p">(</span><span class="s">"Time,Trigger,Device,Serial,HW,FW,Code,Note,Page0,Page1,Page2"</span><span class="p">);</span>
+  <span class="n">getTime</span><span class="p">();</span>
+  <span class="n">statusStr</span><span class="p">(</span><span class="n">LogTimeDate</span> <span class="o">+</span> <span class="s">",boot,Margay,"</span> <span class="o">+</span> <span class="n">String</span><span class="p">(</span><span class="n">SN</span><span class="p">)</span> <span class="o">+</span> <span class="s">","</span> <span class="o">+</span> <span class="n">HWVersion</span> <span class="o">+</span> <span class="s">","</span> <span class="o">+</span> <span class="n">String</span><span class="p">(</span><span class="n">LibVersion</span><span class="p">)</span> <span class="o">+</span> <span class="s">",0x00,None,,,"</span><span class="p">);</span>
+  <span class="c1">// The data file starts with its header row (old loggers lack BME280)</span>
   <span class="c1">// Note is always the last column and carries no comma after it: every</span>
   <span class="c1">// sensor ends its fields with a comma for the next, so this ends the row.</span>
   <span class="k">if</span> <span class="p">(</span><span class="n">Model</span> <span class="o">&lt;</span> <span class="n">MODEL_2v0</span><span class="p">)</span>
@@ -940,9 +943,8 @@ Andy Wickert
 
 <span class="kt">int</span> <span class="n">Margay</span><span class="o">::</span><span class="n">logStr</span><span class="p">(</span><span class="n">String</span> <span class="n">val</span><span class="p">)</span> <span class="p">{</span>
   <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">val</span><span class="p">);</span> <span class="c1">//Echo to serial monitor</span>
-  <span class="n">SD</span><span class="p">.</span><span class="n">chdir</span><span class="p">(</span><span class="s">"/NW"</span><span class="p">);</span>  <span class="c1">//Move into northern widget folder from root</span>
-  <span class="n">SD</span><span class="p">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">SN</span><span class="p">);</span>  <span class="c1">//Move into specific numbered sub folder</span>
-  <span class="n">SD</span><span class="p">.</span><span class="n">chdir</span><span class="p">(</span><span class="s">"Logs"</span><span class="p">);</span> <span class="c1">//Move into the logs sub-folder</span>
+  <span class="n">SD</span><span class="p">.</span><span class="n">chdir</span><span class="p">(</span><span class="s">"/"</span><span class="p">);</span>  <span class="c1">//The card's root</span>
+  <span class="n">SD</span><span class="p">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">SN</span><span class="p">);</span>  <span class="c1">//Move into this logger's folder, named by its serial number</span>
   <span class="n">File</span> <span class="n">DataFile</span> <span class="o">=</span> <span class="n">SD</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="n">FileNameC</span><span class="p">,</span> <span class="n">FILE_WRITE</span><span class="p">);</span>
 
   <span class="c1">// if the file is available, write to it:</span>
@@ -952,6 +954,21 @@ Andy Wickert
     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
   <span class="p">}</span>
   <span class="c1">// if the file isn't open, pop up an error:</span>
+  <span class="k">else</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">Margay</span><span class="o">::</span><span class="n">statusStr</span><span class="p">(</span><span class="n">String</span> <span class="n">val</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">val</span><span class="p">);</span> <span class="c1">//Echo to serial monitor</span>
+  <span class="n">SD</span><span class="p">.</span><span class="n">chdir</span><span class="p">(</span><span class="s">"/"</span><span class="p">);</span>  <span class="c1">//The card's root</span>
+  <span class="n">SD</span><span class="p">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">SN</span><span class="p">);</span>  <span class="c1">//Move into this logger's folder, named by its serial number</span>
+  <span class="n">File</span> <span class="n">StatusFile</span> <span class="o">=</span> <span class="n">SD</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="n">FileNameStaC</span><span class="p">,</span> <span class="n">FILE_WRITE</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">StatusFile</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">StatusFile</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">val</span><span class="p">);</span>
+    <span class="n">StatusFile</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="p">}</span>
   <span class="k">else</span> <span class="p">{</span>
     <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
   <span class="p">}</span>
@@ -1431,7 +1448,7 @@ Andy Wickert
 
 <hr />
 
-<p>Updated on 2026-09-23 at 04:49:52 +0000</p>
+<p>Updated on 2026-09-23 at 20:12:55 +0000</p>
 
         
       </section>

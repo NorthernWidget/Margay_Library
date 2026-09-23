@@ -225,7 +225,7 @@
           <aside class="sidebar__right sticky">
             <nav class="toc" aria-label="Table of contents">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
-              <ul class="toc__menu"><li><a href="#margay-logger-library">Margay Logger Library</a><ul><li><a href="#citation">Citation</a></li><li><a href="#installation">Installation:</a></li><li><a href="#examples">Examples:</a></li><li><a href="#operation">Operation:</a><ul><li><a href="#logging-start">Logging Start:</a></li><li><a href="#note-column">Note column:</a></li><li><a href="#troubleshooting">Troubleshooting:</a></li></ul></li></ul></li></ul>
+              <ul class="toc__menu"><li><a href="#margay-logger-library">Margay Logger Library</a><ul><li><a href="#citation">Citation</a></li><li><a href="#installation">Installation:</a></li><li><a href="#examples">Examples:</a></li><li><a href="#operation">Operation:</a><ul><li><a href="#logging-start">Logging Start:</a></li><li><a href="#note-column">Note column:</a></li><li><a href="#files-on-the-card">Files on the card:</a></li><li><a href="#troubleshooting">Troubleshooting:</a></li></ul></li></ul></li></ul>
             </nav>
           </aside>
         
@@ -291,6 +291,18 @@
 
 <p>The word is written in the row, printed to the serial monitor as <code class="language-plaintext highlighter-rouge">Note: NoACK</code>, and shown as an orange pulse on the LED. Several notes in one interval are joined with <code class="language-plaintext highlighter-rouge">;</code>. Measurement columns keep <code class="language-plaintext highlighter-rouge">-9999</code> for a failed reading.</p>
 
+<h3 id="files-on-the-card">Files on the card:</h3>
+
+<p>Everything a <a href="/Margay_Library/Classes/classMargay/">Margay</a> writes sits in one folder at the card’s root, named by the logger’s serial number, so a card that has served several loggers holds one folder per logger and nothing else of ours:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">/</span><span class="mi">4</span><span class="n">D03</span><span class="o">-</span><span class="mo">0007</span><span class="o">-</span><span class="mo">002</span><span class="n">A</span><span class="o">-</span><span class="mo">0000</span><span class="o">/</span>
+    <span class="n">log00001</span><span class="p">.</span><span class="n">csv</span>    <span class="n">the</span> <span class="n">data</span><span class="o">:</span> <span class="n">a</span> <span class="n">header</span> <span class="n">row</span><span class="p">,</span> <span class="n">then</span> <span class="n">one</span> <span class="n">row</span> <span class="n">per</span> <span class="n">reading</span>
+    <span class="n">sta00001</span><span class="p">.</span><span class="n">csv</span>    <span class="n">the</span> <span class="n">status</span> <span class="n">file</span> <span class="k">for</span> <span class="n">the</span> <span class="n">same</span> <span class="n">deployment</span>
+    <span class="n">HWTest</span><span class="p">.</span><span class="n">txt</span>      <span class="n">the</span> <span class="n">boot</span> <span class="n">self</span><span class="o">-</span><span class="n">test</span>
+</code></pre></div></div>
+
+<p>A new pair of files starts at each logging start, numbered from the first unused number. The data file begins with its header row. The status file (<code class="language-plaintext highlighter-rouge">sta</code>, same number) is a table of reports: <code class="language-plaintext highlighter-rouge">Time,Trigger,Device,Serial,HW,FW,Code,Note,Page0,Page1,Page2</code>. Its first row is the logger’s own boot row, which records the library version, the serial number and the hardware version that the data file’s first line used to carry. Rows for the sensors follow whenever a device reports something (a fault, a reset, a stored calibration): the sketch writes the logger’s time, a trigger word, and the device’s <code class="language-plaintext highlighter-rouge">printStatus()</code> line through <code class="language-plaintext highlighter-rouge">statusStr()</code>. The Time column of a status row equals the Time of the data row the report belongs to.</p>
+
 <h3 id="troubleshooting">Troubleshooting:</h3>
 
 <p>If an error code is received try the following steps:</p>
@@ -346,7 +358,7 @@
 
 <hr />
 
-<p>Updated on 2026-09-23 at 04:49:52 +0000</p>
+<p>Updated on 2026-09-23 at 20:12:55 +0000</p>
 
         
       </section>

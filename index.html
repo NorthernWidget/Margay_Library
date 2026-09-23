@@ -287,6 +287,18 @@
 
 <p>The word is written in the row, printed to the serial monitor as <code class="language-plaintext highlighter-rouge">Note: NoACK</code>, and shown as an orange pulse on the LED. Several notes in one interval are joined with <code class="language-plaintext highlighter-rouge">;</code>. Measurement columns keep <code class="language-plaintext highlighter-rouge">-9999</code> for a failed reading.</p>
 
+<h3 id="files-on-the-card">Files on the card:</h3>
+
+<p>Everything a Margay writes sits in one folder at the card’s root, named by the logger’s serial number, so a card that has served several loggers holds one folder per logger and nothing else of ours:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/4D03-0007-002A-0000/
+    log00001.csv    the data: a header row, then one row per reading
+    sta00001.csv    the status file for the same deployment
+    HWTest.txt      the boot self-test
+</code></pre></div></div>
+
+<p>A new pair of files starts at each logging start, numbered from the first unused number. The data file begins with its header row. The status file (<code class="language-plaintext highlighter-rouge">sta</code>, same number) is a table of reports: <code class="language-plaintext highlighter-rouge">Time,Trigger,Device,Serial,HW,FW,Code,Note,Page0,Page1,Page2</code>. Its first row is the logger’s own boot row, which records the library version, the serial number and the hardware version that the data file’s first line used to carry. Rows for the sensors follow whenever a device reports something (a fault, a reset, a stored calibration): the sketch writes the logger’s time, a trigger word, and the device’s <code class="language-plaintext highlighter-rouge">printStatus()</code> line through <code class="language-plaintext highlighter-rouge">statusStr()</code>. The Time column of a status row equals the Time of the data row the report belongs to.</p>
+
 <h3 id="troubleshooting">Troubleshooting:</h3>
 <p>If an error code is received try the following steps:</p>
 
