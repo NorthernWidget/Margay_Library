@@ -103,7 +103,7 @@ enum temp_source
  * void loop()  { Logger.run(update, 60); }
  * @endcode
  */
-class Margay
+class Margay : public NW_Sensor
 {
 
   public:
@@ -165,10 +165,26 @@ class Margay
      * sensor captured at its boot other than the reset a logger expects when it
      * powers the rail (trigger "boot"). The first reading writes a boot row for
      * every watched sensor, whatever it says, so the file records each device's
-     * identity and versions. Up to MARGAY_MAX_WATCHED sensors.
+     * identity and versions. Up to MaxWatched sensors.
      * @return false if the list is full
      */
     bool watch(NW_Sensor& sensor);
+
+    // --- NW_Sensor: Margay is a Schema 1 device and watches itself ---
+    /** @brief "Margay". */
+    const char* name() const override { return "Margay"; }
+    /** @brief Kind of the logger's own report latched during the last reading (0 = none). */
+    uint8_t reportKind() override;
+    bool reportIsFault() override;
+    /** @brief The report at boot: LoggingStarted (0xF0), or the first fault begin() found. */
+    uint8_t bootReportKind() override;
+    void clearBootReport() override;
+    /**
+     * @brief The logger's own status line: name, serial, hardware version, library
+     * version, report code and note word, Pages 0-2 in hex (its reading of itself:
+     * battery, onboard environment, clock). The same columns as a sensor's.
+     */
+    size_t printStatus(Print& out, bool boot = false) override;
 
     /**
      * @brief Note a one-word condition for the current log row.
@@ -445,10 +461,19 @@ class Margay
 
     char FileNameC[13]; // "logNNNNN.csv" (12 chars) + null terminator
     char FileNameStaC[13]; // "staNNNNN.csv", the status file with the same number
-    static const uint8_t MARGAY_MAX_WATCHED = 8;
-    NW_Sensor* _watched[MARGAY_MAX_WATCHED]; // sensors whose reports go to the status file (watch())
-    uint8_t _nWatched = 0;
-    bool _deviceBootRows = false; // the first reading's boot rows have been written
+    static const uint8_t MaxWatched = 8;
+    NW_Pages Pages;         // Margay's own Schema 1 pages: 0-1 from EEPROM, 2-3 its reading of itself
+    NW_Report BootReport;   // what the logger reported at boot, until its row is written
+    bool SDTestFailed = false; // the boot write-and-read-back on the card failed
+    bool ClockError = false; // the DS3231 did not answer, or its oscillator is stopped
+    bool BMEError = false;   // the BME280 did not answer (models 2.0 and up)
+    unsigned long LogInterval = 0; // seconds, from run(); served on Page 3
+    uint16_t FileNum = 0;   // the number of the current log and status file pair
+    uint8_t chipFaults();    // Margay's chip-fault bits for Block 0: SDCard, Clock, BME280, SensorBus, Battery
+    void fillPages();        // Page 2 and 3 from the logger's own readings, then endReading()
+    NW_Sensor* Watched[MaxWatched]; // sensors whose reports go to the status file (watch())
+    uint8_t NumWatched = 0;
+    bool DeviceBootRows = false; // the first reading's boot rows have been written
     int statusRow(const char* trigger, NW_Sensor& sensor, bool boot); // one device row: time, trigger, printStatus()
     void reportRows(); // after a reading: the rows the watched sensors' reports call for
     String HWVersion = ""; // "3.0" from Page 0 (Schema 1), else the model number; for the status file's boot row

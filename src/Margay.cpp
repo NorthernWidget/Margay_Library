@@ -189,6 +189,7 @@ void Margay::begin(uint8_t *vals, uint8_t numVals, String header_) {
   if (Model >= MODEL_2v0 && !bme280.begin(0x77)) { //Initialize onboard temp/pressure/RH sensor (BME280)
     Serial.println("BME280 init: FAIL");
     OnBoardError = true;
+    BMEError = true;
   }
 
 
@@ -209,9 +210,9 @@ void Margay::begin(uint8_t *vals, uint8_t numVals, String header_) {
   // Schema 1 (NW-Provision): serial number = Block 2 (offset 0x10-0x17).
   // Schema 0 (MargaySetup): serial number = the last 8 bytes.
   int page0 = EEPROMLen - 64; //Schema 1 stored image: Page 0 identity, then Page 1 calibration, at the top of EEPROM (2026-09-23 renumbering)
-  uint8_t p0[0x1F];
-  for (int i = 0; i < 0x1F; i++) p0[i] = EEPROM.read(page0 + i);
-  bool schema1 = (p0[0x00] == 0x01) && (p0[0x1D] == 0x4E) && (crc8(p0, 0x1E) == p0[0x1E]);
+  Pages.loadStored(page0); //Margay's own pages: 0 and 1 from EEPROM; 2 and 3 filled at each reading
+  const uint8_t* p0 = Pages.page;
+  bool schema1 = Pages.page0Valid();
   int snStart = schema1 ? page0 + 0x10 : EEPROMLen - 8;
   for (int i = snStart; i < snStart + 8; i++) {  //Read out Serial Number
     val = EEPROM.read(i);  //Read SN values as individual bytes from EEPROM
@@ -232,6 +233,14 @@ void Margay::begin(uint8_t *vals, uint8_t numVals, String header_) {
     HWVersion = String(p0[0x08]) + "." + String(p0[0x09]); //For the status file's boot row
   }
   else HWVersion = String(Model); //Schema 0: the model number the sketch declared
+  if (schema1 && !Pages.page1Blank()) { //Page 1: this board's calibration, written by NW-Provision; the constants otherwise
+    BatteryDivider = Pages.get16(0x20) / 1000.0;
+    A = Pages.getFloat(0x22); B = Pages.getFloat(0x26); C = Pages.getFloat(0x2A); D = Pages.getFloat(0x2E);
+    BatVoltageError = Pages.get16(0x32) / 100.0;
+    BatPercentageWarning = Pages.page[0x34];
+    Serial.println("Calibration from Page 1");
+  }
+  if (!schema1) Pages.latchFault(0xE3); //Page 0 invalid: unprovisioned or corrupt
   if (strcmp(SN, "FFFF-FFFF-FFFF-FFFF") == 0)
     Serial.println("WARNING: no serial number programmed in EEPROM");
   Serial.print("\n\n");
@@ -248,6 +257,7 @@ void Margay::begin(uint8_t *vals, uint8_t numVals, String header_) {
     }
     RTC.setTime(2000 + dateTimeVals[0], dateTimeVals[1], dateTimeVals[2],
                 dateTimeVals[3], dateTimeVals[4], dateTimeVals[5]);
+    Pages.latchNotice(0x30); //ClockSet
   }
 
   getTime(); //Get time to pass to computer
@@ -334,6 +344,17 @@ void Margay::begin(uint8_t *vals, uint8_t numVals, String header_) {
   }
 
   Serial.print("\nReady to Log...\n\n");
+  //The logger's own report at boot, for its first status row: the first fault the
+  //self-tests found, else LoggingStarted (unit, kind 16).
+  if (SDCardMissing) Pages.latchFault(0x01);
+  else if (SDTestFailed) Pages.latchFault(0x05);
+  else if (ClockError) Pages.latchFault(0x21);
+  else if (BMEError) Pages.latchFault(0x41);
+  else if (SensorError) Pages.latchFault(0x61);
+  else if (BatError) Pages.latchFault(0x84);
+  Pages.latchNotice(0xF0);
+  BootReport = Pages.report();
+  Pages.acknowledge();
   NewLog = true; //Set flag to begin new log file
 
   if (ExtIntPin != 255) {
@@ -418,11 +439,13 @@ void Margay::SDtest() {
   if (cardNotPresent) {
     Serial.println(F(" NO CARD"));
     sdTestFailed = true;
+    SDTestFailed = true;
     SDCardMissing = true; //Card not inserted
   }
   else if (!SD.begin(SD_CS)) {
     OnBoardError = true;
     sdTestFailed = true;
+    SDTestFailed = true;
   }
 
   // If card is present and initialised successfully, do the following:
@@ -459,6 +482,7 @@ void Margay::SDtest() {
       for (int i = 0; i < randLength - 1; i++){ //Test random value string
         if (testDigits[i] != randDigits[i]) {
           sdTestFailed = true;
+          SDTestFailed = true;
           OnBoardError = true;
         }
       }
@@ -490,6 +514,7 @@ void Margay::clockTest() {
     delay(1100);
     if (RTC.getValue(5) == testSeconds) {
       OnBoardError = true; // If clock is not incrementing
+      ClockError = true;
       oscStop = true;      // Oscillator not running
       Serial.println(" FAIL (oscillator stopped)");
     }
@@ -508,6 +533,7 @@ void Margay::clockTest() {
   } else {
     Serial.println(" FAIL");
     OnBoardError = true;
+    ClockError = true;
   }
 }
 
@@ -517,7 +543,7 @@ void Margay::batTest() {
   // Set error flag if below min voltage
   if (batVoltage < BatVoltageError) BatError = true;
   // Set warning flag if below set percentage
-  if (batPercentage < BatPercentageWarning) BatWarning = true;
+  if (batPercentage < BatPercentageWarning) { BatWarning = true; Pages.latchNotice(0x90); } //BatteryWarning
   Serial.print("Bat = ");
   Serial.print(batVoltage);
   Serial.print("V\t");
@@ -591,15 +617,15 @@ void Margay::initLogFile() {
     (fileName + String(numCharArray) + ".csv").toCharArray(FileNameC, 13);
   }
   ("sta" + String(numCharArray) + ".csv").toCharArray(FileNameStaC, 13); //The status file, same number
+  if (FileNum != 0) Pages.latchNotice(0xF1); //NewLogFile: a later pair, not the first
+  FileNum = fileNum;
   Serial.print("FileNameC: ");
   Serial.println(FileNameC);
   // The status file: one row per report, boot and check, from this logger and
   // from every device on it (NW-Device-Specification Report register). Its
   // boot row carries what the data file's first line used to: library
   // version and serial number, with the hardware version beside them.
-  statusStr("Time,Trigger,Device,Serial,HW,FW,Code,Note,Page0,Page1,Page2");
-  getTime();
-  statusStr(LogTimeDate + ",boot,Margay," + String(SN) + "," + HWVersion + "," + String(LibVersion) + ",0x00,None,,,");
+  statusStr("Time,Trigger,Device,Serial,HW,FW,Code,Note,Page0,Page1,Page2"); //The logger's own boot row follows at the first reading (it watches itself)
   // The data file starts with its header row (old loggers lack BME280)
   // Note is always the last column and carries no comma after it: every
   // sensor ends its fields with a comma for the next, so this ends the row.
@@ -822,6 +848,7 @@ float Margay::getVoltage() {  //Get voltage from Ax pin
 
 // Pass in function which returns string of data
 void Margay::run(String (*update)(void), unsigned long logInterval) {
+  LogInterval = logInterval; //Served on Page 3
   // Print note that that logging has started
   // Serial.println("Log Started!"); //DEBUG!
   // Serial.println(millis()); //DEBUG!
@@ -946,14 +973,70 @@ void Margay::_addDataPoint(String data) {
   Note = ""; //One row's worth of notes
   digitalWrite(BlueLED, HIGH); //OFF
   // Serial.println("Got OB vals");  //DEBUG!
-  logStr(data);
+  if (logStr(data) != 0) Pages.latchNotice(0xF2); //RowNotWritten
   // Serial.println("Logged Data"); //DEBUG!
-  reportRows(); //The status file: a row for every watched sensor with something to report
+  fillPages(); //Margay's reading of itself: Page 2, Page 3, Block 0
+  reportRows(); //The status file: a row for the logger and every watched sensor with something to report
+}
+
+uint8_t Margay::chipFaults() {
+  uint8_t f = 0;
+  if (SDCardMissing || SDTestFailed) f |= 0x01;
+  if (ClockError) f |= 0x02;
+  if (BMEError) f |= 0x04;
+  if (SensorError) f |= 0x08;
+  if (BatError) f |= 0x10;
+  return f;
+}
+
+void Margay::fillPages() {
+  Pages.beginReading();
+  float v = getBatVoltage();
+  Pages.put8(0x48, (uint8_t)constrain(getBatPercentage(), 0, 100));
+  Pages.put16(0x49, (uint16_t)(v * 100.0 + 0.5));
+  Pages.put16(0x4B, (uint16_t)(int16_t)(getTemp(thermistor_temp_sensor) * 100.0)); //0 on models without the thermistor path
+  if (Model >= MODEL_2v0 && !BMEError) {
+    Pages.put16(0x50, (uint16_t)(int16_t)(bme280.getTemperature() * 100.0));
+    Pages.put16(0x52, (uint16_t)(bme280.getHumidity() * 100.0));
+    Pages.put32(0x54, (uint32_t)(bme280.getPressure() * 100.0));
+  }
+  //Clock: Unix seconds from the DS3231's fields (days from civil, proleptic Gregorian)
+  int y = RTC.getValue(0), mo = RTC.getValue(1), d = RTC.getValue(2);
+  int32_t yy = y - (mo <= 2 ? 1 : 0);
+  int32_t era = (yy >= 0 ? yy : yy - 399) / 400;
+  uint32_t yoe = (uint32_t)(yy - era * 400);
+  uint32_t doy = (153 * (mo + (mo > 2 ? -3 : 9)) + 2) / 5 + d - 1;
+  uint32_t doe = yoe * 365 + yoe / 4 - yoe / 100 + doy;
+  uint32_t days = (uint32_t)(era * 146097 + (int32_t)doe - 719468);
+  Pages.put32(0x58, days * 86400UL + (uint32_t)RTC.getValue(3) * 3600UL + (uint32_t)RTC.getValue(4) * 60UL + (uint32_t)RTC.getValue(5));
+  Pages.put16(0x5C, (uint16_t)(int16_t)(RTC.getTemp() * 100.0));
+  Pages.put16(0x60, FileNum);
+  Pages.put32(0x62, LogInterval);
+  Pages.put16(0x66, getExtIntCount(false));
+  Pages.endReading(chipFaults());
+}
+
+static const char* const margayChips[] = {"SDCard", "Clock", "BME280", "SensorBus", "Battery"};
+static const char* const margayWords[] = {"LoggingStarted", "NewLogFile", "RowNotWritten"};   //unit kinds 16-18
+static const char* const margayChipWords[] = {"BatteryWarning", "ClockSet"};   //kind 16 on Battery (0x90) and on Clock (0x30): one word each
+
+uint8_t Margay::reportKind()    { return Pages.report().kind(); }
+bool    Margay::reportIsFault() { return Pages.report().isFault(); }
+uint8_t Margay::bootReportKind() { return BootReport.kind(); }
+void    Margay::clearBootReport() { BootReport.code = 0; BootReport.status = 0; }
+
+size_t Margay::printStatus(Print& out, bool boot) {
+  const NW_Report& r = boot ? BootReport : Pages.report();
+  //Kind 16 means a different thing on the unit, the battery and the clock: choose the word table by chip
+  const char* const* words = margayWords; uint8_t n = 3;
+  if (r.chip() == 4) { words = margayChipWords; n = 1; }
+  else if (r.chip() == 1) { words = margayChipWords + 1; n = 1; }
+  return Pages.printSnapshot(out, margayChips, 5, LibVersion.c_str(), &r, words, n);
 }
 
 bool Margay::watch(NW_Sensor& sensor) {
-  if (_nWatched >= MARGAY_MAX_WATCHED) return false;
-  _watched[_nWatched++] = &sensor;
+  if (NumWatched >= MaxWatched) return false;
+  Watched[NumWatched++] = &sensor;
   return true;
 }
 
@@ -975,14 +1058,15 @@ void Margay::reportRows() {
   //powering the rail for the reading: no row. Any other boot report, and any
   //report captured with the reading, gets one. The first reading writes every
   //watched sensor's boot row regardless, as the record of what is on the bus.
-  for (uint8_t i = 0; i < _nWatched; i++) {
-    NW_Sensor& s = *_watched[i];
+  for (int8_t i = -1; i < (int8_t)NumWatched; i++) {
+    NW_Sensor& s = (i < 0) ? *this : *Watched[i]; //The logger itself first
     uint8_t bootKind = s.bootReportKind();
-    if (!_deviceBootRows || (bootKind != 0 && bootKind != 6)) statusRow("boot", s, true);
+    if (!DeviceBootRows || (bootKind != 0 && bootKind != 6)) statusRow("boot", s, true);
     s.clearBootReport();
     if (s.reportKind() != 0) statusRow("report", s, false);
   }
-  _deviceBootRows = true;
+  Pages.acknowledge(); //The logger's own report is written; the next one may latch
+  DeviceBootRows = true;
 }
 
 void Margay::note(const String& word) {
