@@ -8,6 +8,7 @@ Andy Wickert
 */
 
 #include <Margay.h>
+#include <Arduino.h>
 
 // CRC-8/SMBUS (polynomial 0x07, init 0x00) over Page 0 bytes 0x00-0x1D, as
 // NW-Provision writes it (NW-Device-Specification Page 0 Block 3).
@@ -19,7 +20,6 @@ static uint8_t crc8(const uint8_t* data, uint8_t len) {
   }
   return crc;
 }
-#include <Arduino.h>
 
 
 volatile bool manualLog = false; // Global for interrupt access
