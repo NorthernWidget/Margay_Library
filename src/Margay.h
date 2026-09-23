@@ -115,7 +115,7 @@ class Margay : public NW_Logger
      *                matching the CSV data returned by the user's update()
      *                function.
      */
-    void begin(uint8_t *vals, uint8_t numVals, String header_) override;
+    bool begin(uint8_t *vals, uint8_t numVals, String header_) override;
     using NW_Logger::begin; ///< begin(header) with no external sensors
 
     /** @brief "Margay". */

@@ -154,7 +154,7 @@ Margay::Margay(board model_, build specs_) {
   Specs = specs_; //Store build info locally
 }
 
-void Margay::begin(uint8_t *vals, uint8_t numVals, String header_) {
+bool Margay::begin(uint8_t *vals, uint8_t numVals, String header_) {
   powerOB(ON);  //Turn on on-board power
   powerAux(ON); //Turn on external auxiliary power
   if (WDHold != 255) pinMode(WDHold, OUTPUT);
@@ -222,6 +222,7 @@ void Margay::begin(uint8_t *vals, uint8_t numVals, String header_) {
   attachExtInt(); //The external-interrupt counter, if setExtInt() named a pin
 
   LED_Color(OFF);
+  return !(OnBoardError || SensorError || TimeError || SDCardMissing); //Okapi's convention: true = nothing wrong
 }
 
 void Margay::batTest() {
@@ -498,15 +499,7 @@ void Margay::fillPages() {
     Pages.put16(0x52, (uint16_t)(bme280.getHumidity() * 100.0));
     Pages.put32(0x54, (uint32_t)(bme280.getPressure() * 100.0));
   }
-  //Clock: Unix seconds from the DS3231's fields (days from civil, proleptic Gregorian)
-  int y = RTC.getValue(0), mo = RTC.getValue(1), d = RTC.getValue(2);
-  int32_t yy = y - (mo <= 2 ? 1 : 0);
-  int32_t era = (yy >= 0 ? yy : yy - 399) / 400;
-  uint32_t yoe = (uint32_t)(yy - era * 400);
-  uint32_t doy = (153 * (mo + (mo > 2 ? -3 : 9)) + 2) / 5 + d - 1;
-  uint32_t doe = yoe * 365 + yoe / 4 - yoe / 100 + doy;
-  uint32_t days = (uint32_t)(era * 146097 + (int32_t)doe - 719468);
-  Pages.put32(0x58, days * 86400UL + (uint32_t)RTC.getValue(3) * 3600UL + (uint32_t)RTC.getValue(4) * 60UL + (uint32_t)RTC.getValue(5));
+  Pages.put32(0x58, clockUnix()); //Clock: Unix seconds
   Pages.put16(0x5C, (uint16_t)(int16_t)(RTC.getTemp() * 100.0));
   Pages.put16(0x60, FileNum);
   Pages.put32(0x62, LogInterval);
