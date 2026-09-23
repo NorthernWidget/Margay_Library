@@ -1,13 +1,12 @@
-Margay File Structure
+Margay File Structure (2026-09-23; the same for Okapi, which shares NW_Logger)
 
 SD:.
-├───NW
-│   ├───SN#1
-│   |	├───HWTest.txt
-|	|	└───Logs
-|	|		├───Log1.txt
-|	|		└───...
-│   ├───SN#2
+├───SN#1                 one folder per logger, named by its serial number
+│   ├───HWTest.txt       the boot write-and-read-back
+│   ├───log00001.csv     data: header row, then one row per reading
+│   ├───sta00001.csv     status: header row, then one row per report (logger and watched sensors)
+│   ├───log00002.csv     the next pair, at the next boot or log-button press
+│   ├───sta00002.csv
 │   └───...
-|	
-...
+├───SN#2
+└───...
