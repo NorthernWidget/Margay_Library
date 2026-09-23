@@ -205,10 +205,10 @@ void Margay::begin(uint8_t *vals, uint8_t numVals, String header_) {
   int EEPROMLen = EEPROM.length(); //Copy value for faster access
   int val = 0; //Value to read temp EEPROM values into
   int pos = 0; //used to keep track of position in SN string
-  // NW-Device-Specification Page 0 occupies the top 32 bytes of EEPROM.
+  // NW-Device-Specification: the stored image (Page 0 identity, Page 1 calibration) occupies the top 64 bytes of EEPROM, Page 0 first.
   // Schema 1 (NW-Provision): serial number = Block 2 (offset 0x10-0x17).
   // Schema 0 (MargaySetup): serial number = the last 8 bytes.
-  int page0 = EEPROMLen - 32;
+  int page0 = EEPROMLen - 64; //Schema 1 stored image: Page 0 identity, then Page 1 calibration, at the top of EEPROM (2026-09-23 renumbering)
   uint8_t p0[0x1F];
   for (int i = 0; i < 0x1F; i++) p0[i] = EEPROM.read(page0 + i);
   bool schema1 = (p0[0x00] == 0x01) && (p0[0x1D] == 0x4E) && (crc8(p0, 0x1E) == p0[0x1E]);
