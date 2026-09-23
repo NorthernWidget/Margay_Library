@@ -339,6 +339,7 @@ Andy Wickert
 */</span>
 
 <span class="cp">#include</span> <span class="cpf">&lt;Margay.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;Arduino.h&gt;</span><span class="cp">
 </span>
 <span class="c1">// CRC-8/SMBUS (polynomial 0x07, init 0x00) over Page 0 bytes 0x00-0x1D, as</span>
 <span class="c1">// NW-Provision writes it (NW-Device-Specification Page 0 Block 3).</span>
@@ -350,8 +351,7 @@ Andy Wickert
   <span class="p">}</span>
   <span class="k">return</span> <span class="n">crc</span><span class="p">;</span>
 <span class="p">}</span>
-<span class="cp">#include</span> <span class="cpf">&lt;Arduino.h&gt;</span><span class="cp">
-</span>
+
 
 <span class="k">volatile</span> <span class="kt">bool</span> <span class="n">manualLog</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span> <span class="c1">// Global for interrupt access</span>
 
@@ -1431,7 +1431,7 @@ Andy Wickert
 
 <hr />
 
-<p>Updated on 2026-09-22 at 23:10:20 +0000</p>
+<p>Updated on 2026-09-23 at 04:49:52 +0000</p>
 
         
       </section>
