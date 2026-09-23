@@ -20,6 +20,17 @@ Andy Wickert
 #include <avr/power.h>
 #include <EEPROM.h>
 #include <NW_Core.h>   // NW_Sensor: the view the status file takes of a sensor
+
+// Build identity: this library's version (held equal to library.properties by
+// NW-Tests/version_check.py) and its build commit, set by the NW-Build wrapper from
+// git and blank in an Arduino IDE build; the sketch's commit the same way.
+#define MARGAY_LIBRARY_VERSION "1.2.0"
+#ifndef MARGAY_LIBRARY_COMMIT
+#define MARGAY_LIBRARY_COMMIT ""
+#endif
+#ifndef SKETCH_COMMIT
+#define SKETCH_COMMIT ""
+#endif
 #include "DS3231_Logger.h"
 #include "MCP3421.h"
 #include "SdFat.h"
@@ -393,7 +404,7 @@ class Margay : public NW_Sensor
     uint8_t NCells = 3; ///< Number of AA cells in series in the battery pack. Used by getBatPercentage().
     float BatVoltageError      = 3.3; ///< Battery voltage threshold [V] below which BatError is set and logged.
     float BatPercentageWarning = 50;  ///< Battery charge threshold [%] below which BatWarning is set and logged.
-    const String LibVersion = "1.2.0"; ///< Library version string, written to every log file header.
+    const String LibVersion = MARGAY_LIBRARY_VERSION; ///< Library version string, the logger's FW column in the status file.
 
   protected:
     float tempConvert(float V, float vcc, float R,

@@ -625,7 +625,7 @@ void Margay::initLogFile() {
   // from every device on it (NW-Device-Specification Report register). Its
   // boot row carries what the data file's first line used to: library
   // version and serial number, with the hardware version beside them.
-  statusStr("Time,Trigger,Device,Serial,HW,FW,Code,Note,Page0,Page1,Page2"); //The logger's own boot row follows at the first reading (it watches itself)
+  statusStr("Time,Trigger,Device,Serial,HW,FW,FWCommit,Lib,LibCommit,Code,Note,Page0,Page1,Page2"); //The logger's own boot row follows at the first reading (it watches itself)
   // The data file starts with its header row (old loggers lack BME280)
   // Note is always the last column and carries no comma after it: every
   // sensor ends its fields with a comma for the next, so this ends the row.
@@ -1031,7 +1031,7 @@ size_t Margay::printStatus(Print& out, bool boot) {
   const char* const* words = margayWords; uint8_t n = 3;
   if (r.chip() == 4) { words = margayChipWords; n = 1; }
   else if (r.chip() == 1) { words = margayChipWords + 1; n = 1; }
-  return Pages.printSnapshot(out, margayChips, 5, LibVersion.c_str(), &r, words, n);
+  return Pages.printSnapshot(out, margayChips, 5, LibVersion.c_str(), &r, words, n, MARGAY_LIBRARY_COMMIT, "", SKETCH_COMMIT); //A logger: its library is its firmware; the sketch stands where a library would
 }
 
 bool Margay::watch(NW_Sensor& sensor) {
