@@ -225,7 +225,7 @@
           <aside class="sidebar__right sticky">
             <nav class="toc" aria-label="Table of contents">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
-              <ul class="toc__menu"><li><a href="#public-functions">Public Functions</a></li><li><a href="#public-attributes">Public Attributes</a></li><li><a href="#detailed-description">Detailed Description</a></li><li><a href="#public-functions-documentation">Public Functions Documentation</a><ul><li><a href="#function-margay">function Margay</a></li><li><a href="#function-begin">function begin</a></li><li><a href="#function-begin-1">function begin</a></li><li><a href="#function-logstr">function logStr</a></li><li><a href="#function-statusstr">function statusStr</a></li><li><a href="#function-watch">function watch</a></li><li><a href="#function-name">function name</a></li><li><a href="#function-reportkind">function reportKind</a></li><li><a href="#function-reportisfault">function reportIsFault</a></li><li><a href="#function-bootreportkind">function bootReportKind</a></li><li><a href="#function-clearbootreport">function clearBootReport</a></li><li><a href="#function-printstatus">function printStatus</a></li><li><a href="#function-note">function note</a></li><li><a href="#function-led_color">function LED_Color</a></li><li><a href="#function-run">function run</a></li><li><a href="#function-getvoltage">function getVoltage</a></li><li><a href="#function-adddatapoint">function addDataPoint</a></li><li><a href="#function-initlogfile">function initLogFile</a></li><li><a href="#function-setextint">function setExtInt</a></li><li><a href="#function-getextintcount">function getExtIntCount</a></li><li><a href="#function-resetextintcount">function resetExtIntCount</a></li><li><a href="#function-gettemp">function getTemp</a></li><li><a href="#function-getbatvoltage">function getBatVoltage</a></li><li><a href="#function-getbatpercentage">function getBatPercentage</a></li><li><a href="#function-initadc">function initADC</a></li><li><a href="#function-resetwdt">function resetWDT</a></li><li><a href="#function-powerob">function powerOB</a></li><li><a href="#function-poweraux">function powerAux</a></li></ul></li><li><a href="#public-attributes-documentation">Public Attributes Documentation</a><ul><li><a href="#variable-sd_cs">variable SD_CS</a></li><li><a href="#variable-auxled">variable AuxLED</a></li><li><a href="#variable-redled">variable RedLED</a></li><li><a href="#variable-greenled">variable GreenLED</a></li><li><a href="#variable-blueled">variable BlueLED</a></li><li><a href="#variable-vref_pin">variable VRef_Pin</a></li><li><a href="#variable-thermsense_pin">variable ThermSense_Pin</a></li><li><a href="#variable-batsense_pin">variable BatSense_Pin</a></li><li><a href="#variable-vswitch_pin">variable VSwitch_Pin</a></li><li><a href="#variable-sd_cd">variable SD_CD</a></li><li><a href="#variable-ext3v3ctrl">variable Ext3v3Ctrl</a></li><li><a href="#variable-i2c_sw">variable I2C_SW</a></li><li><a href="#variable-pg">variable PG</a></li><li><a href="#variable-extint">variable ExtInt</a></li><li><a href="#variable-rtcint">variable RTCInt</a></li><li><a href="#variable-logint">variable LogInt</a></li><li><a href="#variable-wdhold">variable WDHold</a></li><li><a href="#variable-batswitch">variable BatSwitch</a></li><li><a href="#variable-tx">variable TX</a></li><li><a href="#variable-rx">variable RX</a></li><li><a href="#variable-d0">variable D0</a></li><li><a href="#variable-ncells">variable NCells</a></li><li><a href="#variable-batvoltageerror">variable BatVoltageError</a></li><li><a href="#variable-batpercentagewarning">variable BatPercentageWarning</a></li><li><a href="#variable-libversion">variable LibVersion</a></li></ul></li></ul>
+              <ul class="toc__menu"><li><a href="#public-functions">Public Functions</a></li><li><a href="#public-attributes">Public Attributes</a></li><li><a href="#detailed-description">Detailed Description</a></li><li><a href="#public-functions-documentation">Public Functions Documentation</a><ul><li><a href="#function-margay">function Margay</a></li><li><a href="#function-begin">function begin</a></li><li><a href="#function-name">function name</a></li><li><a href="#function-printstatus">function printStatus</a></li><li><a href="#function-getvoltage">function getVoltage</a></li><li><a href="#function-adddatapoint">function addDataPoint</a></li><li><a href="#function-gettemp">function getTemp</a></li><li><a href="#function-getbatvoltage">function getBatVoltage</a></li><li><a href="#function-getbatpercentage">function getBatPercentage</a></li><li><a href="#function-initadc">function initADC</a></li><li><a href="#function-powerob">function powerOB</a></li><li><a href="#function-poweraux">function powerAux</a></li></ul></li><li><a href="#public-attributes-documentation">Public Attributes Documentation</a><ul><li><a href="#variable-vref_pin">variable VRef_Pin</a></li><li><a href="#variable-thermsense_pin">variable ThermSense_Pin</a></li><li><a href="#variable-batsense_pin">variable BatSense_Pin</a></li><li><a href="#variable-vswitch_pin">variable VSwitch_Pin</a></li><li><a href="#variable-ext3v3ctrl">variable Ext3v3Ctrl</a></li><li><a href="#variable-pg">variable PG</a></li><li><a href="#variable-extint">variable ExtInt</a></li><li><a href="#variable-batswitch">variable BatSwitch</a></li><li><a href="#variable-tx">variable TX</a></li><li><a href="#variable-rx">variable RX</a></li><li><a href="#variable-d0">variable D0</a></li><li><a href="#variable-ncells">variable NCells</a></li><li><a href="#variable-batvoltageerror">variable BatVoltageError</a></li><li><a href="#variable-batpercentagewarning">variable BatPercentageWarning</a></li><li><a href="#variable-libversion">variable LibVersion</a></li></ul></li></ul>
             </nav>
           </aside>
         
@@ -233,7 +233,7 @@
 
 <p><code class="language-plaintext highlighter-rouge">#include &lt;Margay.h&gt;</code></p>
 
-<p>Inherits from NW_Sensor</p>
+<p>Inherits from NW_Logger</p>
 
 <h2 id="public-functions">Public Functions</h2>
 
@@ -250,60 +250,16 @@
       <td><strong><a href="/Margay_Library/Classes/classMargay/#function-margay">Margay</a></strong>(board model_ =MODEL_3v0, build specs_ =BUILD_B)<br />Instantiate a <a href="/Margay_Library/Classes/classMargay/">Margay</a> logger object.</td>
     </tr>
     <tr>
-      <td>void</td>
-      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-begin">begin</a></strong>(uint8<em>t * vals, uint8_t numVals, String header</em>)<br />Initialise the logger with a list of external I2C sensor addresses.</td>
-    </tr>
-    <tr>
-      <td>void</td>
-      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-begin">begin</a></strong>(String header_ =””)<br />Initialise the logger with no external I2C sensors.</td>
-    </tr>
-    <tr>
-      <td>int</td>
-      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-logstr">logStr</a></strong>(String val)<br />Write a string to the SD card log file and echo it to Serial.</td>
-    </tr>
-    <tr>
-      <td>int</td>
-      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-statusstr">statusStr</a></strong>(String val)<br />Append one row to the status file (sta<n>.csv beside log<n>.csv).</n></n></td>
-    </tr>
-    <tr>
       <td>bool</td>
-      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-watch">watch</a></strong>(NW_Sensor &amp; sensor)<br />Register a sensor whose reports the status file should carry.</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-begin">begin</a></strong>(uint8<em>t * vals, uint8_t numVals, String header</em>) override<br />Initialise the logger with a list of external I2C sensor addresses.</td>
     </tr>
     <tr>
       <td>const char *</td>
-      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-name">name</a></strong>() const override<br />“Margay”.</td>
-    </tr>
-    <tr>
-      <td>uint8_t</td>
-      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-reportkind">reportKind</a></strong>() override<br />Kind of the logger’s own report latched during the last reading (0 = none).</td>
-    </tr>
-    <tr>
-      <td>bool</td>
-      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-reportisfault">reportIsFault</a></strong>() override</td>
-    </tr>
-    <tr>
-      <td>uint8_t</td>
-      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-bootreportkind">bootReportKind</a></strong>() override<br />The report at boot: LoggingStarted (0xF0), or the first fault <a href="/Margay_Library/Classes/classMargay/#function-begin">begin()</a> found.</td>
-    </tr>
-    <tr>
-      <td>void</td>
-      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-clearbootreport">clearBootReport</a></strong>() override</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-name">name</a></strong>() const override<br />&lt; begin(header) with no external sensors</td>
     </tr>
     <tr>
       <td>size_t</td>
       <td><strong><a href="/Margay_Library/Classes/classMargay/#function-printstatus">printStatus</a></strong>(Print &amp; out, bool boot =false) override<br />The logger’s own status line: name, serial, hardware version, library version, report code and note word, Pages 0-2 in hex (its reading of itself: battery, onboard environment, clock). The same columns as a sensor’s.</td>
-    </tr>
-    <tr>
-      <td>void</td>
-      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-note">note</a></strong>(const String &amp; word)<br />Note a one-word condition for the current log row.</td>
-    </tr>
-    <tr>
-      <td>void</td>
-      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-led-color">LED_Color</a></strong>(unsigned long val)<br />Set the on-board RGB LED to a packed color value.</td>
-    </tr>
-    <tr>
-      <td>void</td>
-      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-run">run</a></strong>(String(*)(void) f, unsigned long logInterval)<br />Main logging loop; call from Arduino loop().</td>
     </tr>
     <tr>
       <td>float</td>
@@ -311,23 +267,7 @@
     </tr>
     <tr>
       <td>void</td>
-      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-adddatapoint">addDataPoint</a></strong>(String(*)(void) update)<br />Log one data point immediately, outside the normal <a href="/Margay_Library/Classes/classMargay/#function-run">run()</a> cycle.</td>
-    </tr>
-    <tr>
-      <td>void</td>
-      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-initlogfile">initLogFile</a></strong>()<br />Create a new sequentially numbered log file on the SD card.</td>
-    </tr>
-    <tr>
-      <td>void</td>
-      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-setextint">setExtInt</a></strong>(uint8_t n, String header_entry =”nInterrupts,”)<br />Configure a pin as an external interrupt event counter.</td>
-    </tr>
-    <tr>
-      <td>uint16_t</td>
-      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-getextintcount">getExtIntCount</a></strong>(bool reset0 =true)<br />Atomically read the external interrupt event count.</td>
-    </tr>
-    <tr>
-      <td>void</td>
-      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-resetextintcount">resetExtIntCount</a></strong>(uint16_t start =0)<br />Atomically set the external interrupt counter to a given value.</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-adddatapoint">addDataPoint</a></strong>(String(*)(void) update) override<br />Log one data point immediately, outside the normal run() cycle.</td>
     </tr>
     <tr>
       <td>float</td>
@@ -344,10 +284,6 @@
     <tr>
       <td>void</td>
       <td><strong><a href="/Margay_Library/Classes/classMargay/#function-initadc">initADC</a></strong>(uint8_t desiredResolution)<br />Initialise the on-board MCP3421 ADC at a given resolution.</td>
-    </tr>
-    <tr>
-      <td>void</td>
-      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-resetwdt">resetWDT</a></strong>()<br />Pulse the external watchdog timer’s DONE pin.</td>
     </tr>
     <tr>
       <td>void</td>
@@ -372,26 +308,6 @@
   <tbody>
     <tr>
       <td>uint8_t</td>
-      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-sd-cs">SD_CS</a></strong> <br />SD card SPI chip-select pin.</td>
-    </tr>
-    <tr>
-      <td>uint8_t</td>
-      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-auxled">AuxLED</a></strong> <br />Auxiliary single-color LED pin.</td>
-    </tr>
-    <tr>
-      <td>uint8_t</td>
-      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-redled">RedLED</a></strong> <br />Red channel of on-board RGB LED (active low).</td>
-    </tr>
-    <tr>
-      <td>uint8_t</td>
-      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-greenled">GreenLED</a></strong> <br />Green channel of on-board RGB LED (active low).</td>
-    </tr>
-    <tr>
-      <td>uint8_t</td>
-      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-blueled">BlueLED</a></strong> <br />Blue channel of on-board RGB LED (active low).</td>
-    </tr>
-    <tr>
-      <td>uint8_t</td>
       <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-vref-pin">VRef_Pin</a></strong> <br />ADC pin connected to voltage reference.</td>
     </tr>
     <tr>
@@ -408,15 +324,7 @@
     </tr>
     <tr>
       <td>uint8_t</td>
-      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-sd-cd">SD_CD</a></strong> <br />SD card detect pin (LOW when card is present).</td>
-    </tr>
-    <tr>
-      <td>uint8_t</td>
       <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-ext3v3ctrl">Ext3v3Ctrl</a></strong> <br />Enable pin for the auxiliary 3.3 V sensor power rail.</td>
-    </tr>
-    <tr>
-      <td>uint8_t</td>
-      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-i2c-sw">I2C_SW</a></strong> <br />I2C bus switch (HIGH = external bus, LOW = internal bus).</td>
     </tr>
     <tr>
       <td>uint8_t</td>
@@ -424,19 +332,7 @@
     </tr>
     <tr>
       <td>uint8_t</td>
-      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-extint">ExtInt</a></strong> <br />External interrupt pin (legacy; use <a href="">setExtInt()</a>).</td>
-    </tr>
-    <tr>
-      <td>uint8_t</td>
-      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-rtcint">RTCInt</a></strong> <br />RTC alarm interrupt pin.</td>
-    </tr>
-    <tr>
-      <td>uint8_t</td>
-      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-logint">LogInt</a></strong> <br />Manual log button interrupt pin.</td>
-    </tr>
-    <tr>
-      <td>uint8_t</td>
-      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-wdhold">WDHold</a></strong> <br />Watchdog timer DONE pin (255 = not present on this model).</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-extint">ExtInt</a></strong> <br />External interrupt pin (legacy; use setExtInt()).</td>
     </tr>
     <tr>
       <td>uint8_t</td>
@@ -468,7 +364,7 @@
     </tr>
     <tr>
       <td>const String</td>
-      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-libversion">LibVersion</a></strong> <br />Library version string, written to every log file header.</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-libversion">LibVersion</a></strong> <br />Library version string, the logger’s FW column in the status file.</td>
     </tr>
   </tbody>
 </table>
@@ -512,11 +408,11 @@
 
 <h3 id="function-begin">function begin</h3>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">begin</span><span class="p">(</span>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">bool</span> <span class="n">begin</span><span class="p">(</span>
     <span class="kt">uint8_t</span> <span class="o">*</span> <span class="n">vals</span><span class="p">,</span>
     <span class="kt">uint8_t</span> <span class="n">numVals</span><span class="p">,</span>
     <span class="n">String</span> <span class="n">header_</span>
-<span class="p">)</span>
+<span class="p">)</span> <span class="k">override</span>
 </code></pre></div></div>
 
 <p>Initialise the logger with a list of external I2C sensor addresses.</p>
@@ -531,96 +427,14 @@
 
 <p>Powers on hardware, initialises the RTC, SD card, BME280, and ADC. Reads the serial number from EEPROM. Runs self-tests for I2C devices, clock, SD card, battery, and power rail, reporting results over Serial at 38400 baud and signalling status via the RGB LED. Attaches RTC alarm and manual-log-button interrupts. Accepts an optional time string over Serial (format YYMMDDHHMMSS) to set the RTC clock on first use.</p>
 
-<h3 id="function-begin-1">function begin</h3>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">begin</span><span class="p">(</span>
-    <span class="n">String</span> <span class="n">header_</span> <span class="o">=</span><span class="s">""</span>
-<span class="p">)</span>
-</code></pre></div></div>
-
-<p>Initialise the logger with no external I2C sensors.</p>
-
-<p><strong>Parameters</strong>:</p>
-
-<ul>
-  <li><strong>header_</strong> Optional column header string (default empty).</li>
-</ul>
-
-<p>Convenience overload; equivalent to calling begin(empty_array, 0, header_). Logs only on-board sensor values.</p>
-
-<h3 id="function-logstr">function logStr</h3>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">logStr</span><span class="p">(</span>
-    <span class="n">String</span> <span class="n">val</span>
-<span class="p">)</span>
-</code></pre></div></div>
-
-<p>Write a string to the SD card log file and echo it to Serial.</p>
-
-<p><strong>Parameters</strong>:</p>
-
-<ul>
-  <li><strong>val</strong> String to log.</li>
-</ul>
-
-<p><strong>Return</strong>: 0 on success, -1 if the log file could not be opened.</p>
-
-<h3 id="function-statusstr">function statusStr</h3>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">statusStr</span><span class="p">(</span>
-    <span class="n">String</span> <span class="n">val</span>
-<span class="p">)</span>
-</code></pre></div></div>
-
-<p>Append one row to the status file (sta<n>.csv beside log<n>.csv).</n></n></p>
-
-<p><strong>Return</strong>: 0 written, -1 the file could not be opened</p>
-
-<p>Columns: Time,Trigger,Device,Serial,HW,FW,Code,Note,Page0,Page1,Page2. The logger writes its own boot row at every new file; a sketch writes a device’s row with the logger’s time, a trigger word, and the device’s <a href="/Margay_Library/Classes/classMargay/#function-printstatus">printStatus()</a> line (NW_Core), whenever the device’s <a href="/Margay_Library/Classes/classMargay/#function-reportkind">reportKind()</a> is not 0.</p>
-
-<h3 id="function-watch">function watch</h3>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">bool</span> <span class="n">watch</span><span class="p">(</span>
-    <span class="n">NW_Sensor</span> <span class="o">&amp;</span> <span class="n">sensor</span>
-<span class="p">)</span>
-</code></pre></div></div>
-
-<p>Register a sensor whose reports the status file should carry.</p>
-
-<p><strong>Return</strong>: false if the list is full</p>
-
-<p>Call once per sensor in setup(). After every reading the logger writes a row for each watched sensor whose report says something happened: a report captured with the reading (trigger “report”), and a report the sensor captured at its boot other than the reset a logger expects when it powers the rail (trigger “boot”). The first reading writes a boot row for every watched sensor, whatever it says, so the file records each device’s identity and versions. Up to MaxWatched sensors.</p>
-
 <h3 id="function-name">function name</h3>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">inline</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">name</span><span class="p">()</span> <span class="k">const</span> <span class="k">override</span>
 </code></pre></div></div>
 
+<p>&lt; begin(header) with no external sensors</p>
+
 <p>“Margay”.</p>
-
-<h3 id="function-reportkind">function reportKind</h3>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint8_t</span> <span class="n">reportKind</span><span class="p">()</span> <span class="k">override</span>
-</code></pre></div></div>
-
-<p>Kind of the logger’s own report latched during the last reading (0 = none).</p>
-
-<h3 id="function-reportisfault">function reportIsFault</h3>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">bool</span> <span class="n">reportIsFault</span><span class="p">()</span> <span class="k">override</span>
-</code></pre></div></div>
-
-<h3 id="function-bootreportkind">function bootReportKind</h3>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint8_t</span> <span class="n">bootReportKind</span><span class="p">()</span> <span class="k">override</span>
-</code></pre></div></div>
-
-<p>The report at boot: LoggingStarted (0xF0), or the first fault <a href="/Margay_Library/Classes/classMargay/#function-begin">begin()</a> found.</p>
-
-<h3 id="function-clearbootreport">function clearBootReport</h3>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">clearBootReport</span><span class="p">()</span> <span class="k">override</span>
-</code></pre></div></div>
 
 <h3 id="function-printstatus">function printStatus</h3>
 
@@ -631,60 +445,6 @@
 </code></pre></div></div>
 
 <p>The logger’s own status line: name, serial, hardware version, library version, report code and note word, Pages 0-2 in hex (its reading of itself: battery, onboard environment, clock). The same columns as a sensor’s.</p>
-
-<h3 id="function-note">function note</h3>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">note</span><span class="p">(</span>
-    <span class="k">const</span> <span class="n">String</span> <span class="o">&amp;</span> <span class="n">word</span>
-<span class="p">)</span>
-</code></pre></div></div>
-
-<p>Note a one-word condition for the current log row.</p>
-
-<p><strong>Parameters</strong>:</p>
-
-<ul>
-  <li><strong>word</strong> One word (no commas) naming the condition.</li>
-</ul>
-
-<p>The word goes in the Note column, the last column of every row, written without a comma after it so the row ends cleanly. It is also printed to Serial and shown as an orange pulse on the LED. Several notes in one interval are joined with ‘;’. Cleared after each row. Typical words: NotAnswering, OldFirmware, NotSchema1, LiDARTimeout.</p>
-
-<h3 id="function-led_color">function LED_Color</h3>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">LED_Color</span><span class="p">(</span>
-    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">val</span>
-<span class="p">)</span>
-</code></pre></div></div>
-
-<p>Set the on-board RGB LED to a packed color value.</p>
-
-<p><strong>Parameters</strong>:</p>
-
-<ul>
-  <li><strong>val</strong> Packed 32-bit color value.</li>
-</ul>
-
-<p>The color format is 0xLLRRGGBB: byte 3 = luminosity, byte 2 = red, byte 1 = green, byte 0 = blue. Use the predefined color constants (RED, GREEN, BLUE, etc.) or OFF to turn the LED off.</p>
-
-<h3 id="function-run">function run</h3>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">run</span><span class="p">(</span>
-    <span class="n">String</span><span class="p">(</span><span class="o">*</span><span class="p">)(</span><span class="kt">void</span><span class="p">)</span> <span class="n">f</span><span class="p">,</span>
-    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">logInterval</span>
-<span class="p">)</span>
-</code></pre></div></div>
-
-<p>Main logging loop; call from Arduino loop().</p>
-
-<p>Handles three logging triggers:</p>
-
-<ul>
-  <li>RTC alarm (every logInterval seconds): logs a data point and resets the alarm.</li>
-  <li>Manual log button press: logs an additional data point immediately.</li>
-  <li>External interrupt (if configured via <a href="/Margay_Library/Classes/classMargay/#function-setextint">setExtInt()</a>): increments the event counter. Puts the MCU into SLEEP_MODE_PWR_DOWN between events to minimise power consumption. Turns the SD card and auxiliary power rail off during sleep and restores them on wake. fPointer to the user’s update() function, which must return a comma-separated String of sensor readings with a trailing comma.</li>
-</ul>
-
-<p>logIntervalLogging interval in seconds.</p>
 
 <h3 id="function-getvoltage">function getVoltage</h3>
 
@@ -701,10 +461,10 @@
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">addDataPoint</span><span class="p">(</span>
     <span class="n">String</span><span class="p">(</span><span class="o">*</span><span class="p">)(</span><span class="kt">void</span><span class="p">)</span> <span class="n">update</span>
-<span class="p">)</span>
+<span class="p">)</span> <span class="k">override</span>
 </code></pre></div></div>
 
-<p>Log one data point immediately, outside the normal <a href="/Margay_Library/Classes/classMargay/#function-run">run()</a> cycle.</p>
+<p>Log one data point immediately, outside the normal run() cycle.</p>
 
 <p><strong>Parameters</strong>:</p>
 
@@ -713,70 +473,6 @@
 </ul>
 
 <p>Switches the I2C bus to external, calls the user’s update() function to obtain sensor data, restores the bus, prepends on-board values (timestamp, BME280, RTC temp, battery voltage), and writes the complete row to the SD card.</p>
-
-<h3 id="function-initlogfile">function initLogFile</h3>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">initLogFile</span><span class="p">()</span>
-</code></pre></div></div>
-
-<p>Create a new sequentially numbered log file on the SD card.</p>
-
-<p>Log files are stored at SD:/NW/<SN>/Logs/LogNNNNN.txt. Searches for the next unused number and writes the library version, serial number, and column header as the first two lines. Called automatically by [run()](/Margay_Library/Classes/classMargay/#function-run) when a new log is started; can also be called directly (e.g. from HighSpeed_NoSleep sketches).</SN></p>
-
-<h3 id="function-setextint">function setExtInt</h3>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">setExtInt</span><span class="p">(</span>
-    <span class="kt">uint8_t</span> <span class="n">n</span><span class="p">,</span>
-    <span class="n">String</span> <span class="n">header_entry</span> <span class="o">=</span><span class="s">"nInterrupts,"</span>
-<span class="p">)</span>
-</code></pre></div></div>
-
-<p>Configure a pin as an external interrupt event counter.</p>
-
-<p><strong>Parameters</strong>:</p>
-
-<ul>
-  <li><strong>n</strong> Arduino pin number for the external interrupt.</li>
-  <li><strong>header_entry</strong> CSV column label for the counter, including trailing comma (default “nInterrupts,”).</li>
-</ul>
-
-<p>Attaches a falling-edge interrupt to the given pin. Each falling edge increments an internal counter accessible via <a href="/Margay_Library/Classes/classMargay/#function-getextintcount">getExtIntCount()</a>. Intended for pulse-output sensors such as tipping bucket rain gauges and anemometers. Must be called before <a href="/Margay_Library/Classes/classMargay/#function-begin">begin()</a>.</p>
-
-<h3 id="function-getextintcount">function getExtIntCount</h3>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint16_t</span> <span class="n">getExtIntCount</span><span class="p">(</span>
-    <span class="kt">bool</span> <span class="n">reset0</span> <span class="o">=</span><span class="nb">true</span>
-<span class="p">)</span>
-</code></pre></div></div>
-
-<p>Atomically read the external interrupt event count.</p>
-
-<p><strong>Parameters</strong>:</p>
-
-<ul>
-  <li><strong>reset0</strong> If true (default), reset the counter to zero after reading.</li>
-</ul>
-
-<p><strong>Return</strong>: Number of external interrupt events since the last reset.</p>
-
-<p>Disables interrupts while reading and optionally resetting the 16-bit counter to prevent torn reads on the 8-bit AVR. Any interrupt that arrives during the critical section is deferred, not lost.</p>
-
-<h3 id="function-resetextintcount">function resetExtIntCount</h3>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">resetExtIntCount</span><span class="p">(</span>
-    <span class="kt">uint16_t</span> <span class="n">start</span> <span class="o">=</span><span class="mi">0</span>
-<span class="p">)</span>
-</code></pre></div></div>
-
-<p>Atomically set the external interrupt counter to a given value.</p>
-
-<p><strong>Parameters</strong>:</p>
-
-<ul>
-  <li><strong>start</strong> Value to set the counter to (default 0).</li>
-</ul>
-
-<p>Disables interrupts during the write to prevent a torn store on the 8-bit AVR. Any interrupt that arrives during the critical section is deferred, not lost.</p>
 
 <h3 id="function-gettemp">function getTemp</h3>
 
@@ -838,15 +534,6 @@
 
 <p>Only meaningful on BUILD_B, BUILD_C, and BUILD_D. Called automatically by <a href="/Margay_Library/Classes/classMargay/#function-begin">begin()</a> for those builds; exposed publicly for advanced use in high-speed sketches.</p>
 
-<h3 id="function-resetwdt">function resetWDT</h3>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">resetWDT</span><span class="p">()</span>
-</code></pre></div></div>
-
-<p>Pulse the external watchdog timer’s DONE pin.</p>
-
-<p>Pulses WDHold HIGH for 5 µs to feed the hardware watchdog. Has no effect on board models without a watchdog timer (WDHold == 255). Called automatically by <a href="/Margay_Library/Classes/classMargay/#function-run">run()</a> after each logging event.</p>
-
 <h3 id="function-powerob">function powerOB</h3>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">powerOB</span><span class="p">(</span>
@@ -883,41 +570,6 @@
 
 <h2 id="public-attributes-documentation">Public Attributes Documentation</h2>
 
-<h3 id="variable-sd_cs">variable SD_CS</h3>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint8_t</span> <span class="n">SD_CS</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p>SD card SPI chip-select pin.</p>
-
-<h3 id="variable-auxled">variable AuxLED</h3>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint8_t</span> <span class="n">AuxLED</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p>Auxiliary single-color LED pin.</p>
-
-<h3 id="variable-redled">variable RedLED</h3>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint8_t</span> <span class="n">RedLED</span> <span class="o">=</span> <span class="mi">13</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p>Red channel of on-board RGB LED (active low).</p>
-
-<h3 id="variable-greenled">variable GreenLED</h3>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint8_t</span> <span class="n">GreenLED</span> <span class="o">=</span> <span class="mi">15</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p>Green channel of on-board RGB LED (active low).</p>
-
-<h3 id="variable-blueled">variable BlueLED</h3>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint8_t</span> <span class="n">BlueLED</span> <span class="o">=</span> <span class="mi">14</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p>Blue channel of on-board RGB LED (active low).</p>
-
 <h3 id="variable-vref_pin">variable VRef_Pin</h3>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint8_t</span> <span class="n">VRef_Pin</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
@@ -946,26 +598,12 @@
 
 <p>Voltage switch control pin.</p>
 
-<h3 id="variable-sd_cd">variable SD_CD</h3>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint8_t</span> <span class="n">SD_CD</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p>SD card detect pin (LOW when card is present).</p>
-
 <h3 id="variable-ext3v3ctrl">variable Ext3v3Ctrl</h3>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint8_t</span> <span class="n">Ext3v3Ctrl</span> <span class="o">=</span> <span class="mi">19</span><span class="p">;</span>
 </code></pre></div></div>
 
 <p>Enable pin for the auxiliary 3.3 V sensor power rail.</p>
-
-<h3 id="variable-i2c_sw">variable I2C_SW</h3>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint8_t</span> <span class="n">I2C_SW</span> <span class="o">=</span> <span class="mi">21</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p>I2C bus switch (HIGH = external bus, LOW = internal bus).</p>
 
 <h3 id="variable-pg">variable PG</h3>
 
@@ -979,28 +617,7 @@
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint8_t</span> <span class="n">ExtInt</span> <span class="o">=</span> <span class="mi">11</span><span class="p">;</span>
 </code></pre></div></div>
 
-<p>External interrupt pin (legacy; use <a href="">setExtInt()</a>).</p>
-
-<h3 id="variable-rtcint">variable RTCInt</h3>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint8_t</span> <span class="n">RTCInt</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p>RTC alarm interrupt pin.</p>
-
-<h3 id="variable-logint">variable LogInt</h3>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint8_t</span> <span class="n">LogInt</span> <span class="o">=</span>  <span class="mi">2</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p>Manual log button interrupt pin.</p>
-
-<h3 id="variable-wdhold">variable WDHold</h3>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint8_t</span> <span class="n">WDHold</span> <span class="o">=</span> <span class="mi">23</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p>Watchdog timer DONE pin (255 = not present on this model).</p>
+<p>External interrupt pin (legacy; use setExtInt()).</p>
 
 <h3 id="variable-batswitch">variable BatSwitch</h3>
 
@@ -1053,14 +670,14 @@
 
 <h3 id="variable-libversion">variable LibVersion</h3>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">const</span> <span class="n">String</span> <span class="n">LibVersion</span> <span class="o">=</span> <span class="s">"1.2.0"</span><span class="p">;</span>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">const</span> <span class="n">String</span> <span class="n">LibVersion</span> <span class="o">=</span> <span class="n">MARGAY_LIBRARY_VERSION</span><span class="p">;</span>
 </code></pre></div></div>
 
-<p>Library version string, written to every log file header.</p>
+<p>Library version string, the logger’s FW column in the status file.</p>
 
 <hr />
 
-<p>Updated on 2026-09-23 at 20:56:47 +0000</p>
+<p>Updated on 2026-09-23 at 22:44:26 +0000</p>
 
         
       </section>

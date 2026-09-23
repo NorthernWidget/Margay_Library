@@ -225,7 +225,7 @@
           <aside class="sidebar__right sticky">
             <nav class="toc" aria-label="Table of contents">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
-              <ul class="toc__menu"><li><a href="#classes">Classes</a></li><li><a href="#types">Types</a></li><li><a href="#defines">Defines</a></li><li><a href="#types-documentation">Types Documentation</a><ul><li><a href="#enum-board">enum board</a></li><li><a href="#enum-build">enum build</a></li><li><a href="#enum-temp_source">enum temp_source</a></li></ul></li><li><a href="#macros-documentation">Macros Documentation</a><ul><li><a href="#define-on">define ON</a></li><li><a href="#define-off">define OFF</a></li><li><a href="#define-cbi">define cbi</a></li></ul></li><li><a href="#source-code">Source code</a></li></ul>
+              <ul class="toc__menu"><li><a href="#classes">Classes</a></li><li><a href="#types">Types</a></li><li><a href="#defines">Defines</a></li><li><a href="#types-documentation">Types Documentation</a><ul><li><a href="#enum-board">enum board</a></li><li><a href="#enum-build">enum build</a></li><li><a href="#enum-temp_source">enum temp_source</a></li></ul></li><li><a href="#macros-documentation">Macros Documentation</a><ul><li><a href="#define-margay_library_version">define MARGAY_LIBRARY_VERSION</a></li><li><a href="#define-margay_library_commit">define MARGAY_LIBRARY_COMMIT</a></li><li><a href="#define-sketch_commit">define SKETCH_COMMIT</a></li></ul></li><li><a href="#source-code">Source code</a></li></ul>
             </nav>
           </aside>
         
@@ -283,15 +283,15 @@
   <tbody>
     <tr>
       <td> </td>
-      <td><strong><a href="/Margay_Library/Files/Margay_8h/#define-on">ON</a></strong></td>
+      <td><strong><a href="/Margay_Library/Files/Margay_8h/#define-margay-library-version">MARGAY_LIBRARY_VERSION</a></strong></td>
     </tr>
     <tr>
       <td> </td>
-      <td><strong><a href="/Margay_Library/Files/Margay_8h/#define-off">OFF</a></strong></td>
+      <td><strong><a href="/Margay_Library/Files/Margay_8h/#define-margay-library-commit">MARGAY_LIBRARY_COMMIT</a></strong></td>
     </tr>
     <tr>
       <td> </td>
-      <td><strong><a href="/Margay_Library/Files/Margay_8h/#define-cbi">cbi</a></strong>(sfr, bit)</td>
+      <td><strong><a href="/Margay_Library/Files/Margay_8h/#define-sketch-commit">SKETCH_COMMIT</a></strong></td>
     </tr>
   </tbody>
 </table>
@@ -412,24 +412,20 @@
 
 <h2 id="macros-documentation">Macros Documentation</h2>
 
-<h3 id="define-on">define ON</h3>
+<h3 id="define-margay_library_version">define MARGAY_LIBRARY_VERSION</h3>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#define ON 1
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#define MARGAY_LIBRARY_VERSION "1.2.0"
 </span></code></pre></div></div>
 
-<h3 id="define-off">define OFF</h3>
+<h3 id="define-margay_library_commit">define MARGAY_LIBRARY_COMMIT</h3>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#define OFF 0
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#define MARGAY_LIBRARY_COMMIT ""
 </span></code></pre></div></div>
 
-<h3 id="define-cbi">define cbi</h3>
+<h3 id="define-sketch_commit">define SKETCH_COMMIT</h3>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#define cbi(
-</span>    <span class="n">sfr</span><span class="p">,</span>
-    <span class="n">bit</span>
-<span class="p">)</span>
-<span class="p">(</span><span class="n">_SFR_BYTE</span><span class="p">(</span><span class="n">sfr</span><span class="p">)</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="n">_BV</span><span class="p">(</span><span class="n">bit</span><span class="p">))</span>
-</code></pre></div></div>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#define SKETCH_COMMIT ""
+</span></code></pre></div></div>
 
 <h2 id="source-code">Source code</h2>
 
@@ -442,7 +438,6 @@ Bobby Schulz
 Andy Wickert
 */</span>
 
-
 <span class="cp">#ifndef MARGAY_h
 #define MARGAY_h
 </span>
@@ -454,30 +449,19 @@ Andy Wickert
 #include</span> <span class="cpf">&lt;avr/wdt.h&gt;</span><span class="cp">
 #include</span> <span class="cpf">&lt;avr/power.h&gt;</span><span class="cp">
 #include</span> <span class="cpf">&lt;EEPROM.h&gt;</span><span class="cp">
-#include</span> <span class="cpf">&lt;NW_Core.h&gt;</span><span class="c1">   // NW_Sensor: the view the status file takes of a sensor</span><span class="cp">
-#include</span> <span class="cpf">"DS3231_Logger.h"</span><span class="cp">
-#include</span> <span class="cpf">"MCP3421.h"</span><span class="cp">
-#include</span> <span class="cpf">"SdFat.h"</span><span class="cp">
-#include</span> <span class="cpf">&lt;NW_BME280.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;NW_Logger.h&gt;</span><span class="c1">   // the logger core that Margay and Okapi share (NW_Sensor and NW_Pages through it)</span><span class="cp">
 </span>
-
-<span class="cp">#define RED         0xFFFF0000L
-#define GREEN       0xFF00FF00L
-#define BLUE        0xFF0000FFL
-#define MAROON      0xFF800000L
-#define GOLD        0xFFFFD700L
-#define ORANGE      0xFFFFA500L
-#define PURPLE      0xFF800080L
-#define CYAN        0xFF00FFFFL
-#define BLACK_ALERT 0x802019FFL 
-</span>
-<span class="cp">#define ON  1
-#define OFF 0
-</span>
-<span class="c1">//Define CBI macro</span>
-<span class="cp">#ifndef cbi
-#define cbi(sfr, bit) (_SFR_BYTE(sfr) &amp;= ~_BV(bit))
+<span class="c1">// Build identity: this library's version (held equal to library.properties by</span>
+<span class="c1">// NW-Tests/version_check.py) and its build commit, set by the NW-Build wrapper from</span>
+<span class="c1">// git and blank in an Arduino IDE build; the sketch's commit the same way.</span>
+<span class="cp">#define MARGAY_LIBRARY_VERSION "1.2.0"
+#ifndef MARGAY_LIBRARY_COMMIT
+#define MARGAY_LIBRARY_COMMIT ""
 #endif
+#ifndef SKETCH_COMMIT
+#define SKETCH_COMMIT ""
+#endif
+#include</span> <span class="cpf">"MCP3421.h"</span><span class="cp">
 </span>
 <span class="k">enum</span> <span class="n">board</span>
 <span class="p">{</span>
@@ -504,45 +488,21 @@ Andy Wickert
 <span class="p">};</span>
 
 
-<span class="k">class</span> <span class="nc">Margay</span> <span class="o">:</span> <span class="k">public</span> <span class="n">NW_Sensor</span>
+<span class="k">class</span> <span class="nc">Margay</span> <span class="o">:</span> <span class="k">public</span> <span class="n">NW_Logger</span>
 <span class="p">{</span>
 
   <span class="nl">public:</span>
     <span class="n">Margay</span><span class="p">(</span><span class="n">board</span> <span class="n">model_</span> <span class="o">=</span> <span class="n">MODEL_3v0</span><span class="p">,</span> <span class="n">build</span> <span class="n">specs_</span> <span class="o">=</span> <span class="n">BUILD_B</span><span class="p">);</span>
 
-    <span class="kt">void</span> <span class="n">begin</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="o">*</span><span class="n">vals</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="n">numVals</span><span class="p">,</span> <span class="n">String</span> <span class="n">header_</span><span class="p">);</span>
+    <span class="kt">bool</span> <span class="n">begin</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="o">*</span><span class="n">vals</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="n">numVals</span><span class="p">,</span> <span class="n">String</span> <span class="n">header_</span><span class="p">)</span> <span class="k">override</span><span class="p">;</span>
+    <span class="k">using</span> <span class="n">NW_Logger</span><span class="o">::</span><span class="n">begin</span><span class="p">;</span> 
 
-    <span class="kt">void</span> <span class="n">begin</span><span class="p">(</span><span class="n">String</span> <span class="n">header_</span> <span class="o">=</span> <span class="s">""</span><span class="p">);</span>
-
-    <span class="kt">int</span> <span class="n">logStr</span><span class="p">(</span><span class="n">String</span> <span class="n">val</span><span class="p">);</span>
-    <span class="kt">int</span> <span class="n">statusStr</span><span class="p">(</span><span class="n">String</span> <span class="n">val</span><span class="p">);</span>
-    <span class="kt">bool</span> <span class="n">watch</span><span class="p">(</span><span class="n">NW_Sensor</span><span class="o">&amp;</span> <span class="n">sensor</span><span class="p">);</span>
-
-    <span class="c1">// --- NW_Sensor: Margay is a Schema 1 device and watches itself ---</span>
     <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">name</span><span class="p">()</span> <span class="k">const</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="s">"Margay"</span><span class="p">;</span> <span class="p">}</span>
-    <span class="kt">uint8_t</span> <span class="n">reportKind</span><span class="p">()</span> <span class="k">override</span><span class="p">;</span>
-    <span class="kt">bool</span> <span class="n">reportIsFault</span><span class="p">()</span> <span class="k">override</span><span class="p">;</span>
-    <span class="kt">uint8_t</span> <span class="n">bootReportKind</span><span class="p">()</span> <span class="k">override</span><span class="p">;</span>
-    <span class="kt">void</span> <span class="n">clearBootReport</span><span class="p">()</span> <span class="k">override</span><span class="p">;</span>
     <span class="kt">size_t</span> <span class="n">printStatus</span><span class="p">(</span><span class="n">Print</span><span class="o">&amp;</span> <span class="n">out</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">boot</span> <span class="o">=</span> <span class="nb">false</span><span class="p">)</span> <span class="k">override</span><span class="p">;</span>
-
-    <span class="kt">void</span> <span class="nf">note</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">word</span><span class="p">);</span>
-
-    <span class="kt">void</span> <span class="nf">LED_Color</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">val</span><span class="p">);</span>
-
-    <span class="kt">void</span> <span class="nf">run</span><span class="p">(</span><span class="n">String</span> <span class="p">(</span><span class="o">*</span><span class="n">f</span><span class="p">)(</span><span class="kt">void</span><span class="p">),</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">logInterval</span><span class="p">);</span>
 
     <span class="kt">float</span> <span class="nf">getVoltage</span><span class="p">();</span>
 
-    <span class="kt">void</span> <span class="nf">addDataPoint</span><span class="p">(</span><span class="n">String</span> <span class="p">(</span><span class="o">*</span><span class="n">update</span><span class="p">)(</span><span class="kt">void</span><span class="p">));</span>
-
-    <span class="kt">void</span> <span class="nf">initLogFile</span><span class="p">();</span>
-
-    <span class="kt">void</span> <span class="nf">setExtInt</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="n">n</span><span class="p">,</span> <span class="n">String</span> <span class="n">header_entry</span> <span class="o">=</span> <span class="s">"nInterrupts,"</span><span class="p">);</span>
-
-    <span class="kt">uint16_t</span> <span class="nf">getExtIntCount</span><span class="p">(</span><span class="kt">bool</span> <span class="n">reset0</span> <span class="o">=</span> <span class="nb">true</span><span class="p">);</span>
-
-    <span class="kt">void</span> <span class="nf">resetExtIntCount</span><span class="p">(</span><span class="kt">uint16_t</span> <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="kt">void</span> <span class="n">addDataPoint</span><span class="p">(</span><span class="n">String</span> <span class="p">(</span><span class="o">*</span><span class="n">update</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span> <span class="k">override</span><span class="p">;</span>
 
     <span class="kt">float</span> <span class="nf">getTemp</span><span class="p">(</span><span class="n">temp_source</span> <span class="n">sensor</span> <span class="o">=</span> <span class="n">thermistor_temp_sensor</span><span class="p">);</span>
 
@@ -551,8 +511,6 @@ Andy Wickert
     <span class="kt">float</span> <span class="nf">getBatPercentage</span><span class="p">();</span>
 
     <span class="kt">void</span> <span class="nf">initADC</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="n">desiredResolution</span><span class="p">);</span>
-
-    <span class="kt">void</span> <span class="nf">resetWDT</span><span class="p">();</span>
 
     <span class="kt">void</span> <span class="nf">powerOB</span><span class="p">(</span><span class="kt">bool</span> <span class="n">state</span><span class="p">);</span>
 
@@ -565,26 +523,15 @@ Andy Wickert
     <span class="c1">// determine hardware assignments; do not modify after begin() is called.</span>
     <span class="c1">// -----------------------------------------------------------------------</span>
 
-    <span class="kt">uint8_t</span> <span class="n">SD_CS</span>  <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>  
-    <span class="kt">uint8_t</span> <span class="n">AuxLED</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span> 
-    <span class="kt">uint8_t</span> <span class="n">RedLED</span> <span class="o">=</span> <span class="mi">13</span><span class="p">;</span> 
-    <span class="kt">uint8_t</span> <span class="n">GreenLED</span> <span class="o">=</span> <span class="mi">15</span><span class="p">;</span> 
-    <span class="kt">uint8_t</span> <span class="n">BlueLED</span>  <span class="o">=</span> <span class="mi">14</span><span class="p">;</span> 
-
     <span class="kt">uint8_t</span> <span class="n">VRef_Pin</span>      <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> 
     <span class="kt">uint8_t</span> <span class="n">ThermSense_Pin</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> 
     <span class="kt">uint8_t</span> <span class="n">BatSense_Pin</span>   <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> 
 
     <span class="kt">uint8_t</span> <span class="n">VSwitch_Pin</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span> 
-    <span class="kt">uint8_t</span> <span class="n">SD_CD</span>       <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> 
 
     <span class="kt">uint8_t</span> <span class="n">Ext3v3Ctrl</span> <span class="o">=</span> <span class="mi">19</span><span class="p">;</span> 
-    <span class="kt">uint8_t</span> <span class="n">I2C_SW</span>     <span class="o">=</span> <span class="mi">21</span><span class="p">;</span> 
     <span class="kt">uint8_t</span> <span class="n">PG</span>         <span class="o">=</span> <span class="mi">18</span><span class="p">;</span> 
     <span class="kt">uint8_t</span> <span class="n">ExtInt</span>     <span class="o">=</span> <span class="mi">11</span><span class="p">;</span> 
-    <span class="kt">uint8_t</span> <span class="n">RTCInt</span>     <span class="o">=</span> <span class="mi">10</span><span class="p">;</span> 
-    <span class="kt">uint8_t</span> <span class="n">LogInt</span>     <span class="o">=</span>  <span class="mi">2</span><span class="p">;</span> 
-    <span class="kt">uint8_t</span> <span class="n">WDHold</span>     <span class="o">=</span> <span class="mi">23</span><span class="p">;</span> 
     <span class="kt">uint8_t</span> <span class="n">BatSwitch</span>  <span class="o">=</span> <span class="mi">22</span><span class="p">;</span> 
     <span class="kt">uint8_t</span> <span class="n">TX</span>         <span class="o">=</span> <span class="mi">11</span><span class="p">;</span> 
     <span class="kt">uint8_t</span> <span class="n">RX</span>         <span class="o">=</span> <span class="mi">10</span><span class="p">;</span> 
@@ -598,95 +545,35 @@ Andy Wickert
     <span class="kt">uint8_t</span> <span class="n">NCells</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span> 
     <span class="kt">float</span> <span class="n">BatVoltageError</span>      <span class="o">=</span> <span class="mf">3.3</span><span class="p">;</span> 
     <span class="kt">float</span> <span class="n">BatPercentageWarning</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>  
-    <span class="k">const</span> <span class="n">String</span> <span class="n">LibVersion</span> <span class="o">=</span> <span class="s">"1.2.0"</span><span class="p">;</span> 
+    <span class="k">const</span> <span class="n">String</span> <span class="n">LibVersion</span> <span class="o">=</span> <span class="n">MARGAY_LIBRARY_VERSION</span><span class="p">;</span> 
 
   <span class="k">protected</span><span class="o">:</span>
     <span class="kt">float</span> <span class="nf">tempConvert</span><span class="p">(</span><span class="kt">float</span> <span class="n">V</span><span class="p">,</span> <span class="kt">float</span> <span class="n">vcc</span><span class="p">,</span> <span class="kt">float</span> <span class="n">R</span><span class="p">,</span>
         <span class="kt">float</span> <span class="n">A</span><span class="p">,</span> <span class="kt">float</span> <span class="n">B</span><span class="p">,</span> <span class="kt">float</span> <span class="n">C</span><span class="p">,</span> <span class="kt">float</span> <span class="n">D</span><span class="p">,</span> <span class="kt">float</span> <span class="n">R25</span><span class="p">);</span>
-    <span class="kt">void</span> <span class="nf">blinkGood</span><span class="p">();</span>
-    <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">writeDataToSD</span><span class="p">();</span>
-    <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">buttonLog</span><span class="p">();</span>
-    <span class="k">static</span> <span class="kt">void</span> <span class="nf">isr0</span><span class="p">();</span>
-    <span class="k">static</span> <span class="kt">void</span> <span class="nf">isr1</span><span class="p">();</span>
-    <span class="k">static</span> <span class="kt">void</span> <span class="nf">isr2</span><span class="p">();</span>
-    <span class="k">static</span> <span class="n">Margay</span><span class="o">*</span> <span class="n">selfPointer</span><span class="p">;</span>
-    <span class="k">static</span> <span class="kt">void</span> <span class="nf">dateTimeSD</span><span class="p">(</span><span class="kt">uint16_t</span><span class="o">*</span> <span class="n">date</span><span class="p">,</span> <span class="kt">uint16_t</span><span class="o">*</span> <span class="n">time</span><span class="p">);</span>
-    <span class="kt">void</span> <span class="nf">switchExternalI2C</span><span class="p">(</span><span class="kt">bool</span> <span class="n">desiredState</span><span class="p">);</span>
-    <span class="kt">void</span> <span class="nf">sleepNow</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="n">sleepNow</span><span class="p">()</span> <span class="k">override</span><span class="p">;</span>
     <span class="kt">void</span> <span class="nf">turnOffSDcard</span><span class="p">();</span>
     <span class="kt">void</span> <span class="nf">turnOnSDcard</span><span class="p">();</span>
-    <span class="kt">void</span> <span class="nf">getTime</span><span class="p">();</span>
     <span class="n">String</span> <span class="nf">getOnBoardVals</span><span class="p">();</span>
-    <span class="kt">void</span> <span class="nf">I2Ctest</span><span class="p">();</span>
-    <span class="kt">void</span> <span class="nf">SDtest</span><span class="p">();</span>
-    <span class="kt">void</span> <span class="nf">clockTest</span><span class="p">();</span>
+    <span class="n">String</span> <span class="n">dataHeader</span><span class="p">()</span> <span class="k">override</span><span class="p">;</span> <span class="c1">// the data file's header row: old loggers lack the BME280</span>
     <span class="kt">void</span> <span class="nf">batTest</span><span class="p">();</span>
     <span class="kt">void</span> <span class="nf">powerTest</span><span class="p">();</span>
     <span class="kt">void</span> <span class="nf">bme280Readings</span><span class="p">();</span>
-    <span class="kt">void</span> <span class="nf">extIntCounter</span><span class="p">();</span>
     <span class="kt">void</span> <span class="nf">_addDataPoint</span><span class="p">(</span><span class="n">String</span> <span class="n">data</span><span class="p">);</span>
-    <span class="kt">void</span> <span class="nf">farmGateI2C</span><span class="p">(</span><span class="kt">bool</span> <span class="n">initialStateExternalI2C</span><span class="p">);</span>
 
-    <span class="n">DS3231_Logger</span> <span class="n">RTC</span><span class="p">;</span>
     <span class="n">MCP3421</span> <span class="n">adc</span><span class="p">;</span>
-    <span class="n">BME</span> <span class="n">bme280</span><span class="p">;</span>
 
     <span class="kt">float</span> <span class="n">A</span> <span class="o">=</span> <span class="mf">0.003354016</span><span class="p">;</span>
     <span class="kt">float</span> <span class="n">B</span> <span class="o">=</span> <span class="mf">0.0003074038</span><span class="p">;</span>
     <span class="kt">float</span> <span class="n">C</span> <span class="o">=</span> <span class="mf">1.019153E-05</span><span class="p">;</span>
     <span class="kt">float</span> <span class="n">D</span> <span class="o">=</span> <span class="mf">9.093712E-07</span><span class="p">;</span>
-    <span class="n">String</span> <span class="n">LogTimeDate</span> <span class="o">=</span> <span class="s">"2063/04/05 20:00:00"</span><span class="p">;</span>
-    <span class="kt">bool</span> <span class="n">i2cTruncated</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span> <span class="c1">// true if numVals passed to begin() exceeded I2C_ADR capacity</span>
-    <span class="kt">bool</span> <span class="n">OnBoardError</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
-    <span class="kt">bool</span> <span class="n">SensorError</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
-    <span class="kt">bool</span> <span class="n">TimeError</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
-    <span class="kt">bool</span> <span class="n">SDCardMissing</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
-    <span class="kt">bool</span> <span class="n">BatError</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
-    <span class="kt">bool</span> <span class="n">BatWarning</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
-    <span class="n">String</span> <span class="n">Header</span> <span class="o">=</span> <span class="s">""</span><span class="p">;</span>
-    <span class="n">String</span> <span class="n">Note</span> <span class="o">=</span> <span class="s">""</span><span class="p">;</span> <span class="c1">// pending word(s) for the Note column of the next row</span>
-    <span class="k">const</span> <span class="kt">char</span> <span class="n">HexMap</span><span class="p">[</span><span class="mi">16</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-      <span class="sc">'0'</span><span class="p">,</span> <span class="sc">'1'</span><span class="p">,</span> <span class="sc">'2'</span><span class="p">,</span> <span class="sc">'3'</span><span class="p">,</span> <span class="sc">'4'</span><span class="p">,</span> <span class="sc">'5'</span><span class="p">,</span> <span class="sc">'6'</span><span class="p">,</span> <span class="sc">'7'</span><span class="p">,</span>
-      <span class="sc">'8'</span><span class="p">,</span> <span class="sc">'9'</span><span class="p">,</span> <span class="sc">'A'</span><span class="p">,</span> <span class="sc">'B'</span><span class="p">,</span> <span class="sc">'C'</span><span class="p">,</span> <span class="sc">'D'</span><span class="p">,</span> <span class="sc">'E'</span><span class="p">,</span> <span class="sc">'F'</span>
-    <span class="p">};</span> <span class="c1">// hex digit lookup table</span>
-    <span class="kt">char</span> <span class="n">SN</span><span class="p">[</span><span class="mi">20</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span> <span class="c1">// serial number: 19 chars + null terminator</span>
-    <span class="kt">uint8_t</span> <span class="n">NumADR</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="kt">uint8_t</span> <span class="n">I2C_ADR</span><span class="p">[</span><span class="mi">128</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span> <span class="c1">// one slot per usable 7-bit I2C address</span>
-    <span class="kt">uint8_t</span> <span class="n">NumADR_OB</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-    <span class="kt">uint8_t</span> <span class="n">I2C_ADR_OB</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mh">0x68</span><span class="p">};</span> <span class="c1">//ADC, Clock</span>
 
     <span class="kt">float</span> <span class="n">BatteryDivider</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">;</span> <span class="c1">//Default for v1.0</span>
 
     <span class="n">board</span> <span class="n">Model</span><span class="p">;</span>
     <span class="n">build</span> <span class="n">Specs</span><span class="p">;</span>
 
-    <span class="k">volatile</span> <span class="kt">bool</span> <span class="n">LogEvent</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span> <span class="c1">//Used to test if logging should begin yet</span>
-    <span class="k">volatile</span> <span class="kt">bool</span> <span class="n">NewLog</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span> <span class="c1">//Used to tell system to start a new log</span>
-    <span class="k">volatile</span> <span class="kt">int</span> <span class="n">AwakeCount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-
-    <span class="kt">char</span> <span class="n">FileNameC</span><span class="p">[</span><span class="mi">13</span><span class="p">];</span> <span class="c1">// "logNNNNN.csv" (12 chars) + null terminator</span>
-    <span class="kt">char</span> <span class="n">FileNameStaC</span><span class="p">[</span><span class="mi">13</span><span class="p">];</span> <span class="c1">// "staNNNNN.csv", the status file with the same number</span>
-    <span class="k">static</span> <span class="k">const</span> <span class="kt">uint8_t</span> <span class="n">MaxWatched</span> <span class="o">=</span> <span class="mi">8</span><span class="p">;</span>
-    <span class="n">NW_Pages</span> <span class="n">Pages</span><span class="p">;</span>         <span class="c1">// Margay's own Schema 1 pages: 0-1 from EEPROM, 2-3 its reading of itself</span>
-    <span class="n">NW_Report</span> <span class="n">BootReport</span><span class="p">;</span>   <span class="c1">// what the logger reported at boot, until its row is written</span>
-    <span class="kt">bool</span> <span class="n">SDTestFailed</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span> <span class="c1">// the boot write-and-read-back on the card failed</span>
-    <span class="kt">bool</span> <span class="n">ClockError</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span> <span class="c1">// the DS3231 did not answer, or its oscillator is stopped</span>
-    <span class="kt">bool</span> <span class="n">BMEError</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>   <span class="c1">// the BME280 did not answer (models 2.0 and up)</span>
-    <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">LogInterval</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// seconds, from run(); served on Page 3</span>
-    <span class="kt">uint16_t</span> <span class="n">FileNum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>   <span class="c1">// the number of the current log and status file pair</span>
     <span class="kt">uint8_t</span> <span class="nf">chipFaults</span><span class="p">();</span>    <span class="c1">// Margay's chip-fault bits for Block 0: SDCard, Clock, BME280, SensorBus, Battery</span>
     <span class="kt">void</span> <span class="nf">fillPages</span><span class="p">();</span>        <span class="c1">// Page 2 and 3 from the logger's own readings, then endReading()</span>
-    <span class="n">NW_Sensor</span><span class="o">*</span> <span class="n">Watched</span><span class="p">[</span><span class="n">MaxWatched</span><span class="p">];</span> <span class="c1">// sensors whose reports go to the status file (watch())</span>
-    <span class="kt">uint8_t</span> <span class="n">NumWatched</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="kt">bool</span> <span class="n">DeviceBootRows</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span> <span class="c1">// the first reading's boot rows have been written</span>
-    <span class="kt">int</span> <span class="nf">statusRow</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">trigger</span><span class="p">,</span> <span class="n">NW_Sensor</span><span class="o">&amp;</span> <span class="n">sensor</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">boot</span><span class="p">);</span> <span class="c1">// one device row: time, trigger, printStatus()</span>
-    <span class="kt">void</span> <span class="nf">reportRows</span><span class="p">();</span> <span class="c1">// after a reading: the rows the watched sensors' reports call for</span>
-    <span class="n">String</span> <span class="n">HWVersion</span> <span class="o">=</span> <span class="s">""</span><span class="p">;</span> <span class="c1">// "3.0" from Page 0 (Schema 1), else the model number; for the status file's boot row</span>
-    <span class="kt">char</span> <span class="n">FileNameTestC</span><span class="p">[</span><span class="mi">11</span><span class="p">];</span> <span class="c1">// "HWTest.txt" (10 chars) + null terminator</span>
-    <span class="kt">bool</span> <span class="n">externalI2COn</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
-    <span class="n">SdFat</span> <span class="n">SD</span><span class="p">;</span>
-    <span class="n">byte</span>  <span class="n">keep_SPCR</span><span class="p">;</span>
-    <span class="n">byte</span> <span class="n">keep_ADCSRA</span><span class="p">;</span>
 <span class="p">};</span>
 
 <span class="cp">#endif
@@ -694,7 +581,7 @@ Andy Wickert
 
 <hr />
 
-<p>Updated on 2026-09-23 at 20:56:47 +0000</p>
+<p>Updated on 2026-09-23 at 22:44:26 +0000</p>
 
         
       </section>

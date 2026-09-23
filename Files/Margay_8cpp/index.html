@@ -225,7 +225,7 @@
           <aside class="sidebar__right sticky">
             <nav class="toc" aria-label="Table of contents">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
-              <ul class="toc__menu"><li><a href="#functions">Functions</a></li><li><a href="#attributes">Attributes</a></li><li><a href="#functions-documentation">Functions Documentation</a><ul><li><a href="#function-crc8">function crc8</a></li><li><a href="#function-isr">function ISR</a></li></ul></li><li><a href="#attributes-documentation">Attributes Documentation</a><ul><li><a href="#variable-manuallog">variable manualLog</a></li><li><a href="#variable-extintpin">variable ExtIntPin</a></li><li><a href="#variable-ext_int_header_entry">variable ext_int_header_entry</a></li><li><a href="#variable-extinttripped">variable ExtIntTripped</a></li><li><a href="#variable-extint_count">variable ExtInt_count</a></li><li><a href="#variable-margaychips">variable margayChips</a></li><li><a href="#variable-margaywords">variable margayWords</a></li><li><a href="#variable-margaychipwords">variable margayChipWords</a></li></ul></li><li><a href="#source-code">Source code</a></li></ul>
+              <ul class="toc__menu"><li><a href="#functions">Functions</a></li><li><a href="#attributes">Attributes</a></li><li><a href="#functions-documentation">Functions Documentation</a><ul><li><a href="#function-crc8">function crc8</a></li></ul></li><li><a href="#attributes-documentation">Attributes Documentation</a><ul><li><a href="#variable-margaychips">variable margayChips</a></li><li><a href="#variable-margaywords">variable margayWords</a></li><li><a href="#variable-margaychipwords">variable margayChipWords</a></li></ul></li><li><a href="#source-code">Source code</a></li></ul>
             </nav>
           </aside>
         
@@ -243,10 +243,6 @@
       <td>uint8_t</td>
       <td><strong><a href="/Margay_Library/Files/Margay_8cpp/#function-crc8">crc8</a></strong>(const uint8_t * data, uint8_t len)</td>
     </tr>
-    <tr>
-      <td> </td>
-      <td><strong><a href="/Margay_Library/Files/Margay_8cpp/#function-isr">ISR</a></strong>(PCINT0_vect )</td>
-    </tr>
   </tbody>
 </table>
 
@@ -260,26 +256,6 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td>volatile bool</td>
-      <td><strong><a href="/Margay_Library/Files/Margay_8cpp/#variable-manuallog">manualLog</a></strong></td>
-    </tr>
-    <tr>
-      <td>volatile uint8_t</td>
-      <td><strong><a href="/Margay_Library/Files/Margay_8cpp/#variable-extintpin">ExtIntPin</a></strong></td>
-    </tr>
-    <tr>
-      <td>String</td>
-      <td><strong><a href="/Margay_Library/Files/Margay_8cpp/#variable-ext-int-header-entry">ext_int_header_entry</a></strong></td>
-    </tr>
-    <tr>
-      <td>volatile bool</td>
-      <td><strong><a href="/Margay_Library/Files/Margay_8cpp/#variable-extinttripped">ExtIntTripped</a></strong></td>
-    </tr>
-    <tr>
-      <td>volatile uint16_t</td>
-      <td><strong><a href="/Margay_Library/Files/Margay_8cpp/#variable-extint-count">ExtInt_count</a></strong></td>
-    </tr>
     <tr>
       <td>const char *const</td>
       <td><strong><a href="/Margay_Library/Files/Margay_8cpp/#variable-margaychips">margayChips</a></strong></td>
@@ -305,39 +281,7 @@
 <span class="p">)</span>
 </code></pre></div></div>
 
-<h3 id="function-isr">function ISR</h3>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ISR</span><span class="p">(</span>
-    <span class="n">PCINT0_vect</span> 
-<span class="p">)</span>
-</code></pre></div></div>
-
 <h2 id="attributes-documentation">Attributes Documentation</h2>
-
-<h3 id="variable-manuallog">variable manualLog</h3>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">volatile</span> <span class="kt">bool</span> <span class="n">manualLog</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
-</code></pre></div></div>
-
-<h3 id="variable-extintpin">variable ExtIntPin</h3>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">volatile</span> <span class="kt">uint8_t</span> <span class="n">ExtIntPin</span> <span class="o">=</span> <span class="mi">255</span><span class="p">;</span>
-</code></pre></div></div>
-
-<h3 id="variable-ext_int_header_entry">variable ext_int_header_entry</h3>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">String</span> <span class="n">ext_int_header_entry</span><span class="p">;</span>
-</code></pre></div></div>
-
-<h3 id="variable-extinttripped">variable ExtIntTripped</h3>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">volatile</span> <span class="kt">bool</span> <span class="n">ExtIntTripped</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
-</code></pre></div></div>
-
-<h3 id="variable-extint_count">variable ExtInt_count</h3>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">volatile</span> <span class="kt">uint16_t</span> <span class="n">ExtInt_count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</code></pre></div></div>
 
 <h3 id="variable-margaychips">variable margayChips</h3>
 
@@ -379,15 +323,6 @@ Andy Wickert
   <span class="k">return</span> <span class="n">crc</span><span class="p">;</span>
 <span class="p">}</span>
 
-
-<span class="k">volatile</span> <span class="kt">bool</span> <span class="n">manualLog</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span> <span class="c1">// Global for interrupt access</span>
-
-<span class="k">volatile</span> <span class="kt">uint8_t</span> <span class="n">ExtIntPin</span> <span class="o">=</span> <span class="mi">255</span><span class="p">;</span> <span class="c1">// external interrupt pin; 255 = not set</span>
-<span class="n">String</span> <span class="n">ext_int_header_entry</span><span class="p">;</span>
-<span class="k">volatile</span> <span class="kt">bool</span> <span class="n">ExtIntTripped</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span> <span class="c1">// Global for the external interrupt</span>
-<span class="k">volatile</span> <span class="kt">uint16_t</span> <span class="n">ExtInt_count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// Global for the external interrupt</span>
-
-<span class="n">Margay</span><span class="o">*</span> <span class="n">Margay</span><span class="o">::</span><span class="n">selfPointer</span><span class="p">;</span>
 
 <span class="n">Margay</span><span class="o">::</span><span class="n">Margay</span><span class="p">(</span><span class="n">board</span> <span class="n">model_</span><span class="p">,</span> <span class="n">build</span> <span class="n">specs_</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">if</span> <span class="p">(</span><span class="n">model_</span> <span class="o">==</span> <span class="mi">2</span> <span class="o">||</span> <span class="n">model_</span> <span class="o">==</span> <span class="mi">3</span><span class="p">)</span> <span class="p">{</span>
@@ -521,7 +456,7 @@ Andy Wickert
   <span class="n">Specs</span> <span class="o">=</span> <span class="n">specs_</span><span class="p">;</span> <span class="c1">//Store build info locally</span>
 <span class="p">}</span>
 
-<span class="kt">void</span> <span class="n">Margay</span><span class="o">::</span><span class="n">begin</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="o">*</span><span class="n">vals</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="n">numVals</span><span class="p">,</span> <span class="n">String</span> <span class="n">header_</span><span class="p">)</span> <span class="p">{</span>
+<span class="kt">bool</span> <span class="n">Margay</span><span class="o">::</span><span class="n">begin</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="o">*</span><span class="n">vals</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="n">numVals</span><span class="p">,</span> <span class="n">String</span> <span class="n">header_</span><span class="p">)</span> <span class="p">{</span>
   <span class="n">powerOB</span><span class="p">(</span><span class="n">ON</span><span class="p">);</span>  <span class="c1">//Turn on on-board power</span>
   <span class="n">powerAux</span><span class="p">(</span><span class="n">ON</span><span class="p">);</span> <span class="c1">//Turn on external auxiliary power</span>
   <span class="k">if</span> <span class="p">(</span><span class="n">WDHold</span> <span class="o">!=</span> <span class="mi">255</span><span class="p">)</span> <span class="n">pinMode</span><span class="p">(</span><span class="n">WDHold</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
@@ -531,15 +466,7 @@ Andy Wickert
 
   <span class="n">pinMode</span><span class="p">(</span><span class="n">VSwitch_Pin</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span> <span class="c1">//Setup switch control as output</span>
 
-  <span class="n">i2cTruncated</span> <span class="o">=</span> <span class="p">(</span><span class="n">numVals</span> <span class="o">&gt;</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">I2C_ADR</span><span class="p">));</span>
-  <span class="n">NumADR</span> <span class="o">=</span> <span class="n">min</span><span class="p">(</span><span class="n">numVals</span><span class="p">,</span> <span class="p">(</span><span class="kt">uint8_t</span><span class="p">)</span><span class="k">sizeof</span><span class="p">(</span><span class="n">I2C_ADR</span><span class="p">));</span>
-  <span class="k">for</span> <span class="p">(</span><span class="kt">uint8_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">NumADR</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="n">I2C_ADR</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">vals</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">ExtIntPin</span> <span class="o">==</span> <span class="mi">255</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">Header</span> <span class="o">=</span> <span class="n">header_</span><span class="p">;</span> <span class="c1">//Copy user defined header</span>
-  <span class="p">}</span>
-  <span class="k">else</span> <span class="p">{</span>
-    <span class="n">Header</span> <span class="o">=</span> <span class="n">header_</span> <span class="o">+</span> <span class="n">ext_int_header_entry</span><span class="p">;</span>
-  <span class="p">}</span>
+  <span class="n">acceptAddresses</span><span class="p">(</span><span class="n">vals</span><span class="p">,</span> <span class="n">numVals</span><span class="p">,</span> <span class="n">header_</span><span class="p">);</span> <span class="c1">//The sketch's sensor addresses and header</span>
 
   <span class="n">RTC</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span> <span class="c1">//Initialize RTC</span>
   <span class="n">RTC</span><span class="p">.</span><span class="n">clearAlarm</span><span class="p">();</span> <span class="c1">//</span>
@@ -560,37 +487,8 @@ Andy Wickert
   <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">Model</span><span class="p">);</span>
   <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"  Build = "</span><span class="p">);</span>
   <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">Specs</span><span class="p">);</span>
-  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"SN = "</span><span class="p">);</span>
-  <span class="kt">int</span> <span class="n">EEPROMLen</span> <span class="o">=</span> <span class="n">EEPROM</span><span class="p">.</span><span class="n">length</span><span class="p">();</span> <span class="c1">//Copy value for faster access</span>
-  <span class="kt">int</span> <span class="n">val</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">//Value to read temp EEPROM values into</span>
-  <span class="kt">int</span> <span class="n">pos</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">//used to keep track of position in SN string</span>
-  <span class="c1">// NW-Device-Specification: the stored image (Page 0 identity, Page 1 calibration) occupies the top 64 bytes of EEPROM, Page 0 first.</span>
-  <span class="c1">// Schema 1 (NW-Provision): serial number = Block 2 (offset 0x10-0x17).</span>
-  <span class="c1">// Schema 0 (MargaySetup): serial number = the last 8 bytes.</span>
-  <span class="kt">int</span> <span class="n">page0</span> <span class="o">=</span> <span class="n">EEPROMLen</span> <span class="o">-</span> <span class="mi">64</span><span class="p">;</span> <span class="c1">//Schema 1 stored image: Page 0 identity, then Page 1 calibration, at the top of EEPROM (2026-09-23 renumbering)</span>
-  <span class="n">Pages</span><span class="p">.</span><span class="n">loadStored</span><span class="p">(</span><span class="n">page0</span><span class="p">);</span> <span class="c1">//Margay's own pages: 0 and 1 from EEPROM; 2 and 3 filled at each reading</span>
-  <span class="k">const</span> <span class="kt">uint8_t</span><span class="o">*</span> <span class="n">p0</span> <span class="o">=</span> <span class="n">Pages</span><span class="p">.</span><span class="n">page</span><span class="p">;</span>
-  <span class="kt">bool</span> <span class="n">schema1</span> <span class="o">=</span> <span class="n">Pages</span><span class="p">.</span><span class="n">page0Valid</span><span class="p">();</span>
-  <span class="kt">int</span> <span class="n">snStart</span> <span class="o">=</span> <span class="n">schema1</span> <span class="o">?</span> <span class="n">page0</span> <span class="o">+</span> <span class="mh">0x10</span> <span class="o">:</span> <span class="n">EEPROMLen</span> <span class="o">-</span> <span class="mi">8</span><span class="p">;</span>
-  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">snStart</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">snStart</span> <span class="o">+</span> <span class="mi">8</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>  <span class="c1">//Read out Serial Number</span>
-    <span class="n">val</span> <span class="o">=</span> <span class="n">EEPROM</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>  <span class="c1">//Read SN values as individual bytes from EEPROM</span>
-    <span class="c1">// Load upper and lower nibbles of each EEPROM byte into SN string,</span>
-    <span class="c1">// post-incrementing the position index each time</span>
-    <span class="n">SN</span><span class="p">[</span><span class="n">pos</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">HexMap</span><span class="p">[(</span><span class="n">val</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span><span class="p">)];</span>
-    <span class="n">SN</span><span class="p">[</span><span class="n">pos</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">HexMap</span><span class="p">[(</span><span class="n">val</span> <span class="o">%</span> <span class="mh">0x10</span><span class="p">)];</span>
-    <span class="k">if</span> <span class="p">((</span><span class="n">i</span> <span class="o">-</span> <span class="n">snStart</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">snStart</span> <span class="o">+</span> <span class="mi">7</span><span class="p">)</span> <span class="p">{</span>
-      <span class="n">SN</span><span class="p">[</span><span class="n">pos</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="sc">'-'</span><span class="p">;</span>  <span class="c1">//Place - between each SN category, post inc pos</span>
-    <span class="p">}</span>
-    <span class="n">SN</span><span class="p">[</span><span class="mi">19</span><span class="p">]</span> <span class="o">=</span> <span class="sc">'\0'</span><span class="p">;</span> <span class="c1">//Null terminate string</span>
-  <span class="p">}</span>
-
-  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">SN</span><span class="p">);</span> <span class="c1">//Print compiled string</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">schema1</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"  (Schema 1, HW v"</span><span class="p">);</span>
-    <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">p0</span><span class="p">[</span><span class="mh">0x08</span><span class="p">]);</span> <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"."</span><span class="p">);</span> <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">p0</span><span class="p">[</span><span class="mh">0x09</span><span class="p">]);</span> <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">")"</span><span class="p">);</span>
-    <span class="n">HWVersion</span> <span class="o">=</span> <span class="n">String</span><span class="p">(</span><span class="n">p0</span><span class="p">[</span><span class="mh">0x08</span><span class="p">])</span> <span class="o">+</span> <span class="s">"."</span> <span class="o">+</span> <span class="n">String</span><span class="p">(</span><span class="n">p0</span><span class="p">[</span><span class="mh">0x09</span><span class="p">]);</span> <span class="c1">//For the status file's boot row</span>
-  <span class="p">}</span>
-  <span class="k">else</span> <span class="n">HWVersion</span> <span class="o">=</span> <span class="n">String</span><span class="p">(</span><span class="n">Model</span><span class="p">);</span> <span class="c1">//Schema 0: the model number the sketch declared</span>
+  <span class="kt">bool</span> <span class="n">schema1</span> <span class="o">=</span> <span class="n">readIdentity</span><span class="p">();</span> <span class="c1">//Serial number and hardware version from Page 0 (Schema 1), else the Schema 0 bytes</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">schema1</span><span class="p">)</span> <span class="n">HWVersion</span> <span class="o">=</span> <span class="n">String</span><span class="p">(</span><span class="n">Model</span><span class="p">);</span> <span class="c1">//Schema 0: the model number the sketch declared</span>
   <span class="k">if</span> <span class="p">(</span><span class="n">schema1</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">Pages</span><span class="p">.</span><span class="n">page1Blank</span><span class="p">())</span> <span class="p">{</span> <span class="c1">//Page 1: this board's calibration, written by NW-Provision; the constants otherwise</span>
     <span class="n">BatteryDivider</span> <span class="o">=</span> <span class="n">Pages</span><span class="p">.</span><span class="n">get16</span><span class="p">(</span><span class="mh">0x20</span><span class="p">)</span> <span class="o">/</span> <span class="mf">1000.0</span><span class="p">;</span>
     <span class="n">A</span> <span class="o">=</span> <span class="n">Pages</span><span class="p">.</span><span class="n">getFloat</span><span class="p">(</span><span class="mh">0x22</span><span class="p">);</span> <span class="n">B</span> <span class="o">=</span> <span class="n">Pages</span><span class="p">.</span><span class="n">getFloat</span><span class="p">(</span><span class="mh">0x26</span><span class="p">);</span> <span class="n">C</span> <span class="o">=</span> <span class="n">Pages</span><span class="p">.</span><span class="n">getFloat</span><span class="p">(</span><span class="mh">0x2A</span><span class="p">);</span> <span class="n">D</span> <span class="o">=</span> <span class="n">Pages</span><span class="p">.</span><span class="n">getFloat</span><span class="p">(</span><span class="mh">0x2E</span><span class="p">);</span>
@@ -598,56 +496,8 @@ Andy Wickert
     <span class="n">BatPercentageWarning</span> <span class="o">=</span> <span class="n">Pages</span><span class="p">.</span><span class="n">page</span><span class="p">[</span><span class="mh">0x34</span><span class="p">];</span>
     <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Calibration from Page 1"</span><span class="p">);</span>
   <span class="p">}</span>
-  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">schema1</span><span class="p">)</span> <span class="n">Pages</span><span class="p">.</span><span class="n">latchFault</span><span class="p">(</span><span class="mh">0xE3</span><span class="p">);</span> <span class="c1">//Page 0 invalid: unprovisioned or corrupt</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">strcmp</span><span class="p">(</span><span class="n">SN</span><span class="p">,</span> <span class="s">"FFFF-FFFF-FFFF-FFFF"</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
-    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"WARNING: no serial number programmed in EEPROM"</span><span class="p">);</span>
-  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n\n</span><span class="s">"</span><span class="p">);</span>
-  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Initializing...</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span> <span class="c1">//DEBUG!</span>
-  <span class="n">delay</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">Serial</span><span class="p">.</span><span class="n">available</span><span class="p">())</span> <span class="p">{</span>  <span class="c1">//If time setting info available</span>
-    <span class="n">String</span> <span class="n">dateTimeTemp</span> <span class="o">=</span> <span class="n">Serial</span><span class="p">.</span><span class="n">readString</span><span class="p">();</span>
-    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">dateTimeTemp</span><span class="p">);</span>  <span class="c1">//DEBUG!</span>
-    <span class="kt">int</span> <span class="n">dateTimeVals</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-      <span class="n">dateTimeVals</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">dateTimeTemp</span><span class="p">.</span><span class="n">substring</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)).</span><span class="n">toInt</span><span class="p">();</span>
-      <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">i</span><span class="p">);</span> <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"  "</span><span class="p">);</span> <span class="c1">//DEBUG!</span>
-      <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">dateTimeVals</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span> <span class="c1">//DEBUG!</span>
-    <span class="p">}</span>
-    <span class="n">RTC</span><span class="p">.</span><span class="n">setTime</span><span class="p">(</span><span class="mi">2000</span> <span class="o">+</span> <span class="n">dateTimeVals</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dateTimeVals</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">dateTimeVals</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
-                <span class="n">dateTimeVals</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">dateTimeVals</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">dateTimeVals</span><span class="p">[</span><span class="mi">5</span><span class="p">]);</span>
-    <span class="n">Pages</span><span class="p">.</span><span class="n">latchNotice</span><span class="p">(</span><span class="mh">0x30</span><span class="p">);</span> <span class="c1">//ClockSet</span>
-  <span class="p">}</span>
-
-  <span class="n">getTime</span><span class="p">();</span> <span class="c1">//Get time to pass to computer</span>
-  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Timestamp = "</span><span class="p">);</span>
-  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">LogTimeDate</span><span class="p">);</span>
-
-  <span class="c1">//Sets up basic initialization required for the system</span>
-  <span class="n">selfPointer</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
-
-
-  <span class="n">pinMode</span><span class="p">(</span><span class="n">RedLED</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
-  <span class="n">pinMode</span><span class="p">(</span><span class="n">GreenLED</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
-  <span class="n">pinMode</span><span class="p">(</span><span class="n">BlueLED</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
-
-  <span class="n">LED_Color</span><span class="p">(</span><span class="n">OFF</span><span class="p">);</span>
-
-  <span class="n">pinMode</span><span class="p">(</span><span class="n">SD_CS</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
-
-  <span class="n">SdFile</span><span class="o">::</span><span class="n">dateTimeCallback</span><span class="p">(</span><span class="n">dateTimeSD</span><span class="p">);</span> <span class="c1">//Setup SD file time setting</span>
-  <span class="c1">// Attach ISR driven by RTC interrupt; triggers data logging each interval</span>
-  <span class="n">attachInterrupt</span><span class="p">(</span><span class="n">digitalPinToInterrupt</span><span class="p">(</span><span class="n">RTCInt</span><span class="p">),</span> <span class="n">Margay</span><span class="o">::</span><span class="n">isr1</span><span class="p">,</span> <span class="n">FALLING</span><span class="p">);</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">Model</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
-    <span class="c1">// Attach ISR driven by manual log button, sets logging flag and logs data</span>
-    <span class="n">attachInterrupt</span><span class="p">(</span><span class="n">digitalPinToInterrupt</span><span class="p">(</span><span class="n">LogInt</span><span class="p">),</span> <span class="n">Margay</span><span class="o">::</span><span class="n">isr0</span><span class="p">,</span> <span class="n">FALLING</span><span class="p">);</span>
-  <span class="p">}</span>
-  <span class="k">else</span> <span class="p">{</span> <span class="c1">//Model &gt;= v2.0: use PCINT for log button (LogInt = D28, PA4); enable pin first</span>
-    <span class="o">*</span><span class="n">digitalPinToPCMSK</span><span class="p">(</span><span class="n">LogInt</span><span class="p">)</span> <span class="o">|=</span> <span class="n">bit</span><span class="p">(</span><span class="n">digitalPinToPCMSKbit</span><span class="p">(</span><span class="n">LogInt</span><span class="p">));</span> <span class="c1">// enable</span>
-    <span class="n">PCIFR</span> <span class="o">|=</span> <span class="n">bit</span><span class="p">(</span><span class="n">digitalPinToPCICRbit</span><span class="p">(</span><span class="n">LogInt</span><span class="p">));</span> <span class="c1">// clear outstanding interrupt</span>
-    <span class="n">PCICR</span> <span class="o">|=</span> <span class="n">bit</span><span class="p">(</span><span class="n">digitalPinToPCICRbit</span><span class="p">(</span><span class="n">LogInt</span><span class="p">));</span> <span class="c1">// enable interrupt group</span>
-  <span class="p">}</span>
-  <span class="n">pinMode</span><span class="p">(</span><span class="n">RTCInt</span><span class="p">,</span> <span class="n">INPUT_PULLUP</span><span class="p">);</span>
-  <span class="n">pinMode</span><span class="p">(</span><span class="n">LogInt</span><span class="p">,</span> <span class="n">INPUT</span><span class="p">);</span>
+  <span class="n">serialTimeSet</span><span class="p">();</span> <span class="c1">//A YYMMDDHHMMSS string waiting on Serial sets the clock; then the timestamp</span>
+  <span class="n">attachLoggerInterrupts</span><span class="p">(</span><span class="n">Model</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">);</span> <span class="c1">//LED pins, SD chip select, file times, the alarm and the button (PCINT from v2.0)</span>
 
   <span class="n">I2Ctest</span><span class="p">();</span>
   <span class="n">clockTest</span><span class="p">();</span>
@@ -657,51 +507,7 @@ Andy Wickert
   <span class="c1">// Only print out environmental variables if BME280 is on board</span>
   <span class="k">if</span> <span class="p">(</span><span class="n">Model</span> <span class="o">&gt;=</span> <span class="n">MODEL_2v0</span><span class="p">)</span> <span class="n">bme280Readings</span><span class="p">();</span>
 
-  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">AuxLED</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
-
-  <span class="k">if</span> <span class="p">(</span><span class="n">OnBoardError</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">LED_Color</span><span class="p">(</span><span class="n">RED</span><span class="p">);</span> <span class="c1">//On board failure</span>
-    <span class="n">delay</span><span class="p">(</span><span class="mi">2000</span><span class="p">);</span>
-  <span class="p">}</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">SensorError</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">LED_Color</span><span class="p">(</span><span class="n">ORANGE</span><span class="p">);</span>  <span class="c1">//Sensor failure</span>
-    <span class="n">delay</span><span class="p">(</span><span class="mi">2000</span><span class="p">);</span>
-  <span class="p">}</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">TimeError</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">LED_Color</span><span class="p">(</span><span class="n">CYAN</span><span class="p">);</span> <span class="c1">//Time set error</span>
-    <span class="n">delay</span><span class="p">(</span><span class="mi">2000</span><span class="p">);</span>
-  <span class="p">}</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">SDCardMissing</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">LED_Color</span><span class="p">(</span><span class="n">PURPLE</span><span class="p">);</span> <span class="c1">//Sd card not inserted</span>
-    <span class="n">delay</span><span class="p">(</span><span class="mi">2000</span><span class="p">);</span>
-  <span class="p">}</span>
-  <span class="c1">// Battery voltage is below level where hardware functionality</span>
-  <span class="c1">// can be guaranteed</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">BatError</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-      <span class="n">LED_Color</span><span class="p">(</span><span class="n">RED</span><span class="p">);</span>
-      <span class="n">delay</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
-      <span class="n">LED_Color</span><span class="p">(</span><span class="n">OFF</span><span class="p">);</span>
-      <span class="n">delay</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-
-  <span class="c1">// Battery charge % is at a concerning level; recommend replacing batteries</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">BatWarning</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">BatError</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-      <span class="n">LED_Color</span><span class="p">(</span><span class="n">GOLD</span><span class="p">);</span> <span class="c1">//Low battery charge warning</span>
-      <span class="n">delay</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
-      <span class="n">LED_Color</span><span class="p">(</span><span class="n">OFF</span><span class="p">);</span>
-      <span class="n">delay</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-  <span class="c1">//Include battery error in test??</span>
-  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">OnBoardError</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">SensorError</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">TimeError</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">SDCardMissing</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">LED_Color</span><span class="p">(</span><span class="n">GREEN</span><span class="p">);</span>
-    <span class="n">delay</span><span class="p">(</span><span class="mi">2000</span><span class="p">);</span>
-  <span class="p">}</span>
-
-  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Ready to Log...</span><span class="se">\n\n</span><span class="s">"</span><span class="p">);</span>
+  <span class="n">ledReport</span><span class="p">();</span> <span class="c1">//The self-test results on the RGB LED, then "Ready to Log"</span>
   <span class="c1">//The logger's own report at boot, for its first status row: the first fault the</span>
   <span class="c1">//self-tests found, else LoggingStarted (unit, kind 16).</span>
   <span class="k">if</span> <span class="p">(</span><span class="n">SDCardMissing</span><span class="p">)</span> <span class="n">Pages</span><span class="p">.</span><span class="n">latchFault</span><span class="p">(</span><span class="mh">0x01</span><span class="p">);</span>
@@ -715,184 +521,10 @@ Andy Wickert
   <span class="n">Pages</span><span class="p">.</span><span class="n">acknowledge</span><span class="p">();</span>
   <span class="n">NewLog</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span> <span class="c1">//Set flag to begin new log file</span>
 
-  <span class="k">if</span> <span class="p">(</span><span class="n">ExtIntPin</span> <span class="o">!=</span> <span class="mi">255</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">pinMode</span><span class="p">(</span><span class="n">ExtIntPin</span><span class="p">,</span> <span class="n">INPUT</span><span class="p">);</span>
-    <span class="n">digitalWrite</span><span class="p">(</span><span class="n">ExtIntPin</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
-    <span class="n">attachInterrupt</span><span class="p">(</span><span class="n">digitalPinToInterrupt</span><span class="p">(</span><span class="n">ExtIntPin</span><span class="p">),</span> <span class="n">Margay</span><span class="o">::</span><span class="n">isr2</span><span class="p">,</span> <span class="n">FALLING</span><span class="p">);</span>
-  <span class="p">}</span>
+  <span class="n">attachExtInt</span><span class="p">();</span> <span class="c1">//The external-interrupt counter, if setExtInt() named a pin</span>
 
   <span class="n">LED_Color</span><span class="p">(</span><span class="n">OFF</span><span class="p">);</span>
-<span class="p">}</span>
-
-<span class="n">ISR</span> <span class="p">(</span><span class="n">PCINT0_vect</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// handle pin change interrupt for D24-D31 (Port A) on ATmega1284p</span>
-  <span class="c1">// NOTE: PCINT fires on both rising and falling edges. The current</span>
-  <span class="c1">// implementation sets manualLog unconditionally. If the button is still</span>
-  <span class="c1">// held when the logger finishes processing and re-enters sleep, the</span>
-  <span class="c1">// rising edge on release will trigger a second log entry. Consider</span>
-  <span class="c1">// checking pin state to fire only on the falling edge (button press):</span>
-  <span class="c1">//   if (!(PINA &amp; digitalPinToBitMask(28))) manualLog = true;</span>
-  <span class="n">manualLog</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="kt">void</span> <span class="n">Margay</span><span class="o">::</span><span class="n">begin</span><span class="p">(</span><span class="n">String</span> <span class="n">header_</span><span class="p">)</span> <span class="p">{</span>
-  <span class="kt">uint8_t</span> <span class="n">dummy</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
-  <span class="n">begin</span><span class="p">(</span><span class="n">dummy</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">header_</span><span class="p">);</span> <span class="c1">//Call generalized begin function</span>
-<span class="p">}</span>
-
-<span class="kt">void</span> <span class="n">Margay</span><span class="o">::</span><span class="n">I2Ctest</span><span class="p">()</span> <span class="p">{</span>
-  <span class="kt">bool</span> <span class="n">initialStateExternalI2C</span> <span class="o">=</span> <span class="n">digitalRead</span><span class="p">(</span><span class="n">I2C_SW</span><span class="p">);</span>
-
-  <span class="n">switchExternalI2C</span><span class="p">(</span><span class="n">ON</span><span class="p">);</span>
-
-  <span class="kt">int</span> <span class="n">error</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-  <span class="kt">bool</span> <span class="n">i2cTest</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-
-  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"I2C: "</span><span class="p">);</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">i2cTruncated</span><span class="p">)</span>
-    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">F</span><span class="p">(</span><span class="s">"WARNING: address list truncated to 128"</span><span class="p">));</span>
-  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">NumADR</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">Wire</span><span class="p">.</span><span class="n">beginTransmission</span><span class="p">(</span><span class="n">I2C_ADR</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
-    <span class="n">error</span> <span class="o">=</span> <span class="n">Wire</span><span class="p">.</span><span class="n">endTransmission</span><span class="p">();</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">error</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-      <span class="k">if</span> <span class="p">(</span><span class="n">i2cTest</span><span class="p">)</span> <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">" Fail"</span><span class="p">);</span>
-      <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"   Fail At: "</span><span class="p">);</span>
-      <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">I2C_ADR</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">HEX</span><span class="p">);</span>
-      <span class="n">i2cTest</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
-      <span class="n">SensorError</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-
-  <span class="c1">//Switch to connect to onboard I2C!</span>
-  <span class="n">switchExternalI2C</span><span class="p">(</span><span class="n">OFF</span><span class="p">);</span>
-
-  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">NumADR_OB</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">Wire</span><span class="p">.</span><span class="n">beginTransmission</span><span class="p">(</span><span class="n">I2C_ADR_OB</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
-    <span class="n">error</span> <span class="o">=</span> <span class="n">Wire</span><span class="p">.</span><span class="n">endTransmission</span><span class="p">();</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">error</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-      <span class="k">if</span> <span class="p">(</span><span class="n">i2cTest</span><span class="p">)</span> <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">" Fail"</span><span class="p">);</span>
-      <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"   Fail At: "</span><span class="p">);</span>
-      <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">I2C_ADR_OB</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">HEX</span><span class="p">);</span>
-      <span class="n">i2cTest</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
-      <span class="n">OnBoardError</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-
-  <span class="k">if</span> <span class="p">(</span><span class="n">i2cTest</span><span class="p">)</span> <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"PASS"</span><span class="p">);</span>
-
-  <span class="c1">// make sure I2C Bus is returned to initial state</span>
-  <span class="n">farmGateI2C</span><span class="p">(</span><span class="n">initialStateExternalI2C</span><span class="p">);</span>
-<span class="p">}</span>
-
-
-<span class="kt">void</span> <span class="n">Margay</span><span class="o">::</span><span class="n">SDtest</span><span class="p">()</span> <span class="p">{</span>
-  <span class="kt">bool</span> <span class="n">sdTestFailed</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
-
-  <span class="c1">// SD_CD is pulled up: HIGH=1 if not present</span>
-  <span class="c1">// SD card being inserted closes a switch to pull it LOW</span>
-  <span class="n">pinMode</span><span class="p">(</span><span class="n">SD_CD</span><span class="p">,</span> <span class="n">INPUT</span><span class="p">);</span>
-  <span class="kt">bool</span> <span class="n">cardNotPresent</span> <span class="o">=</span> <span class="n">digitalRead</span><span class="p">(</span><span class="n">SD_CD</span><span class="p">);</span>
-
-  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"SD: "</span><span class="p">);</span>
-  <span class="n">delay</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span> <span class="c1">//DEBUG!</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">cardNotPresent</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">F</span><span class="p">(</span><span class="s">" NO CARD"</span><span class="p">));</span>
-    <span class="n">sdTestFailed</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-    <span class="n">SDTestFailed</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-    <span class="n">SDCardMissing</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span> <span class="c1">//Card not inserted</span>
-  <span class="p">}</span>
-  <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="o">!</span><span class="n">SD</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="n">SD_CS</span><span class="p">))</span> <span class="p">{</span>
-    <span class="n">OnBoardError</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-    <span class="n">sdTestFailed</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-    <span class="n">SDTestFailed</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-  <span class="p">}</span>
-
-  <span class="c1">// If card is present and initialised successfully, do the following:</span>
-  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">cardNotPresent</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">sdTestFailed</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">SD</span><span class="p">.</span><span class="n">chdir</span><span class="p">(</span><span class="s">"/"</span><span class="p">);</span> <span class="c1">//The card's root</span>
-    <span class="n">SD</span><span class="p">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">SN</span><span class="p">);</span> <span class="c1">//Make directory with serial number as name: everything this logger writes lives in it</span>
-    <span class="n">SD</span><span class="p">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">SN</span><span class="p">);</span> <span class="c1">//Move into this directory</span>
-    <span class="n">String</span> <span class="n">fileNameTest</span> <span class="o">=</span> <span class="s">"HWTest"</span><span class="p">;</span>
-    <span class="p">(</span><span class="n">fileNameTest</span> <span class="o">+</span> <span class="s">".txt"</span><span class="p">).</span><span class="n">toCharArray</span><span class="p">(</span><span class="n">FileNameTestC</span><span class="p">,</span> <span class="mi">11</span><span class="p">);</span>
-    <span class="n">SD</span><span class="p">.</span><span class="n">remove</span><span class="p">(</span><span class="n">FileNameTestC</span><span class="p">);</span> <span class="c1">//Remove any previous files</span>
-
-    <span class="c1">// Seed with a random process to ensure randomness</span>
-    <span class="n">randomSeed</span><span class="p">(</span><span class="n">analogRead</span><span class="p">(</span><span class="n">A7</span><span class="p">));</span>
-    <span class="c1">// Generate a random number between 1 and 30557</span>
-    <span class="c1">// (the number of words in Hamlet); start at 1 to avoid log10(0)</span>
-    <span class="kt">int</span> <span class="n">randVal</span> <span class="o">=</span> <span class="n">random</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">30557</span><span class="p">);</span>
-    <span class="kt">char</span> <span class="n">randDigits</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
-    <span class="c1">// Convert randVal into a series of digits</span>
-    <span class="n">sprintf</span><span class="p">(</span><span class="n">randDigits</span><span class="p">,</span> <span class="s">"%d"</span><span class="p">,</span> <span class="n">randVal</span><span class="p">);</span>
-    <span class="c1">// +1: println appends \r; loop uses randLength-1 to skip it</span>
-    <span class="kt">int</span> <span class="n">randLength</span> <span class="o">=</span> <span class="n">strlen</span><span class="p">(</span><span class="n">randDigits</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-    <span class="n">File</span> <span class="n">dataWrite</span> <span class="o">=</span> <span class="n">SD</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="n">FileNameTestC</span><span class="p">,</span> <span class="n">FILE_WRITE</span><span class="p">);</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">dataWrite</span><span class="p">)</span> <span class="p">{</span>
-      <span class="n">dataWrite</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">randVal</span><span class="p">);</span>
-      <span class="n">dataWrite</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">He was a man. Take him for all in all."</span><span class="p">);</span>
-      <span class="n">dataWrite</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"I shall not look upon his like again."</span><span class="p">);</span>
-      <span class="n">dataWrite</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"-Hamlet, Act 1, Scene 2"</span><span class="p">);</span>
-    <span class="p">}</span>
-    <span class="n">dataWrite</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
-    <span class="kt">char</span> <span class="n">testDigits</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
-    <span class="n">File</span> <span class="n">dataRead</span> <span class="o">=</span> <span class="n">SD</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="n">FileNameTestC</span><span class="p">,</span> <span class="n">FILE_READ</span><span class="p">);</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">dataRead</span><span class="p">)</span> <span class="p">{</span>
-      <span class="n">dataRead</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="n">testDigits</span><span class="p">,</span> <span class="n">randLength</span><span class="p">);</span>
-      <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">randLength</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span> <span class="c1">//Test random value string</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">testDigits</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">randDigits</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="p">{</span>
-          <span class="n">sdTestFailed</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-          <span class="n">SDTestFailed</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-          <span class="n">OnBoardError</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-        <span class="p">}</span>
-      <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="n">dataRead</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
-
-    <span class="n">keep_SPCR</span><span class="o">=</span><span class="n">SPCR</span><span class="p">;</span>
-  <span class="p">}</span>
-
-  <span class="c1">// If card is inserted and still does not connect properly, throw error</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">sdTestFailed</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">cardNotPresent</span><span class="p">)</span> <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"FAIL"</span><span class="p">);</span>
-  <span class="c1">// If card is inserted AND connects properly, return success</span>
-  <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="o">!</span><span class="n">sdTestFailed</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">cardNotPresent</span><span class="p">)</span> <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"PASS"</span><span class="p">);</span>
-<span class="p">}</span>
-
-<span class="kt">void</span> <span class="n">Margay</span><span class="o">::</span><span class="n">clockTest</span><span class="p">()</span> <span class="p">{</span>
-  <span class="kt">int</span> <span class="n">error</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-  <span class="kt">uint8_t</span> <span class="n">testSeconds</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-  <span class="kt">bool</span> <span class="n">oscStop</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
-
-  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"Clock: "</span><span class="p">);</span>
-  <span class="n">Wire</span><span class="p">.</span><span class="n">beginTransmission</span><span class="p">(</span><span class="n">I2C_ADR_OB</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
-  <span class="n">Wire</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="mh">0xFF</span><span class="p">);</span>
-  <span class="n">error</span> <span class="o">=</span> <span class="n">Wire</span><span class="p">.</span><span class="n">endTransmission</span><span class="p">();</span>
-
-  <span class="k">if</span> <span class="p">(</span><span class="n">error</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">getTime</span><span class="p">();</span> <span class="c1">//FIX!</span>
-    <span class="n">testSeconds</span> <span class="o">=</span> <span class="n">RTC</span><span class="p">.</span><span class="n">getValue</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
-    <span class="n">delay</span><span class="p">(</span><span class="mi">1100</span><span class="p">);</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">RTC</span><span class="p">.</span><span class="n">getValue</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">==</span> <span class="n">testSeconds</span><span class="p">)</span> <span class="p">{</span>
-      <span class="n">OnBoardError</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span> <span class="c1">// If clock is not incrementing</span>
-      <span class="n">ClockError</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-      <span class="n">oscStop</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>      <span class="c1">// Oscillator not running</span>
-      <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">" FAIL (oscillator stopped)"</span><span class="p">);</span>
-    <span class="p">}</span>
-    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">oscStop</span><span class="p">)</span> <span class="p">{</span>
-      <span class="c1">// DS3231 powers on at Jan 1, 2000 (year register = 0). If the year</span>
-      <span class="c1">// is still 0, the clock has not been set — timestamps will read as</span>
-      <span class="c1">// 2000, which is an obviously wrong but identifiable sentinel value.</span>
-      <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">yearNow</span> <span class="o">=</span> <span class="n">RTC</span><span class="p">.</span><span class="n">getValue</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-      <span class="k">if</span> <span class="p">(</span><span class="n">yearNow</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">TimeError</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-        <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">" PASS, BAD TIME"</span><span class="p">);</span>
-      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-        <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">" PASS"</span><span class="p">);</span>
-      <span class="p">}</span>
-    <span class="p">}</span>
-  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">" FAIL"</span><span class="p">);</span>
-    <span class="n">OnBoardError</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-    <span class="n">ClockError</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-  <span class="p">}</span>
+  <span class="k">return</span> <span class="o">!</span><span class="p">(</span><span class="n">OnBoardError</span> <span class="o">||</span> <span class="n">SensorError</span> <span class="o">||</span> <span class="n">TimeError</span> <span class="o">||</span> <span class="n">SDCardMissing</span><span class="p">);</span> <span class="c1">//Okapi's convention: true = nothing wrong</span>
 <span class="p">}</span>
 
 <span class="kt">void</span> <span class="n">Margay</span><span class="o">::</span><span class="n">batTest</span><span class="p">()</span> <span class="p">{</span>
@@ -960,96 +592,6 @@ Andy Wickert
   <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"%"</span><span class="p">);</span>
 <span class="p">}</span>
 
-<span class="kt">void</span> <span class="n">Margay</span><span class="o">::</span><span class="n">initLogFile</span><span class="p">()</span> <span class="p">{</span>
-  <span class="n">SD</span><span class="p">.</span><span class="n">chdir</span><span class="p">(</span><span class="s">"/"</span><span class="p">);</span>  <span class="c1">//The card's root</span>
-  <span class="n">SD</span><span class="p">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">SN</span><span class="p">);</span>  <span class="c1">//Move into this logger's folder, named by its serial number</span>
-  <span class="c1">//Find the first unused file number in "SD:/sn/"</span>
-  <span class="kt">char</span> <span class="n">numCharArray</span><span class="p">[</span><span class="mi">6</span><span class="p">];</span>
-  <span class="n">String</span> <span class="n">fileName</span> <span class="o">=</span> <span class="s">"log"</span><span class="p">;</span>
-  <span class="kt">int</span> <span class="n">fileNum</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-  <span class="n">sprintf</span><span class="p">(</span><span class="n">numCharArray</span><span class="p">,</span> <span class="s">"%05d"</span><span class="p">,</span> <span class="n">fileNum</span><span class="p">);</span>
-  <span class="p">(</span><span class="n">fileName</span> <span class="o">+</span> <span class="n">String</span><span class="p">(</span><span class="n">numCharArray</span><span class="p">)</span> <span class="o">+</span> <span class="s">".csv"</span><span class="p">).</span><span class="n">toCharArray</span><span class="p">(</span><span class="n">FileNameC</span><span class="p">,</span> <span class="mi">13</span><span class="p">);</span>
-  <span class="k">while</span> <span class="p">(</span><span class="n">SD</span><span class="p">.</span><span class="n">exists</span><span class="p">(</span><span class="n">FileNameC</span><span class="p">))</span> <span class="p">{</span>
-    <span class="n">fileNum</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
-    <span class="n">sprintf</span><span class="p">(</span><span class="n">numCharArray</span><span class="p">,</span> <span class="s">"%05d"</span><span class="p">,</span> <span class="n">fileNum</span><span class="p">);</span>
-    <span class="p">(</span><span class="n">fileName</span> <span class="o">+</span> <span class="n">String</span><span class="p">(</span><span class="n">numCharArray</span><span class="p">)</span> <span class="o">+</span> <span class="s">".csv"</span><span class="p">).</span><span class="n">toCharArray</span><span class="p">(</span><span class="n">FileNameC</span><span class="p">,</span> <span class="mi">13</span><span class="p">);</span>
-  <span class="p">}</span>
-  <span class="p">(</span><span class="s">"sta"</span> <span class="o">+</span> <span class="n">String</span><span class="p">(</span><span class="n">numCharArray</span><span class="p">)</span> <span class="o">+</span> <span class="s">".csv"</span><span class="p">).</span><span class="n">toCharArray</span><span class="p">(</span><span class="n">FileNameStaC</span><span class="p">,</span> <span class="mi">13</span><span class="p">);</span> <span class="c1">//The status file, same number</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">FileNum</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="n">Pages</span><span class="p">.</span><span class="n">latchNotice</span><span class="p">(</span><span class="mh">0xF1</span><span class="p">);</span> <span class="c1">//NewLogFile: a later pair, not the first</span>
-  <span class="n">FileNum</span> <span class="o">=</span> <span class="n">fileNum</span><span class="p">;</span>
-  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"FileNameC: "</span><span class="p">);</span>
-  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">FileNameC</span><span class="p">);</span>
-  <span class="c1">// The status file: one row per report, boot and check, from this logger and</span>
-  <span class="c1">// from every device on it (NW-Device-Specification Report register). Its</span>
-  <span class="c1">// boot row carries what the data file's first line used to: library</span>
-  <span class="c1">// version and serial number, with the hardware version beside them.</span>
-  <span class="n">statusStr</span><span class="p">(</span><span class="s">"Time,Trigger,Device,Serial,HW,FW,Code,Note,Page0,Page1,Page2"</span><span class="p">);</span> <span class="c1">//The logger's own boot row follows at the first reading (it watches itself)</span>
-  <span class="c1">// The data file starts with its header row (old loggers lack BME280)</span>
-  <span class="c1">// Note is always the last column and carries no comma after it: every</span>
-  <span class="c1">// sensor ends its fields with a comma for the next, so this ends the row.</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">Model</span> <span class="o">&lt;</span> <span class="n">MODEL_2v0</span><span class="p">)</span>
-    <span class="n">logStr</span><span class="p">(</span><span class="s">"Time [UTC], Temp OB [C], Temp RTC [C], Bat [V], "</span> <span class="o">+</span> <span class="n">Header</span> <span class="o">+</span> <span class="s">"Note"</span><span class="p">);</span>
-  <span class="k">else</span>  <span class="c1">// new loggers include pressure and RH from BME280</span>
-    <span class="n">logStr</span><span class="p">(</span><span class="s">"Time [UTC], PresOB [mBar], RH_OB [%], TempOB [C], "</span>
-           <span class="s">"Temp RTC [C], Bat [V], "</span> <span class="o">+</span> <span class="n">Header</span> <span class="o">+</span> <span class="s">"Note"</span><span class="p">);</span>
-<span class="p">}</span>
-
-<span class="kt">int</span> <span class="n">Margay</span><span class="o">::</span><span class="n">logStr</span><span class="p">(</span><span class="n">String</span> <span class="n">val</span><span class="p">)</span> <span class="p">{</span>
-  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">val</span><span class="p">);</span> <span class="c1">//Echo to serial monitor</span>
-  <span class="n">SD</span><span class="p">.</span><span class="n">chdir</span><span class="p">(</span><span class="s">"/"</span><span class="p">);</span>  <span class="c1">//The card's root</span>
-  <span class="n">SD</span><span class="p">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">SN</span><span class="p">);</span>  <span class="c1">//Move into this logger's folder, named by its serial number</span>
-  <span class="n">File</span> <span class="n">DataFile</span> <span class="o">=</span> <span class="n">SD</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="n">FileNameC</span><span class="p">,</span> <span class="n">FILE_WRITE</span><span class="p">);</span>
-
-  <span class="c1">// if the file is available, write to it:</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">DataFile</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">DataFile</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">val</span><span class="p">);</span>
-    <span class="n">DataFile</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
-    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-  <span class="p">}</span>
-  <span class="c1">// if the file isn't open, pop up an error:</span>
-  <span class="k">else</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-
-<span class="kt">int</span> <span class="n">Margay</span><span class="o">::</span><span class="n">statusStr</span><span class="p">(</span><span class="n">String</span> <span class="n">val</span><span class="p">)</span> <span class="p">{</span>
-  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">val</span><span class="p">);</span> <span class="c1">//Echo to serial monitor</span>
-  <span class="n">SD</span><span class="p">.</span><span class="n">chdir</span><span class="p">(</span><span class="s">"/"</span><span class="p">);</span>  <span class="c1">//The card's root</span>
-  <span class="n">SD</span><span class="p">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">SN</span><span class="p">);</span>  <span class="c1">//Move into this logger's folder, named by its serial number</span>
-  <span class="n">File</span> <span class="n">StatusFile</span> <span class="o">=</span> <span class="n">SD</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="n">FileNameStaC</span><span class="p">,</span> <span class="n">FILE_WRITE</span><span class="p">);</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">StatusFile</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">StatusFile</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">val</span><span class="p">);</span>
-    <span class="n">StatusFile</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
-    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-  <span class="p">}</span>
-  <span class="k">else</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-
-<span class="kt">void</span> <span class="n">Margay</span><span class="o">::</span><span class="n">LED_Color</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">val</span><span class="p">)</span> <span class="p">{</span> <span class="c1">//Set color of onboard led</span>
-  <span class="kt">int</span> <span class="n">red</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">//red led color</span>
-  <span class="kt">int</span> <span class="n">green</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>  <span class="c1">//green led color</span>
-  <span class="kt">int</span> <span class="n">blue</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>  <span class="c1">//blue led color</span>
-  <span class="kt">int</span> <span class="n">lum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>  <span class="c1">//Luminosity</span>
-
-  <span class="c1">//Parse all values from single val</span>
-  <span class="n">blue</span> <span class="o">=</span> <span class="n">val</span> <span class="o">&amp;</span> <span class="mh">0xFF</span><span class="p">;</span>
-  <span class="n">green</span> <span class="o">=</span> <span class="p">(</span><span class="n">val</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFF</span><span class="p">;</span>
-  <span class="n">red</span> <span class="o">=</span> <span class="p">(</span><span class="n">val</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFF</span><span class="p">;</span>
-  <span class="n">lum</span> <span class="o">=</span> <span class="p">(</span><span class="n">val</span> <span class="o">&gt;&gt;</span> <span class="mi">24</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFF</span><span class="p">;</span>
-  <span class="c1">//  lum = 255 - lum; //Invert since LEDs are open drain</span>
-
-  <span class="n">analogWrite</span><span class="p">(</span><span class="n">RedLED</span><span class="p">,</span> <span class="mi">255</span> <span class="o">-</span> <span class="p">(</span><span class="n">red</span> <span class="o">*</span> <span class="n">lum</span><span class="p">)</span><span class="o">/</span><span class="mh">0xFF</span><span class="p">);</span>
-  <span class="n">analogWrite</span><span class="p">(</span><span class="n">GreenLED</span><span class="p">,</span> <span class="mi">255</span> <span class="o">-</span> <span class="p">(</span><span class="n">green</span> <span class="o">*</span> <span class="n">lum</span><span class="p">)</span><span class="o">/</span><span class="mh">0xFF</span><span class="p">);</span>
-  <span class="n">analogWrite</span><span class="p">(</span><span class="n">BlueLED</span><span class="p">,</span> <span class="mi">255</span> <span class="o">-</span> <span class="p">(</span><span class="n">blue</span> <span class="o">*</span> <span class="n">lum</span><span class="p">)</span><span class="o">/</span><span class="mh">0xFF</span><span class="p">);</span>
-<span class="p">}</span>
-
-<span class="kt">void</span> <span class="n">Margay</span><span class="o">::</span><span class="n">getTime</span><span class="p">()</span> <span class="p">{</span>
-  <span class="c1">//Update global time string</span>
-  <span class="n">LogTimeDate</span> <span class="o">=</span> <span class="n">RTC</span><span class="p">.</span><span class="n">getTime</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-<span class="p">}</span>
-
 <span class="kt">float</span> <span class="n">Margay</span><span class="o">::</span><span class="n">getTemp</span><span class="p">(</span><span class="n">temp_source</span> <span class="n">sensor</span><span class="p">)</span> <span class="p">{</span>
   <span class="kt">float</span> <span class="n">vcc</span> <span class="o">=</span> <span class="mf">3.3</span><span class="p">;</span>
   <span class="c1">// Get temp from on board thermistor</span>
@@ -1113,6 +655,18 @@ Andy Wickert
   <span class="k">return</span> <span class="n">percentage</span><span class="p">;</span>
 <span class="p">}</span>
 
+<span class="c1">// The data file's header row: the on-board columns (old loggers lack the</span>
+<span class="c1">// BME280), then the sketch's Header, then Note. Note is always the last</span>
+<span class="c1">// column and carries no comma after it: every sensor ends its fields with a</span>
+<span class="c1">// comma for the next, so this ends the row.</span>
+<span class="n">String</span> <span class="n">Margay</span><span class="o">::</span><span class="n">dataHeader</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">Model</span> <span class="o">&lt;</span> <span class="n">MODEL_2v0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s">"Time [UTC], Temp OB [C], Temp RTC [C], Bat [V], "</span> <span class="o">+</span> <span class="n">Header</span> <span class="o">+</span> <span class="s">"Note"</span><span class="p">;</span>
+  <span class="k">else</span>  <span class="c1">// new loggers include pressure and RH from BME280</span>
+    <span class="k">return</span> <span class="s">"Time [UTC], PresOB [mBar], RH_OB [%], TempOB [C], "</span>
+           <span class="s">"Temp RTC [C], Bat [V], "</span> <span class="o">+</span> <span class="n">Header</span> <span class="o">+</span> <span class="s">"Note"</span><span class="p">;</span>
+<span class="p">}</span>
+
 <span class="n">String</span> <span class="n">Margay</span><span class="o">::</span><span class="n">getOnBoardVals</span><span class="p">()</span> <span class="p">{</span>
   <span class="c1">// Get onboard temp, RTC temp, and battery voltage, reference voltage</span>
   <span class="c1">// float VRef = analogRead(VRef_Pin);</span>
@@ -1163,21 +717,6 @@ Andy Wickert
   <span class="k">return</span> <span class="n">t</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="kt">void</span> <span class="n">Margay</span><span class="o">::</span><span class="n">blinkGood</span><span class="p">()</span> <span class="p">{</span>
-  <span class="c1">// Peppy blinky pattern to show that the logger has successfully initialized</span>
-  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">BlueLED</span><span class="p">,</span><span class="n">LOW</span><span class="p">);</span>
-  <span class="n">delay</span><span class="p">(</span><span class="mi">651</span><span class="p">);</span>
-  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">BlueLED</span><span class="p">,</span><span class="n">HIGH</span><span class="p">);</span>
-  <span class="n">delay</span><span class="p">(</span><span class="mi">300</span><span class="p">);</span>
-  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">BlueLED</span><span class="p">,</span><span class="n">LOW</span><span class="p">);</span>
-  <span class="n">delay</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
-  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">BlueLED</span><span class="p">,</span><span class="n">HIGH</span><span class="p">);</span>
-  <span class="n">delay</span><span class="p">(</span><span class="mi">200</span><span class="p">);</span>
-  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">BlueLED</span><span class="p">,</span><span class="n">LOW</span><span class="p">);</span>
-  <span class="n">delay</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
-  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">BlueLED</span><span class="p">,</span><span class="n">HIGH</span><span class="p">);</span>
-<span class="p">}</span>
-
 <span class="kt">float</span> <span class="n">Margay</span><span class="o">::</span><span class="n">getVoltage</span><span class="p">()</span> <span class="p">{</span>  <span class="c1">//Get voltage from Ax pin</span>
   <span class="c1">// Voltage reads from the on-board ADC, but to read the Ax pin at the</span>
   <span class="c1">// same time as external sensors, need access to the ADC. However, we</span>
@@ -1202,102 +741,6 @@ Andy Wickert
   <span class="n">farmGateI2C</span><span class="p">(</span><span class="n">initialStateExternalI2C</span><span class="p">);</span>
 
   <span class="k">return</span> <span class="n">val</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="c1">// Pass in function which returns string of data</span>
-<span class="kt">void</span> <span class="n">Margay</span><span class="o">::</span><span class="n">run</span><span class="p">(</span><span class="n">String</span> <span class="p">(</span><span class="o">*</span><span class="n">update</span><span class="p">)(</span><span class="kt">void</span><span class="p">),</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">logInterval</span><span class="p">)</span> <span class="p">{</span>
-  <span class="n">LogInterval</span> <span class="o">=</span> <span class="n">logInterval</span><span class="p">;</span> <span class="c1">//Served on Page 3</span>
-  <span class="c1">// Print note that that logging has started</span>
-  <span class="c1">// Serial.println("Log Started!"); //DEBUG!</span>
-  <span class="c1">// Serial.println(millis()); //DEBUG!</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">NewLog</span><span class="p">)</span> <span class="p">{</span>
-    <span class="c1">// LogEvent = true;</span>
-    <span class="n">RTC</span><span class="p">.</span><span class="n">setAlarm</span><span class="p">(</span><span class="n">logInterval</span><span class="p">);</span>
-    <span class="n">initLogFile</span><span class="p">();</span> <span class="c1">//Start a new file each time log button is pressed</span>
-    <span class="c1">//Add inital data point</span>
-    <span class="n">addDataPoint</span><span class="p">(</span><span class="n">update</span><span class="p">);</span>
-    <span class="n">NewLog</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>  <span class="c1">//Clear flag once log is started</span>
-    <span class="n">blinkGood</span><span class="p">();</span>  <span class="c1">//Alert user to start of log</span>
-    <span class="n">resetWDT</span><span class="p">();</span> <span class="c1">//Clear alarm</span>
-  <span class="p">}</span>
-
-  <span class="k">if</span> <span class="p">(</span><span class="n">LogEvent</span><span class="p">)</span> <span class="p">{</span>
-    <span class="c1">// Serial.println("Log Event!"); //DEBUG!</span>
-    <span class="c1">// RTC.setAlarm(logInterval);  //Set/reset alarm //DEBUG!</span>
-    <span class="n">addDataPoint</span><span class="p">(</span><span class="n">update</span><span class="p">);</span> <span class="c1">//Write values to SD</span>
-    <span class="n">LogEvent</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span> <span class="c1">//Clear log flag</span>
-    <span class="n">RTC</span><span class="p">.</span><span class="n">setAlarm</span><span class="p">(</span><span class="n">logInterval</span><span class="p">);</span>  <span class="c1">//Set/reset alarm</span>
-    <span class="n">resetWDT</span><span class="p">();</span> <span class="c1">//Clear alarm</span>
-  <span class="p">}</span>
-
-  <span class="c1">// Write data to SD card without interrupting existing timing cycle</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">manualLog</span><span class="p">)</span> <span class="p">{</span>
-    <span class="c1">// Serial.println("Click!"); //DEBUG!</span>
-    <span class="n">addDataPoint</span><span class="p">(</span><span class="n">update</span><span class="p">);</span> <span class="c1">//write values to SD</span>
-    <span class="n">manualLog</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span> <span class="c1">//Clear log flag</span>
-    <span class="n">resetWDT</span><span class="p">();</span> <span class="c1">//Clear alarm</span>
-  <span class="p">}</span>
-
-  <span class="k">if</span> <span class="p">(</span><span class="n">ExtIntTripped</span><span class="p">)</span> <span class="p">{</span>  <span class="c1">// Defaults to just counter for now</span>
-    <span class="c1">// Serial.println("TIP!"); //DEBUG!</span>
-    <span class="n">ExtInt_count</span> <span class="o">++</span><span class="p">;</span>
-    <span class="n">ExtIntTripped</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span> <span class="c1">// Clear interrupt flag</span>
-    <span class="n">resetWDT</span><span class="p">();</span> <span class="c1">//Clear alarm</span>
-    <span class="n">delay</span><span class="p">(</span><span class="mi">150</span><span class="p">);</span> <span class="c1">//Hard-code for now; tipping bucket "debounce"</span>
-    <span class="n">attachInterrupt</span><span class="p">(</span><span class="n">digitalPinToInterrupt</span><span class="p">(</span><span class="n">ExtIntPin</span><span class="p">),</span> <span class="n">Margay</span><span class="o">::</span><span class="n">isr2</span><span class="p">,</span> <span class="n">FALLING</span><span class="p">);</span>
-  <span class="p">}</span>
-
-  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">digitalRead</span><span class="p">(</span><span class="n">RTCInt</span><span class="p">))</span> <span class="p">{</span>  <span class="c1">//Catch alarm if not reset properly</span>
-    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Reset Alarm"</span><span class="p">);</span> <span class="c1">//DEBUG!</span>
-    <span class="n">RTC</span><span class="p">.</span><span class="n">setAlarm</span><span class="p">(</span><span class="n">logInterval</span><span class="p">);</span> <span class="c1">//Turn alarm back on</span>
-  <span class="p">}</span>
-
-  <span class="n">AwakeCount</span><span class="o">++</span><span class="p">;</span>
-
-  <span class="c1">// @bschulz1701: AwakeCount was designed to give ~5 run() iterations after</span>
-  <span class="c1">// an RTC wake before returning to sleep, reset to 0 by the RTC ISR</span>
-  <span class="c1">// (writeDataToSD). Since addDataPoint() blocks within a single run() call,</span>
-  <span class="c1">// the 5-count may be unnecessary. Consider simplifying or removing.</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">AwakeCount</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">sleepNow</span><span class="p">();</span>
-  <span class="p">}</span>
-  <span class="n">delay</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-<span class="p">}</span>
-
-<span class="c1">// Send a pulse to "feed" the watchdog timer</span>
-<span class="kt">void</span> <span class="n">Margay</span><span class="o">::</span><span class="n">resetWDT</span><span class="p">()</span> <span class="p">{</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">WDHold</span> <span class="o">==</span> <span class="mi">255</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span> <span class="c1">// No watchdog timer on this board model</span>
-  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">WDHold</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span> <span class="c1">//Set DONE pin high</span>
-  <span class="n">delayMicroseconds</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span> <span class="c1">//Wait a short pulse</span>
-  <span class="n">digitalWrite</span><span class="p">(</span><span class="n">WDHold</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
-<span class="p">}</span>
-
-<span class="kt">void</span> <span class="n">Margay</span><span class="o">::</span><span class="n">switchExternalI2C</span><span class="p">(</span><span class="kt">bool</span> <span class="n">desiredState</span><span class="p">)</span> <span class="p">{</span>
-  <span class="cm">/*
-  Must be ON to read off-board sensors, OFF to read on-board sensors and RTC
-  Serves to isolate these s.t. I2C addresses may not clash.
-  */</span>
-  <span class="n">pinMode</span><span class="p">(</span><span class="n">I2C_SW</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
-
-  <span class="k">if</span> <span class="p">(</span> <span class="n">desiredState</span> <span class="o">==</span> <span class="n">ON</span> <span class="p">)</span> <span class="p">{</span>
-    <span class="n">digitalWrite</span><span class="p">(</span><span class="n">I2C_SW</span><span class="p">,</span> <span class="n">HIGH</span><span class="p">);</span>
-    <span class="n">externalI2COn</span> <span class="o">=</span> <span class="n">digitalRead</span><span class="p">(</span><span class="n">I2C_SW</span><span class="p">);</span>
-  <span class="p">}</span>
-  <span class="k">else</span> <span class="p">{</span>
-    <span class="n">digitalWrite</span><span class="p">(</span><span class="n">I2C_SW</span><span class="p">,</span> <span class="n">LOW</span><span class="p">);</span>
-    <span class="n">externalI2COn</span> <span class="o">=</span> <span class="n">digitalRead</span><span class="p">(</span><span class="n">I2C_SW</span><span class="p">);</span>
-  <span class="p">}</span>
-  <span class="n">delay</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// Any time needed to switch states; may not be necessary</span>
-<span class="p">}</span>
-
-<span class="kt">void</span> <span class="n">Margay</span><span class="o">::</span><span class="n">farmGateI2C</span><span class="p">(</span><span class="kt">bool</span> <span class="n">initStateI2C</span><span class="p">)</span> <span class="p">{</span>
-  <span class="c1">// This closes the farm gate at the end of a function that uses the</span>
-  <span class="c1">// external I2C bus. It works by checking if the current state of I2C</span>
-  <span class="c1">// comms (class variable) matches the starting state (argument to this</span>
-  <span class="c1">// function). If they do not match (XOR), and it was on at the start,</span>
-  <span class="c1">// then turn on. Otherwise, turn off.</span>
-
-  <span class="n">switchExternalI2C</span><span class="p">(</span><span class="n">initStateI2C</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="c1">// Reads new data and writes data to SD</span>
@@ -1358,15 +801,7 @@ Andy Wickert
     <span class="n">Pages</span><span class="p">.</span><span class="n">put16</span><span class="p">(</span><span class="mh">0x52</span><span class="p">,</span> <span class="p">(</span><span class="kt">uint16_t</span><span class="p">)(</span><span class="n">bme280</span><span class="p">.</span><span class="n">getHumidity</span><span class="p">()</span> <span class="o">*</span> <span class="mf">100.0</span><span class="p">));</span>
     <span class="n">Pages</span><span class="p">.</span><span class="n">put32</span><span class="p">(</span><span class="mh">0x54</span><span class="p">,</span> <span class="p">(</span><span class="kt">uint32_t</span><span class="p">)(</span><span class="n">bme280</span><span class="p">.</span><span class="n">getPressure</span><span class="p">()</span> <span class="o">*</span> <span class="mf">100.0</span><span class="p">));</span>
   <span class="p">}</span>
-  <span class="c1">//Clock: Unix seconds from the DS3231's fields (days from civil, proleptic Gregorian)</span>
-  <span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="n">RTC</span><span class="p">.</span><span class="n">getValue</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">mo</span> <span class="o">=</span> <span class="n">RTC</span><span class="p">.</span><span class="n">getValue</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">d</span> <span class="o">=</span> <span class="n">RTC</span><span class="p">.</span><span class="n">getValue</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
-  <span class="kt">int32_t</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="p">(</span><span class="n">mo</span> <span class="o">&lt;=</span> <span class="mi">2</span> <span class="o">?</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">);</span>
-  <span class="kt">int32_t</span> <span class="n">era</span> <span class="o">=</span> <span class="p">(</span><span class="n">yy</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">?</span> <span class="n">yy</span> <span class="o">:</span> <span class="n">yy</span> <span class="o">-</span> <span class="mi">399</span><span class="p">)</span> <span class="o">/</span> <span class="mi">400</span><span class="p">;</span>
-  <span class="kt">uint32_t</span> <span class="n">yoe</span> <span class="o">=</span> <span class="p">(</span><span class="kt">uint32_t</span><span class="p">)(</span><span class="n">yy</span> <span class="o">-</span> <span class="n">era</span> <span class="o">*</span> <span class="mi">400</span><span class="p">);</span>
-  <span class="kt">uint32_t</span> <span class="n">doy</span> <span class="o">=</span> <span class="p">(</span><span class="mi">153</span> <span class="o">*</span> <span class="p">(</span><span class="n">mo</span> <span class="o">+</span> <span class="p">(</span><span class="n">mo</span> <span class="o">&gt;</span> <span class="mi">2</span> <span class="o">?</span> <span class="o">-</span><span class="mi">3</span> <span class="o">:</span> <span class="mi">9</span><span class="p">))</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">5</span> <span class="o">+</span> <span class="n">d</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
-  <span class="kt">uint32_t</span> <span class="n">doe</span> <span class="o">=</span> <span class="n">yoe</span> <span class="o">*</span> <span class="mi">365</span> <span class="o">+</span> <span class="n">yoe</span> <span class="o">/</span> <span class="mi">4</span> <span class="o">-</span> <span class="n">yoe</span> <span class="o">/</span> <span class="mi">100</span> <span class="o">+</span> <span class="n">doy</span><span class="p">;</span>
-  <span class="kt">uint32_t</span> <span class="n">days</span> <span class="o">=</span> <span class="p">(</span><span class="kt">uint32_t</span><span class="p">)(</span><span class="n">era</span> <span class="o">*</span> <span class="mi">146097</span> <span class="o">+</span> <span class="p">(</span><span class="kt">int32_t</span><span class="p">)</span><span class="n">doe</span> <span class="o">-</span> <span class="mi">719468</span><span class="p">);</span>
-  <span class="n">Pages</span><span class="p">.</span><span class="n">put32</span><span class="p">(</span><span class="mh">0x58</span><span class="p">,</span> <span class="n">days</span> <span class="o">*</span> <span class="mi">86400UL</span> <span class="o">+</span> <span class="p">(</span><span class="kt">uint32_t</span><span class="p">)</span><span class="n">RTC</span><span class="p">.</span><span class="n">getValue</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="mi">3600UL</span> <span class="o">+</span> <span class="p">(</span><span class="kt">uint32_t</span><span class="p">)</span><span class="n">RTC</span><span class="p">.</span><span class="n">getValue</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">*</span> <span class="mi">60UL</span> <span class="o">+</span> <span class="p">(</span><span class="kt">uint32_t</span><span class="p">)</span><span class="n">RTC</span><span class="p">.</span><span class="n">getValue</span><span class="p">(</span><span class="mi">5</span><span class="p">));</span>
+  <span class="n">Pages</span><span class="p">.</span><span class="n">put32</span><span class="p">(</span><span class="mh">0x58</span><span class="p">,</span> <span class="n">clockUnix</span><span class="p">());</span> <span class="c1">//Clock: Unix seconds</span>
   <span class="n">Pages</span><span class="p">.</span><span class="n">put16</span><span class="p">(</span><span class="mh">0x5C</span><span class="p">,</span> <span class="p">(</span><span class="kt">uint16_t</span><span class="p">)(</span><span class="kt">int16_t</span><span class="p">)(</span><span class="n">RTC</span><span class="p">.</span><span class="n">getTemp</span><span class="p">()</span> <span class="o">*</span> <span class="mf">100.0</span><span class="p">));</span>
   <span class="n">Pages</span><span class="p">.</span><span class="n">put16</span><span class="p">(</span><span class="mh">0x60</span><span class="p">,</span> <span class="n">FileNum</span><span class="p">);</span>
   <span class="n">Pages</span><span class="p">.</span><span class="n">put32</span><span class="p">(</span><span class="mh">0x62</span><span class="p">,</span> <span class="n">LogInterval</span><span class="p">);</span>
@@ -1378,117 +813,13 @@ Andy Wickert
 <span class="k">static</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="k">const</span> <span class="n">margayWords</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="s">"LoggingStarted"</span><span class="p">,</span> <span class="s">"NewLogFile"</span><span class="p">,</span> <span class="s">"RowNotWritten"</span><span class="p">};</span>   <span class="c1">//unit kinds 16-18</span>
 <span class="k">static</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="k">const</span> <span class="n">margayChipWords</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="s">"BatteryWarning"</span><span class="p">,</span> <span class="s">"ClockSet"</span><span class="p">};</span>   <span class="c1">//kind 16 on Battery (0x90) and on Clock (0x30): one word each</span>
 
-<span class="kt">uint8_t</span> <span class="n">Margay</span><span class="o">::</span><span class="n">reportKind</span><span class="p">()</span>    <span class="p">{</span> <span class="k">return</span> <span class="n">Pages</span><span class="p">.</span><span class="n">report</span><span class="p">().</span><span class="n">kind</span><span class="p">();</span> <span class="p">}</span>
-<span class="kt">bool</span>    <span class="n">Margay</span><span class="o">::</span><span class="n">reportIsFault</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">Pages</span><span class="p">.</span><span class="n">report</span><span class="p">().</span><span class="n">isFault</span><span class="p">();</span> <span class="p">}</span>
-<span class="kt">uint8_t</span> <span class="n">Margay</span><span class="o">::</span><span class="n">bootReportKind</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">BootReport</span><span class="p">.</span><span class="n">kind</span><span class="p">();</span> <span class="p">}</span>
-<span class="kt">void</span>    <span class="n">Margay</span><span class="o">::</span><span class="n">clearBootReport</span><span class="p">()</span> <span class="p">{</span> <span class="n">BootReport</span><span class="p">.</span><span class="n">code</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">BootReport</span><span class="p">.</span><span class="n">status</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="p">}</span>
-
 <span class="kt">size_t</span> <span class="n">Margay</span><span class="o">::</span><span class="n">printStatus</span><span class="p">(</span><span class="n">Print</span><span class="o">&amp;</span> <span class="n">out</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">boot</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">const</span> <span class="n">NW_Report</span><span class="o">&amp;</span> <span class="n">r</span> <span class="o">=</span> <span class="n">boot</span> <span class="o">?</span> <span class="n">BootReport</span> <span class="o">:</span> <span class="n">Pages</span><span class="p">.</span><span class="n">report</span><span class="p">();</span>
   <span class="c1">//Kind 16 means a different thing on the unit, the battery and the clock: choose the word table by chip</span>
   <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="k">const</span><span class="o">*</span> <span class="n">words</span> <span class="o">=</span> <span class="n">margayWords</span><span class="p">;</span> <span class="kt">uint8_t</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
   <span class="k">if</span> <span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">chip</span><span class="p">()</span> <span class="o">==</span> <span class="mi">4</span><span class="p">)</span> <span class="p">{</span> <span class="n">words</span> <span class="o">=</span> <span class="n">margayChipWords</span><span class="p">;</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="p">}</span>
   <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">chip</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span> <span class="n">words</span> <span class="o">=</span> <span class="n">margayChipWords</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="p">}</span>
-  <span class="k">return</span> <span class="n">Pages</span><span class="p">.</span><span class="n">printSnapshot</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">margayChips</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">LibVersion</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="o">&amp;</span><span class="n">r</span><span class="p">,</span> <span class="n">words</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
-<span class="p">}</span>
-
-<span class="kt">bool</span> <span class="n">Margay</span><span class="o">::</span><span class="n">watch</span><span class="p">(</span><span class="n">NW_Sensor</span><span class="o">&amp;</span> <span class="n">sensor</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">NumWatched</span> <span class="o">&gt;=</span> <span class="n">MaxWatched</span><span class="p">)</span> <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
-  <span class="n">Watched</span><span class="p">[</span><span class="n">NumWatched</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">sensor</span><span class="p">;</span>
-  <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="kt">int</span> <span class="n">Margay</span><span class="o">::</span><span class="n">statusRow</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">trigger</span><span class="p">,</span> <span class="n">NW_Sensor</span><span class="o">&amp;</span> <span class="n">sensor</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">boot</span><span class="p">)</span> <span class="p">{</span>
-  <span class="n">SD</span><span class="p">.</span><span class="n">chdir</span><span class="p">(</span><span class="s">"/"</span><span class="p">);</span>  <span class="c1">//The card's root</span>
-  <span class="n">SD</span><span class="p">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">SN</span><span class="p">);</span>  <span class="c1">//Move into this logger's folder, named by its serial number</span>
-  <span class="n">File</span> <span class="n">StatusFile</span> <span class="o">=</span> <span class="n">SD</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="n">FileNameStaC</span><span class="p">,</span> <span class="n">FILE_WRITE</span><span class="p">);</span>
-  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">StatusFile</span><span class="p">)</span> <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-  <span class="n">StatusFile</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">LogTimeDate</span><span class="p">);</span> <span class="n">StatusFile</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="sc">','</span><span class="p">);</span>
-  <span class="n">StatusFile</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">trigger</span><span class="p">);</span> <span class="n">StatusFile</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="sc">','</span><span class="p">);</span>
-  <span class="n">sensor</span><span class="p">.</span><span class="n">printStatus</span><span class="p">(</span><span class="n">StatusFile</span><span class="p">,</span> <span class="n">boot</span><span class="p">);</span>
-  <span class="n">StatusFile</span><span class="p">.</span><span class="n">println</span><span class="p">();</span>
-  <span class="n">StatusFile</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
-  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="kt">void</span> <span class="n">Margay</span><span class="o">::</span><span class="n">reportRows</span><span class="p">()</span> <span class="p">{</span>
-  <span class="c1">//A reset seen at a sensor's boot (kind 6) is what this logger causes by</span>
-  <span class="c1">//powering the rail for the reading: no row. Any other boot report, and any</span>
-  <span class="c1">//report captured with the reading, gets one. The first reading writes every</span>
-  <span class="c1">//watched sensor's boot row regardless, as the record of what is on the bus.</span>
-  <span class="k">for</span> <span class="p">(</span><span class="kt">int8_t</span> <span class="n">i</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="p">(</span><span class="kt">int8_t</span><span class="p">)</span><span class="n">NumWatched</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">NW_Sensor</span><span class="o">&amp;</span> <span class="n">s</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">?</span> <span class="o">*</span><span class="k">this</span> <span class="o">:</span> <span class="o">*</span><span class="n">Watched</span><span class="p">[</span><span class="n">i</span><span class="p">];</span> <span class="c1">//The logger itself first</span>
-    <span class="kt">uint8_t</span> <span class="n">bootKind</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">bootReportKind</span><span class="p">();</span>
-    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">DeviceBootRows</span> <span class="o">||</span> <span class="p">(</span><span class="n">bootKind</span> <span class="o">!=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">bootKind</span> <span class="o">!=</span> <span class="mi">6</span><span class="p">))</span> <span class="n">statusRow</span><span class="p">(</span><span class="s">"boot"</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span>
-    <span class="n">s</span><span class="p">.</span><span class="n">clearBootReport</span><span class="p">();</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">reportKind</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="n">statusRow</span><span class="p">(</span><span class="s">"report"</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="nb">false</span><span class="p">);</span>
-  <span class="p">}</span>
-  <span class="n">Pages</span><span class="p">.</span><span class="n">acknowledge</span><span class="p">();</span> <span class="c1">//The logger's own report is written; the next one may latch</span>
-  <span class="n">DeviceBootRows</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="kt">void</span> <span class="n">Margay</span><span class="o">::</span><span class="n">note</span><span class="p">(</span><span class="k">const</span> <span class="n">String</span><span class="o">&amp;</span> <span class="n">word</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">Note</span><span class="p">.</span><span class="n">length</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="n">Note</span> <span class="o">+=</span> <span class="s">";"</span><span class="p">;</span>
-  <span class="n">Note</span> <span class="o">+=</span> <span class="n">word</span><span class="p">;</span>
-  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">F</span><span class="p">(</span><span class="s">"Note: "</span><span class="p">));</span>
-  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">word</span><span class="p">);</span>
-  <span class="n">LED_Color</span><span class="p">(</span><span class="n">ORANGE</span><span class="p">);</span>
-  <span class="n">delay</span><span class="p">(</span><span class="mi">300</span><span class="p">);</span>
-  <span class="n">LED_Color</span><span class="p">(</span><span class="n">OFF</span><span class="p">);</span>
-<span class="p">}</span>
-
-<span class="c1">//ISRs</span>
-
-<span class="kt">void</span> <span class="n">Margay</span><span class="o">::</span><span class="n">buttonLog</span><span class="p">()</span> <span class="p">{</span>
-  <span class="c1">// ISR to respond to pressing log button and waking device from sleep</span>
-  <span class="c1">// and starting log</span>
-  <span class="n">manualLog</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span> <span class="c1">//Set flag to manually record an additional data point</span>
-<span class="p">}</span>
-
-<span class="kt">void</span> <span class="n">Margay</span><span class="o">::</span><span class="n">extIntCounter</span><span class="p">()</span> <span class="p">{</span>
-  <span class="c1">// ISR for an external event waking the logger</span>
-  <span class="n">detachInterrupt</span><span class="p">(</span><span class="n">digitalPinToInterrupt</span><span class="p">(</span><span class="n">ExtIntPin</span><span class="p">));</span>
-  <span class="c1">// Set flag to just increment the counter and return to sleep</span>
-  <span class="n">ExtIntTripped</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="kt">void</span> <span class="n">Margay</span><span class="o">::</span><span class="n">writeDataToSD</span><span class="p">()</span> <span class="p">{</span>
-  <span class="c1">//Write global data to SD</span>
-  <span class="n">LogEvent</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span> <span class="c1">//Set flag for a log event</span>
-  <span class="n">AwakeCount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="c1">// ExtInt functions</span>
-<span class="kt">void</span> <span class="n">Margay</span><span class="o">::</span><span class="n">setExtInt</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="n">n</span><span class="p">,</span> <span class="n">String</span> <span class="n">header_entry</span><span class="p">)</span> <span class="p">{</span>
-  <span class="n">ExtIntPin</span> <span class="o">=</span> <span class="n">n</span><span class="p">;</span>
-  <span class="n">ext_int_header_entry</span> <span class="o">=</span> <span class="n">header_entry</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="kt">uint16_t</span> <span class="n">Margay</span><span class="o">::</span><span class="n">getExtIntCount</span><span class="p">(</span><span class="kt">bool</span> <span class="n">reset0</span><span class="p">)</span> <span class="p">{</span>
-  <span class="c1">// ExtInt_count is a 16-bit volatile shared with isr2. On 8-bit AVR, a</span>
-  <span class="c1">// 16-bit read is two instructions; if isr2 fires between them the read</span>
-  <span class="c1">// is torn (e.g. low byte 0xFF before + high byte 0x01 after = 0x01FF</span>
-  <span class="c1">// instead of the correct 0x0100). Folding the optional reset into the</span>
-  <span class="c1">// same cli/sei block closes a second race: a tip arriving between a</span>
-  <span class="c1">// separate read and reset would be silently zeroed out and lost.</span>
-  <span class="c1">//</span>
-  <span class="c1">// cli() defers rather than discards interrupts — any tip that arrives</span>
-  <span class="c1">// during the critical section is held pending and fires immediately</span>
-  <span class="c1">// after sei(), so it is correctly counted in the next reading.</span>
-  <span class="n">cli</span><span class="p">();</span>
-  <span class="kt">uint16_t</span> <span class="n">out</span> <span class="o">=</span> <span class="n">ExtInt_count</span><span class="p">;</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">reset0</span><span class="p">)</span> <span class="n">ExtInt_count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-  <span class="n">sei</span><span class="p">();</span>
-  <span class="k">return</span> <span class="n">out</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="kt">void</span> <span class="n">Margay</span><span class="o">::</span><span class="n">resetExtIntCount</span><span class="p">(</span><span class="kt">uint16_t</span> <span class="n">start</span><span class="p">)</span> <span class="p">{</span>
-  <span class="c1">// Protect the 16-bit write with cli/sei so isr2 cannot increment</span>
-  <span class="c1">// ExtInt_count between the two store bytes. As with getExtIntCount,</span>
-  <span class="c1">// any interrupt arriving during cli is deferred, not dropped.</span>
-  <span class="n">cli</span><span class="p">();</span>
-  <span class="n">ExtInt_count</span> <span class="o">=</span> <span class="n">start</span><span class="p">;</span>
-  <span class="n">sei</span><span class="p">();</span>
+  <span class="k">return</span> <span class="n">Pages</span><span class="p">.</span><span class="n">printSnapshot</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">margayChips</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">LibVersion</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="o">&amp;</span><span class="n">r</span><span class="p">,</span> <span class="n">words</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">MARGAY_LIBRARY_COMMIT</span><span class="p">,</span> <span class="s">""</span><span class="p">,</span> <span class="n">SKETCH_COMMIT</span><span class="p">);</span> <span class="c1">//A logger: its library is its firmware; the sketch stands where a library would</span>
 <span class="p">}</span>
 
 <span class="kt">void</span> <span class="n">Margay</span><span class="o">::</span><span class="n">powerAux</span><span class="p">(</span><span class="kt">bool</span> <span class="n">state</span><span class="p">)</span> <span class="p">{</span>
@@ -1505,22 +836,6 @@ Andy Wickert
   <span class="n">pinMode</span><span class="p">(</span><span class="n">BatSwitch</span><span class="p">,</span> <span class="n">OUTPUT</span><span class="p">);</span>
   <span class="n">digitalWrite</span><span class="p">(</span><span class="n">BatSwitch</span><span class="p">,</span> <span class="n">state</span><span class="p">);</span> <span class="c1">//Set bat switch for onboard 3v3/main power</span>
 <span class="p">}</span>
-
-<span class="kt">void</span> <span class="n">Margay</span><span class="o">::</span><span class="n">dateTimeSD</span><span class="p">(</span><span class="kt">uint16_t</span><span class="o">*</span> <span class="n">date</span><span class="p">,</span> <span class="kt">uint16_t</span><span class="o">*</span> <span class="n">time</span><span class="p">)</span> <span class="p">{</span>
-  <span class="c1">// return date using FAT_DATE macro to format fields</span>
-  <span class="o">*</span><span class="n">date</span> <span class="o">=</span> <span class="n">FAT_DATE</span><span class="p">(</span><span class="n">selfPointer</span><span class="o">-&gt;</span><span class="n">RTC</span><span class="p">.</span><span class="n">getValue</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2000</span><span class="p">,</span>
-                   <span class="n">selfPointer</span><span class="o">-&gt;</span><span class="n">RTC</span><span class="p">.</span><span class="n">getValue</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
-                   <span class="n">selfPointer</span><span class="o">-&gt;</span><span class="n">RTC</span><span class="p">.</span><span class="n">getValue</span><span class="p">(</span><span class="mi">2</span><span class="p">));</span>
-
-  <span class="c1">// return time using FAT_TIME macro to format fields</span>
-  <span class="o">*</span><span class="n">time</span> <span class="o">=</span> <span class="n">FAT_TIME</span><span class="p">(</span><span class="n">selfPointer</span><span class="o">-&gt;</span><span class="n">RTC</span><span class="p">.</span><span class="n">getValue</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span>
-                   <span class="n">selfPointer</span><span class="o">-&gt;</span><span class="n">RTC</span><span class="p">.</span><span class="n">getValue</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span>
-                   <span class="n">selfPointer</span><span class="o">-&gt;</span><span class="n">RTC</span><span class="p">.</span><span class="n">getValue</span><span class="p">(</span><span class="mi">5</span><span class="p">));</span>
-<span class="p">}</span>
-
-<span class="kt">void</span> <span class="n">Margay</span><span class="o">::</span><span class="n">isr0</span><span class="p">()</span> <span class="p">{</span> <span class="n">selfPointer</span><span class="o">-&gt;</span><span class="n">buttonLog</span><span class="p">();</span> <span class="p">}</span>
-<span class="kt">void</span> <span class="n">Margay</span><span class="o">::</span><span class="n">isr1</span><span class="p">()</span> <span class="p">{</span> <span class="n">selfPointer</span><span class="o">-&gt;</span><span class="n">writeDataToSD</span><span class="p">();</span> <span class="p">}</span>
-<span class="kt">void</span> <span class="n">Margay</span><span class="o">::</span><span class="n">isr2</span><span class="p">()</span> <span class="p">{</span> <span class="n">selfPointer</span><span class="o">-&gt;</span><span class="n">extIntCounter</span><span class="p">();</span> <span class="p">}</span>
 
 <span class="c1">//Low Power functions</span>
 <span class="kt">void</span> <span class="n">Margay</span><span class="o">::</span><span class="n">sleepNow</span><span class="p">()</span> <span class="p">{</span>         <span class="c1">// here we put the arduino to sleep</span>
@@ -1594,7 +909,7 @@ Andy Wickert
 
 <hr />
 
-<p>Updated on 2026-09-23 at 20:56:47 +0000</p>
+<p>Updated on 2026-09-23 at 22:44:26 +0000</p>
 
         
       </section>
