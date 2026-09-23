@@ -69,3 +69,11 @@ BLACK_ALERT	LITERAL1
 # Power state
 ON		LITERAL1
 OFF		LITERAL1
+watch	KEYWORD2
+statusStr	KEYWORD2
+printStatus	KEYWORD2
+reportKind	KEYWORD2
+reportIsFault	KEYWORD2
+bootReportKind	KEYWORD2
+clearBootReport	KEYWORD2
+name	KEYWORD2
