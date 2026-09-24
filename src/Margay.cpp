@@ -358,6 +358,8 @@ float Margay::getBatPercentage() {
 // column and carries no comma after it: every sensor ends its fields with a
 // comma for the next, so this ends the row.
 String Margay::dataHeader() {
+  // Note is always the last column and carries no comma after it: every
+  // sensor ends its fields with a comma for the next, so this ends the row.
   if (Model < MODEL_2v0)
     return "Time [UTC], Temp OB [C], Temp RTC [C], Bat [V], " + Header + "Note";
   else  // new loggers include pressure and RH from BME280
