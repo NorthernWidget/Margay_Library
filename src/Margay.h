@@ -243,19 +243,24 @@ class Margay : public NW_Logger
 
   protected:
     /**
-     * @brief The on-board thermistor's Steinhart-Hart coefficients, from Page 1.
-     * @details The four are one calibration, never used apart: they are read
-     * together and passed together. The field names are the datasheet's.
+     * @brief Everything the on-board thermistor measurement is calibrated by.
+     * @details One object, because none of it is ever used apart. a, b, c and d
+     * are the Steinhart-Hart coefficients and keep the datasheet's letters;
+     * seriesResistance is the divider resistor beside the thermistor, and r25
+     * the thermistor's nominal resistance at 25 C. Only a, b, c and d come from
+     * Page 1 today (0x22-0x31); the other two hold the board's compiled values,
+     * and Page 1 has room at 0x35-0x3F if they are ever provisioned.
      */
-    struct SteinhartHart {
+    struct Thermistor {
       float a;
       float b;
       float c;
       float d;
+      float seriesResistance;   ///< [ohm]
+      float r25;                ///< [ohm] at 25 C
     };
 
-    float tempConvert(float V, float vcc, float R,
-        const SteinhartHart& sh, float R25);
+    float tempConvert(float V, float vcc, const Thermistor& th);
     void sleepNow() override;
     void turnOffSDcard();
     void turnOnSDcard();
@@ -274,7 +279,7 @@ class Margay : public NW_Logger
 
     MCP3421 adc;
 
-    SteinhartHart _thermistor = {0.003354016, 0.0003074038, 1.019153E-05, 9.093712E-07};
+    Thermistor _thermistor = {0.003354016, 0.0003074038, 1.019153E-05, 9.093712E-07, 10000.0, 10000.0};
 
     float _batteryDivider = 2.0; //Default for v1.0
 

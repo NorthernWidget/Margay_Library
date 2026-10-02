@@ -301,7 +301,7 @@ float Margay::getTemp(temp_source sensor) {
   // Get temp from on board thermistor
   if (sensor == thermistor_temp_sensor) {
     float adcVoltage = float(analogRead(ThermSense_Pin))*(vcc/1023.0);
-    float tempData = tempConvert(adcVoltage, vcc, 10000.0, _thermistor, 10000.0);
+    float tempData = tempConvert(adcVoltage, vcc, _thermistor);
     tempData = tempData - 273.15;
     return tempData;
   }
@@ -416,7 +416,7 @@ void Margay::readOnBoard() {
     // float Vout = vcc - val;
     // Serial.println(val); //DEBUG!
     // Serial.println(Vout);  //DEBUG!
-    tempData = tempConvert(val, vcc*comp, 10000.0, _thermistor, 10000.0);
+    tempData = tempConvert(val, vcc*comp, _thermistor);
     tempData = tempData - 273.15; //Get temp from on board thermistor
   }
 
@@ -432,17 +432,16 @@ void Margay::readOnBoard() {
   _batVoltage = batVoltage;
 }
 
-float Margay::tempConvert(float V, float vcc, float R,
-    const SteinhartHart& sh, float R25) {
+float Margay::tempConvert(float V, float vcc, const Thermistor& th) {
   //  Serial.print("R = "); //DEBUG!
   //  Serial.println(R); //DEBUG!
-  float rt = ((vcc/V)*R) - R;
+  float rt = ((vcc/V)*th.seriesResistance) - th.seriesResistance;
   //  Serial.print("rt = "); //DEBUG!
   //  Serial.println(rt); //DEBUG!
-  float logRt = log(rt/R25);
+  float logRt = log(rt/th.r25);
   //  Serial.print("logRt = "); //DEBUG!
   //  Serial.println(logRt); //DEBUG!
-  float t = 1.0/(sh.a + sh.b*logRt + sh.c*pow(logRt, 2.0) + sh.d*pow(logRt, 3.0));
+  float t = 1.0/(th.a + th.b*logRt + th.c*pow(logRt, 2.0) + th.d*pow(logRt, 3.0));
   return t;
 }
 
