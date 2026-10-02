@@ -236,6 +236,9 @@ class Margay : public NW_Logger
     uint8_t NCells = 3; ///< Number of AA cells in series in the battery pack. Used by getBatPercentage().
     float BatVoltageError      = 3.3; ///< Battery voltage threshold [V] below which BatError is set and logged.
     float BatPercentageWarning = 50;  ///< Battery charge threshold [%] below which BatWarning is set and logged.
+    float OnBoardTemp = NW_ERROR;   ///< Thermistor temperature from the last readOnBoard() [C]
+    float RtcTemp = NW_ERROR;       ///< RTC die temperature from the last readOnBoard() [C]
+    float BatVoltage = NW_ERROR;    ///< Battery voltage from the last readOnBoard() [V]
     const String LibVersion = MARGAY_LIBRARY_VERSION; ///< Library version string, the logger's FW column in the status file.
 
   protected:
@@ -244,7 +247,15 @@ class Margay : public NW_Logger
     void sleepNow() override;
     void turnOffSDcard();
     void turnOnSDcard();
+    /** @brief Read the on-board channels into OnBoardTemp, RtcTemp and BatVoltage (and the timestamp). */
+    void readOnBoard();
     String getOnBoardVals();
+
+    /** @brief Print the logger's own data columns: the timestamp and the on-board sensors. */
+    size_t printDataHeader(Print& out) override;
+
+    /** @brief Print those columns' values, as readOnBoard() left them. Takes no reading. */
+    size_t printDataRow(Print& out) override;
     String dataHeader() override; // the data file's header row: old loggers lack the BME280
     void batTest();
     void powerTest();

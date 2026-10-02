@@ -357,17 +357,54 @@ float Margay::getBatPercentage() {
 // BME280), then the sketch's Header, then Note. Note is always the last
 // column and carries no comma after it: every sensor ends its fields with a
 // comma for the next, so this ends the row.
+size_t Margay::printDataHeader(Print& out) {
+  // The logger's own columns: the timestamp and the on-board sensors. The data
+  // file's header row is this, then each watched sensor's, then Note. See
+  // LIBRARY-DESIGN.md section 14.
+  size_t n = 0;
+  if (Model < MODEL_2v0) {
+    n += out.print("Time [UTC], Temp OB [C], Temp RTC [C], Bat [V], ");
+  }
+  else {  // new loggers include pressure and RH from BME280
+    n += out.print("Time [UTC], PresOB [mBar], RH_OB [%], TempOB [C], ");
+    n += out.print("Temp RTC [C], Bat [V], ");
+  }
+  return n;
+}
+
+size_t Margay::printDataRow(Print& out) {
+  // The values readOnBoard() left, in printDataHeader()'s order. This takes no
+  // reading: a row written to the card and to the monitor must not read the
+  // thermistor twice, and the two rows would otherwise differ.
+  size_t n = 0;
+  n += out.print(LogTimeDate);
+  n += out.print(',');
+  if (Model < MODEL_2v0) {
+    n += out.print(OnBoardTemp);
+    n += out.print(',');
+  }
+  else {
+    n += bme280.printDataRow(out);
+  }
+  n += out.print(RtcTemp);
+  n += out.print(',');
+  n += out.print(BatVoltage);
+  n += out.print(',');
+  return n;
+}
+
 String Margay::dataHeader() {
   // Note is always the last column and carries no comma after it: every
   // sensor ends its fields with a comma for the next, so this ends the row.
-  if (Model < MODEL_2v0)
-    return "Time [UTC], Temp OB [C], Temp RTC [C], Bat [V], " + Header + "Note";
-  else  // new loggers include pressure and RH from BME280
-    return "Time [UTC], PresOB [mBar], RH_OB [%], TempOB [C], "
-           "Temp RTC [C], Bat [V], " + Header + "Note";
+  String h;
+  NW_StringPrint p(h);
+  printDataHeader(p);
+  h += Header;
+  h += "Note";
+  return h;
 }
 
-String Margay::getOnBoardVals() {
+void Margay::readOnBoard() {
   // Get onboard temp, RTC temp, and battery voltage, reference voltage
   // float VRef = analogRead(VRef_Pin);
   float vcc = 3.3; //(1.8/VRef)*3.3; //Compensate for vcc using VRef
@@ -395,12 +432,19 @@ String Margay::getOnBoardVals() {
   // Temp[3] = Clock.getTemperature(); //Get temperature from RTC //FIX!
   float rtcTemp = RTC.getTemp();  //Get Temp from RTC
   getTime(); //FIX!
-  if (Model < MODEL_2v0)
-    return LogTimeDate + "," + String(tempData) + ","
-           + String(rtcTemp) + "," + String(batVoltage) + ",";
-  else
-    return LogTimeDate + "," + String(bme280.getString())
-           + String(rtcTemp) + "," + String(batVoltage) + ",";
+  OnBoardTemp = tempData;
+  RtcTemp = rtcTemp;
+  BatVoltage = batVoltage;
+}
+
+String Margay::getOnBoardVals() {
+  // The reading, then the row: printDataRow() prints what readOnBoard() left,
+  // which is what lets the same row reach two sinks without reading twice.
+  readOnBoard();
+  String s;
+  NW_StringPrint p(s);
+  printDataRow(p);
+  return s;
 }
 
 float Margay::tempConvert(float V, float vcc, float R,
