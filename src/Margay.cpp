@@ -189,7 +189,10 @@ bool Margay::begin(uint8_t *vals, uint8_t numVals, String header_) {
   if (!schema1) _hwVersion = String(_model); //Schema 0: the model number the sketch declared
   if (schema1 && !_pages.page1Blank()) { //Page 1: this board's calibration, written by NW-Provision; the constants otherwise
     _batteryDivider = _pages.get16(0x20) / 1000.0;
-    A = _pages.getFloat(0x22); B = _pages.getFloat(0x26); C = _pages.getFloat(0x2A); D = _pages.getFloat(0x2E);
+    A = _pages.getFloat(0x22);
+    B = _pages.getFloat(0x26);
+    C = _pages.getFloat(0x2A);
+    D = _pages.getFloat(0x2E);
     batVoltageError = _pages.get16(0x32) / 100.0;
     batPercentageWarning = _pages.page[0x34];
     Serial.println("Calibration from Page 1");
@@ -231,7 +234,10 @@ void Margay::batTest() {
   // Set error flag if below min voltage
   if (batVoltage < batVoltageError) _batError = true;
   // Set warning flag if below set percentage
-  if (batPercentage < batPercentageWarning) { _batWarning = true; _pages.latchNotice(0x90); } //BatteryWarning
+  if (batPercentage < batPercentageWarning) {
+    _batWarning = true;
+    _pages.latchNotice(0x90);
+  } //BatteryWarning
   Serial.print("Bat = ");
   Serial.print(batVoltage);
   Serial.print("V\t");
