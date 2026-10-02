@@ -250,6 +250,13 @@ class Margay : public NW_Logger
      * the thermistor's nominal resistance at 25 C. Only a, b, c and d come from
      * Page 1 today (0x22-0x31); the other two hold the board's compiled values,
      * and Page 1 has room at 0x35-0x3F if they are ever provisioned.
+     *
+     * This is not limited to a Steinhart-Hart part. tempConvert() evaluates a
+     * polynomial in ln(Rt/r25), and the B-parameter equation is that same
+     * expression with its two higher terms at zero: a = 1/T0, b = 1/B, c = 0,
+     * d = 0, r25 = R0. A beta-specified thermistor therefore needs no second
+     * code path, only those values. The compiled a here is 1/298.15 to ten
+     * decimal places, which is 1/T0 at 25 C.
      */
     struct Thermistor {
       float a;
