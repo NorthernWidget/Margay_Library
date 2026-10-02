@@ -380,15 +380,15 @@ size_t Margay::printDataRow(Print& out) {
   n += out.print(LogTimeDate);
   n += out.print(',');
   if (Model < MODEL_2v0) {
-    n += out.print(OnBoardTemp);
+    n += out.print(_onBoardTemp);
     n += out.print(',');
   }
   else {
     n += bme280.printDataRow(out);
   }
-  n += out.print(RtcTemp);
+  n += out.print(_rtcTemp);
   n += out.print(',');
-  n += out.print(BatVoltage);
+  n += out.print(_batVoltage);
   n += out.print(',');
   return n;
 }
@@ -421,9 +421,9 @@ void Margay::readOnBoard() {
   // Temp[3] = Clock.getTemperature(); //Get temperature from RTC //FIX!
   float rtcTemp = RTC.getTemp();  //Get Temp from RTC
   getTime(); //FIX!
-  OnBoardTemp = tempData;
-  RtcTemp = rtcTemp;
-  BatVoltage = batVoltage;
+  _onBoardTemp = tempData;
+  _rtcTemp = rtcTemp;
+  _batVoltage = batVoltage;
 }
 
 float Margay::tempConvert(float V, float vcc, float R,
