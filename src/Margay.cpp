@@ -393,17 +393,6 @@ size_t Margay::printDataRow(Print& out) {
   return n;
 }
 
-String Margay::dataHeader() {
-  // Note is always the last column and carries no comma after it: every
-  // sensor ends its fields with a comma for the next, so this ends the row.
-  String h;
-  NW_StringPrint p(h);
-  printDataHeader(p);
-  h += Header;
-  h += "Note";
-  return h;
-}
-
 void Margay::readOnBoard() {
   // Get onboard temp, RTC temp, and battery voltage, reference voltage
   // float VRef = analogRead(VRef_Pin);
@@ -435,16 +424,6 @@ void Margay::readOnBoard() {
   OnBoardTemp = tempData;
   RtcTemp = rtcTemp;
   BatVoltage = batVoltage;
-}
-
-String Margay::getOnBoardVals() {
-  // The reading, then the row: printDataRow() prints what readOnBoard() left,
-  // which is what lets the same row reach two sinks without reading twice.
-  readOnBoard();
-  String s;
-  NW_StringPrint p(s);
-  printDataRow(p);
-  return s;
 }
 
 float Margay::tempConvert(float V, float vcc, float R,

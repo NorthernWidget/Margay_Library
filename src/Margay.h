@@ -248,15 +248,13 @@ class Margay : public NW_Logger
     void turnOffSDcard();
     void turnOnSDcard();
     /** @brief Read the on-board channels into OnBoardTemp, RtcTemp and BatVoltage (and the timestamp). */
-    void readOnBoard();
-    String getOnBoardVals();
+    void readOnBoard() override;
 
     /** @brief Print the logger's own data columns: the timestamp and the on-board sensors. */
     size_t printDataHeader(Print& out) override;
 
     /** @brief Print those columns' values, as readOnBoard() left them. Takes no reading. */
     size_t printDataRow(Print& out) override;
-    String dataHeader() override; // the data file's header row: old loggers lack the BME280
     void batTest();
     void powerTest();
     void bme280Readings();
