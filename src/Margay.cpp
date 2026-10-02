@@ -358,9 +358,9 @@ float Margay::getBatPercentage() {
 // column and carries no comma after it: every sensor ends its fields with a
 // comma for the next, so this ends the row.
 size_t Margay::printDataHeader(Print& out) {
-  // The logger's own columns: the timestamp and the on-board sensors. The data
-  // file's header row is this, then each watched sensor's, then Note. See
-  // LIBRARY-DESIGN.md section 14.
+  //The logger's own columns: the timestamp and the on-board sensors. The data
+  //file's header row is this, then each watched sensor's, then Note. See
+  //LIBRARY-DESIGN.md section 14.
   size_t n = 0;
   if (_model < MODEL_2v0) {
     n += out.print("Time [UTC], Temp OB [C], Temp RTC [C], Bat [V], ");
@@ -373,9 +373,9 @@ size_t Margay::printDataHeader(Print& out) {
 }
 
 size_t Margay::printDataRow(Print& out) {
-  // The values readOnBoard() left, in printDataHeader()'s order. This takes no
-  // reading: a row written to the card and to the monitor must not read the
-  // thermistor twice, and the two rows would otherwise differ.
+  //The values readOnBoard() left, in printDataHeader()'s order. This takes no
+  //reading: a row written to the card and to the monitor must not read the
+  //thermistor twice, and the two rows would otherwise differ.
   size_t n = 0;
   n += out.print(_logTimeDate);
   n += out.print(',');
@@ -407,9 +407,9 @@ void Margay::readOnBoard() {
     // Override comp calculation since many v0.0 models do not have ref equipped
     if (_model == 0) comp = 1.0;
     val = val*comp*(vcc/1023.0); //Compensate for ref voltage error
-    //  float Vout = vcc - val;
-    //  Serial.println(val); //DEBUG!
-    //  Serial.println(Vout);  //DEBUG!
+    // float Vout = vcc - val;
+    // Serial.println(val); //DEBUG!
+    // Serial.println(Vout);  //DEBUG!
     tempData = tempConvert(val, vcc*comp, 10000.0, A, B, C, D, 10000.0);
     tempData = tempData - 273.15; //Get temp from on board thermistor
   }
