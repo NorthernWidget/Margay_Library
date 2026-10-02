@@ -233,13 +233,13 @@ class Margay : public NW_Logger
     // May be modified between begin() and the first call to run().
     // -----------------------------------------------------------------------
 
-    uint8_t NCells = 3; ///< Number of AA cells in series in the battery pack. Used by getBatPercentage().
-    float BatVoltageError      = 3.3; ///< Battery voltage threshold [V] below which BatError is set and logged.
-    float BatPercentageWarning = 50;  ///< Battery charge threshold [%] below which BatWarning is set and logged.
+    uint8_t nCells = 3; ///< Number of AA cells in series in the battery pack. Used by getBatPercentage().
+    float batVoltageError      = 3.3; ///< Battery voltage threshold [V] below which BatError is set and logged.
+    float batPercentageWarning = 50;  ///< Battery charge threshold [%] below which BatWarning is set and logged.
     float _onBoardTemp = NW_ERROR;   ///< Thermistor temperature from the last readOnBoard() [C]
     float _rtcTemp = NW_ERROR;       ///< RTC die temperature from the last readOnBoard() [C]
     float _batVoltage = NW_ERROR;    ///< Battery voltage from the last readOnBoard() [V]
-    const String LibVersion = MARGAY_LIBRARY_VERSION; ///< Library version string, the logger's FW column in the status file.
+    const String libVersion = MARGAY_LIBRARY_VERSION; ///< Library version string, the logger's FW column in the status file.
 
   protected:
     float tempConvert(float V, float vcc, float R,
@@ -267,10 +267,10 @@ class Margay : public NW_Logger
     float C = 1.019153E-05;
     float D = 9.093712E-07;
 
-    float BatteryDivider = 2.0; //Default for v1.0
+    float _batteryDivider = 2.0; //Default for v1.0
 
-    board Model;
-    build Specs;
+    board _model;
+    build _specs;
 
     uint8_t chipFaults();    // Margay's chip-fault bits for Block 0: SDCard, Clock, BME280, SensorBus, Battery
     void fillPages();        // Page 2 and 3 from the logger's own readings, then endReading()
