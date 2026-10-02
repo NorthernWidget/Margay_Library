@@ -242,8 +242,20 @@ class Margay : public NW_Logger
     const String libVersion = MARGAY_LIBRARY_VERSION; ///< Library version string, the logger's FW column in the status file.
 
   protected:
+    /**
+     * @brief The on-board thermistor's Steinhart-Hart coefficients, from Page 1.
+     * @details The four are one calibration, never used apart: they are read
+     * together and passed together. The field names are the datasheet's.
+     */
+    struct SteinhartHart {
+      float a;
+      float b;
+      float c;
+      float d;
+    };
+
     float tempConvert(float V, float vcc, float R,
-        float A, float B, float C, float D, float R25);
+        const SteinhartHart& sh, float R25);
     void sleepNow() override;
     void turnOffSDcard();
     void turnOnSDcard();
@@ -262,10 +274,7 @@ class Margay : public NW_Logger
 
     MCP3421 adc;
 
-    float A = 0.003354016;
-    float B = 0.0003074038;
-    float C = 1.019153E-05;
-    float D = 9.093712E-07;
+    SteinhartHart _thermistor = {0.003354016, 0.0003074038, 1.019153E-05, 9.093712E-07};
 
     float _batteryDivider = 2.0; //Default for v1.0
 

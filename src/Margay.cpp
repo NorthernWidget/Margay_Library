@@ -189,10 +189,10 @@ bool Margay::begin(uint8_t *vals, uint8_t numVals, String header_) {
   if (!schema1) _hwVersion = String(_model); //Schema 0: the model number the sketch declared
   if (schema1 && !_pages.page1Blank()) { //Page 1: this board's calibration, written by NW-Provision; the constants otherwise
     _batteryDivider = _pages.get16(0x20) / 1000.0;
-    A = _pages.getFloat(0x22);
-    B = _pages.getFloat(0x26);
-    C = _pages.getFloat(0x2A);
-    D = _pages.getFloat(0x2E);
+    _thermistor.a = _pages.getFloat(0x22);
+    _thermistor.b = _pages.getFloat(0x26);
+    _thermistor.c = _pages.getFloat(0x2A);
+    _thermistor.d = _pages.getFloat(0x2E);
     batVoltageError = _pages.get16(0x32) / 100.0;
     batPercentageWarning = _pages.page[0x34];
     Serial.println("Calibration from Page 1");
@@ -301,7 +301,7 @@ float Margay::getTemp(temp_source sensor) {
   // Get temp from on board thermistor
   if (sensor == thermistor_temp_sensor) {
     float adcVoltage = float(analogRead(ThermSense_Pin))*(vcc/1023.0);
-    float tempData = tempConvert(adcVoltage, vcc, 10000.0, A, B, C, D, 10000.0);
+    float tempData = tempConvert(adcVoltage, vcc, 10000.0, _thermistor, 10000.0);
     tempData = tempData - 273.15;
     return tempData;
   }
@@ -416,7 +416,7 @@ void Margay::readOnBoard() {
     // float Vout = vcc - val;
     // Serial.println(val); //DEBUG!
     // Serial.println(Vout);  //DEBUG!
-    tempData = tempConvert(val, vcc*comp, 10000.0, A, B, C, D, 10000.0);
+    tempData = tempConvert(val, vcc*comp, 10000.0, _thermistor, 10000.0);
     tempData = tempData - 273.15; //Get temp from on board thermistor
   }
 
@@ -433,7 +433,7 @@ void Margay::readOnBoard() {
 }
 
 float Margay::tempConvert(float V, float vcc, float R,
-    float A, float B, float C, float D, float R25) {
+    const SteinhartHart& sh, float R25) {
   //  Serial.print("R = "); //DEBUG!
   //  Serial.println(R); //DEBUG!
   float rt = ((vcc/V)*R) - R;
@@ -442,7 +442,7 @@ float Margay::tempConvert(float V, float vcc, float R,
   float logRt = log(rt/R25);
   //  Serial.print("logRt = "); //DEBUG!
   //  Serial.println(logRt); //DEBUG!
-  float t = 1.0/(A + B*logRt + C*pow(logRt, 2.0) + D*pow(logRt, 3.0));
+  float t = 1.0/(sh.a + sh.b*logRt + sh.c*pow(logRt, 2.0) + sh.d*pow(logRt, 3.0));
   return t;
 }
 
