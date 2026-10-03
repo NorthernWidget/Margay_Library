@@ -279,6 +279,16 @@ class Margay : public NW_Logger
 
     /** @brief Print those columns' values, as readOnBoard() left them. Takes no reading. */
     size_t printDataRow(Print& out) override;
+
+    /// @brief A logger is not powered down, so it is always awake. @return true.
+    bool wake() override { return true; }
+
+    /// @brief Read this board's own channels, for printDataRow() to print.
+    bool acquire() override { readOnBoard(); return true; }
+
+    /// @brief A logger's own word for the Note column: it has none of its own.
+    size_t printNote(Print& out, bool beginFailed = false) override { (void)out; (void)beginFailed; return 0; }
+
     void batTest();
     void powerTest();
     void bme280Readings();
