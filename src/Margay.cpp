@@ -42,7 +42,7 @@ Margay::Margay(board model_, build specs_) {
     PG = 18;
     TX = 11;
     RX = 10;
-    ExtInt = 11; //Legacy inclusion
+    ExtInt = 11;  //Legacy inclusion
     RTCInt = 2;
     LogInt = 28;
 
@@ -52,20 +52,19 @@ Margay::Margay(board model_, build specs_) {
     _batteryDivider = 2.0;
 
     if (specs_ == BUILD_A) {
-      _numAdrOb = 1; //Only check for clock presence
+      _numAdrOb = 1;  //Only check for clock presence
     }
 
     else if (specs_ == BUILD_B) {
-      _numAdrOb = 2; //Tell system to search additional ADRs
-      _i2cAdrOb[1] = 0x69; //Use 0x69 on board ADC (MCP3421A1)
+      _numAdrOb = 2;        //Tell system to search additional ADRs
+      _i2cAdrOb[1] = 0x69;  //Use 0x69 on board ADC (MCP3421A1)
     }
 
     else if (specs_ == BUILD_C) {
-      _numAdrOb = 2; //Tell system to search additional ADRs
-      _i2cAdrOb[1] = 0x6B; //Use 0x6B on board ADC (MCP3421A3)
+      _numAdrOb = 2;        //Tell system to search additional ADRs
+      _i2cAdrOb[1] = 0x6B;  //Use 0x6B on board ADC (MCP3421A3)
     }
-  }
-  else if (model_ == 1) {
+  } else if (model_ == 1) {
     SD_CS = 4;
     AuxLED = 20;
     RedLED = 13;
@@ -88,32 +87,31 @@ Margay::Margay(board model_, build specs_) {
     RTCInt = 10;
     LogInt = 2;
 
-    WDHold = 255; //Null pins
-    BatSwitch = 255; //Null pins
+    WDHold = 255;     //Null pins
+    BatSwitch = 255;  //Null pins
 
     _batteryDivider = 2.0;
 
     if (specs_ == BUILD_A) {
-      _numAdrOb = 1; //Only check for clock presence
+      _numAdrOb = 1;  //Only check for clock presence
     }
 
     else if (specs_ == BUILD_B) {
-      _numAdrOb = 2; //Tell system to search additional ADRs
-      _i2cAdrOb[1] = 0x69; //Use 0x69 on board ADC (MCP3421A1)
+      _numAdrOb = 2;        //Tell system to search additional ADRs
+      _i2cAdrOb[1] = 0x69;  //Use 0x69 on board ADC (MCP3421A1)
     }
 
     else if (specs_ == BUILD_C) {
-      _numAdrOb = 2; //Tell system to search additional ADRs
-      _i2cAdrOb[1] = 0x6B; //Use 0x6B on board ADC (MCP3421A3)
+      _numAdrOb = 2;        //Tell system to search additional ADRs
+      _i2cAdrOb[1] = 0x6B;  //Use 0x6B on board ADC (MCP3421A3)
     }
 
 
     else if (specs_ == BUILD_D) {
-      _numAdrOb = 2; //Tell system to search additional ADRs
-      _i2cAdrOb[1] = 0x6A; //Use 0x6A on board ADC (MCP3421A2)
+      _numAdrOb = 2;        //Tell system to search additional ADRs
+      _i2cAdrOb[1] = 0x6A;  //Use 0x6A on board ADC (MCP3421A2)
     }
-  }
-  else {
+  } else {
     SD_CS = 4;
     AuxLED = 19;
     RedLED = 13;
@@ -136,59 +134,59 @@ Margay::Margay(board model_, build specs_) {
     _batteryDivider = 9.0;
 
     if (specs_ == BUILD_A) {  //Setup sub builds
-      _numAdrOb = 1; //Only check for clock presence
+      _numAdrOb = 1;          //Only check for clock presence
     }
 
     else if (specs_ == BUILD_B) {
-      _numAdrOb = 2; //Tell system to search additional ADRs
-      _i2cAdrOb[1] = 0x69; //Use 0x69 on board ADC (MCP3421A1)
+      _numAdrOb = 2;        //Tell system to search additional ADRs
+      _i2cAdrOb[1] = 0x69;  //Use 0x69 on board ADC (MCP3421A1)
     }
 
     else if (specs_ == BUILD_C) {
-      _numAdrOb = 2; //Tell system to search additional ADRs
-      _i2cAdrOb[1] = 0x6B; //Use 0x6B on board ADC (MCP3421A3)
+      _numAdrOb = 2;        //Tell system to search additional ADRs
+      _i2cAdrOb[1] = 0x6B;  //Use 0x6B on board ADC (MCP3421A3)
     }
   }
 
-  _model = model_; //Store model info locally
-  _specs = specs_; //Store build info locally
+  _model = model_;  //Store model info locally
+  _specs = specs_;  //Store build info locally
 }
 
-bool Margay::beginBoard(uint8_t *vals, uint8_t numVals) {
-  powerOB(ON);  //Turn on on-board power
-  powerAux(ON); //Turn on external auxiliary power
+bool Margay::beginBoard(uint8_t* vals, uint8_t numVals) {
+  powerOB(ON);   //Turn on on-board power
+  powerAux(ON);  //Turn on external auxiliary power
   if (WDHold != 255) pinMode(WDHold, OUTPUT);
 
   pinMode(AuxLED, OUTPUT);
-  digitalWrite(AuxLED, LOW); //Turn built in LED on
+  digitalWrite(AuxLED, LOW);  //Turn built in LED on
 
-  pinMode(VSwitch_Pin, OUTPUT); //Setup switch control as output
+  pinMode(VSwitch_Pin, OUTPUT);  //Setup switch control as output
 
-  acceptAddresses(vals, numVals); //The watched sensors' addresses
+  acceptAddresses(vals, numVals);  //The watched sensors' addresses
 
-  _rtc.begin(); //Initialize RTC
-  _rtc.clearAlarm(); //
-  if (_numAdrOb > 1) initADC(18); // Only BUILD_B/C/D have an on-board ADC
-  if (_model >= MODEL_2v0 && !bme280.begin(0x77)) { //Initialize onboard temp/pressure/RH sensor (BME280)
+  _rtc.begin();                                      //Initialize RTC
+  _rtc.clearAlarm();                                 //
+  if (_numAdrOb > 1) initADC(18);                    // Only BUILD_B/C/D have an on-board ADC
+  if (_model >= MODEL_2v0 && !bme280.begin(0x77)) {  //Initialize onboard temp/pressure/RH sensor (BME280)
     Serial.println("BME280 init: FAIL");
     _onBoardError = true;
     _bmeError = true;
   }
 
 
-  ADCSRA = 0b10000111; //Configure on board ADC for low speed, and enable
+  ADCSRA = 0b10000111;  //Configure on board ADC for low speed, and enable
 
-  Serial.begin(38400); //DEBUG!
+  Serial.begin(38400);  //DEBUG!
   Serial.print("Lib = ");
   Serial.println(libVersion);
   Serial.print("Model = ");
   Serial.print(_model);
   Serial.print("  Build = ");
   Serial.println(_specs);
-  bool schema1 = readIdentity(); //Serial number and hardware version from Page 0 (Schema 1), else the Schema 0 bytes
+  bool schema1 = readIdentity();  //Serial number and hardware version from Page 0 (Schema 1), else the Schema 0 bytes
   //Schema 0: the model number the sketch declared
   if (!schema1) snprintf(_hwVersion, sizeof(_hwVersion), "%u", (unsigned)_model);
-  if (schema1 && !_pages.page1Blank()) { //Page 1: this board's calibration, written by NW-Provision; the constants otherwise
+  if (schema1 && !_pages.page1Blank()) {  //Page 1: this board's calibration, written by NW-Provision; the constants otherwise
     _batteryDivider = _pages.get16(0x20) / 1000.0;
     _thermistor.a = _pages.getFloat(0x22);
     _thermistor.b = _pages.getFloat(0x26);
@@ -198,8 +196,8 @@ bool Margay::beginBoard(uint8_t *vals, uint8_t numVals) {
     batPercentageWarning = _pages.page[0x34];
     Serial.println("Calibration from Page 1");
   }
-  serialTimeSet(); //A YYMMDDHHMMSS string waiting on Serial sets the clock; then the timestamp
-  attachLoggerInterrupts(_model >= 2); //LED pins, SD chip select, file times, the alarm and the button (PCINT from v2.0)
+  serialTimeSet();                      //A YYMMDDHHMMSS string waiting on Serial sets the clock; then the timestamp
+  attachLoggerInterrupts(_model >= 2);  //LED pins, SD chip select, file times, the alarm and the button (PCINT from v2.0)
 
   I2Ctest();
   clockTest();
@@ -209,7 +207,7 @@ bool Margay::beginBoard(uint8_t *vals, uint8_t numVals) {
   // Only print out environmental variables if BME280 is on board
   if (_model >= MODEL_2v0) bme280Readings();
 
-  ledReport(); //The self-test results on the RGB LED, then "Ready to Log"
+  ledReport();  //The self-test results on the RGB LED, then "Ready to Log"
   //The logger's own report at boot, for its first status row: the first fault the
   //self-tests found, else LoggingStarted (unit, kind 16).
   if (_sdCardMissing) _pages.latchFault(0x01);
@@ -221,12 +219,12 @@ bool Margay::beginBoard(uint8_t *vals, uint8_t numVals) {
   _pages.latchNotice(0xF0);
   _bootReport = _pages.report();
   _pages.acknowledge();
-  _newLog = true; //Set flag to begin new log file
+  _newLog = true;  //Set flag to begin new log file
 
-  attachExtInt(); //The external-interrupt counter, if setExtInt() named a pin
+  attachExtInt();  //The external-interrupt counter, if setExtInt() named a pin
 
   LED_Color(OFF);
-  return !(_onBoardError || _sensorError || _timeError || _sdCardMissing); //Okapi's convention: true = nothing wrong
+  return !(_onBoardError || _sensorError || _timeError || _sdCardMissing);  //Okapi's convention: true = nothing wrong
 }
 
 void Margay::batTest() {
@@ -238,7 +236,7 @@ void Margay::batTest() {
   if (batPercentage < batPercentageWarning) {
     _batWarning = true;
     _pages.latchNotice(0x90);
-  } //BatteryWarning
+  }  //BatteryWarning
   Serial.print("Bat = ");
   Serial.print(batVoltage);
   Serial.print("V\t");
@@ -248,7 +246,7 @@ void Margay::batTest() {
 
 void Margay::initADC(uint8_t desiredResolution) {
   // Serial.print("ADC should be on"); // DEBUG
-  adc.begin(_i2cAdrOb[1]); //Initialize external ADC
+  adc.begin(_i2cAdrOb[1]);  //Initialize external ADC
   adc.setResolution(desiredResolution);
 }
 
@@ -262,10 +260,10 @@ void Margay::powerTest() {
   Serial.print("Power: ");
 
   bool initialStateExternalI2C = digitalRead(I2C_SW);
-  switchExternalI2C(OFF); // BME280 is on the internal I2C bus
+  switchExternalI2C(OFF);  // BME280 is on the internal I2C bus
 
-  powerAux(OFF); // cut AUX rail
-  delay(10);     // allow capacitors to discharge
+  powerAux(OFF);  // cut AUX rail
+  delay(10);      // allow capacitors to discharge
 
   Wire.beginTransmission(0x77);
   int error = Wire.endTransmission();
@@ -275,10 +273,10 @@ void Margay::powerTest() {
   // calibration — the sensor is fully ready when begin() returns, so no
   // additional settling delay is needed before bme280Readings() is called.
   bme280.begin(0x77);
-  farmGateI2C(initialStateExternalI2C); // restore I2C bus to its prior state
+  farmGateI2C(initialStateExternalI2C);  // restore I2C bus to its prior state
 
   if (error == 0) {
-    Serial.println("FAIL"); // BME280 still responded — AUX rail not cut
+    Serial.println("FAIL");  // BME280 still responded — AUX rail not cut
     _onBoardError = true;
   } else {
     Serial.println("PASS");
@@ -301,7 +299,7 @@ float Margay::getTemp(temp_source sensor) {
   float vcc = 3.3;
   // Get temp from on board thermistor
   if (sensor == thermistor_temp_sensor) {
-    float adcVoltage = float(analogRead(ThermSense_Pin))*(vcc/1023.0);
+    float adcVoltage = float(analogRead(ThermSense_Pin)) * (vcc / 1023.0);
     float tempData = tempConvert(adcVoltage, vcc, _thermistor);
     tempData = tempData - 273.15;
     return tempData;
@@ -310,10 +308,9 @@ float Margay::getTemp(temp_source sensor) {
   else if (sensor == RTC_temp_sensor) {
     float rtcTemp = _rtc.getTemp();
     return rtcTemp;
-  }
-  else {
+  } else {
     // Obvious temperature error value that no sensor would give
-    return -1234; 
+    return -1234;
   }
 }
 
@@ -321,20 +318,20 @@ float Margay::getBatVoltage() {
   // Maybe not necessary: seems to be set this way anyway
   // Enable ADC, set clock divider to max to deal with high impedance input
   ADCSRA = 0b10000111;
-  delay(10); //Allow for >1 clock cycle to set values
+  delay(10);  //Allow for >1 clock cycle to set values
 
-  float vAux = 3.3; // Voltage reference for ATMega1284p ADC
-  float batADC10bit = analogRead(BatSense_Pin); //Get (divided) battery ADC val
+  float vAux = 3.3;                              // Voltage reference for ATMega1284p ADC
+  float batADC10bit = analogRead(BatSense_Pin);  //Get (divided) battery ADC val
   //VRef is having issues: often approx 0.9 <-- This was from the hardware component; fixed now
   // Therefore, instead we will just use the 3V3 regulator as our basis
   // Find compensation value with VRef due to larger uncertainty with vcc
-  float comp = (1.8/3.3)*1023./analogRead(VRef_Pin);
+  float comp = (1.8 / 3.3) * 1023. / analogRead(VRef_Pin);
   // Override comp calculation since many v0.0 models do not have ref equipped
   if (_model == 0) comp = 1.0;
   // Should divide by 1023. instead of 1024: 0-1023
   //batVoltage = batVoltage*BatteryDivider*comp*(vcc/1024.0);
   //  Compensate for voltage divider and ref voltage error
-  float batVoltage = batADC10bit/1023. * vAux * _batteryDivider;
+  float batVoltage = batADC10bit / 1023. * vAux * _batteryDivider;
   return batVoltage;
 }
 
@@ -350,9 +347,9 @@ float Margay::getBatPercentage() {
   float batA = -1.9809;
   float batB = 6.2931;
   float batC = -4.0063;
-  float cellVoltage = getBatVoltage()/nCells; //Divide to get per-cell voltage
+  float cellVoltage = getBatVoltage() / nCells;  //Divide to get per-cell voltage
   // Return percentage of remaining battery energy
-  float percentage = ((batA*pow(cellVoltage, 2) + batB*cellVoltage + batC)*2 - 1)*100.0;
+  float percentage = ((batA * pow(cellVoltage, 2) + batB * cellVoltage + batC) * 2 - 1) * 100.0;
   if (percentage < 0) return 0;  //Do not allow return of non-sensical values
   // Is this appropriate? Float voltage could be higher than specified
   // and still be correct
@@ -371,8 +368,7 @@ size_t Margay::printDataHeader(Print& out) {
   size_t n = 0;
   if (_model < MODEL_2v0) {
     n += out.print("Time [UTC], Temp OB [C], Temp RTC [C], Bat [V], ");
-  }
-  else {  // new loggers include pressure and RH from BME280
+  } else {  // new loggers include pressure and RH from BME280
     n += out.print("Time [UTC], PresOB [mBar], RH_OB [%], TempOB [C], ");
     n += out.print("Temp RTC [C], Bat [V], ");
   }
@@ -389,8 +385,7 @@ size_t Margay::printDataRow(Print& out) {
   if (_model < MODEL_2v0) {
     n += out.print(_onBoardTemp);
     n += out.print(',');
-  }
-  else {
+  } else {
     n += bme280.printDataRow(out);
   }
   n += out.print(_rtcTemp);
@@ -403,22 +398,22 @@ size_t Margay::printDataRow(Print& out) {
 void Margay::readOnBoard() {
   // Get onboard temp, RTC temp, and battery voltage, reference voltage
   // float VRef = analogRead(VRef_Pin);
-  float vcc = 3.3; //(1.8/VRef)*3.3; //Compensate for vcc using VRef
+  float vcc = 3.3;  //(1.8/VRef)*3.3; //Compensate for vcc using VRef
   // Serial.println(vcc); //DEBUG!
-  float tempData = 0; //FIX!!! Dumb!
+  float tempData = 0;  //FIX!!! Dumb!
 
   if (_model < MODEL_2v0) {  //For older thermistor models
     float val = float(analogRead(ThermSense_Pin));
     // Find compensation value with VRef due to vcc error
-    float comp = (1.8/3.3)*1023.0/analogRead(VRef_Pin);
+    float comp = (1.8 / 3.3) * 1023.0 / analogRead(VRef_Pin);
     // Override comp calculation since many v0.0 models do not have ref equipped
     if (_model == 0) comp = 1.0;
-    val = val*comp*(vcc/1023.0); //Compensate for ref voltage error
+    val = val * comp * (vcc / 1023.0);  //Compensate for ref voltage error
     // float Vout = vcc - val;
     // Serial.println(val); //DEBUG!
     // Serial.println(Vout);  //DEBUG!
-    tempData = tempConvert(val, vcc*comp, _thermistor);
-    tempData = tempData - 273.15; //Get temp from on board thermistor
+    tempData = tempConvert(val, vcc * comp, _thermistor);
+    tempData = tempData - 273.15;  //Get temp from on board thermistor
   }
 
   // delay(10);
@@ -427,7 +422,7 @@ void Margay::readOnBoard() {
 
   // Temp[3] = Clock.getTemperature(); //Get temperature from RTC //FIX!
   float rtcTemp = _rtc.getTemp();  //Get Temp from RTC
-  getTime(); //FIX!
+  getTime();                       //FIX!
   _onBoardTemp = tempData;
   _rtcTemp = rtcTemp;
   _batVoltage = batVoltage;
@@ -436,13 +431,13 @@ void Margay::readOnBoard() {
 float Margay::tempConvert(float V, float vcc, const Thermistor& th) {
   //  Serial.print("R = "); //DEBUG!
   //  Serial.println(R); //DEBUG!
-  float rt = ((vcc/V)*th.seriesResistance) - th.seriesResistance;
+  float rt = ((vcc / V) * th.seriesResistance) - th.seriesResistance;
   //  Serial.print("rt = "); //DEBUG!
   //  Serial.println(rt); //DEBUG!
-  float logRt = log(rt/th.r25);
+  float logRt = log(rt / th.r25);
   //  Serial.print("logRt = "); //DEBUG!
   //  Serial.println(logRt); //DEBUG!
-  float t = 1.0/(th.a + th.b*logRt + th.c*pow(logRt, 2.0) + th.d*pow(logRt, 3.0));
+  float t = 1.0 / (th.a + th.b * logRt + th.c * pow(logRt, 2.0) + th.d * pow(logRt, 3.0));
   return t;
 }
 
@@ -461,7 +456,7 @@ float Margay::getVoltage() {  //Get voltage from Ax pin
   float val = 0;
 
   switchExternalI2C(OFF);
-  if (_numAdrOb > 1) { // Only BUILD_B/C/D have an on-board ADC
+  if (_numAdrOb > 1) {  // Only BUILD_B/C/D have an on-board ADC
     initADC(18);
     val = adc.getVoltage();
   }
@@ -477,12 +472,12 @@ float Margay::getVoltage() {  //Get voltage from Ax pin
 void Margay::addDataPoint() {
   //The streaming row: this board's bus dance around the base class's reading
   //and writing. The String overload above does the same for a sketch's update().
-  if (_model >= MODEL_2v0) bme280.begin(0x77);   //FIX??
+  if (_model >= MODEL_2v0) bme280.begin(0x77);  //FIX??
   bool initialStateExternalI2C = digitalRead(I2C_SW);
   switchExternalI2C(ON);
   readSensors();
   farmGateI2C(initialStateExternalI2C);
-  if (logRow() != 0) _pages.latchNotice(0xF2);   //RowNotWritten
+  if (logRow() != 0) _pages.latchNotice(0xF2);  //RowNotWritten
   fillPages();
   reportRows();
 }
@@ -503,13 +498,13 @@ void Margay::fillPages() {
   float v = getBatVoltage();
   _pages.put8(0x48, (uint8_t)constrain(getBatPercentage(), 0, 100));
   _pages.put16(0x49, (uint16_t)(v * 100.0 + 0.5));
-  _pages.put16(0x4B, (uint16_t)(int16_t)(getTemp(thermistor_temp_sensor) * 100.0)); //0 on models without the thermistor path
+  _pages.put16(0x4B, (uint16_t)(int16_t)(getTemp(thermistor_temp_sensor) * 100.0));  //0 on models without the thermistor path
   if (_model >= MODEL_2v0 && !_bmeError) {
     _pages.put16(0x50, (uint16_t)(int16_t)(bme280.getTemperature() * 100.0));
     _pages.put16(0x52, (uint16_t)(bme280.getHumidity() * 100.0));
     _pages.put32(0x54, (uint32_t)(bme280.getPressure() * 100.0));
   }
-  _pages.put32(0x58, clockUnix()); //Clock: Unix seconds
+  _pages.put32(0x58, clockUnix());  //Clock: Unix seconds
   _pages.put16(0x5C, (uint16_t)(int16_t)(_rtc.getTemp() * 100.0));
   _pages.put16(0x60, _fileNum);
   _pages.put32(0x62, _logInterval);
@@ -517,36 +512,41 @@ void Margay::fillPages() {
   _pages.endReading(chipFaults());
 }
 
-static const char* const margayChips[] = {"SDCard", "Clock", "BME280", "SensorBus", "Battery"};
-static const char* const margayWords[] = {"LoggingStarted", "NewLogFile", "RowNotWritten"};   //unit kinds 16-18
-static const char* const margayChipWords[] = {"BatteryWarning", "ClockSet"};   //kind 16 on Battery (0x90) and on Clock (0x30): one word each
+static const char* const margayChips[] = { "SDCard", "Clock", "BME280", "SensorBus", "Battery" };
+static const char* const margayWords[] = { "LoggingStarted", "NewLogFile", "RowNotWritten" };  //unit kinds 16-18
+static const char* const margayChipWords[] = { "BatteryWarning", "ClockSet" };                 //kind 16 on Battery (0x90) and on Clock (0x30): one word each
 
 size_t Margay::printStatus(Print& out, bool boot) {
   const NW_Report& r = boot ? _bootReport : _pages.report();
   //Kind 16 means a different thing on the unit, the battery and the clock: choose the word table by chip
-  const char* const* words = margayWords; uint8_t n = 3;
-  if (r.chip() == 4) { words = margayChipWords; n = 1; }
-  else if (r.chip() == 1) { words = margayChipWords + 1; n = 1; }
-  return _pages.printSnapshot(out, margayChips, 5, libVersion, &r, words, n, MARGAY_LIBRARY_COMMIT, "", SKETCH_COMMIT); //A logger: its library is its firmware; the sketch stands where a library would
+  const char* const* words = margayWords;
+  uint8_t n = 3;
+  if (r.chip() == 4) {
+    words = margayChipWords;
+    n = 1;
+  } else if (r.chip() == 1) {
+    words = margayChipWords + 1;
+    n = 1;
+  }
+  return _pages.printSnapshot(out, margayChips, 5, libVersion, &r, words, n, MARGAY_LIBRARY_COMMIT, "", SKETCH_COMMIT);  //A logger: its library is its firmware; the sketch stands where a library would
 }
 
 void Margay::powerAux(bool state) {
-  pinMode(Ext3v3Ctrl, OUTPUT); //Setup outputs for robustness
-  if (state) powerOB(ON); //Turn on on-board power if required
-  if (_model >= MODEL_2v0) {  //use positive logic for Model v2.0 and newer
-    digitalWrite(Ext3v3Ctrl, state); //Switch 3v3 Aux power
-  }
-  else digitalWrite(Ext3v3Ctrl, !state); //Switch 3v3 Aux power
+  pinMode(Ext3v3Ctrl, OUTPUT);              //Setup outputs for robustness
+  if (state) powerOB(ON);                   //Turn on on-board power if required
+  if (_model >= MODEL_2v0) {                //use positive logic for Model v2.0 and newer
+    digitalWrite(Ext3v3Ctrl, state);        //Switch 3v3 Aux power
+  } else digitalWrite(Ext3v3Ctrl, !state);  //Switch 3v3 Aux power
 }
 
 void Margay::powerOB(bool state) {
-  if (BatSwitch == 255) return; // No battery switch on this board model
+  if (BatSwitch == 255) return;  // No battery switch on this board model
   pinMode(BatSwitch, OUTPUT);
-  digitalWrite(BatSwitch, state); //Set bat switch for onboard 3v3/main power
+  digitalWrite(BatSwitch, state);  //Set bat switch for onboard 3v3/main power
 }
 
 //Low Power functions
-void Margay::sleepNow() {         // here we put the arduino to sleep
+void Margay::sleepNow() {  // here we put the arduino to sleep
   /* Now is the time to set the sleep mode. In the Atmega8 datasheet
    * http://www.atmel.com/dyn/resources/prod_documents/doc2486.pdf on page 35
    * there is a list of sleep modes which explains which clocks and
@@ -568,10 +568,10 @@ void Margay::sleepNow() {         // here we put the arduino to sleep
    *
    */
   turnOffSDcard();
-  digitalWrite(VSwitch_Pin, LOW); //DEBUG!
+  digitalWrite(VSwitch_Pin, LOW);  //DEBUG!
   keep_ADCSRA = ADCSRA;
-  set_sleep_mode(SLEEP_MODE_PWR_DOWN);   // sleep mode is set here
-  cbi(ADCSRA,ADEN);
+  set_sleep_mode(SLEEP_MODE_PWR_DOWN);  // sleep mode is set here
+  cbi(ADCSRA, ADEN);
   sleep_enable();
   sleep_bod_disable();
   sei();
@@ -579,8 +579,7 @@ void Margay::sleepNow() {         // here we put the arduino to sleep
   sleep_cpu();
   sleep_disable();
   turnOnSDcard();
-  ADCSRA = 135; //DEBUG!
-
+  ADCSRA = 135;  //DEBUG!
 }
 
 void Margay::turnOffSDcard() {
@@ -594,8 +593,8 @@ void Margay::turnOffSDcard() {
   pinMode(8, INPUT);
   pinMode(9, INPUT);
   delay(6);
-  powerAux(OFF); //turn off external 3v3 rail
-  powerOB(OFF); //Turn off battery connection to sense divider
+  powerAux(OFF);  //turn off external 3v3 rail
+  powerOB(OFF);   //Turn off battery connection to sense divider
   delay(1);
   digitalWrite(SD_CS, LOW);
   delay(20);
@@ -605,11 +604,11 @@ void Margay::turnOffSDcard() {
 }
 
 void Margay::turnOnSDcard() {
-  powerOB(ON); //Turn on battery connection to sense divider
-  powerAux(ON); //turn on external 3v3 rail
-  delay(6);                   // let the card settle
-  power_spi_enable();         // enable the SPI clock
-  SPCR = keep_SPCR;           // enable SPI peripheral
+  powerOB(ON);         //Turn on battery connection to sense divider
+  powerAux(ON);        //turn on external 3v3 rail
+  delay(6);            // let the card settle
+  power_spi_enable();  // enable the SPI clock
+  SPCR = keep_SPCR;    // enable SPI peripheral
   delay(10);
   _sd.begin(SD_CS, SD_SCK_MHZ(8));
 }
