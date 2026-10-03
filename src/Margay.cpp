@@ -186,7 +186,8 @@ bool Margay::beginBoard(uint8_t *vals, uint8_t numVals) {
   Serial.print("  Build = ");
   Serial.println(_specs);
   bool schema1 = readIdentity(); //Serial number and hardware version from Page 0 (Schema 1), else the Schema 0 bytes
-  if (!schema1) _hwVersion = String(_model); //Schema 0: the model number the sketch declared
+  //Schema 0: the model number the sketch declared
+  if (!schema1) snprintf(_hwVersion, sizeof(_hwVersion), "%u", (unsigned)_model);
   if (schema1 && !_pages.page1Blank()) { //Page 1: this board's calibration, written by NW-Provision; the constants otherwise
     _batteryDivider = _pages.get16(0x20) / 1000.0;
     _thermistor.a = _pages.getFloat(0x22);
