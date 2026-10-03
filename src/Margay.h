@@ -115,7 +115,7 @@ class Margay : public NW_Logger
      *                matching the CSV data returned by the user's update()
      *                function.
      */
-    bool begin(uint8_t *vals, uint8_t numVals, String header_) override;
+    bool beginBoard(uint8_t *vals, uint8_t numVals) override;
     using NW_Logger::begin; ///< begin(header) with no external sensors
 
     /** @brief "Margay". */
@@ -144,7 +144,6 @@ class Margay : public NW_Logger
      * complete row to the SD card.
      * @param update Pointer to the user's update() function.
      */
-    void addDataPoint(String (*update)(void)) override;
 
     /**
      * @brief Read temperature from an on-board sensor.
@@ -298,7 +297,6 @@ class Margay : public NW_Logger
     void batTest();
     void powerTest();
     void bme280Readings();
-    void _addDataPoint(String data);
 
     MCP3421 adc;
 

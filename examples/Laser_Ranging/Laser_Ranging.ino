@@ -17,28 +17,19 @@ Distributed as-is; no warranty is given.
 #include "Margay.h"
 #include "Apis.h"
 
+// Number of seconds between readings
+uint32_t updateRate = 60;
+
 Margay Logger(MODEL_3v0); // Update to match your hardware version
 Apis rangefinder;
 
-uint8_t I2CVals[] = {Apis::DEFAULT_ADDRESS};
-String header = "";
-uint32_t updateRate = 60; // Seconds between readings
-
 void setup() {
-    header = rangefinder.getHeader();
-    Logger.begin(I2CVals, sizeof(I2CVals), header);
-    initialize();
+    // One line states the sensor, its address and its column order. The logger
+    // writes the header and every row from it; this sketch composes nothing.
+    Logger.watch(rangefinder);
+    Logger.begin();
 }
 
 void loop() {
-    Logger.run(update, updateRate);
-}
-
-String update() {
-    initialize();
-    return rangefinder.getString();
-}
-
-void initialize() {
-    rangefinder.begin();
+    Logger.run(updateRate);
 }

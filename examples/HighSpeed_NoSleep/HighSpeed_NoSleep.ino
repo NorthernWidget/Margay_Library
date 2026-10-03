@@ -18,34 +18,26 @@ Distributed as-is; no warranty is given.
 
 #include "Margay.h"
 
-String header = "";
-uint8_t I2CVals[] = {};
-
 uint32_t updateRate = 150; // Milliseconds between readings
 
 Margay Logger(MODEL_3v0); // Update to match your hardware version
 
 void setup() {
-    Logger.begin(I2CVals, sizeof(I2CVals), header);
+    // Watch any external sensor here; the logger takes its address and its
+    // columns from that one line.
+    Logger.begin();
     Logger.initLogFile(); // Generate a new log file on each reset
-    initialize();
 }
 
 void loop() {
+    // No sleeping and no RTC alarm: this loop times the readings itself and
+    // asks for a row directly, which is why it is milliseconds rather than
+    // seconds and why run() is not used.
     static uint32_t trigger = millis();
     if (millis() - trigger > updateRate) {
         trigger = millis();
         Logger.LED_Color(BLUE);
-        Logger.addDataPoint(update);
+        Logger.addDataPoint();
         Logger.LED_Color(OFF);
     }
-}
-
-String update() {
-    initialize();
-    return "";
-}
-
-void initialize() {
-    // Place any sensor initialization calls here
 }

@@ -154,7 +154,7 @@ Margay::Margay(board model_, build specs_) {
   _specs = specs_; //Store build info locally
 }
 
-bool Margay::begin(uint8_t *vals, uint8_t numVals, String header_) {
+bool Margay::beginBoard(uint8_t *vals, uint8_t numVals) {
   powerOB(ON);  //Turn on on-board power
   powerAux(ON); //Turn on external auxiliary power
   if (WDHold != 255) pinMode(WDHold, OUTPUT);
@@ -164,7 +164,7 @@ bool Margay::begin(uint8_t *vals, uint8_t numVals, String header_) {
 
   pinMode(VSwitch_Pin, OUTPUT); //Setup switch control as output
 
-  acceptAddresses(vals, numVals, header_); //The sketch's sensor addresses and header
+  acceptAddresses(vals, numVals); //The watched sensors' addresses
 
   _rtc.begin(); //Initialize RTC
   _rtc.clearAlarm(); //
@@ -472,23 +472,6 @@ float Margay::getVoltage() {  //Get voltage from Ax pin
 }
 
 // Reads new data and writes data to SD
-void Margay::addDataPoint(String (*update)(void)) {
-  String data = "";
-  //Re-initialize BME280  //FIX??
-  if (_model >= MODEL_2v0) bme280.begin(0x77);
-  // Serial.println("Called Update"); //DEBUG!
-
-  bool initialStateExternalI2C = digitalRead(I2C_SW);
-
-  switchExternalI2C(ON);
-  data = (*update)(); //Run external update function
-
-  // make sure I2C Bus is returned to initial state
-  farmGateI2C(initialStateExternalI2C);
-
-  _addDataPoint(data);
-
-}
 
 void Margay::addDataPoint() {
   //The streaming row: this board's bus dance around the base class's reading
@@ -503,23 +486,6 @@ void Margay::addDataPoint() {
   reportRows();
 }
 
-void Margay::_addDataPoint(String data) {
-  // Serial.println("Request OB vals"); //DEBUG!
-  // Briefly flash an LED to show that data are being logged
-  // without needing to waste extra time/power with a delay.
-  // This step should always take the same amount of time
-  // unless there is a significant library or xtal change
-  pinMode(BlueLED, OUTPUT);
-  digitalWrite(BlueLED, LOW); //ON
-  data = getOnBoardVals() + data + _note; //Prepend on board readings; Note column last
-  _note = ""; //One row's worth of notes
-  digitalWrite(BlueLED, HIGH); //OFF
-  // Serial.println("Got OB vals");  //DEBUG!
-  if (logStr(data) != 0) _pages.latchNotice(0xF2); //RowNotWritten
-  // Serial.println("Logged Data"); //DEBUG!
-  fillPages(); //Margay's reading of itself: Page 2, Page 3, Block 0
-  reportRows(); //The status file: a row for the logger and every watched sensor with something to report
-}
 
 uint8_t Margay::chipFaults() {
   uint8_t f = 0;

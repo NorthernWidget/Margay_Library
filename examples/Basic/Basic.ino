@@ -13,29 +13,16 @@ Distributed as-is; no warranty is given.
 
 #include "Margay.h"
 
-// Empty header and I2C list: no external sensors
-String header = "";
-uint8_t I2CVals[] = {};
-
 // Number of seconds between readings
 uint32_t updateRate = 5;
 
 Margay Logger(MODEL_3v0); // Update to match your hardware version
 
 void setup() {
-    Logger.begin(I2CVals, sizeof(I2CVals), header);
-    initialize();
+    // Nothing watched: this logger reports only its own columns.
+    Logger.begin();
 }
 
 void loop() {
-    Logger.run(update, updateRate);
-}
-
-String update() {
-    initialize();
-    return "";
-}
-
-void initialize() {
-    // Place any sensor initialization calls here
+    Logger.run(updateRate);
 }
