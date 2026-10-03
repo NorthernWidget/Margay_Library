@@ -527,7 +527,7 @@ size_t Margay::printStatus(Print& out, bool boot) {
   const char* const* words = margayWords; uint8_t n = 3;
   if (r.chip() == 4) { words = margayChipWords; n = 1; }
   else if (r.chip() == 1) { words = margayChipWords + 1; n = 1; }
-  return _pages.printSnapshot(out, margayChips, 5, libVersion.c_str(), &r, words, n, MARGAY_LIBRARY_COMMIT, "", SKETCH_COMMIT); //A logger: its library is its firmware; the sketch stands where a library would
+  return _pages.printSnapshot(out, margayChips, 5, libVersion, &r, words, n, MARGAY_LIBRARY_COMMIT, "", SKETCH_COMMIT); //A logger: its library is its firmware; the sketch stands where a library would
 }
 
 void Margay::powerAux(bool state) {

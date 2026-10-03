@@ -238,7 +238,7 @@ class Margay : public NW_Logger
     float _onBoardTemp = NW_ERROR;   ///< Thermistor temperature from the last readOnBoard() [C]
     float _rtcTemp = NW_ERROR;       ///< RTC die temperature from the last readOnBoard() [C]
     float _batVoltage = NW_ERROR;    ///< Battery voltage from the last readOnBoard() [V]
-    const String libVersion = MARGAY_LIBRARY_VERSION; ///< Library version string, the logger's FW column in the status file.
+    static constexpr const char* libVersion = MARGAY_LIBRARY_VERSION; ///< Library version, the logger's FW column in the status file.
 
   protected:
     /**
