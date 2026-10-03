@@ -280,8 +280,11 @@ class Margay : public NW_Logger
     /** @brief Print those columns' values, as readOnBoard() left them. Takes no reading. */
     size_t printDataRow(Print& out) override;
 
+    /// @brief A logger is on its own bus, not found at an address on it.
+    uint8_t defaultAddress() const override { return 0; }
+
     /// @brief A logger is not powered down, so it is always awake. @return true.
-    bool wake() override { return true; }
+    bool wake(uint8_t address) override { (void)address; return true; }
 
     /// @brief Read this board's own channels, for printDataRow() to print.
     bool acquire() override { readOnBoard(); return true; }
