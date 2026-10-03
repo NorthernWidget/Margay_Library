@@ -289,6 +289,9 @@ class Margay : public NW_Logger
     /// @brief A logger's own word for the Note column: it has none of its own.
     size_t printNote(Print& out, bool beginFailed = false) override { (void)out; (void)beginFailed; return 0; }
 
+    /// @brief The streaming row: this board's bus dance around readSensors() and logRow().
+    void addDataPoint() override;
+
     void batTest();
     void powerTest();
     void bme280Readings();

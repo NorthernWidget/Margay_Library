@@ -490,6 +490,19 @@ void Margay::addDataPoint(String (*update)(void)) {
 
 }
 
+void Margay::addDataPoint() {
+  //The streaming row: this board's bus dance around the base class's reading
+  //and writing. The String overload above does the same for a sketch's update().
+  if (_model >= MODEL_2v0) bme280.begin(0x77);   //FIX??
+  bool initialStateExternalI2C = digitalRead(I2C_SW);
+  switchExternalI2C(ON);
+  readSensors();
+  farmGateI2C(initialStateExternalI2C);
+  if (logRow() != 0) _pages.latchNotice(0xF2);   //RowNotWritten
+  fillPages();
+  reportRows();
+}
+
 void Margay::_addDataPoint(String data) {
   // Serial.println("Request OB vals"); //DEBUG!
   // Briefly flash an LED to show that data are being logged
