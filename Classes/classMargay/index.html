@@ -225,7 +225,7 @@
           <aside class="sidebar__right sticky">
             <nav class="toc" aria-label="Table of contents">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
-              <ul class="toc__menu"><li><a href="#public-functions">Public Functions</a></li><li><a href="#public-attributes">Public Attributes</a></li><li><a href="#detailed-description">Detailed Description</a></li><li><a href="#public-functions-documentation">Public Functions Documentation</a><ul><li><a href="#function-margay">function Margay</a></li><li><a href="#function-begin">function begin</a></li><li><a href="#function-name">function name</a></li><li><a href="#function-printstatus">function printStatus</a></li><li><a href="#function-getvoltage">function getVoltage</a></li><li><a href="#function-adddatapoint">function addDataPoint</a></li><li><a href="#function-gettemp">function getTemp</a></li><li><a href="#function-getbatvoltage">function getBatVoltage</a></li><li><a href="#function-getbatpercentage">function getBatPercentage</a></li><li><a href="#function-initadc">function initADC</a></li><li><a href="#function-powerob">function powerOB</a></li><li><a href="#function-poweraux">function powerAux</a></li></ul></li><li><a href="#public-attributes-documentation">Public Attributes Documentation</a><ul><li><a href="#variable-vref_pin">variable VRef_Pin</a></li><li><a href="#variable-thermsense_pin">variable ThermSense_Pin</a></li><li><a href="#variable-batsense_pin">variable BatSense_Pin</a></li><li><a href="#variable-vswitch_pin">variable VSwitch_Pin</a></li><li><a href="#variable-ext3v3ctrl">variable Ext3v3Ctrl</a></li><li><a href="#variable-pg">variable PG</a></li><li><a href="#variable-extint">variable ExtInt</a></li><li><a href="#variable-batswitch">variable BatSwitch</a></li><li><a href="#variable-tx">variable TX</a></li><li><a href="#variable-rx">variable RX</a></li><li><a href="#variable-d0">variable D0</a></li><li><a href="#variable-ncells">variable NCells</a></li><li><a href="#variable-batvoltageerror">variable BatVoltageError</a></li><li><a href="#variable-batpercentagewarning">variable BatPercentageWarning</a></li><li><a href="#variable-libversion">variable LibVersion</a></li></ul></li></ul>
+              <ul class="toc__menu"><li><a href="#public-functions">Public Functions</a></li><li><a href="#public-attributes">Public Attributes</a></li><li><a href="#detailed-description">Detailed Description</a></li><li><a href="#public-functions-documentation">Public Functions Documentation</a><ul><li><a href="#function-margay">function Margay</a></li><li><a href="#function-beginboard">function beginBoard</a></li><li><a href="#function-name">function name</a></li><li><a href="#function-printstatus">function printStatus</a></li><li><a href="#function-getvoltage">function getVoltage</a></li><li><a href="#function-gettemp">function getTemp</a></li><li><a href="#function-getbatvoltage">function getBatVoltage</a></li><li><a href="#function-getbatpercentage">function getBatPercentage</a></li><li><a href="#function-initadc">function initADC</a></li><li><a href="#function-powerob">function powerOB</a></li><li><a href="#function-poweraux">function powerAux</a></li></ul></li><li><a href="#public-attributes-documentation">Public Attributes Documentation</a><ul><li><a href="#variable-vref_pin">variable VRef_Pin</a></li><li><a href="#variable-thermsense_pin">variable ThermSense_Pin</a></li><li><a href="#variable-batsense_pin">variable BatSense_Pin</a></li><li><a href="#variable-vswitch_pin">variable VSwitch_Pin</a></li><li><a href="#variable-ext3v3ctrl">variable Ext3v3Ctrl</a></li><li><a href="#variable-pg">variable PG</a></li><li><a href="#variable-extint">variable ExtInt</a></li><li><a href="#variable-batswitch">variable BatSwitch</a></li><li><a href="#variable-tx">variable TX</a></li><li><a href="#variable-rx">variable RX</a></li><li><a href="#variable-d0">variable D0</a></li><li><a href="#variable-ncells">variable nCells</a></li><li><a href="#variable-batvoltageerror">variable batVoltageError</a></li><li><a href="#variable-batpercentagewarning">variable batPercentageWarning</a></li><li><a href="#variable-_onboardtemp">variable _onBoardTemp</a></li><li><a href="#variable-_rtctemp">variable _rtcTemp</a></li><li><a href="#variable-_batvoltage">variable _batVoltage</a></li><li><a href="#variable-libversion">variable libVersion</a></li></ul></li></ul>
             </nav>
           </aside>
         
@@ -251,7 +251,7 @@
     </tr>
     <tr>
       <td>bool</td>
-      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-begin">begin</a></strong>(uint8<em>t * vals, uint8_t numVals, String header</em>) override<br />Initialise the logger with a list of external I2C sensor addresses.</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-beginboard">beginBoard</a></strong>(uint8_t * vals, uint8_t numVals) override<br />Initialise the logger with a list of external I2C sensor addresses.</td>
     </tr>
     <tr>
       <td>const char *</td>
@@ -266,12 +266,8 @@
       <td><strong><a href="/Margay_Library/Classes/classMargay/#function-getvoltage">getVoltage</a></strong>()<br />Read voltage from the on-board MCP3421 ADC.</td>
     </tr>
     <tr>
-      <td>void</td>
-      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-adddatapoint">addDataPoint</a></strong>(String(*)(void) update) override<br />Log one data point immediately, outside the normal run() cycle.</td>
-    </tr>
-    <tr>
       <td>float</td>
-      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-gettemp">getTemp</a></strong>(temp_source sensor =thermistor_temp_sensor)<br />Read temperature from an on-board sensor.</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-gettemp">getTemp</a></strong>(temp_source sensor =thermistor_temp_sensor)<br />Log one data point immediately, outside the normal run() cycle.</td>
     </tr>
     <tr>
       <td>float</td>
@@ -352,19 +348,31 @@
     </tr>
     <tr>
       <td>uint8_t</td>
-      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-ncells">NCells</a></strong> <br />Number of AA cells in series in the battery pack. Used by <a href="">getBatPercentage()</a>.</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-ncells">nCells</a></strong> <br />Number of AA cells in series in the battery pack. Used by <a href="">getBatPercentage()</a>.</td>
     </tr>
     <tr>
       <td>float</td>
-      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-batvoltageerror">BatVoltageError</a></strong> <br />Battery voltage threshold [V] below which BatError is set and logged.</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-batvoltageerror">batVoltageError</a></strong> <br />Battery voltage threshold [V] below which BatError is set and logged.</td>
     </tr>
     <tr>
       <td>float</td>
-      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-batpercentagewarning">BatPercentageWarning</a></strong> <br />Battery charge threshold [%] below which BatWarning is set and logged.</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-batpercentagewarning">batPercentageWarning</a></strong> <br />Battery charge threshold [%] below which BatWarning is set and logged.</td>
     </tr>
     <tr>
-      <td>const String</td>
-      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-libversion">LibVersion</a></strong> <br />Library version string, the logger’s FW column in the status file.</td>
+      <td>float</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable--onboardtemp">_onBoardTemp</a></strong> <br />Thermistor temperature from the last readOnBoard() [C].</td>
+    </tr>
+    <tr>
+      <td>float</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable--rtctemp">_rtcTemp</a></strong> <br />RTC die temperature from the last readOnBoard() [C].</td>
+    </tr>
+    <tr>
+      <td>float</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable--batvoltage">_batVoltage</a></strong> <br />Battery voltage from the last readOnBoard() [V].</td>
+    </tr>
+    <tr>
+      <td>constexpr const char *</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-libversion">libVersion</a></strong> <br />Library version, the logger’s FW column in the status file.</td>
     </tr>
   </tbody>
 </table>
@@ -404,14 +412,13 @@
   <li><strong>specs_</strong> Build variant selecting on-board ADC address (default BUILD_B).</li>
 </ul>
 
-<p>Sets board-specific pin assignments based on model and build. Does not initialise hardware; call <a href="/Margay_Library/Classes/classMargay/#function-begin">begin()</a> in setup().</p>
+<p>Sets board-specific pin assignments based on model and build. Does not initialise hardware; call begin() in setup().</p>
 
-<h3 id="function-begin">function begin</h3>
+<h3 id="function-beginboard">function beginBoard</h3>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">bool</span> <span class="n">begin</span><span class="p">(</span>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">bool</span> <span class="n">beginBoard</span><span class="p">(</span>
     <span class="kt">uint8_t</span> <span class="o">*</span> <span class="n">vals</span><span class="p">,</span>
-    <span class="kt">uint8_t</span> <span class="n">numVals</span><span class="p">,</span>
-    <span class="n">String</span> <span class="n">header_</span>
+    <span class="kt">uint8_t</span> <span class="n">numVals</span>
 <span class="p">)</span> <span class="k">override</span>
 </code></pre></div></div>
 
@@ -457,11 +464,11 @@
 
 <p>Only available on BUILD_B, BUILD_C, and BUILD_D. Temporarily switches the I2C bus to the internal bus, takes a reading, and restores the bus to its prior state.</p>
 
-<h3 id="function-adddatapoint">function addDataPoint</h3>
+<h3 id="function-gettemp">function getTemp</h3>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">addDataPoint</span><span class="p">(</span>
-    <span class="n">String</span><span class="p">(</span><span class="o">*</span><span class="p">)(</span><span class="kt">void</span><span class="p">)</span> <span class="n">update</span>
-<span class="p">)</span> <span class="k">override</span>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">float</span> <span class="n">getTemp</span><span class="p">(</span>
+    <span class="n">temp_source</span> <span class="n">sensor</span> <span class="o">=</span><span class="n">thermistor_temp_sensor</span>
+<span class="p">)</span>
 </code></pre></div></div>
 
 <p>Log one data point immediately, outside the normal run() cycle.</p>
@@ -470,22 +477,6 @@
 
 <ul>
   <li><strong>update</strong> Pointer to the user’s update() function.</li>
-</ul>
-
-<p>Switches the I2C bus to external, calls the user’s update() function to obtain sensor data, restores the bus, prepends on-board values (timestamp, BME280, RTC temp, battery voltage), and writes the complete row to the SD card.</p>
-
-<h3 id="function-gettemp">function getTemp</h3>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">float</span> <span class="n">getTemp</span><span class="p">(</span>
-    <span class="n">temp_source</span> <span class="n">sensor</span> <span class="o">=</span><span class="n">thermistor_temp_sensor</span>
-<span class="p">)</span>
-</code></pre></div></div>
-
-<p>Read temperature from an on-board sensor.</p>
-
-<p><strong>Parameters</strong>:</p>
-
-<ul>
   <li>
     <p><strong>sensor</strong> Temperature source. Options:</p>
   </li>
@@ -494,6 +485,9 @@
 </ul>
 
 <p><strong>Return</strong>: Temperature in degrees Celsius, or -1234 on invalid input.</p>
+
+<p>Switches the I2C bus to external, calls the user’s update() function to obtain sensor data, restores the bus, prepends on-board values (timestamp, BME280, RTC temp, battery voltage), and writes the complete row to the SD card. 
+Read temperature from an on-board sensor.</p>
 
 <h3 id="function-getbatvoltage">function getBatVoltage</h3>
 
@@ -532,7 +526,7 @@
   <li><strong>desiredResolution</strong> ADC resolution in bits (12, 14, 16, or 18).</li>
 </ul>
 
-<p>Only meaningful on BUILD_B, BUILD_C, and BUILD_D. Called automatically by <a href="/Margay_Library/Classes/classMargay/#function-begin">begin()</a> for those builds; exposed publicly for advanced use in high-speed sketches.</p>
+<p>Only meaningful on BUILD_B, BUILD_C, and BUILD_D. Called automatically by begin() for those builds; exposed publicly for advanced use in high-speed sketches.</p>
 
 <h3 id="function-powerob">function powerOB</h3>
 
@@ -642,42 +636,63 @@
 
 <h3 id="variable-d0">variable D0</h3>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint8_t</span> <span class="n">D0</span> <span class="o">=</span>  <span class="mi">3</span><span class="p">;</span>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint8_t</span> <span class="n">D0</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
 </code></pre></div></div>
 
 <p>General-purpose digital I/O pin 0.</p>
 
-<h3 id="variable-ncells">variable NCells</h3>
+<h3 id="variable-ncells">variable nCells</h3>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint8_t</span> <span class="n">NCells</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint8_t</span> <span class="n">nCells</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
 </code></pre></div></div>
 
 <p>Number of AA cells in series in the battery pack. Used by <a href="">getBatPercentage()</a>.</p>
 
-<h3 id="variable-batvoltageerror">variable BatVoltageError</h3>
+<h3 id="variable-batvoltageerror">variable batVoltageError</h3>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">float</span> <span class="n">BatVoltageError</span> <span class="o">=</span> <span class="mf">3.3</span><span class="p">;</span>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">float</span> <span class="n">batVoltageError</span> <span class="o">=</span> <span class="mf">3.3</span><span class="p">;</span>
 </code></pre></div></div>
 
 <p>Battery voltage threshold [V] below which BatError is set and logged.</p>
 
-<h3 id="variable-batpercentagewarning">variable BatPercentageWarning</h3>
+<h3 id="variable-batpercentagewarning">variable batPercentageWarning</h3>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">float</span> <span class="n">BatPercentageWarning</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">float</span> <span class="n">batPercentageWarning</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>
 </code></pre></div></div>
 
 <p>Battery charge threshold [%] below which BatWarning is set and logged.</p>
 
-<h3 id="variable-libversion">variable LibVersion</h3>
+<h3 id="variable-_onboardtemp">variable _onBoardTemp</h3>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">const</span> <span class="n">String</span> <span class="n">LibVersion</span> <span class="o">=</span> <span class="n">MARGAY_LIBRARY_VERSION</span><span class="p">;</span>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">float</span> <span class="n">_onBoardTemp</span> <span class="o">=</span> <span class="n">NW_ERROR</span><span class="p">;</span>
 </code></pre></div></div>
 
-<p>Library version string, the logger’s FW column in the status file.</p>
+<p>Thermistor temperature from the last readOnBoard() [C].</p>
+
+<h3 id="variable-_rtctemp">variable _rtcTemp</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">float</span> <span class="n">_rtcTemp</span> <span class="o">=</span> <span class="n">NW_ERROR</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>RTC die temperature from the last readOnBoard() [C].</p>
+
+<h3 id="variable-_batvoltage">variable _batVoltage</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">float</span> <span class="n">_batVoltage</span> <span class="o">=</span> <span class="n">NW_ERROR</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>Battery voltage from the last readOnBoard() [V].</p>
+
+<h3 id="variable-libversion">variable libVersion</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">static</span> <span class="k">constexpr</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">libVersion</span> <span class="o">=</span> <span class="n">MARGAY_LIBRARY_VERSION</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>Library version, the logger’s FW column in the status file.</p>
 
 <hr />
 
-<p>Updated on 2026-09-24 at 01:53:23 +0000</p>
+<p>Updated on 2026-10-04 at 04:51:39 +0000</p>
 
         
       </section>

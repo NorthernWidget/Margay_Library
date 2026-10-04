@@ -449,7 +449,7 @@ Andy Wickert
 #include</span> <span class="cpf">&lt;avr/wdt.h&gt;</span><span class="cp">
 #include</span> <span class="cpf">&lt;avr/power.h&gt;</span><span class="cp">
 #include</span> <span class="cpf">&lt;EEPROM.h&gt;</span><span class="cp">
-#include</span> <span class="cpf">&lt;NW_Logger.h&gt;</span><span class="c1">   // the logger core that Margay and Okapi share (NW_Sensor and NW_Pages through it)</span><span class="cp">
+#include</span> <span class="cpf">&lt;NW_Logger.h&gt;</span><span class="c1">  // the logger core that Margay and Okapi share (NW_Sensor and NW_Pages through it)</span><span class="cp">
 </span>
 <span class="c1">// Build identity: this library's version (held equal to library.properties by</span>
 <span class="c1">// NW-Tests/version_check.py) and its build commit, set by the NW-Build wrapper from</span>
@@ -463,117 +463,146 @@ Andy Wickert
 #endif
 #include</span> <span class="cpf">"MCP3421.h"</span><span class="cp">
 </span>
-<span class="k">enum</span> <span class="n">board</span>
-<span class="p">{</span>
-    <span class="n">MODEL_0v0</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> 
-    <span class="n">MODEL_1v0</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> 
-    <span class="n">MODEL_2v0</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> 
-    <span class="n">MODEL_2v1</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> 
-    <span class="n">MODEL_2v2</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> 
-    <span class="n">MODEL_3v0</span> <span class="o">=</span> <span class="mi">3</span>  
+<span class="k">enum</span> <span class="n">board</span> <span class="p">{</span>
+  <span class="n">MODEL_0v0</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>  
+  <span class="n">MODEL_1v0</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>  
+  <span class="n">MODEL_2v0</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>  
+  <span class="n">MODEL_2v1</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>  
+  <span class="n">MODEL_2v2</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>  
+  <span class="n">MODEL_3v0</span> <span class="o">=</span> <span class="mi">3</span>   
 <span class="p">};</span>
 
-<span class="k">enum</span> <span class="n">build</span>
-<span class="p">{</span>
-    <span class="n">BUILD_A</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> 
-    <span class="n">BUILD_B</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> 
-    <span class="n">BUILD_C</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> 
-    <span class="n">BUILD_D</span> <span class="o">=</span> <span class="mi">3</span>  
+<span class="k">enum</span> <span class="n">build</span> <span class="p">{</span>
+  <span class="n">BUILD_A</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>  
+  <span class="n">BUILD_B</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>  
+  <span class="n">BUILD_C</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>  
+  <span class="n">BUILD_D</span> <span class="o">=</span> <span class="mi">3</span>   
 <span class="p">};</span>
 
-<span class="k">enum</span> <span class="n">temp_source</span>
-<span class="p">{</span>
-    <span class="n">thermistor_temp_sensor</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> 
-    <span class="n">RTC_temp_sensor</span>        <span class="o">=</span> <span class="mi">1</span>  
+<span class="k">enum</span> <span class="n">temp_source</span> <span class="p">{</span>
+  <span class="n">thermistor_temp_sensor</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>  
+  <span class="n">RTC_temp_sensor</span> <span class="o">=</span> <span class="mi">1</span>          
 <span class="p">};</span>
 
 
-<span class="k">class</span> <span class="nc">Margay</span> <span class="o">:</span> <span class="k">public</span> <span class="n">NW_Logger</span>
-<span class="p">{</span>
+<span class="k">class</span> <span class="nc">Margay</span> <span class="o">:</span> <span class="k">public</span> <span class="n">NW_Logger</span> <span class="p">{</span>
 
-  <span class="nl">public:</span>
-    <span class="n">Margay</span><span class="p">(</span><span class="n">board</span> <span class="n">model_</span> <span class="o">=</span> <span class="n">MODEL_3v0</span><span class="p">,</span> <span class="n">build</span> <span class="n">specs_</span> <span class="o">=</span> <span class="n">BUILD_B</span><span class="p">);</span>
+<span class="nl">public:</span>
+  <span class="n">Margay</span><span class="p">(</span><span class="n">board</span> <span class="n">model_</span> <span class="o">=</span> <span class="n">MODEL_3v0</span><span class="p">,</span> <span class="n">build</span> <span class="n">specs_</span> <span class="o">=</span> <span class="n">BUILD_B</span><span class="p">);</span>
 
-    <span class="kt">bool</span> <span class="n">begin</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="o">*</span><span class="n">vals</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="n">numVals</span><span class="p">,</span> <span class="n">String</span> <span class="n">header_</span><span class="p">)</span> <span class="k">override</span><span class="p">;</span>
-    <span class="k">using</span> <span class="n">NW_Logger</span><span class="o">::</span><span class="n">begin</span><span class="p">;</span> 
+  <span class="kt">bool</span> <span class="n">beginBoard</span><span class="p">(</span><span class="kt">uint8_t</span><span class="o">*</span> <span class="n">vals</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="n">numVals</span><span class="p">)</span> <span class="k">override</span><span class="p">;</span>
+  <span class="k">using</span> <span class="n">NW_Logger</span><span class="o">::</span><span class="n">begin</span><span class="p">;</span>  
 
-    <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">name</span><span class="p">()</span> <span class="k">const</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="s">"Margay"</span><span class="p">;</span> <span class="p">}</span>
-    <span class="kt">size_t</span> <span class="n">printStatus</span><span class="p">(</span><span class="n">Print</span><span class="o">&amp;</span> <span class="n">out</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">boot</span> <span class="o">=</span> <span class="nb">false</span><span class="p">)</span> <span class="k">override</span><span class="p">;</span>
+  <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">name</span><span class="p">()</span> <span class="k">const</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="s">"Margay"</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="kt">size_t</span> <span class="n">printStatus</span><span class="p">(</span><span class="n">Print</span><span class="o">&amp;</span> <span class="n">out</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">boot</span> <span class="o">=</span> <span class="nb">false</span><span class="p">)</span> <span class="k">override</span><span class="p">;</span>
 
-    <span class="kt">float</span> <span class="nf">getVoltage</span><span class="p">();</span>
+  <span class="kt">float</span> <span class="nf">getVoltage</span><span class="p">();</span>
 
-    <span class="kt">void</span> <span class="n">addDataPoint</span><span class="p">(</span><span class="n">String</span> <span class="p">(</span><span class="o">*</span><span class="n">update</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span> <span class="k">override</span><span class="p">;</span>
+  <span class="kt">float</span> <span class="nf">getTemp</span><span class="p">(</span><span class="n">temp_source</span> <span class="n">sensor</span> <span class="o">=</span> <span class="n">thermistor_temp_sensor</span><span class="p">);</span>
 
-    <span class="kt">float</span> <span class="nf">getTemp</span><span class="p">(</span><span class="n">temp_source</span> <span class="n">sensor</span> <span class="o">=</span> <span class="n">thermistor_temp_sensor</span><span class="p">);</span>
+  <span class="kt">float</span> <span class="nf">getBatVoltage</span><span class="p">();</span>
 
-    <span class="kt">float</span> <span class="nf">getBatVoltage</span><span class="p">();</span>
+  <span class="kt">float</span> <span class="nf">getBatPercentage</span><span class="p">();</span>
 
-    <span class="kt">float</span> <span class="nf">getBatPercentage</span><span class="p">();</span>
+  <span class="kt">void</span> <span class="nf">initADC</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="n">desiredResolution</span><span class="p">);</span>
 
-    <span class="kt">void</span> <span class="nf">initADC</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="n">desiredResolution</span><span class="p">);</span>
+  <span class="kt">void</span> <span class="nf">powerOB</span><span class="p">(</span><span class="kt">bool</span> <span class="n">state</span><span class="p">);</span>
 
-    <span class="kt">void</span> <span class="nf">powerOB</span><span class="p">(</span><span class="kt">bool</span> <span class="n">state</span><span class="p">);</span>
+  <span class="kt">void</span> <span class="nf">powerAux</span><span class="p">(</span><span class="kt">bool</span> <span class="n">state</span><span class="p">);</span>
 
-    <span class="kt">void</span> <span class="nf">powerAux</span><span class="p">(</span><span class="kt">bool</span> <span class="n">state</span><span class="p">);</span>
+  <span class="c1">// -----------------------------------------------------------------------</span>
+  <span class="c1">// Public pin definitions</span>
+  <span class="c1">// These are initialised by the constructor to the correct values for the</span>
+  <span class="c1">// selected board model and build. Advanced users may read these to</span>
+  <span class="c1">// determine hardware assignments; do not modify after begin() is called.</span>
+  <span class="c1">// -----------------------------------------------------------------------</span>
 
-    <span class="c1">// -----------------------------------------------------------------------</span>
-    <span class="c1">// Public pin definitions</span>
-    <span class="c1">// These are initialised by the constructor to the correct values for the</span>
-    <span class="c1">// selected board model and build. Advanced users may read these to</span>
-    <span class="c1">// determine hardware assignments; do not modify after begin() is called.</span>
-    <span class="c1">// -----------------------------------------------------------------------</span>
+  <span class="kt">uint8_t</span> <span class="n">VRef_Pin</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>        
+  <span class="kt">uint8_t</span> <span class="n">ThermSense_Pin</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>  
+  <span class="kt">uint8_t</span> <span class="n">BatSense_Pin</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>    
 
-    <span class="kt">uint8_t</span> <span class="n">VRef_Pin</span>      <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> 
-    <span class="kt">uint8_t</span> <span class="n">ThermSense_Pin</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> 
-    <span class="kt">uint8_t</span> <span class="n">BatSense_Pin</span>   <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> 
+  <span class="kt">uint8_t</span> <span class="n">VSwitch_Pin</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>  
 
-    <span class="kt">uint8_t</span> <span class="n">VSwitch_Pin</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span> 
+  <span class="kt">uint8_t</span> <span class="n">Ext3v3Ctrl</span> <span class="o">=</span> <span class="mi">19</span><span class="p">;</span>  
+  <span class="kt">uint8_t</span> <span class="n">PG</span> <span class="o">=</span> <span class="mi">18</span><span class="p">;</span>          
+  <span class="kt">uint8_t</span> <span class="n">ExtInt</span> <span class="o">=</span> <span class="mi">11</span><span class="p">;</span>      
+  <span class="kt">uint8_t</span> <span class="n">BatSwitch</span> <span class="o">=</span> <span class="mi">22</span><span class="p">;</span>   
+  <span class="kt">uint8_t</span> <span class="n">TX</span> <span class="o">=</span> <span class="mi">11</span><span class="p">;</span>          
+  <span class="kt">uint8_t</span> <span class="n">RX</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>          
+  <span class="kt">uint8_t</span> <span class="n">D0</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>           
 
-    <span class="kt">uint8_t</span> <span class="n">Ext3v3Ctrl</span> <span class="o">=</span> <span class="mi">19</span><span class="p">;</span> 
-    <span class="kt">uint8_t</span> <span class="n">PG</span>         <span class="o">=</span> <span class="mi">18</span><span class="p">;</span> 
-    <span class="kt">uint8_t</span> <span class="n">ExtInt</span>     <span class="o">=</span> <span class="mi">11</span><span class="p">;</span> 
-    <span class="kt">uint8_t</span> <span class="n">BatSwitch</span>  <span class="o">=</span> <span class="mi">22</span><span class="p">;</span> 
-    <span class="kt">uint8_t</span> <span class="n">TX</span>         <span class="o">=</span> <span class="mi">11</span><span class="p">;</span> 
-    <span class="kt">uint8_t</span> <span class="n">RX</span>         <span class="o">=</span> <span class="mi">10</span><span class="p">;</span> 
-    <span class="kt">uint8_t</span> <span class="n">D0</span>         <span class="o">=</span>  <span class="mi">3</span><span class="p">;</span> 
+  <span class="c1">// -----------------------------------------------------------------------</span>
+  <span class="c1">// Public configuration variables</span>
+  <span class="c1">// May be modified between begin() and the first call to run().</span>
+  <span class="c1">// -----------------------------------------------------------------------</span>
 
-    <span class="c1">// -----------------------------------------------------------------------</span>
-    <span class="c1">// Public configuration variables</span>
-    <span class="c1">// May be modified between begin() and the first call to run().</span>
-    <span class="c1">// -----------------------------------------------------------------------</span>
+  <span class="kt">uint8_t</span> <span class="n">nCells</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>                                                
+  <span class="kt">float</span> <span class="n">batVoltageError</span> <span class="o">=</span> <span class="mf">3.3</span><span class="p">;</span>                                       
+  <span class="kt">float</span> <span class="n">batPercentageWarning</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>                                   
+  <span class="kt">float</span> <span class="n">_onBoardTemp</span> <span class="o">=</span> <span class="n">NW_ERROR</span><span class="p">;</span>                                     
+  <span class="kt">float</span> <span class="n">_rtcTemp</span> <span class="o">=</span> <span class="n">NW_ERROR</span><span class="p">;</span>                                         
+  <span class="kt">float</span> <span class="n">_batVoltage</span> <span class="o">=</span> <span class="n">NW_ERROR</span><span class="p">;</span>                                      
+  <span class="k">static</span> <span class="k">constexpr</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">libVersion</span> <span class="o">=</span> <span class="n">MARGAY_LIBRARY_VERSION</span><span class="p">;</span>  
 
-    <span class="kt">uint8_t</span> <span class="n">NCells</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span> 
-    <span class="kt">float</span> <span class="n">BatVoltageError</span>      <span class="o">=</span> <span class="mf">3.3</span><span class="p">;</span> 
-    <span class="kt">float</span> <span class="n">BatPercentageWarning</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>  
-    <span class="k">const</span> <span class="n">String</span> <span class="n">LibVersion</span> <span class="o">=</span> <span class="n">MARGAY_LIBRARY_VERSION</span><span class="p">;</span> 
+<span class="k">protected</span><span class="o">:</span>
+  <span class="k">struct</span> <span class="nc">Thermistor</span> <span class="p">{</span>
+    <span class="kt">float</span> <span class="n">a</span><span class="p">;</span>
+    <span class="kt">float</span> <span class="n">b</span><span class="p">;</span>
+    <span class="kt">float</span> <span class="n">c</span><span class="p">;</span>
+    <span class="kt">float</span> <span class="n">d</span><span class="p">;</span>
+    <span class="kt">float</span> <span class="n">seriesResistance</span><span class="p">;</span>  
+    <span class="kt">float</span> <span class="n">r25</span><span class="p">;</span>               
+  <span class="p">};</span>
 
-  <span class="k">protected</span><span class="o">:</span>
-    <span class="kt">float</span> <span class="nf">tempConvert</span><span class="p">(</span><span class="kt">float</span> <span class="n">V</span><span class="p">,</span> <span class="kt">float</span> <span class="n">vcc</span><span class="p">,</span> <span class="kt">float</span> <span class="n">R</span><span class="p">,</span>
-        <span class="kt">float</span> <span class="n">A</span><span class="p">,</span> <span class="kt">float</span> <span class="n">B</span><span class="p">,</span> <span class="kt">float</span> <span class="n">C</span><span class="p">,</span> <span class="kt">float</span> <span class="n">D</span><span class="p">,</span> <span class="kt">float</span> <span class="n">R25</span><span class="p">);</span>
-    <span class="kt">void</span> <span class="n">sleepNow</span><span class="p">()</span> <span class="k">override</span><span class="p">;</span>
-    <span class="kt">void</span> <span class="nf">turnOffSDcard</span><span class="p">();</span>
-    <span class="kt">void</span> <span class="nf">turnOnSDcard</span><span class="p">();</span>
-    <span class="n">String</span> <span class="nf">getOnBoardVals</span><span class="p">();</span>
-    <span class="n">String</span> <span class="n">dataHeader</span><span class="p">()</span> <span class="k">override</span><span class="p">;</span> <span class="c1">// the data file's header row: old loggers lack the BME280</span>
-    <span class="kt">void</span> <span class="nf">batTest</span><span class="p">();</span>
-    <span class="kt">void</span> <span class="nf">powerTest</span><span class="p">();</span>
-    <span class="kt">void</span> <span class="nf">bme280Readings</span><span class="p">();</span>
-    <span class="kt">void</span> <span class="nf">_addDataPoint</span><span class="p">(</span><span class="n">String</span> <span class="n">data</span><span class="p">);</span>
+  <span class="kt">float</span> <span class="nf">tempConvert</span><span class="p">(</span><span class="kt">float</span> <span class="n">V</span><span class="p">,</span> <span class="kt">float</span> <span class="n">vcc</span><span class="p">,</span> <span class="k">const</span> <span class="n">Thermistor</span><span class="o">&amp;</span> <span class="n">th</span><span class="p">);</span>
+  <span class="kt">void</span> <span class="n">sleepNow</span><span class="p">()</span> <span class="k">override</span><span class="p">;</span>
+  <span class="kt">void</span> <span class="nf">turnOffSDcard</span><span class="p">();</span>
+  <span class="kt">void</span> <span class="nf">turnOnSDcard</span><span class="p">();</span>
+  <span class="kt">void</span> <span class="n">readOnBoard</span><span class="p">()</span> <span class="k">override</span><span class="p">;</span>
 
-    <span class="n">MCP3421</span> <span class="n">adc</span><span class="p">;</span>
+  <span class="kt">size_t</span> <span class="n">printDataHeader</span><span class="p">(</span><span class="n">Print</span><span class="o">&amp;</span> <span class="n">out</span><span class="p">)</span> <span class="k">override</span><span class="p">;</span>
 
-    <span class="kt">float</span> <span class="n">A</span> <span class="o">=</span> <span class="mf">0.003354016</span><span class="p">;</span>
-    <span class="kt">float</span> <span class="n">B</span> <span class="o">=</span> <span class="mf">0.0003074038</span><span class="p">;</span>
-    <span class="kt">float</span> <span class="n">C</span> <span class="o">=</span> <span class="mf">1.019153E-05</span><span class="p">;</span>
-    <span class="kt">float</span> <span class="n">D</span> <span class="o">=</span> <span class="mf">9.093712E-07</span><span class="p">;</span>
+  <span class="kt">size_t</span> <span class="n">printDataRow</span><span class="p">(</span><span class="n">Print</span><span class="o">&amp;</span> <span class="n">out</span><span class="p">)</span> <span class="k">override</span><span class="p">;</span>
 
-    <span class="kt">float</span> <span class="n">BatteryDivider</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">;</span> <span class="c1">//Default for v1.0</span>
+  <span class="kt">uint8_t</span> <span class="n">defaultAddress</span><span class="p">()</span> <span class="k">const</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="p">}</span>
 
-    <span class="n">board</span> <span class="n">Model</span><span class="p">;</span>
-    <span class="n">build</span> <span class="n">Specs</span><span class="p">;</span>
+  <span class="kt">bool</span> <span class="n">wake</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="n">address</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">address</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+  <span class="p">}</span>
 
-    <span class="kt">uint8_t</span> <span class="nf">chipFaults</span><span class="p">();</span>    <span class="c1">// Margay's chip-fault bits for Block 0: SDCard, Clock, BME280, SensorBus, Battery</span>
-    <span class="kt">void</span> <span class="nf">fillPages</span><span class="p">();</span>        <span class="c1">// Page 2 and 3 from the logger's own readings, then endReading()</span>
+  <span class="kt">bool</span> <span class="nf">acquire</span><span class="p">()</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="n">readOnBoard</span><span class="p">();</span>
+    <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="kt">size_t</span> <span class="n">printNote</span><span class="p">(</span><span class="n">Print</span><span class="o">&amp;</span> <span class="n">out</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">beginFailed</span> <span class="o">=</span> <span class="nb">false</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">out</span><span class="p">;</span>
+    <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">beginFailed</span><span class="p">;</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="kt">void</span> <span class="n">addDataPoint</span><span class="p">()</span> <span class="k">override</span><span class="p">;</span>
+
+  <span class="kt">void</span> <span class="nf">batTest</span><span class="p">();</span>
+  <span class="kt">void</span> <span class="nf">powerTest</span><span class="p">();</span>
+  <span class="kt">void</span> <span class="nf">bme280Readings</span><span class="p">();</span>
+
+  <span class="n">MCP3421</span> <span class="n">adc</span><span class="p">;</span>
+
+  <span class="n">Thermistor</span> <span class="n">_thermistor</span> <span class="o">=</span> <span class="p">{</span> <span class="mf">0.003354016</span><span class="p">,</span> <span class="mf">0.0003074038</span><span class="p">,</span> <span class="mf">1.019153E-05</span><span class="p">,</span> <span class="mf">9.093712E-07</span><span class="p">,</span> <span class="mf">10000.0</span><span class="p">,</span> <span class="mf">10000.0</span> <span class="p">};</span>
+
+  <span class="kt">float</span> <span class="n">_batteryDivider</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">;</span>  <span class="c1">//Default for v1.0</span>
+
+  <span class="n">board</span> <span class="n">_model</span><span class="p">;</span>
+  <span class="n">build</span> <span class="n">_specs</span><span class="p">;</span>
+
+  <span class="kt">uint8_t</span> <span class="nf">chipFaults</span><span class="p">();</span>  <span class="c1">// Margay's chip-fault bits for Block 0: SDCard, Clock, BME280, SensorBus, Battery</span>
+  <span class="kt">void</span> <span class="nf">fillPages</span><span class="p">();</span>      <span class="c1">// Page 2 and 3 from the logger's own readings, then endReading()</span>
 <span class="p">};</span>
 
 <span class="cp">#endif
@@ -581,7 +610,7 @@ Andy Wickert
 
 <hr />
 
-<p>Updated on 2026-09-24 at 01:53:23 +0000</p>
+<p>Updated on 2026-10-04 at 04:51:39 +0000</p>
 
         
       </section>

@@ -15,7 +15,7 @@
 <meta charset="utf-8">
 
 
-<!-- begin _includes/seo.html --><title>Pages - Margay Library</title>
+<!-- begin _includes/seo.html --><title>Margay::Thermistor - Margay Library</title>
 <meta name="description" content="Arduino library for the Margay data logger">
 
 
@@ -26,8 +26,8 @@
 <meta property="og:type" content="website">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Margay Library">
-<meta property="og:title" content="Pages">
-<meta property="og:url" content="https://docs.northernwidget.com/Margay_Library/Pages/index_pages/">
+<meta property="og:title" content="Margay::Thermistor">
+<meta property="og:url" content="https://docs.northernwidget.com/Margay_Library/Classes/structMargay_1_1Thermistor/">
 
 
   <meta property="og:description" content="Arduino library for the Margay data logger">
@@ -45,7 +45,7 @@
 
 
 
-<link rel="canonical" href="https://docs.northernwidget.com/Margay_Library/Pages/index_pages/">
+<link rel="canonical" href="https://docs.northernwidget.com/Margay_Library/Classes/structMargay_1_1Thermistor/">
 
 
 
@@ -201,7 +201,7 @@
 
 
   <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="Pages">
+    <meta itemprop="headline" content="Margay::Thermistor">
     
     
     
@@ -210,7 +210,7 @@
       
         <header>
           <h1 id="page-title" class="page__title p-name" itemprop="headline">
-            <a href="https://docs.northernwidget.com/Margay_Library/Pages/index_pages/" itemprop="url">Pages
+            <a href="https://docs.northernwidget.com/Margay_Library/Classes/structMargay_1_1Thermistor/" itemprop="url">Margay::Thermistor
 </a>
           </h1>
           
@@ -225,14 +225,95 @@
           <aside class="sidebar__right sticky">
             <nav class="toc" aria-label="Table of contents">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
-              
+              <ul class="toc__menu"><li><a href="#public-attributes">Public Attributes</a></li><li><a href="#detailed-description">Detailed Description</a></li><li><a href="#public-attributes-documentation">Public Attributes Documentation</a><ul><li><a href="#variable-a">variable a</a></li><li><a href="#variable-b">variable b</a></li><li><a href="#variable-c">variable c</a></li><li><a href="#variable-d">variable d</a></li><li><a href="#variable-seriesresistance">variable seriesResistance</a></li><li><a href="#variable-r25">variable r25</a></li></ul></li></ul>
             </nav>
           </aside>
         
-        <ul>
-  <li><strong>page <a href="/Margay_Library/Pages/md_CLAUDE/#page-md-claude">Margay_Library</a></strong></li>
-  <li><strong>page <a href="/Margay_Library/Pages/md_README/#page-md-readme">README</a></strong></li>
-</ul>
+        <p>Everything the on-board thermistor measurement is calibrated by.  <a href="#detailed-description">More…</a></p>
+
+<h2 id="public-attributes">Public Attributes</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>float</td>
+      <td><strong><a href="/Margay_Library/Classes/structMargay_1_1Thermistor/#variable-a">a</a></strong></td>
+    </tr>
+    <tr>
+      <td>float</td>
+      <td><strong><a href="/Margay_Library/Classes/structMargay_1_1Thermistor/#variable-b">b</a></strong></td>
+    </tr>
+    <tr>
+      <td>float</td>
+      <td><strong><a href="/Margay_Library/Classes/structMargay_1_1Thermistor/#variable-c">c</a></strong></td>
+    </tr>
+    <tr>
+      <td>float</td>
+      <td><strong><a href="/Margay_Library/Classes/structMargay_1_1Thermistor/#variable-d">d</a></strong></td>
+    </tr>
+    <tr>
+      <td>float</td>
+      <td><strong><a href="/Margay_Library/Classes/structMargay_1_1Thermistor/#variable-seriesresistance">seriesResistance</a></strong> <br />[ohm]</td>
+    </tr>
+    <tr>
+      <td>float</td>
+      <td><strong><a href="/Margay_Library/Classes/structMargay_1_1Thermistor/#variable-r25">r25</a></strong> <br />[ohm] at 25 C</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="detailed-description">Detailed Description</h2>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="nc">Margay</span><span class="o">::</span><span class="n">Thermistor</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>Everything the on-board thermistor measurement is calibrated by.</p>
+
+<p>One object, because none of it is ever used apart. a, b, c and d are the Steinhart-Hart coefficients and keep the datasheet’s letters; seriesResistance is the divider resistor beside the thermistor, and r25 the thermistor’s nominal resistance at 25 C. Only a, b, c and d come from Page 1 today (0x22-0x31); the other two hold the board’s compiled values, and Page 1 has room at 0x35-0x3F if they are ever provisioned.</p>
+
+<p>This is not limited to a Steinhart-Hart part. tempConvert() evaluates a polynomial in ln(Rt/r25), and the B-parameter equation is that same expression with its two higher terms at zero: a = 1/T0, b = 1/B, c = 0, d = 0, r25 = R0. A beta-specified thermistor therefore needs no second code path, only those values. The compiled a here is 1/298.15 to ten decimal places, which is 1/T0 at 25 C.</p>
+
+<h2 id="public-attributes-documentation">Public Attributes Documentation</h2>
+
+<h3 id="variable-a">variable a</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">float</span> <span class="n">a</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="variable-b">variable b</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">float</span> <span class="n">b</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="variable-c">variable c</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">float</span> <span class="n">c</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="variable-d">variable d</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">float</span> <span class="n">d</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="variable-seriesresistance">variable seriesResistance</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">float</span> <span class="n">seriesResistance</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>[ohm]</p>
+
+<h3 id="variable-r25">variable r25</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">float</span> <span class="n">r25</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>[ohm] at 25 C</p>
 
 <hr />
 
