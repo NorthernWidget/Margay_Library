@@ -49,6 +49,12 @@ Margay::Margay(board model_, build specs_) {
     WDHold = 23;
     BatSwitch = 19;
 
+    //The watchdog's period, from R10 = 100k on the TPL5010's DELAY pin and
+    //Equation 1 of its datasheet (SNAS651A, Table 1, the T > 1000 s
+    //coefficients): 2160 s, or 36 minutes. A logging interval plus a cycle must
+    //stay inside it, so the longest the grid can hold here is 1800 s.
+    wdtSeconds = 2160;
+
     _batteryDivider = 2.0;
 
     if (specs_ == BUILD_A) {
@@ -89,6 +95,7 @@ Margay::Margay(board model_, build specs_) {
 
     WDHold = 255;     //Null pins
     BatSwitch = 255;  //Null pins
+    wdtSeconds = 0;   //No watchdog on this model, so no ceiling to check against
 
     _batteryDivider = 2.0;
 
