@@ -194,13 +194,17 @@ bool Margay::beginBoard(uint8_t* vals, uint8_t numVals) {
   //Schema 0: the model number the sketch declared
   if (!schema1) snprintf(_hwVersion, sizeof(_hwVersion), "%u", (unsigned)_model);
   if (schema1 && !_pages.page1Blank()) {  //Page 1: this board's calibration, written by NW-Provision; the constants otherwise
+    //Block 0, battery. The thermistor's Steinhart-Hart coefficients used to sit
+    //at 0x22-0x31 and are gone: they were Vishay's published set for a 10k NTC,
+    //identical on every board and compiled in below, and the part itself is
+    //fitted only below model 2.0.
     _batteryDivider = _pages.get16(0x20) / 1000.0;
-    _thermistor.a = _pages.getFloat(0x22);
-    _thermistor.b = _pages.getFloat(0x26);
-    _thermistor.c = _pages.getFloat(0x2A);
-    _thermistor.d = _pages.getFloat(0x2E);
-    batVoltageError = _pages.get16(0x32) / 100.0;
-    batPercentageWarning = _pages.page[0x34];
+    batVoltageError = _pages.get16(0x22) / 100.0;
+    batPercentageWarning = _pages.page[0x24];
+    //Block 2, timing. Zero leaves the model's compiled period in place, so a
+    //blank field does not remove the schedule's ceiling.
+    uint16_t wdt = _pages.get16(0x30);
+    if (wdt) wdtSeconds = wdt;
     Serial.println("Calibration from Page 1");
   }
   serialTimeSet();                      //A YYMMDDHHMMSS string waiting on Serial sets the clock; then the timestamp
