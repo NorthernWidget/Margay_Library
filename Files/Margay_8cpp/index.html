@@ -351,6 +351,15 @@ Andy Wickert
     <span class="n">WDHold</span> <span class="o">=</span> <span class="mi">23</span><span class="p">;</span>
     <span class="n">BatSwitch</span> <span class="o">=</span> <span class="mi">19</span><span class="p">;</span>
 
+    <span class="c1">//The watchdog's period, from R10 = 100k on the TPL5010's DELAY pin. The</span>
+    <span class="c1">//datasheet's Equation 1 (SNAS651A, Table 1, T &gt; 1000 s) gives 2159.65 s,</span>
+    <span class="c1">//which Equation 3 truncates to a discrete 2159 s - the part has 1650</span>
+    <span class="c1">//intervals, not a continuum. R10 is a 1 % resistor, so the real period lies</span>
+    <span class="c1">//between 2110 s and 2209 s, and the shortest is what a ceiling must respect.</span>
+    <span class="c1">//A logging interval plus a cycle must stay inside it, so the longest the</span>
+    <span class="c1">//grid can hold here is 1800 s.</span>
+    <span class="n">wdtSeconds</span> <span class="o">=</span> <span class="mi">2110</span><span class="p">;</span>
+
     <span class="n">_batteryDivider</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">;</span>
 
     <span class="k">if</span> <span class="p">(</span><span class="n">specs_</span> <span class="o">==</span> <span class="n">BUILD_A</span><span class="p">)</span> <span class="p">{</span>
@@ -391,6 +400,7 @@ Andy Wickert
 
     <span class="n">WDHold</span> <span class="o">=</span> <span class="mi">255</span><span class="p">;</span>     <span class="c1">//Null pins</span>
     <span class="n">BatSwitch</span> <span class="o">=</span> <span class="mi">255</span><span class="p">;</span>  <span class="c1">//Null pins</span>
+    <span class="n">wdtSeconds</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>   <span class="c1">//No watchdog on this model, so no ceiling to check against</span>
 
     <span class="n">_batteryDivider</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">;</span>
 
@@ -469,16 +479,17 @@ Andy Wickert
   <span class="n">_rtc</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>                                      <span class="c1">//Initialize RTC</span>
   <span class="n">_rtc</span><span class="p">.</span><span class="n">clearAlarm</span><span class="p">();</span>                                 <span class="c1">//</span>
   <span class="k">if</span> <span class="p">(</span><span class="n">_numAdrOb</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="n">initADC</span><span class="p">(</span><span class="mi">18</span><span class="p">);</span>                    <span class="c1">// Only BUILD_B/C/D have an on-board ADC</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">38400</span><span class="p">);</span>                               <span class="c1">//Before the first thing that may print: the BME280 result below</span>
   <span class="k">if</span> <span class="p">(</span><span class="n">_model</span> <span class="o">&gt;=</span> <span class="n">MODEL_2v0</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">bme280</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mh">0x77</span><span class="p">))</span> <span class="p">{</span>  <span class="c1">//Initialize onboard temp/pressure/RH sensor (BME280)</span>
     <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"BME280 init: FAIL"</span><span class="p">);</span>
     <span class="n">_onBoardError</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
     <span class="n">_bmeError</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="n">raise</span><span class="p">(</span><span class="n">NW_MSG_BME_MISSING</span><span class="p">);</span>
   <span class="p">}</span>
 
 
   <span class="n">ADCSRA</span> <span class="o">=</span> <span class="mb">0b10000111</span><span class="p">;</span>  <span class="c1">//Configure on board ADC for low speed, and enable</span>
 
-  <span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">38400</span><span class="p">);</span>  <span class="c1">//DEBUG!</span>
   <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"Lib = "</span><span class="p">);</span>
   <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">libVersion</span><span class="p">);</span>
   <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"Model = "</span><span class="p">);</span>
@@ -489,13 +500,17 @@ Andy Wickert
   <span class="c1">//Schema 0: the model number the sketch declared</span>
   <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">schema1</span><span class="p">)</span> <span class="n">snprintf</span><span class="p">(</span><span class="n">_hwVersion</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">_hwVersion</span><span class="p">),</span> <span class="s">"%u"</span><span class="p">,</span> <span class="p">(</span><span class="kt">unsigned</span><span class="p">)</span><span class="n">_model</span><span class="p">);</span>
   <span class="k">if</span> <span class="p">(</span><span class="n">schema1</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">_pages</span><span class="p">.</span><span class="n">page1Blank</span><span class="p">())</span> <span class="p">{</span>  <span class="c1">//Page 1: this board's calibration, written by NW-Provision; the constants otherwise</span>
+    <span class="c1">//Block 0, battery. The thermistor's Steinhart-Hart coefficients used to sit</span>
+    <span class="c1">//at 0x22-0x31 and are gone: they were Vishay's published set for a 10k NTC,</span>
+    <span class="c1">//identical on every board and compiled in below, and the part itself is</span>
+    <span class="c1">//fitted only below model 2.0.</span>
     <span class="n">_batteryDivider</span> <span class="o">=</span> <span class="n">_pages</span><span class="p">.</span><span class="n">get16</span><span class="p">(</span><span class="mh">0x20</span><span class="p">)</span> <span class="o">/</span> <span class="mf">1000.0</span><span class="p">;</span>
-    <span class="n">_thermistor</span><span class="p">.</span><span class="n">a</span> <span class="o">=</span> <span class="n">_pages</span><span class="p">.</span><span class="n">getFloat</span><span class="p">(</span><span class="mh">0x22</span><span class="p">);</span>
-    <span class="n">_thermistor</span><span class="p">.</span><span class="n">b</span> <span class="o">=</span> <span class="n">_pages</span><span class="p">.</span><span class="n">getFloat</span><span class="p">(</span><span class="mh">0x26</span><span class="p">);</span>
-    <span class="n">_thermistor</span><span class="p">.</span><span class="n">c</span> <span class="o">=</span> <span class="n">_pages</span><span class="p">.</span><span class="n">getFloat</span><span class="p">(</span><span class="mh">0x2A</span><span class="p">);</span>
-    <span class="n">_thermistor</span><span class="p">.</span><span class="n">d</span> <span class="o">=</span> <span class="n">_pages</span><span class="p">.</span><span class="n">getFloat</span><span class="p">(</span><span class="mh">0x2E</span><span class="p">);</span>
-    <span class="n">batVoltageError</span> <span class="o">=</span> <span class="n">_pages</span><span class="p">.</span><span class="n">get16</span><span class="p">(</span><span class="mh">0x32</span><span class="p">)</span> <span class="o">/</span> <span class="mf">100.0</span><span class="p">;</span>
-    <span class="n">batPercentageWarning</span> <span class="o">=</span> <span class="n">_pages</span><span class="p">.</span><span class="n">page</span><span class="p">[</span><span class="mh">0x34</span><span class="p">];</span>
+    <span class="n">batVoltageError</span> <span class="o">=</span> <span class="n">_pages</span><span class="p">.</span><span class="n">get16</span><span class="p">(</span><span class="mh">0x22</span><span class="p">)</span> <span class="o">/</span> <span class="mf">100.0</span><span class="p">;</span>
+    <span class="n">batPercentageWarning</span> <span class="o">=</span> <span class="n">_pages</span><span class="p">.</span><span class="n">page</span><span class="p">[</span><span class="mh">0x24</span><span class="p">];</span>
+    <span class="c1">//Block 2, timing. Zero leaves the model's compiled period in place, so a</span>
+    <span class="c1">//blank field does not remove the schedule's ceiling.</span>
+    <span class="kt">uint16_t</span> <span class="n">wdt</span> <span class="o">=</span> <span class="n">_pages</span><span class="p">.</span><span class="n">get16</span><span class="p">(</span><span class="mh">0x30</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">wdt</span><span class="p">)</span> <span class="n">wdtSeconds</span> <span class="o">=</span> <span class="n">wdt</span><span class="p">;</span>
     <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Calibration from Page 1"</span><span class="p">);</span>
   <span class="p">}</span>
   <span class="n">serialTimeSet</span><span class="p">();</span>                      <span class="c1">//A YYMMDDHHMMSS string waiting on Serial sets the clock; then the timestamp</span>
@@ -509,7 +524,11 @@ Andy Wickert
   <span class="c1">// Only print out environmental variables if BME280 is on board</span>
   <span class="k">if</span> <span class="p">(</span><span class="n">_model</span> <span class="o">&gt;=</span> <span class="n">MODEL_2v0</span><span class="p">)</span> <span class="n">bme280Readings</span><span class="p">();</span>
 
-  <span class="n">ledReport</span><span class="p">();</span>  <span class="c1">//The self-test results on the RGB LED, then "Ready to Log"</span>
+  <span class="n">printReadyToLog</span><span class="p">();</span>  <span class="c1">//"Ready to Log" on Serial; the LED verdict waits for the first row, in run()</span>
+  <span class="c1">//Pending Andy's decision on whether a logger keeps serving its own Report</span>
+  <span class="c1">//register (QUEUE.md, item 1 step 3). The messages above are what the LED and</span>
+  <span class="c1">//the Note column read; this chain is the served byte, and reports only the</span>
+  <span class="c1">//first fault it meets.</span>
   <span class="c1">//The logger's own report at boot, for its first status row: the first fault the</span>
   <span class="c1">//self-tests found, else LoggingStarted (unit, kind 16).</span>
   <span class="k">if</span> <span class="p">(</span><span class="n">_sdCardMissing</span><span class="p">)</span> <span class="n">_pages</span><span class="p">.</span><span class="n">latchFault</span><span class="p">(</span><span class="mh">0x01</span><span class="p">);</span>
@@ -519,6 +538,7 @@ Andy Wickert
   <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">_sensorError</span><span class="p">)</span> <span class="n">_pages</span><span class="p">.</span><span class="n">latchFault</span><span class="p">(</span><span class="mh">0x61</span><span class="p">);</span>
   <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">_batError</span><span class="p">)</span> <span class="n">_pages</span><span class="p">.</span><span class="n">latchFault</span><span class="p">(</span><span class="mh">0x84</span><span class="p">);</span>
   <span class="n">_pages</span><span class="p">.</span><span class="n">latchNotice</span><span class="p">(</span><span class="mh">0xF0</span><span class="p">);</span>
+  <span class="n">raise</span><span class="p">(</span><span class="n">NW_MSG_LOG_STARTED</span><span class="p">);</span>
   <span class="n">_bootReport</span> <span class="o">=</span> <span class="n">_pages</span><span class="p">.</span><span class="n">report</span><span class="p">();</span>
   <span class="n">_pages</span><span class="p">.</span><span class="n">acknowledge</span><span class="p">();</span>
   <span class="n">_newLog</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>  <span class="c1">//Set flag to begin new log file</span>
@@ -779,7 +799,10 @@ Andy Wickert
   <span class="n">switchExternalI2C</span><span class="p">(</span><span class="n">ON</span><span class="p">);</span>
   <span class="n">readSensors</span><span class="p">();</span>
   <span class="n">farmGateI2C</span><span class="p">(</span><span class="n">initialStateExternalI2C</span><span class="p">);</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">logRow</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="n">_pages</span><span class="p">.</span><span class="n">latchNotice</span><span class="p">(</span><span class="mh">0xF2</span><span class="p">);</span>  <span class="c1">//RowNotWritten</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">logRow</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">_pages</span><span class="p">.</span><span class="n">latchNotice</span><span class="p">(</span><span class="mh">0xF2</span><span class="p">);</span>  <span class="c1">//RowNotWritten, the served byte</span>
+    <span class="n">raise</span><span class="p">(</span><span class="n">NW_MSG_ROW_NOT_WRITTEN</span><span class="p">);</span>
+  <span class="p">}</span>
   <span class="n">fillPages</span><span class="p">();</span>
   <span class="n">reportRows</span><span class="p">();</span>
 <span class="p">}</span>
@@ -918,7 +941,7 @@ Andy Wickert
 
 <hr />
 
-<p>Updated on 2026-10-04 at 04:51:39 +0000</p>
+<p>Updated on 2026-10-20 at 05:10:40 +0000</p>
 
         
       </section>
