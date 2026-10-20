@@ -221,7 +221,7 @@ bool Margay::beginBoard(uint8_t* vals, uint8_t numVals) {
   // Only print out environmental variables if BME280 is on board
   if (_model >= MODEL_2v0) bme280Readings();
 
-  ledReport();  //The self-test results on the RGB LED, then "Ready to Log"
+  printReadyToLog();  //"Ready to Log" on Serial; the LED verdict waits for the first row, in run()
   //The logger's own report at boot, for its first status row: the first fault the
   //self-tests found, else LoggingStarted (unit, kind 16).
   if (_sdCardMissing) _pages.latchFault(0x01);
