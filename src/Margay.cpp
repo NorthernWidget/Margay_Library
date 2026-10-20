@@ -236,6 +236,7 @@ bool Margay::beginBoard(uint8_t* vals, uint8_t numVals) {
   else if (_sensorError) _pages.latchFault(0x61);
   else if (_batError) _pages.latchFault(0x84);
   _pages.latchNotice(0xF0);
+  raise(NW_MSG_LOG_STARTED);
   _bootReport = _pages.report();
   _pages.acknowledge();
   _newLog = true;  //Set flag to begin new log file
@@ -496,7 +497,10 @@ void Margay::addDataPoint() {
   switchExternalI2C(ON);
   readSensors();
   farmGateI2C(initialStateExternalI2C);
-  if (logRow() != 0) _pages.latchNotice(0xF2);  //RowNotWritten
+  if (logRow() != 0) {
+    _pages.latchNotice(0xF2);  //RowNotWritten, the served byte
+    raise(NW_MSG_ROW_NOT_WRITTEN);
+  }
   fillPages();
   reportRows();
 }
