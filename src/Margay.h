@@ -238,6 +238,7 @@ public:
   float _onBoardTemp = NW_ERROR;                                     ///< Thermistor temperature from the last readOnBoard() [C]
   float _rtcTemp = NW_ERROR;                                         ///< RTC die temperature from the last readOnBoard() [C]
   float _batVoltage = NW_ERROR;                                      ///< Battery voltage from the last readOnBoard() [V]
+  float _batPercent = NW_ERROR;                                      ///< Battery percentage from the last readOnBoard(), the alkaline fit
   static constexpr const char* libVersion = MARGAY_LIBRARY_VERSION;  ///< Library version, the logger's FW column in the status file.
 
 protected:
@@ -272,6 +273,15 @@ protected:
   void turnOnSDcard();
   /** @brief Read the on-board channels into _onBoardTemp, _rtcTemp and _batVoltage (and the timestamp). */
   void readOnBoard() override;
+  // TEMPORARY (Andy, 2026-10-28): the pack's level colours the chirp and the
+  // per-row blip, blue, purple or red, from the alkaline fit's percentage.
+  // Placeholder thresholds until Page 1's battery block decides them; and until
+  // Margay_Library#34 gives a USB discriminator, a reading below 3.4 V is not a
+  // pack the board can be running from (a benched board on USB reads 3.29 V) and
+  // gets no judgement: blue.
+  uint32_t batteryColour();
+  uint32_t chirpColour() override;
+  uint32_t rowBlipColour() override;
 
   /** @brief Print the logger's own data columns: the timestamp and the on-board sensors. */
   size_t printDataHeader(Print& out) override;

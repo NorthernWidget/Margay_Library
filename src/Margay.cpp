@@ -247,6 +247,29 @@ bool Margay::beginBoard(uint8_t* vals, uint8_t numVals) {
   return !(_onBoardError || _sensorError || _timeError || _sdCardMissing);  //Okapi's convention: true = nothing wrong
 }
 
+//TEMPORARY thresholds (Andy, 2026-10-28), until Page 1's battery block decides
+//them: the fit's percentage, red below 20, purple below 50, blue above. Below
+//3.4 V the reading is not a pack the board runs from (USB alone reads 3.29 V,
+//Margay_Library#34), so no judgement is made.
+static const float MARGAY_BAT_UNJUDGED_V = 3.4;
+static const float MARGAY_BAT_LOW_PCT = 20;
+static const float MARGAY_BAT_MID_PCT = 50;
+
+uint32_t Margay::batteryColour() {
+  if (_batVoltage == NW_ERROR || _batVoltage < MARGAY_BAT_UNJUDGED_V) return BLUE;
+  if (_batPercent < MARGAY_BAT_LOW_PCT) return RED;
+  if (_batPercent < MARGAY_BAT_MID_PCT) return PURPLE;
+  return BLUE;
+}
+
+uint32_t Margay::chirpColour() {
+  return batteryColour();
+}
+
+uint32_t Margay::rowBlipColour() {
+  return batteryColour();
+}
+
 void Margay::batTest() {
   float batVoltage = getBatVoltage();
   float batPercentage = getBatPercentage();
@@ -356,6 +379,10 @@ float Margay::getBatVoltage() {
 }
 
 float Margay::getBatPercentage() {
+  return batPercentFromVoltage(getBatVoltage());
+}
+
+float Margay::batPercentFromVoltage(float batVoltage) {
   if (nCells == 0) {
     Serial.println(F("getBatPercentage: NCells must be > 0"));
     return -1;
@@ -367,7 +394,7 @@ float Margay::getBatPercentage() {
   float batA = -1.9809;
   float batB = 6.2931;
   float batC = -4.0063;
-  float cellVoltage = getBatVoltage() / nCells;  //Divide to get per-cell voltage
+  float cellVoltage = batVoltage / nCells;  //Divide to get per-cell voltage
   // Return percentage of remaining battery energy
   float percentage = ((batA * pow(cellVoltage, 2) + batB * cellVoltage + batC) * 2 - 1) * 100.0;
   if (percentage < 0) return 0;  //Do not allow return of non-sensical values
@@ -379,10 +406,6 @@ float Margay::getBatPercentage() {
 
 // The data file's header row: the on-board columns (old loggers lack the
 // BME280), then the sketch's Header, then Note. Note is always the last
-  return batPercentFromVoltage(getBatVoltage());
-}
-
-float Margay::batPercentFromVoltage(float batVoltage) {
 // column and carries no comma after it: every sensor ends its fields with a
 // comma for the next, so this ends the row.
 size_t Margay::printDataHeader(Print& out) {
@@ -450,6 +473,7 @@ void Margay::readOnBoard() {
   _onBoardTemp = tempData;
   _rtcTemp = rtcTemp;
   _batVoltage = batVoltage;
+  _batPercent = batPercentFromVoltage(batVoltage);  //TEMPORARY: for the chirp's and the blip's colour; no second read
 }
 
 float Margay::tempConvert(float V, float vcc, const Thermistor& th) {
