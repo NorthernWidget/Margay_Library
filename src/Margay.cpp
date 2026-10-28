@@ -379,6 +379,10 @@ float Margay::getBatPercentage() {
 
 // The data file's header row: the on-board columns (old loggers lack the
 // BME280), then the sketch's Header, then Note. Note is always the last
+  return batPercentFromVoltage(getBatVoltage());
+}
+
+float Margay::batPercentFromVoltage(float batVoltage) {
 // column and carries no comma after it: every sensor ends its fields with a
 // comma for the next, so this ends the row.
 size_t Margay::printDataHeader(Print& out) {

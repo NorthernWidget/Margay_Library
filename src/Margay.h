@@ -175,6 +175,8 @@ public:
      * @return Charge percentage in [0, 100], or -1 if NCells == 0.
      */
   float getBatPercentage();
+  /** @brief The alkaline fit alone: percentage from a pack voltage already read, with nCells. */
+  float batPercentFromVoltage(float batVoltage);
 
   /**
      * @brief Initialise the on-board MCP3421 ADC at a given resolution.
