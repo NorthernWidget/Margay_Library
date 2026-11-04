@@ -312,7 +312,7 @@
     <tr>
       <td>MODEL_0v0</td>
       <td>0</td>
-      <td><a href="/Margay_Library/Classes/classMargay/">Margay</a> v0.0 (prototype)</td>
+      <td><a href="/Margay_Library/Classes/classMargay/">Margay</a> v0.0 (prototype).</td>
     </tr>
     <tr>
       <td>MODEL_1v0</td>
@@ -327,12 +327,12 @@
     <tr>
       <td>MODEL_2v1</td>
       <td>2</td>
-      <td><a href="/Margay_Library/Classes/classMargay/">Margay</a> v2.1 (same pin map as v2.0)</td>
+      <td><a href="/Margay_Library/Classes/classMargay/">Margay</a> v2.1 (same pin map as v2.0).</td>
     </tr>
     <tr>
       <td>MODEL_2v2</td>
       <td>2</td>
-      <td><a href="/Margay_Library/Classes/classMargay/">Margay</a> v2.2 (same pin map as v2.0)</td>
+      <td><a href="/Margay_Library/Classes/classMargay/">Margay</a> v2.2 (same pin map as v2.0).</td>
     </tr>
     <tr>
       <td>MODEL_3v0</td>
@@ -365,12 +365,12 @@
     <tr>
       <td>BUILD_B</td>
       <td>1</td>
-      <td>On-board ADC at 0x69 (MCP3421A1)</td>
+      <td>On-board ADC at 0x69 (MCP3421A1).</td>
     </tr>
     <tr>
       <td>BUILD_C</td>
       <td>2</td>
-      <td>On-board ADC at 0x6B (MCP3421A3)</td>
+      <td>On-board ADC at 0x6B (MCP3421A3).</td>
     </tr>
     <tr>
       <td>BUILD_D</td>
@@ -398,7 +398,7 @@
     <tr>
       <td>thermistor_temp_sensor</td>
       <td>0</td>
-      <td>On-board NTC thermistor (ADC-based)</td>
+      <td>On-board NTC thermistor (ADC-based).</td>
     </tr>
     <tr>
       <td>RTC_temp_sensor</td>
@@ -500,11 +500,13 @@ Andy Wickert
 
   <span class="kt">float</span> <span class="nf">getVoltage</span><span class="p">();</span>
 
+
   <span class="kt">float</span> <span class="nf">getTemp</span><span class="p">(</span><span class="n">temp_source</span> <span class="n">sensor</span> <span class="o">=</span> <span class="n">thermistor_temp_sensor</span><span class="p">);</span>
 
   <span class="kt">float</span> <span class="nf">getBatVoltage</span><span class="p">();</span>
 
   <span class="kt">float</span> <span class="nf">getBatPercentage</span><span class="p">();</span>
+  <span class="kt">float</span> <span class="nf">batPercentFromVoltage</span><span class="p">(</span><span class="kt">float</span> <span class="n">batVoltage</span><span class="p">);</span>
 
   <span class="kt">void</span> <span class="nf">initADC</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="n">desiredResolution</span><span class="p">);</span>
 
@@ -544,6 +546,7 @@ Andy Wickert
   <span class="kt">float</span> <span class="n">_onBoardTemp</span> <span class="o">=</span> <span class="n">NW_ERROR</span><span class="p">;</span>                                     
   <span class="kt">float</span> <span class="n">_rtcTemp</span> <span class="o">=</span> <span class="n">NW_ERROR</span><span class="p">;</span>                                         
   <span class="kt">float</span> <span class="n">_batVoltage</span> <span class="o">=</span> <span class="n">NW_ERROR</span><span class="p">;</span>                                      
+  <span class="kt">float</span> <span class="n">_batPercent</span> <span class="o">=</span> <span class="n">NW_ERROR</span><span class="p">;</span>                                      
   <span class="k">static</span> <span class="k">constexpr</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">libVersion</span> <span class="o">=</span> <span class="n">MARGAY_LIBRARY_VERSION</span><span class="p">;</span>  
 
 <span class="k">protected</span><span class="o">:</span>
@@ -561,6 +564,15 @@ Andy Wickert
   <span class="kt">void</span> <span class="nf">turnOffSDcard</span><span class="p">();</span>
   <span class="kt">void</span> <span class="nf">turnOnSDcard</span><span class="p">();</span>
   <span class="kt">void</span> <span class="n">readOnBoard</span><span class="p">()</span> <span class="k">override</span><span class="p">;</span>
+  <span class="c1">// TEMPORARY (Andy, 2026-10-28): the pack's level colours the chirp and the</span>
+  <span class="c1">// per-row blip, blue, purple or red, from the alkaline fit's percentage.</span>
+  <span class="c1">// Placeholder thresholds until Page 1's battery block decides them; and until</span>
+  <span class="c1">// Margay_Library#34 gives a USB discriminator, a reading below 3.4 V is not a</span>
+  <span class="c1">// pack the board can be running from (a benched board on USB reads 3.29 V) and</span>
+  <span class="c1">// gets no judgement: blue.</span>
+  <span class="kt">uint32_t</span> <span class="nf">batteryColour</span><span class="p">();</span>
+  <span class="kt">uint32_t</span> <span class="n">chirpColour</span><span class="p">()</span> <span class="k">override</span><span class="p">;</span>
+  <span class="kt">uint32_t</span> <span class="n">rowBlipColour</span><span class="p">()</span> <span class="k">override</span><span class="p">;</span>
 
   <span class="kt">size_t</span> <span class="n">printDataHeader</span><span class="p">(</span><span class="n">Print</span><span class="o">&amp;</span> <span class="n">out</span><span class="p">)</span> <span class="k">override</span><span class="p">;</span>
 
@@ -610,7 +622,7 @@ Andy Wickert
 
 <hr />
 
-<p>Updated on 2026-10-20 at 05:10:40 +0000</p>
+<p>Updated on 2026-11-04 at 08:25:00 +0000</p>
 
         
       </section>

@@ -225,7 +225,7 @@
           <aside class="sidebar__right sticky">
             <nav class="toc" aria-label="Table of contents">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
-              <ul class="toc__menu"><li><a href="#public-functions">Public Functions</a></li><li><a href="#public-attributes">Public Attributes</a></li><li><a href="#detailed-description">Detailed Description</a></li><li><a href="#public-functions-documentation">Public Functions Documentation</a><ul><li><a href="#function-margay">function Margay</a></li><li><a href="#function-beginboard">function beginBoard</a></li><li><a href="#function-name">function name</a></li><li><a href="#function-printstatus">function printStatus</a></li><li><a href="#function-getvoltage">function getVoltage</a></li><li><a href="#function-gettemp">function getTemp</a></li><li><a href="#function-getbatvoltage">function getBatVoltage</a></li><li><a href="#function-getbatpercentage">function getBatPercentage</a></li><li><a href="#function-initadc">function initADC</a></li><li><a href="#function-powerob">function powerOB</a></li><li><a href="#function-poweraux">function powerAux</a></li></ul></li><li><a href="#public-attributes-documentation">Public Attributes Documentation</a><ul><li><a href="#variable-vref_pin">variable VRef_Pin</a></li><li><a href="#variable-thermsense_pin">variable ThermSense_Pin</a></li><li><a href="#variable-batsense_pin">variable BatSense_Pin</a></li><li><a href="#variable-vswitch_pin">variable VSwitch_Pin</a></li><li><a href="#variable-ext3v3ctrl">variable Ext3v3Ctrl</a></li><li><a href="#variable-pg">variable PG</a></li><li><a href="#variable-extint">variable ExtInt</a></li><li><a href="#variable-batswitch">variable BatSwitch</a></li><li><a href="#variable-tx">variable TX</a></li><li><a href="#variable-rx">variable RX</a></li><li><a href="#variable-d0">variable D0</a></li><li><a href="#variable-ncells">variable nCells</a></li><li><a href="#variable-batvoltageerror">variable batVoltageError</a></li><li><a href="#variable-batpercentagewarning">variable batPercentageWarning</a></li><li><a href="#variable-_onboardtemp">variable _onBoardTemp</a></li><li><a href="#variable-_rtctemp">variable _rtcTemp</a></li><li><a href="#variable-_batvoltage">variable _batVoltage</a></li><li><a href="#variable-libversion">variable libVersion</a></li></ul></li></ul>
+              <ul class="toc__menu"><li><a href="#public-functions">Public Functions</a></li><li><a href="#public-attributes">Public Attributes</a></li><li><a href="#detailed-description">Detailed Description</a></li><li><a href="#public-functions-documentation">Public Functions Documentation</a><ul><li><a href="#function-margay">function Margay</a></li><li><a href="#function-beginboard">function beginBoard</a></li><li><a href="#function-name">function name</a></li><li><a href="#function-printstatus">function printStatus</a></li><li><a href="#function-getvoltage">function getVoltage</a></li><li><a href="#function-gettemp">function getTemp</a></li><li><a href="#function-getbatvoltage">function getBatVoltage</a></li><li><a href="#function-getbatpercentage">function getBatPercentage</a></li><li><a href="#function-batpercentfromvoltage">function batPercentFromVoltage</a></li><li><a href="#function-initadc">function initADC</a></li><li><a href="#function-powerob">function powerOB</a></li><li><a href="#function-poweraux">function powerAux</a></li></ul></li><li><a href="#public-attributes-documentation">Public Attributes Documentation</a><ul><li><a href="#variable-vref_pin">variable VRef_Pin</a></li><li><a href="#variable-thermsense_pin">variable ThermSense_Pin</a></li><li><a href="#variable-batsense_pin">variable BatSense_Pin</a></li><li><a href="#variable-vswitch_pin">variable VSwitch_Pin</a></li><li><a href="#variable-ext3v3ctrl">variable Ext3v3Ctrl</a></li><li><a href="#variable-pg">variable PG</a></li><li><a href="#variable-extint">variable ExtInt</a></li><li><a href="#variable-batswitch">variable BatSwitch</a></li><li><a href="#variable-tx">variable TX</a></li><li><a href="#variable-rx">variable RX</a></li><li><a href="#variable-d0">variable D0</a></li><li><a href="#variable-ncells">variable nCells</a></li><li><a href="#variable-batvoltageerror">variable batVoltageError</a></li><li><a href="#variable-batpercentagewarning">variable batPercentageWarning</a></li><li><a href="#variable-_onboardtemp">variable _onBoardTemp</a></li><li><a href="#variable-_rtctemp">variable _rtcTemp</a></li><li><a href="#variable-_batvoltage">variable _batVoltage</a></li><li><a href="#variable-_batpercent">variable _batPercent</a></li><li><a href="#variable-libversion">variable libVersion</a></li></ul></li></ul>
             </nav>
           </aside>
         
@@ -276,6 +276,10 @@
     <tr>
       <td>float</td>
       <td><strong><a href="/Margay_Library/Classes/classMargay/#function-getbatpercentage">getBatPercentage</a></strong>()<br />Estimate remaining battery charge as a percentage.</td>
+    </tr>
+    <tr>
+      <td>float</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-batpercentfromvoltage">batPercentFromVoltage</a></strong>(float batVoltage)<br />The alkaline fit alone: percentage from a pack voltage already read, with nCells.</td>
     </tr>
     <tr>
       <td>void</td>
@@ -371,7 +375,11 @@
       <td><strong><a href="/Margay_Library/Classes/classMargay/#variable--batvoltage">_batVoltage</a></strong> <br />Battery voltage from the last readOnBoard() [V].</td>
     </tr>
     <tr>
-      <td>constexpr const char *</td>
+      <td>float</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable--batpercent">_batPercent</a></strong> <br />Battery percentage from the last readOnBoard(), the alkaline fit.</td>
+    </tr>
+    <tr>
+      <td>const char *</td>
       <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-libversion">libVersion</a></strong> <br />Library version, the logger’s FW column in the status file.</td>
     </tr>
   </tbody>
@@ -510,6 +518,15 @@ Read temperature from an on-board sensor.</p>
 <p><strong>Return</strong>: Charge percentage in [0, 100], or -1 if NCells == 0.</p>
 
 <p>Uses a quadratic fit developed for Duracell AA alkaline cells. Should generalise well to most alkalines; accuracy not guaranteed for other chemistries. Accurate to within ~1% from 30% to 100% capacity at 25°C. Configure the number of cells in series via the public member variable NCells (default 3). NCells must be &gt; 0; setting it to 0 will print an error to Serial and return -1.</p>
+
+<h3 id="function-batpercentfromvoltage">function batPercentFromVoltage</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">float</span> <span class="n">batPercentFromVoltage</span><span class="p">(</span>
+    <span class="kt">float</span> <span class="n">batVoltage</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p>The alkaline fit alone: percentage from a pack voltage already read, with nCells.</p>
 
 <h3 id="function-initadc">function initADC</h3>
 
@@ -683,16 +700,23 @@ Read temperature from an on-board sensor.</p>
 
 <p>Battery voltage from the last readOnBoard() [V].</p>
 
+<h3 id="variable-_batpercent">variable _batPercent</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">float</span> <span class="n">_batPercent</span> <span class="o">=</span> <span class="n">NW_ERROR</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>Battery percentage from the last readOnBoard(), the alkaline fit.</p>
+
 <h3 id="variable-libversion">variable libVersion</h3>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">static</span> <span class="k">constexpr</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">libVersion</span> <span class="o">=</span> <span class="n">MARGAY_LIBRARY_VERSION</span><span class="p">;</span>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">static</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">libVersion</span> <span class="o">=</span> <span class="n">MARGAY_LIBRARY_VERSION</span><span class="p">;</span>
 </code></pre></div></div>
 
 <p>Library version, the logger’s FW column in the status file.</p>
 
 <hr />
 
-<p>Updated on 2026-10-20 at 05:10:40 +0000</p>
+<p>Updated on 2026-11-04 at 08:25:00 +0000</p>
 
         
       </section>
