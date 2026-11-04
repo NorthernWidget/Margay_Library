@@ -52,7 +52,6 @@ BUILD_C		LITERAL1
 BUILD_D		LITERAL1
 
 # Temperature source
-thermistor_temp_sensor	LITERAL1
 RTC_temp_sensor		LITERAL1
 
 # LED colours

@@ -31,7 +31,6 @@ Margay::Margay(board model_, build specs_) {
     BlueLED = 14;
 
     VRef_Pin = 3;
-    ThermSense_Pin = 1;
     BatSense_Pin = 2;
 
     VSwitch_Pin = 12;
@@ -81,7 +80,6 @@ Margay::Margay(board model_, build specs_) {
     BlueLED = 14;
 
     VRef_Pin = 2;
-    ThermSense_Pin = 1;
     BatSense_Pin = 0;
 
     VSwitch_Pin = 12;
@@ -129,7 +127,6 @@ Margay::Margay(board model_, build specs_) {
     BlueLED = 14;
 
     VRef_Pin = 2;
-    ThermSense_Pin = 1;
     BatSense_Pin = 0;
 
     VSwitch_Pin = 3;
@@ -339,16 +336,8 @@ void Margay::bme280Readings() {
 }
 
 float Margay::getTemp(temp_source sensor) {
-  float vcc = 3.3;
-  // Get temp from on board thermistor
-  if (sensor == thermistor_temp_sensor) {
-    float adcVoltage = float(analogRead(ThermSense_Pin)) * (vcc / 1023.0);
-    float tempData = tempConvert(adcVoltage, vcc, _thermistor);
-    tempData = tempData - 273.15;
-    return tempData;
-  }
   // Get Temp from RTC
-  else if (sensor == RTC_temp_sensor) {
+  if (sensor == RTC_temp_sensor) {
     float rtcTemp = _rtc.getTemp();
     return rtcTemp;
   } else {
@@ -413,28 +402,19 @@ size_t Margay::printDataHeader(Print& out) {
   //file's header row is this, then each watched sensor's, then Note. See
   //LIBRARY-DESIGN.md section 14.
   size_t n = 0;
-  if (_model < MODEL_2v0) {
-    n += out.print("Time [UTC], Temp OB [C], Temp RTC [C], Bat [V], ");
-  } else {  // new loggers include pressure and RH from BME280
-    n += out.print("Time [UTC], PresOB [mBar], RH_OB [%], TempOB [C], ");
-    n += out.print("Temp RTC [C], Bat [V], ");
-  }
+  n += out.print("Time [UTC], PresOB [mBar], RH_OB [%], TempOB [C], ");
+  n += out.print("Temp RTC [C], Bat [V], ");
   return n;
 }
 
 size_t Margay::printDataRow(Print& out) {
   //The values readOnBoard() left, in printDataHeader()'s order. This takes no
   //reading: a row written to the card and to the monitor must not read the
-  //thermistor twice, and the two rows would otherwise differ.
+  //sensors twice, and the two rows would otherwise differ.
   size_t n = 0;
   n += out.print(_logTimeDate);
   n += out.print(',');
-  if (_model < MODEL_2v0) {
-    n += out.print(_onBoardTemp);
-    n += out.print(',');
-  } else {
-    n += bme280.printDataRow(out);
-  }
+  n += bme280.printDataRow(out);
   n += out.print(_rtcTemp);
   n += out.print(',');
   n += out.print(_batVoltage);
@@ -447,22 +427,6 @@ void Margay::readOnBoard() {
   // float VRef = analogRead(VRef_Pin);
   float vcc = 3.3;  //(1.8/VRef)*3.3; //Compensate for vcc using VRef
   // Serial.println(vcc); //DEBUG!
-  float tempData = 0;  //FIX!!! Dumb!
-
-  if (_model < MODEL_2v0) {  //For older thermistor models
-    float val = float(analogRead(ThermSense_Pin));
-    // Find compensation value with VRef due to vcc error
-    float comp = (1.8 / 3.3) * 1023.0 / analogRead(VRef_Pin);
-    // Override comp calculation since many v0.0 models do not have ref equipped
-    if (_model == 0) comp = 1.0;
-    val = val * comp * (vcc / 1023.0);  //Compensate for ref voltage error
-    // float Vout = vcc - val;
-    // Serial.println(val); //DEBUG!
-    // Serial.println(Vout);  //DEBUG!
-    tempData = tempConvert(val, vcc * comp, _thermistor);
-    tempData = tempData - 273.15;  //Get temp from on board thermistor
-  }
-
   // delay(10);
   // Get battery voltage, including voltage divider in math
   float batVoltage = getBatVoltage();
@@ -470,23 +434,9 @@ void Margay::readOnBoard() {
   // Temp[3] = Clock.getTemperature(); //Get temperature from RTC //FIX!
   float rtcTemp = _rtc.getTemp();  //Get Temp from RTC
   getTime();                       //FIX!
-  _onBoardTemp = tempData;
   _rtcTemp = rtcTemp;
   _batVoltage = batVoltage;
   _batPercent = batPercentFromVoltage(batVoltage);  //TEMPORARY: for the chirp's and the blip's colour; no second read
-}
-
-float Margay::tempConvert(float V, float vcc, const Thermistor& th) {
-  //  Serial.print("R = "); //DEBUG!
-  //  Serial.println(R); //DEBUG!
-  float rt = ((vcc / V) * th.seriesResistance) - th.seriesResistance;
-  //  Serial.print("rt = "); //DEBUG!
-  //  Serial.println(rt); //DEBUG!
-  float logRt = log(rt / th.r25);
-  //  Serial.print("logRt = "); //DEBUG!
-  //  Serial.println(logRt); //DEBUG!
-  float t = 1.0 / (th.a + th.b * logRt + th.c * pow(logRt, 2.0) + th.d * pow(logRt, 3.0));
-  return t;
 }
 
 float Margay::getVoltage() {  //Get voltage from Ax pin
@@ -549,7 +499,6 @@ void Margay::fillPages() {
   float v = getBatVoltage();
   _pages.put8(0x48, (uint8_t)constrain(getBatPercentage(), 0, 100));
   _pages.put16(0x49, (uint16_t)(v * 100.0 + 0.5));
-  _pages.put16(0x4B, (uint16_t)(int16_t)(getTemp(thermistor_temp_sensor) * 100.0));  //0 on models without the thermistor path
   if (_model >= MODEL_2v0 && !_bmeError) {
     _pages.put16(0x50, (uint16_t)(int16_t)(bme280.getTemperature() * 100.0));
     _pages.put16(0x52, (uint16_t)(bme280.getHumidity() * 100.0));

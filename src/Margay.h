@@ -64,8 +64,7 @@ enum build {
  * @brief Temperature sensor selection for getTemp().
  */
 enum temp_source {
-  thermistor_temp_sensor = 0,  ///< On-board NTC thermistor (ADC-based)
-  RTC_temp_sensor = 1          ///< DS3231 RTC internal temperature sensor
+  RTC_temp_sensor = 1  ///< DS3231 RTC internal temperature sensor
 };
 
 ////////////////////////////PIN DEFINITIONS///////////////////////
@@ -145,13 +144,12 @@ public:
 
   /**
      * @brief Read temperature from an on-board sensor.
-     * @param sensor Temperature source. Options:
-     *               - thermistor_temp_sensor (0): on-board NTC thermistor
-     *               - RTC_temp_sensor (1): DS3231 RTC internal sensor
-     *               Defaults to thermistor_temp_sensor.
+     * @param sensor Temperature source: RTC_temp_sensor (1), the DS3231's
+     *               internal sensor. The BME280's temperature is read through
+     *               bme280.
      * @return Temperature in degrees Celsius, or -1234 on invalid input.
      */
-  float getTemp(temp_source sensor = thermistor_temp_sensor);
+  float getTemp(temp_source sensor = RTC_temp_sensor);
 
   /**
      * @brief Read battery pack voltage.
@@ -214,7 +212,6 @@ public:
   // -----------------------------------------------------------------------
 
   uint8_t VRef_Pin = 2;        ///< ADC pin connected to voltage reference.
-  uint8_t ThermSense_Pin = 1;  ///< ADC pin connected to on-board NTC thermistor divider.
   uint8_t BatSense_Pin = 0;    ///< ADC pin connected to battery voltage divider.
 
   uint8_t VSwitch_Pin = 3;  ///< Voltage switch control pin.
@@ -235,43 +232,16 @@ public:
   uint8_t nCells = 3;                                                ///< Number of AA cells in series in the battery pack. Used by getBatPercentage().
   float batVoltageError = 3.3;                                       ///< Battery voltage threshold [V] below which BatError is set and logged.
   float batPercentageWarning = 50;                                   ///< Battery charge threshold [%] below which BatWarning is set and logged.
-  float _onBoardTemp = NW_ERROR;                                     ///< Thermistor temperature from the last readOnBoard() [C]
   float _rtcTemp = NW_ERROR;                                         ///< RTC die temperature from the last readOnBoard() [C]
   float _batVoltage = NW_ERROR;                                      ///< Battery voltage from the last readOnBoard() [V]
   float _batPercent = NW_ERROR;                                      ///< Battery percentage from the last readOnBoard(), the alkaline fit
   static constexpr const char* libVersion = MARGAY_LIBRARY_VERSION;  ///< Library version, the logger's FW column in the status file.
 
 protected:
-  /**
-     * @brief Everything the on-board thermistor measurement is calibrated by.
-     * @details One object, because none of it is ever used apart. a, b, c and d
-     * are the Steinhart-Hart coefficients and keep the datasheet's letters;
-     * seriesResistance is the divider resistor beside the thermistor, and r25
-     * the thermistor's nominal resistance at 25 C. Only a, b, c and d come from
-     * Page 1 today (0x22-0x31); the other two hold the board's compiled values,
-     * and Page 1 has room at 0x35-0x3F if they are ever provisioned.
-     *
-     * This is not limited to a Steinhart-Hart part. tempConvert() evaluates a
-     * polynomial in ln(Rt/r25), and the B-parameter equation is that same
-     * expression with its two higher terms at zero: a = 1/T0, b = 1/B, c = 0,
-     * d = 0, r25 = R0. A beta-specified thermistor therefore needs no second
-     * code path, only those values. The compiled a here is 1/298.15 to ten
-     * decimal places, which is 1/T0 at 25 C.
-     */
-  struct Thermistor {
-    float a;
-    float b;
-    float c;
-    float d;
-    float seriesResistance;  ///< [ohm]
-    float r25;               ///< [ohm] at 25 C
-  };
-
-  float tempConvert(float V, float vcc, const Thermistor& th);
   void sleepNow() override;
   void turnOffSDcard();
   void turnOnSDcard();
-  /** @brief Read the on-board channels into _onBoardTemp, _rtcTemp and _batVoltage (and the timestamp). */
+  /** @brief Read the on-board channels into _rtcTemp and _batVoltage (and the timestamp). */
   void readOnBoard() override;
   // TEMPORARY (Andy, 2026-10-28): the pack's level colours the chirp and the
   // per-row blip, blue, purple or red, from the alkaline fit's percentage.
@@ -322,7 +292,6 @@ protected:
 
   MCP3421 adc;
 
-  Thermistor _thermistor = { 0.003354016, 0.0003074038, 1.019153E-05, 9.093712E-07, 10000.0, 10000.0 };
 
   float _batteryDivider = 2.0;  //Default for v1.0
 
