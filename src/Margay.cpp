@@ -48,14 +48,19 @@ Margay::Margay(board model_, build specs_) {
     WDHold = 23;
     BatSwitch = 19;
 
-    //The watchdog's period, from R10 = 100k on the TPL5010's DELAY pin. The
-    //datasheet's Equation 1 (SNAS651A, Table 1, T > 1000 s) gives 2159.65 s,
-    //which Equation 3 truncates to a discrete 2159 s - the part has 1650
-    //intervals, not a continuum. R10 is a 1 % resistor, so the real period lies
-    //between 2110 s and 2209 s, and the shortest is what a ceiling must respect.
-    //A logging interval plus a cycle must stay inside it, so the longest the
-    //grid can hold here is 1800 s.
-    wdtSeconds = 2110;
+    //The watchdog's period, from R10 on the TPL5010's DELAY pin, by the
+    //datasheet's Equation 1 (SNAS651A, Table 1, T > 1000 s). R10 is a 1 %
+    //resistor and the shortest period it allows is what a ceiling must respect:
+    //a logging interval plus a cycle must stay inside it. Page 1 register 0x30
+    //overrides this per board.
+    //  v3.0: 130 kΩ (Project-Margay 755ffd9, 2022), 3943 s nominal, 3854 to 4033 s;
+    //        the grid holds 3600 s.
+    //  v2.x: 100 kΩ, 2160 s nominal, 2110 to 2209 s; the grid holds 1800 s.
+    if (model_ == 3) {
+      wdtSeconds = 3853;
+    } else {
+      wdtSeconds = 2110;
+    }
 
     _batteryDivider = 2.0;
 
