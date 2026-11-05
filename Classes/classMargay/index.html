@@ -225,7 +225,7 @@
           <aside class="sidebar__right sticky">
             <nav class="toc" aria-label="Table of contents">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
-              <ul class="toc__menu"><li><a href="#public-functions">Public Functions</a></li><li><a href="#public-attributes">Public Attributes</a></li><li><a href="#detailed-description">Detailed Description</a></li><li><a href="#public-functions-documentation">Public Functions Documentation</a><ul><li><a href="#function-margay">function Margay</a></li><li><a href="#function-beginboard">function beginBoard</a></li><li><a href="#function-name">function name</a></li><li><a href="#function-printstatus">function printStatus</a></li><li><a href="#function-getvoltage">function getVoltage</a></li><li><a href="#function-gettemp">function getTemp</a></li><li><a href="#function-getbatvoltage">function getBatVoltage</a></li><li><a href="#function-getbatpercentage">function getBatPercentage</a></li><li><a href="#function-batpercentfromvoltage">function batPercentFromVoltage</a></li><li><a href="#function-initadc">function initADC</a></li><li><a href="#function-powerob">function powerOB</a></li><li><a href="#function-poweraux">function powerAux</a></li></ul></li><li><a href="#public-attributes-documentation">Public Attributes Documentation</a><ul><li><a href="#variable-vref_pin">variable VRef_Pin</a></li><li><a href="#variable-thermsense_pin">variable ThermSense_Pin</a></li><li><a href="#variable-batsense_pin">variable BatSense_Pin</a></li><li><a href="#variable-vswitch_pin">variable VSwitch_Pin</a></li><li><a href="#variable-ext3v3ctrl">variable Ext3v3Ctrl</a></li><li><a href="#variable-pg">variable PG</a></li><li><a href="#variable-extint">variable ExtInt</a></li><li><a href="#variable-batswitch">variable BatSwitch</a></li><li><a href="#variable-tx">variable TX</a></li><li><a href="#variable-rx">variable RX</a></li><li><a href="#variable-d0">variable D0</a></li><li><a href="#variable-ncells">variable nCells</a></li><li><a href="#variable-batvoltageerror">variable batVoltageError</a></li><li><a href="#variable-batpercentagewarning">variable batPercentageWarning</a></li><li><a href="#variable-_onboardtemp">variable _onBoardTemp</a></li><li><a href="#variable-_rtctemp">variable _rtcTemp</a></li><li><a href="#variable-_batvoltage">variable _batVoltage</a></li><li><a href="#variable-_batpercent">variable _batPercent</a></li><li><a href="#variable-libversion">variable libVersion</a></li></ul></li></ul>
+              <ul class="toc__menu"><li><a href="#public-functions">Public Functions</a></li><li><a href="#public-attributes">Public Attributes</a></li><li><a href="#detailed-description">Detailed Description</a></li><li><a href="#public-functions-documentation">Public Functions Documentation</a><ul><li><a href="#function-margay">function Margay</a></li><li><a href="#function-beginboard">function beginBoard</a></li><li><a href="#function-name">function name</a></li><li><a href="#function-printstatus">function printStatus</a></li><li><a href="#function-getvoltage">function getVoltage</a></li><li><a href="#function-gettemp">function getTemp</a></li><li><a href="#function-getbatvoltage">function getBatVoltage</a></li><li><a href="#function-getbatpercentage">function getBatPercentage</a></li><li><a href="#function-batpercentfromvoltage">function batPercentFromVoltage</a></li><li><a href="#function-initadc">function initADC</a></li><li><a href="#function-powerob">function powerOB</a></li><li><a href="#function-poweraux">function powerAux</a></li></ul></li><li><a href="#public-attributes-documentation">Public Attributes Documentation</a><ul><li><a href="#variable-vref_pin">variable VRef_Pin</a></li><li><a href="#variable-batsense_pin">variable BatSense_Pin</a></li><li><a href="#variable-vswitch_pin">variable VSwitch_Pin</a></li><li><a href="#variable-ext3v3ctrl">variable Ext3v3Ctrl</a></li><li><a href="#variable-pg">variable PG</a></li><li><a href="#variable-extint">variable ExtInt</a></li><li><a href="#variable-batswitch">variable BatSwitch</a></li><li><a href="#variable-tx">variable TX</a></li><li><a href="#variable-rx">variable RX</a></li><li><a href="#variable-d0">variable D0</a></li><li><a href="#variable-ncells">variable nCells</a></li><li><a href="#variable-batvoltageerror">variable batVoltageError</a></li><li><a href="#variable-batpercentagewarning">variable batPercentageWarning</a></li><li><a href="#variable-_rtctemp">variable _rtcTemp</a></li><li><a href="#variable-_batvoltage">variable _batVoltage</a></li><li><a href="#variable-_batpercent">variable _batPercent</a></li><li><a href="#variable-libversion">variable libVersion</a></li></ul></li></ul>
             </nav>
           </aside>
         
@@ -267,7 +267,7 @@
     </tr>
     <tr>
       <td>float</td>
-      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-gettemp">getTemp</a></strong>(temp_source sensor =thermistor_temp_sensor)<br />Log one data point immediately, outside the normal run() cycle.</td>
+      <td><strong><a href="/Margay_Library/Classes/classMargay/#function-gettemp">getTemp</a></strong>(temp_source sensor =RTC_temp_sensor)<br />Log one data point immediately, outside the normal run() cycle.</td>
     </tr>
     <tr>
       <td>float</td>
@@ -309,10 +309,6 @@
     <tr>
       <td>uint8_t</td>
       <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-vref-pin">VRef_Pin</a></strong> <br />ADC pin connected to voltage reference.</td>
-    </tr>
-    <tr>
-      <td>uint8_t</td>
-      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-thermsense-pin">ThermSense_Pin</a></strong> <br />ADC pin connected to on-board NTC thermistor divider.</td>
     </tr>
     <tr>
       <td>uint8_t</td>
@@ -361,10 +357,6 @@
     <tr>
       <td>float</td>
       <td><strong><a href="/Margay_Library/Classes/classMargay/#variable-batpercentagewarning">batPercentageWarning</a></strong> <br />Battery charge threshold [%] below which BatWarning is set and logged.</td>
-    </tr>
-    <tr>
-      <td>float</td>
-      <td><strong><a href="/Margay_Library/Classes/classMargay/#variable--onboardtemp">_onBoardTemp</a></strong> <br />Thermistor temperature from the last readOnBoard() [C].</td>
     </tr>
     <tr>
       <td>float</td>
@@ -475,7 +467,7 @@
 <h3 id="function-gettemp">function getTemp</h3>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">float</span> <span class="n">getTemp</span><span class="p">(</span>
-    <span class="n">temp_source</span> <span class="n">sensor</span> <span class="o">=</span><span class="n">thermistor_temp_sensor</span>
+    <span class="n">temp_source</span> <span class="n">sensor</span> <span class="o">=</span><span class="n">RTC_temp_sensor</span>
 <span class="p">)</span>
 </code></pre></div></div>
 
@@ -485,11 +477,7 @@
 
 <ul>
   <li><strong>update</strong> Pointer to the user’s update() function.</li>
-  <li>
-    <p><strong>sensor</strong> Temperature source. Options:</p>
-  </li>
-  <li>thermistor_temp_sensor (0): on-board NTC thermistor</li>
-  <li>RTC_temp_sensor (1): DS3231 RTC internal sensor Defaults to thermistor_temp_sensor.</li>
+  <li><strong>sensor</strong> Temperature source: RTC_temp_sensor (1), the DS3231’s internal sensor. The BME280’s temperature is read through bme280.</li>
 </ul>
 
 <p><strong>Return</strong>: Temperature in degrees Celsius, or -1234 on invalid input.</p>
@@ -588,13 +576,6 @@ Read temperature from an on-board sensor.</p>
 
 <p>ADC pin connected to voltage reference.</p>
 
-<h3 id="variable-thermsense_pin">variable ThermSense_Pin</h3>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint8_t</span> <span class="n">ThermSense_Pin</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p>ADC pin connected to on-board NTC thermistor divider.</p>
-
 <h3 id="variable-batsense_pin">variable BatSense_Pin</h3>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">uint8_t</span> <span class="n">BatSense_Pin</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
@@ -679,13 +660,6 @@ Read temperature from an on-board sensor.</p>
 
 <p>Battery charge threshold [%] below which BatWarning is set and logged.</p>
 
-<h3 id="variable-_onboardtemp">variable _onBoardTemp</h3>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">float</span> <span class="n">_onBoardTemp</span> <span class="o">=</span> <span class="n">NW_ERROR</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p>Thermistor temperature from the last readOnBoard() [C].</p>
-
 <h3 id="variable-_rtctemp">variable _rtcTemp</h3>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">float</span> <span class="n">_rtcTemp</span> <span class="o">=</span> <span class="n">NW_ERROR</span><span class="p">;</span>
@@ -716,7 +690,7 @@ Read temperature from an on-board sensor.</p>
 
 <hr />
 
-<p>Updated on 2026-11-04 at 08:25:00 +0000</p>
+<p>Updated on 2026-11-05 at 05:12:15 +0000</p>
 
         
       </section>

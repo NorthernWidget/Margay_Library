@@ -266,7 +266,7 @@
     </tr>
     <tr>
       <td>enum</td>
-      <td><strong><a href="/Margay_Library/Files/Margay_8h/#enum-temp-source">temp_source</a></strong> { thermistor_temp_sensor = 0, RTC_temp_sensor = 1}<br />Temperature sensor selection for getTemp().</td>
+      <td><strong><a href="/Margay_Library/Files/Margay_8h/#enum-temp-source">temp_source</a></strong> { RTC_temp_sensor = 1}<br />Temperature sensor selection for getTemp().</td>
     </tr>
   </tbody>
 </table>
@@ -396,11 +396,6 @@
   </thead>
   <tbody>
     <tr>
-      <td>thermistor_temp_sensor</td>
-      <td>0</td>
-      <td>On-board NTC thermistor (ADC-based).</td>
-    </tr>
-    <tr>
       <td>RTC_temp_sensor</td>
       <td>1</td>
       <td>DS3231 RTC internal temperature sensor.</td>
@@ -480,8 +475,7 @@ Andy Wickert
 <span class="p">};</span>
 
 <span class="k">enum</span> <span class="n">temp_source</span> <span class="p">{</span>
-  <span class="n">thermistor_temp_sensor</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>  
-  <span class="n">RTC_temp_sensor</span> <span class="o">=</span> <span class="mi">1</span>          
+  <span class="n">RTC_temp_sensor</span> <span class="o">=</span> <span class="mi">1</span>  
 <span class="p">};</span>
 
 
@@ -501,7 +495,7 @@ Andy Wickert
   <span class="kt">float</span> <span class="nf">getVoltage</span><span class="p">();</span>
 
 
-  <span class="kt">float</span> <span class="nf">getTemp</span><span class="p">(</span><span class="n">temp_source</span> <span class="n">sensor</span> <span class="o">=</span> <span class="n">thermistor_temp_sensor</span><span class="p">);</span>
+  <span class="kt">float</span> <span class="nf">getTemp</span><span class="p">(</span><span class="n">temp_source</span> <span class="n">sensor</span> <span class="o">=</span> <span class="n">RTC_temp_sensor</span><span class="p">);</span>
 
   <span class="kt">float</span> <span class="nf">getBatVoltage</span><span class="p">();</span>
 
@@ -522,7 +516,6 @@ Andy Wickert
   <span class="c1">// -----------------------------------------------------------------------</span>
 
   <span class="kt">uint8_t</span> <span class="n">VRef_Pin</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>        
-  <span class="kt">uint8_t</span> <span class="n">ThermSense_Pin</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>  
   <span class="kt">uint8_t</span> <span class="n">BatSense_Pin</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>    
 
   <span class="kt">uint8_t</span> <span class="n">VSwitch_Pin</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>  
@@ -543,23 +536,12 @@ Andy Wickert
   <span class="kt">uint8_t</span> <span class="n">nCells</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>                                                
   <span class="kt">float</span> <span class="n">batVoltageError</span> <span class="o">=</span> <span class="mf">3.3</span><span class="p">;</span>                                       
   <span class="kt">float</span> <span class="n">batPercentageWarning</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>                                   
-  <span class="kt">float</span> <span class="n">_onBoardTemp</span> <span class="o">=</span> <span class="n">NW_ERROR</span><span class="p">;</span>                                     
   <span class="kt">float</span> <span class="n">_rtcTemp</span> <span class="o">=</span> <span class="n">NW_ERROR</span><span class="p">;</span>                                         
   <span class="kt">float</span> <span class="n">_batVoltage</span> <span class="o">=</span> <span class="n">NW_ERROR</span><span class="p">;</span>                                      
   <span class="kt">float</span> <span class="n">_batPercent</span> <span class="o">=</span> <span class="n">NW_ERROR</span><span class="p">;</span>                                      
   <span class="k">static</span> <span class="k">constexpr</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">libVersion</span> <span class="o">=</span> <span class="n">MARGAY_LIBRARY_VERSION</span><span class="p">;</span>  
 
 <span class="k">protected</span><span class="o">:</span>
-  <span class="k">struct</span> <span class="nc">Thermistor</span> <span class="p">{</span>
-    <span class="kt">float</span> <span class="n">a</span><span class="p">;</span>
-    <span class="kt">float</span> <span class="n">b</span><span class="p">;</span>
-    <span class="kt">float</span> <span class="n">c</span><span class="p">;</span>
-    <span class="kt">float</span> <span class="n">d</span><span class="p">;</span>
-    <span class="kt">float</span> <span class="n">seriesResistance</span><span class="p">;</span>  
-    <span class="kt">float</span> <span class="n">r25</span><span class="p">;</span>               
-  <span class="p">};</span>
-
-  <span class="kt">float</span> <span class="nf">tempConvert</span><span class="p">(</span><span class="kt">float</span> <span class="n">V</span><span class="p">,</span> <span class="kt">float</span> <span class="n">vcc</span><span class="p">,</span> <span class="k">const</span> <span class="n">Thermistor</span><span class="o">&amp;</span> <span class="n">th</span><span class="p">);</span>
   <span class="kt">void</span> <span class="n">sleepNow</span><span class="p">()</span> <span class="k">override</span><span class="p">;</span>
   <span class="kt">void</span> <span class="nf">turnOffSDcard</span><span class="p">();</span>
   <span class="kt">void</span> <span class="nf">turnOnSDcard</span><span class="p">();</span>
@@ -606,7 +588,6 @@ Andy Wickert
 
   <span class="n">MCP3421</span> <span class="n">adc</span><span class="p">;</span>
 
-  <span class="n">Thermistor</span> <span class="n">_thermistor</span> <span class="o">=</span> <span class="p">{</span> <span class="mf">0.003354016</span><span class="p">,</span> <span class="mf">0.0003074038</span><span class="p">,</span> <span class="mf">1.019153E-05</span><span class="p">,</span> <span class="mf">9.093712E-07</span><span class="p">,</span> <span class="mf">10000.0</span><span class="p">,</span> <span class="mf">10000.0</span> <span class="p">};</span>
 
   <span class="kt">float</span> <span class="n">_batteryDivider</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">;</span>  <span class="c1">//Default for v1.0</span>
 
@@ -622,7 +603,7 @@ Andy Wickert
 
 <hr />
 
-<p>Updated on 2026-11-04 at 08:25:00 +0000</p>
+<p>Updated on 2026-11-05 at 05:12:15 +0000</p>
 
         
       </section>

@@ -360,7 +360,6 @@ Andy Wickert
     <span class="n">BlueLED</span> <span class="o">=</span> <span class="mi">14</span><span class="p">;</span>
 
     <span class="n">VRef_Pin</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
-    <span class="n">ThermSense_Pin</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
     <span class="n">BatSense_Pin</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
 
     <span class="n">VSwitch_Pin</span> <span class="o">=</span> <span class="mi">12</span><span class="p">;</span>
@@ -378,14 +377,19 @@ Andy Wickert
     <span class="n">WDHold</span> <span class="o">=</span> <span class="mi">23</span><span class="p">;</span>
     <span class="n">BatSwitch</span> <span class="o">=</span> <span class="mi">19</span><span class="p">;</span>
 
-    <span class="c1">//The watchdog's period, from R10 = 100k on the TPL5010's DELAY pin. The</span>
-    <span class="c1">//datasheet's Equation 1 (SNAS651A, Table 1, T &gt; 1000 s) gives 2159.65 s,</span>
-    <span class="c1">//which Equation 3 truncates to a discrete 2159 s - the part has 1650</span>
-    <span class="c1">//intervals, not a continuum. R10 is a 1 % resistor, so the real period lies</span>
-    <span class="c1">//between 2110 s and 2209 s, and the shortest is what a ceiling must respect.</span>
-    <span class="c1">//A logging interval plus a cycle must stay inside it, so the longest the</span>
-    <span class="c1">//grid can hold here is 1800 s.</span>
-    <span class="n">wdtSeconds</span> <span class="o">=</span> <span class="mi">2110</span><span class="p">;</span>
+    <span class="c1">//The watchdog's period, from R10 on the TPL5010's DELAY pin, by the</span>
+    <span class="c1">//datasheet's Equation 1 (SNAS651A, Table 1, T &gt; 1000 s). R10 is a 1 %</span>
+    <span class="c1">//resistor and the shortest period it allows is what a ceiling must respect:</span>
+    <span class="c1">//a logging interval plus a cycle must stay inside it. Page 1 register 0x30</span>
+    <span class="c1">//overrides this per board.</span>
+    <span class="c1">//  v3.0: 130 kΩ (Project-Margay 755ffd9, 2022), 3943 s nominal, 3854 to 4033 s;</span>
+    <span class="c1">//        the grid holds 3600 s.</span>
+    <span class="c1">//  v2.x: 100 kΩ, 2160 s nominal, 2110 to 2209 s; the grid holds 1800 s.</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">model_</span> <span class="o">==</span> <span class="mi">3</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">wdtSeconds</span> <span class="o">=</span> <span class="mi">3853</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="n">wdtSeconds</span> <span class="o">=</span> <span class="mi">2110</span><span class="p">;</span>
+    <span class="p">}</span>
 
     <span class="n">_batteryDivider</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">;</span>
 
@@ -410,7 +414,6 @@ Andy Wickert
     <span class="n">BlueLED</span> <span class="o">=</span> <span class="mi">14</span><span class="p">;</span>
 
     <span class="n">VRef_Pin</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
-    <span class="n">ThermSense_Pin</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
     <span class="n">BatSense_Pin</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 
     <span class="n">VSwitch_Pin</span> <span class="o">=</span> <span class="mi">12</span><span class="p">;</span>
@@ -458,7 +461,6 @@ Andy Wickert
     <span class="n">BlueLED</span> <span class="o">=</span> <span class="mi">14</span><span class="p">;</span>
 
     <span class="n">VRef_Pin</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
-    <span class="n">ThermSense_Pin</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
     <span class="n">BatSense_Pin</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 
     <span class="n">VSwitch_Pin</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
@@ -668,16 +670,8 @@ Andy Wickert
 <span class="p">}</span>
 
 <span class="kt">float</span> <span class="n">Margay</span><span class="o">::</span><span class="n">getTemp</span><span class="p">(</span><span class="n">temp_source</span> <span class="n">sensor</span><span class="p">)</span> <span class="p">{</span>
-  <span class="kt">float</span> <span class="n">vcc</span> <span class="o">=</span> <span class="mf">3.3</span><span class="p">;</span>
-  <span class="c1">// Get temp from on board thermistor</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">sensor</span> <span class="o">==</span> <span class="n">thermistor_temp_sensor</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kt">float</span> <span class="n">adcVoltage</span> <span class="o">=</span> <span class="kt">float</span><span class="p">(</span><span class="n">analogRead</span><span class="p">(</span><span class="n">ThermSense_Pin</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="n">vcc</span> <span class="o">/</span> <span class="mf">1023.0</span><span class="p">);</span>
-    <span class="kt">float</span> <span class="n">tempData</span> <span class="o">=</span> <span class="n">tempConvert</span><span class="p">(</span><span class="n">adcVoltage</span><span class="p">,</span> <span class="n">vcc</span><span class="p">,</span> <span class="n">_thermistor</span><span class="p">);</span>
-    <span class="n">tempData</span> <span class="o">=</span> <span class="n">tempData</span> <span class="o">-</span> <span class="mf">273.15</span><span class="p">;</span>
-    <span class="k">return</span> <span class="n">tempData</span><span class="p">;</span>
-  <span class="p">}</span>
   <span class="c1">// Get Temp from RTC</span>
-  <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">sensor</span> <span class="o">==</span> <span class="n">RTC_temp_sensor</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">sensor</span> <span class="o">==</span> <span class="n">RTC_temp_sensor</span><span class="p">)</span> <span class="p">{</span>
     <span class="kt">float</span> <span class="n">rtcTemp</span> <span class="o">=</span> <span class="n">_rtc</span><span class="p">.</span><span class="n">getTemp</span><span class="p">();</span>
     <span class="k">return</span> <span class="n">rtcTemp</span><span class="p">;</span>
   <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
@@ -742,28 +736,19 @@ Andy Wickert
   <span class="c1">//file's header row is this, then each watched sensor's, then Note. See</span>
   <span class="c1">//LIBRARY-DESIGN.md section 14.</span>
   <span class="kt">size_t</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">_model</span> <span class="o">&lt;</span> <span class="n">MODEL_2v0</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">n</span> <span class="o">+=</span> <span class="n">out</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"Time [UTC], Temp OB [C], Temp RTC [C], Bat [V], "</span><span class="p">);</span>
-  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>  <span class="c1">// new loggers include pressure and RH from BME280</span>
-    <span class="n">n</span> <span class="o">+=</span> <span class="n">out</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"Time [UTC], PresOB [mBar], RH_OB [%], TempOB [C], "</span><span class="p">);</span>
-    <span class="n">n</span> <span class="o">+=</span> <span class="n">out</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"Temp RTC [C], Bat [V], "</span><span class="p">);</span>
-  <span class="p">}</span>
+  <span class="n">n</span> <span class="o">+=</span> <span class="n">out</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"Time [UTC], PresOB [mBar], RH_OB [%], TempOB [C], "</span><span class="p">);</span>
+  <span class="n">n</span> <span class="o">+=</span> <span class="n">out</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"Temp RTC [C], Bat [V], "</span><span class="p">);</span>
   <span class="k">return</span> <span class="n">n</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="kt">size_t</span> <span class="n">Margay</span><span class="o">::</span><span class="n">printDataRow</span><span class="p">(</span><span class="n">Print</span><span class="o">&amp;</span> <span class="n">out</span><span class="p">)</span> <span class="p">{</span>
   <span class="c1">//The values readOnBoard() left, in printDataHeader()'s order. This takes no</span>
   <span class="c1">//reading: a row written to the card and to the monitor must not read the</span>
-  <span class="c1">//thermistor twice, and the two rows would otherwise differ.</span>
+  <span class="c1">//sensors twice, and the two rows would otherwise differ.</span>
   <span class="kt">size_t</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
   <span class="n">n</span> <span class="o">+=</span> <span class="n">out</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">_logTimeDate</span><span class="p">);</span>
   <span class="n">n</span> <span class="o">+=</span> <span class="n">out</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="sc">','</span><span class="p">);</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">_model</span> <span class="o">&lt;</span> <span class="n">MODEL_2v0</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">n</span> <span class="o">+=</span> <span class="n">out</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">_onBoardTemp</span><span class="p">);</span>
-    <span class="n">n</span> <span class="o">+=</span> <span class="n">out</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="sc">','</span><span class="p">);</span>
-  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-    <span class="n">n</span> <span class="o">+=</span> <span class="n">bme280</span><span class="p">.</span><span class="n">printDataRow</span><span class="p">(</span><span class="n">out</span><span class="p">);</span>
-  <span class="p">}</span>
+  <span class="n">n</span> <span class="o">+=</span> <span class="n">bme280</span><span class="p">.</span><span class="n">printDataRow</span><span class="p">(</span><span class="n">out</span><span class="p">);</span>
   <span class="n">n</span> <span class="o">+=</span> <span class="n">out</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">_rtcTemp</span><span class="p">);</span>
   <span class="n">n</span> <span class="o">+=</span> <span class="n">out</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="sc">','</span><span class="p">);</span>
   <span class="n">n</span> <span class="o">+=</span> <span class="n">out</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">_batVoltage</span><span class="p">);</span>
@@ -776,22 +761,6 @@ Andy Wickert
   <span class="c1">// float VRef = analogRead(VRef_Pin);</span>
   <span class="kt">float</span> <span class="n">vcc</span> <span class="o">=</span> <span class="mf">3.3</span><span class="p">;</span>  <span class="c1">//(1.8/VRef)*3.3; //Compensate for vcc using VRef</span>
   <span class="c1">// Serial.println(vcc); //DEBUG!</span>
-  <span class="kt">float</span> <span class="n">tempData</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>  <span class="c1">//FIX!!! Dumb!</span>
-
-  <span class="k">if</span> <span class="p">(</span><span class="n">_model</span> <span class="o">&lt;</span> <span class="n">MODEL_2v0</span><span class="p">)</span> <span class="p">{</span>  <span class="c1">//For older thermistor models</span>
-    <span class="kt">float</span> <span class="n">val</span> <span class="o">=</span> <span class="kt">float</span><span class="p">(</span><span class="n">analogRead</span><span class="p">(</span><span class="n">ThermSense_Pin</span><span class="p">));</span>
-    <span class="c1">// Find compensation value with VRef due to vcc error</span>
-    <span class="kt">float</span> <span class="n">comp</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.8</span> <span class="o">/</span> <span class="mf">3.3</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1023.0</span> <span class="o">/</span> <span class="n">analogRead</span><span class="p">(</span><span class="n">VRef_Pin</span><span class="p">);</span>
-    <span class="c1">// Override comp calculation since many v0.0 models do not have ref equipped</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">_model</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="n">comp</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">;</span>
-    <span class="n">val</span> <span class="o">=</span> <span class="n">val</span> <span class="o">*</span> <span class="n">comp</span> <span class="o">*</span> <span class="p">(</span><span class="n">vcc</span> <span class="o">/</span> <span class="mf">1023.0</span><span class="p">);</span>  <span class="c1">//Compensate for ref voltage error</span>
-    <span class="c1">// float Vout = vcc - val;</span>
-    <span class="c1">// Serial.println(val); //DEBUG!</span>
-    <span class="c1">// Serial.println(Vout);  //DEBUG!</span>
-    <span class="n">tempData</span> <span class="o">=</span> <span class="n">tempConvert</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">vcc</span> <span class="o">*</span> <span class="n">comp</span><span class="p">,</span> <span class="n">_thermistor</span><span class="p">);</span>
-    <span class="n">tempData</span> <span class="o">=</span> <span class="n">tempData</span> <span class="o">-</span> <span class="mf">273.15</span><span class="p">;</span>  <span class="c1">//Get temp from on board thermistor</span>
-  <span class="p">}</span>
-
   <span class="c1">// delay(10);</span>
   <span class="c1">// Get battery voltage, including voltage divider in math</span>
   <span class="kt">float</span> <span class="n">batVoltage</span> <span class="o">=</span> <span class="n">getBatVoltage</span><span class="p">();</span>
@@ -799,23 +768,9 @@ Andy Wickert
   <span class="c1">// Temp[3] = Clock.getTemperature(); //Get temperature from RTC //FIX!</span>
   <span class="kt">float</span> <span class="n">rtcTemp</span> <span class="o">=</span> <span class="n">_rtc</span><span class="p">.</span><span class="n">getTemp</span><span class="p">();</span>  <span class="c1">//Get Temp from RTC</span>
   <span class="n">getTime</span><span class="p">();</span>                       <span class="c1">//FIX!</span>
-  <span class="n">_onBoardTemp</span> <span class="o">=</span> <span class="n">tempData</span><span class="p">;</span>
   <span class="n">_rtcTemp</span> <span class="o">=</span> <span class="n">rtcTemp</span><span class="p">;</span>
   <span class="n">_batVoltage</span> <span class="o">=</span> <span class="n">batVoltage</span><span class="p">;</span>
   <span class="n">_batPercent</span> <span class="o">=</span> <span class="n">batPercentFromVoltage</span><span class="p">(</span><span class="n">batVoltage</span><span class="p">);</span>  <span class="c1">//TEMPORARY: for the chirp's and the blip's colour; no second read</span>
-<span class="p">}</span>
-
-<span class="kt">float</span> <span class="n">Margay</span><span class="o">::</span><span class="n">tempConvert</span><span class="p">(</span><span class="kt">float</span> <span class="n">V</span><span class="p">,</span> <span class="kt">float</span> <span class="n">vcc</span><span class="p">,</span> <span class="k">const</span> <span class="n">Thermistor</span><span class="o">&amp;</span> <span class="n">th</span><span class="p">)</span> <span class="p">{</span>
-  <span class="c1">//  Serial.print("R = "); //DEBUG!</span>
-  <span class="c1">//  Serial.println(R); //DEBUG!</span>
-  <span class="kt">float</span> <span class="n">rt</span> <span class="o">=</span> <span class="p">((</span><span class="n">vcc</span> <span class="o">/</span> <span class="n">V</span><span class="p">)</span> <span class="o">*</span> <span class="n">th</span><span class="p">.</span><span class="n">seriesResistance</span><span class="p">)</span> <span class="o">-</span> <span class="n">th</span><span class="p">.</span><span class="n">seriesResistance</span><span class="p">;</span>
-  <span class="c1">//  Serial.print("rt = "); //DEBUG!</span>
-  <span class="c1">//  Serial.println(rt); //DEBUG!</span>
-  <span class="kt">float</span> <span class="n">logRt</span> <span class="o">=</span> <span class="n">log</span><span class="p">(</span><span class="n">rt</span> <span class="o">/</span> <span class="n">th</span><span class="p">.</span><span class="n">r25</span><span class="p">);</span>
-  <span class="c1">//  Serial.print("logRt = "); //DEBUG!</span>
-  <span class="c1">//  Serial.println(logRt); //DEBUG!</span>
-  <span class="kt">float</span> <span class="n">t</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="n">th</span><span class="p">.</span><span class="n">a</span> <span class="o">+</span> <span class="n">th</span><span class="p">.</span><span class="n">b</span> <span class="o">*</span> <span class="n">logRt</span> <span class="o">+</span> <span class="n">th</span><span class="p">.</span><span class="n">c</span> <span class="o">*</span> <span class="n">pow</span><span class="p">(</span><span class="n">logRt</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">)</span> <span class="o">+</span> <span class="n">th</span><span class="p">.</span><span class="n">d</span> <span class="o">*</span> <span class="n">pow</span><span class="p">(</span><span class="n">logRt</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">));</span>
-  <span class="k">return</span> <span class="n">t</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="kt">float</span> <span class="n">Margay</span><span class="o">::</span><span class="n">getVoltage</span><span class="p">()</span> <span class="p">{</span>  <span class="c1">//Get voltage from Ax pin</span>
@@ -878,7 +833,6 @@ Andy Wickert
   <span class="kt">float</span> <span class="n">v</span> <span class="o">=</span> <span class="n">getBatVoltage</span><span class="p">();</span>
   <span class="n">_pages</span><span class="p">.</span><span class="n">put8</span><span class="p">(</span><span class="mh">0x48</span><span class="p">,</span> <span class="p">(</span><span class="kt">uint8_t</span><span class="p">)</span><span class="n">constrain</span><span class="p">(</span><span class="n">getBatPercentage</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">));</span>
   <span class="n">_pages</span><span class="p">.</span><span class="n">put16</span><span class="p">(</span><span class="mh">0x49</span><span class="p">,</span> <span class="p">(</span><span class="kt">uint16_t</span><span class="p">)(</span><span class="n">v</span> <span class="o">*</span> <span class="mf">100.0</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">));</span>
-  <span class="n">_pages</span><span class="p">.</span><span class="n">put16</span><span class="p">(</span><span class="mh">0x4B</span><span class="p">,</span> <span class="p">(</span><span class="kt">uint16_t</span><span class="p">)(</span><span class="kt">int16_t</span><span class="p">)(</span><span class="n">getTemp</span><span class="p">(</span><span class="n">thermistor_temp_sensor</span><span class="p">)</span> <span class="o">*</span> <span class="mf">100.0</span><span class="p">));</span>  <span class="c1">//0 on models without the thermistor path</span>
   <span class="k">if</span> <span class="p">(</span><span class="n">_model</span> <span class="o">&gt;=</span> <span class="n">MODEL_2v0</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">_bmeError</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">_pages</span><span class="p">.</span><span class="n">put16</span><span class="p">(</span><span class="mh">0x50</span><span class="p">,</span> <span class="p">(</span><span class="kt">uint16_t</span><span class="p">)(</span><span class="kt">int16_t</span><span class="p">)(</span><span class="n">bme280</span><span class="p">.</span><span class="n">getTemperature</span><span class="p">()</span> <span class="o">*</span> <span class="mf">100.0</span><span class="p">));</span>
     <span class="n">_pages</span><span class="p">.</span><span class="n">put16</span><span class="p">(</span><span class="mh">0x52</span><span class="p">,</span> <span class="p">(</span><span class="kt">uint16_t</span><span class="p">)(</span><span class="n">bme280</span><span class="p">.</span><span class="n">getHumidity</span><span class="p">()</span> <span class="o">*</span> <span class="mf">100.0</span><span class="p">));</span>
@@ -996,7 +950,7 @@ Andy Wickert
 
 <hr />
 
-<p>Updated on 2026-11-04 at 08:25:00 +0000</p>
+<p>Updated on 2026-11-05 at 05:12:15 +0000</p>
 
         
       </section>
